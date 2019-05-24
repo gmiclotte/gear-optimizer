@@ -1,0 +1,12 @@
+.content__container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        background: var(--background-color);
+}
+
+.content__p {
+        margin: 0;
+}
