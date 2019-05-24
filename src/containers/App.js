@@ -12,7 +12,7 @@ import '../stylesheets/App.css';
 
 class App extends Component {
         componentDidMount = () => this.props.handleLoadStateLocalStorage();
-        componentDidUpdate = () => this.props.handleSaveStateLocalStorage(this.props.items);
+        componentDidUpdate = () => this.props.handleSaveStateLocalStorage(this.props);
 
         render() {
                 return <AppLayout {...this.props}/>;

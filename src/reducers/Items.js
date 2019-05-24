@@ -17,6 +17,16 @@ class Item {
         }
 }
 
+class ItemContainer {
+        constructor(items) {
+                this.names = [];
+                for (var i = 0; i < items.length; i++) {
+                        this.names.push(items[i][0]);
+                        this[items[i][0]] = items[i][1];
+                }
+        }
+}
+
 export const Slot = {
         W: 'Weapon',
         H: 'Head',
@@ -27,37 +37,37 @@ export const Slot = {
 }
 
 export const Stat = {
-        HACK_SPEED: 'Hack Speed',
-        WISH_SPEED: 'Wish Speed',
-        COOKING: 'Cooking',
-        DAYCARE_SPEED: 'Daycare Speed',
-        YGGDRASIL_YIELD: 'Yggdrasil Yield',
-        MOVE_COOLDOWN: 'Move Cooldown',
-        MAGIC_SPEED: 'Magic Speed',
-        ENERGY_SPEED: 'Energy Speed',
-        QUEST_DROP: 'Quest Drops',
         AP: 'AP',
-        EXPERIENCE: 'Experience',
-        RESPAWN: 'Respawn',
-        GOLD_DROP: 'Gold Drops',
+        AT: 'Advance Training',
+        AUG: 'Augment Speed',
+        BEARD: 'Beard Speed',
+        CD: 'Move Cooldown',
+        COOKING: 'Cooking',
+        DC: 'Daycare Speed',
+        DROP: 'Drop Chance',
+        EBAR: 'Energy Bars',
+        ECAP: 'Energy Cap',
+        EPOW: 'Energy Power',
+        ESPEED: 'Energy Speed',
+        EXP: 'Experience',
+        GOLD: 'Gold Drops',
+        HACK: 'Hack Speed',
+        MBAR: 'Magic Bars',
+        MCAP: 'Magic Cap',
+        MPOW: 'Magic Power',
+        MSPEED: 'Magic Speed',
+        NGU: 'NGU Speed',
         P: 'Power',
+        QUEST: 'Quest Drops',
+        RESPAWN: 'Respawn',
+        SEED: 'Seed Gain',
         T: 'Toughness',
-        ENERGY_POWER: 'Energy Power',
-        ENERGY_BARS: 'Energy Bars',
-        ENERGY_CAP: 'Energy Cap',
-        MAGIC_POWER: 'Magic Power',
-        MAGIC_BARS: 'Magic Bars',
-        MAGIC_CAP: 'Magic Cap',
-        NGU_SPEED: 'NGU Speed',
-        WANDOOS_SPEED: 'Wandoos Speed',
-        ADVANCE_TRAINING: 'Advance Training',
-        AUGMENT_SPEED: 'Augment Speed',
-        BEARD_SPEED: 'Beard Speed',
-        SEED_DROP: 'Seed Gain',
-        DROP_CHANCE: 'Drop Chance',
-        RES3_POWER: 'Res3 Power',
-        RES3_CAP: 'Res3 Cap',
-        RES3_BARS: 'Res3 Bars'
+        WAN: 'Wandoos Speed',
+        WISH: 'Wish Speed',
+        XBAR: 'Res3 Bars',
+        XCAP: 'Res3 Cap',
+        XPOW: 'Res3 Power',
+        YGG: 'Yggdrasil Yield'
 }
 
 const ITEMLIST = [
@@ -69,11 +79,11 @@ const ITEMLIST = [
         ])
 ];
 
-const ITEMS = new Map(ITEMLIST.map((item, index) => {
+const ITEMS = new ItemContainer(ITEMLIST.map((item, index) => {
         return [item.name, item];
 }));
 
-const EQUIP = new Map(ITEMLIST.map((item, index) => {
+const EQUIP = new ItemContainer(ITEMLIST.map((item, index) => {
         return [item.slot, undefined];
 }));
 
@@ -81,42 +91,31 @@ const INITIAL_STATE = {
         items: ITEMS,
         equip: EQUIP
 };
-
+console.log(INITIAL_STATE);
 const ItemsReducer = (state = INITIAL_STATE, action) => {
-        var equip;
         switch (action.type) {
                 case EQUIP_ITEM:
                         {
-                                console.log('equip item')
-                                console.log(action.payload.name)
-                                console.log(state)
-                                const item = state.items.get(action.payload.name);
-                                console.log(state.items.get(action.payload.name))
+                                const item = state.items[action.payload.name];
                                 const slot = item.slot;
-                                equip = new Map(state.equip)
-                                console.log(equip)
-                                equip.set(slot, item);
-                                console.log(equip)
                                 return {
                                         ...state,
-                                        equip: equip
+                                        equip: {
+                                                ...state.equip,
+                                                [slot]: item
+                                        }
                                 };
                         }
                 case UNEQUIP_ITEM:
                         {
-                                console.log('unequip item')
-                                console.log(action.payload.name)
-                                console.log(state)
-                                const item = state.items.get(action.payload.name);
-                                console.log(state.items.get(action.payload.name))
+                                const item = state.items[action.payload.name];
                                 const slot = item.slot;
-                                equip = new Map(state.equip)
-                                console.log(equip)
-                                equip.set(slot, undefined);
-                                console.log(equip)
                                 return {
                                         ...state,
-                                        equip: equip
+                                        equip: {
+                                                ...state.equip,
+                                                [slot]: undefined
+                                        }
                                 };
                         }
 
@@ -129,13 +128,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                 case LOAD_STATE_LOCALSTORAGE:
                         {
                                 const lc = window.localStorage.getItem(LOCALSTORAGE_NAME);
-                                if (lc === 'undefined') {
-                                        return state;
-                                }
-                                console.log('hello there')
-                                console.log(lc, undefined)
                                 const localStorageState = JSON.parse(lc);
-                                console.log(localStorageState)
                                 if (localStorageState) {
                                         // TODO: Validate local storage state.
                                         return {

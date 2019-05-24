@@ -9,9 +9,10 @@ export default class ItemTable extends React.Component {
                 console.log('done');
                 return (<div>
                         {
-                                [...this.props[this.props.type]].map(([key, value]) => {
-                                        console.log(key, value);
-                                        return (<Item item={value} handleClickItem={this.props.handleClickItem} key={key}/>);
+                                [...this.props[this.props.type].names].map(name => {
+                                        const item = this.props[this.props.type][name];
+                                        console.log(name, item);
+                                        return (<Item item={item} handleClickItem={this.props.handleClickItem} key={name}/>);
                                 })
                         }
                 </div>);
