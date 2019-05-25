@@ -14,6 +14,7 @@ export class Item {
 export class EmptySlot extends Item {
         constructor(slot) {
                 super('Empty ' + slot[0] + ' Slot', slot, undefined, 0, []);
+                this.empty = true;
         }
 }
 

@@ -30,9 +30,9 @@ export default class ItemTable extends React.Component {
         render() {
                 //TODO: sorting on every change seems very inefficient
                 let buffer = [];
-                let compare = compare_factory(this.props.group)(this.props[this.props.type]);
-                let class_idx = 0;
                 {
+                        let compare = compare_factory(this.props.group)(this.props[this.props.type]);
+                        let class_idx = 0;
                         let sorted = [...this.props[this.props.type].names].sort(compare);
                         let localbuffer = [];
                         let last = undefined;

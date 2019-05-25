@@ -22,17 +22,44 @@ let ITEMS = new ItemContainer(ITEMLIST.map((item, index) => {
 }));
 
 const SLOTLIST = [
-        Slot.WEAPON,
-        Slot.HEAD,
-        Slot.CHEST,
-        Slot.PANTS,
-        Slot.BOOTS,
-        Slot.ACCESSORY
+        [
+                Slot.WEAPON, 1
+        ],
+        [
+                Slot.HEAD, 1
+        ],
+        [
+                Slot.CHEST, 1
+        ],
+        [
+                Slot.PANTS, 1
+        ],
+        [
+                Slot.BOOTS, 1
+        ],
+        [
+                Slot.ACCESSORY, 12
+        ]
 ]
 
+let slotlist = []
+for (let idx = 0; idx < SLOTLIST.length; idx++) {
+        let slot = SLOTLIST[idx][0];
+        let count = SLOTLIST[idx][1];
+        for (let jdx = 0; jdx < count; jdx++) {
+                slotlist.push([
+                        slot[0] + jdx,
+                        new EmptySlot(slot)
+                ]);
+        }
+}
+
+/*
 const EQUIP = new ItemContainer(SLOTLIST.map((slot, index) => {
         return [slot, new EmptySlot(slot)];
 }));
+*/
+const EQUIP = new ItemContainer(slotlist);
 
 const INITIAL_STATE = {
         items: ITEMS,
@@ -46,12 +73,33 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                 case EQUIP_ITEM:
                         {
                                 const item = state.items[action.payload.name];
-                                const slot = item.slot;
+                                const slot = item.slot[0];
+                                let equiped = false;
+                                let sel = undefined;
+                                for (let idx = 0;; idx++) {
+                                        if (state.equip[slot + idx] === undefined) {
+                                                if (sel === undefined) {
+                                                        sel = idx - 1;
+                                                }
+                                                break;
+                                        }
+                                        if (state.equip[slot + idx].empty) {
+                                                if (sel === undefined) {
+                                                        sel = idx;
+                                                }
+                                        }
+                                        if (state.equip[slot + idx].name === action.payload.name) {
+                                                equiped = true;
+                                        }
+                                }
+                                if (equiped) {
+                                        return state;
+                                }
                                 return {
                                         ...state,
                                         equip: {
                                                 ...state.equip,
-                                                [slot]: item
+                                                [slot + sel]: item
                                         }
                                 };
                         }
@@ -61,12 +109,18 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         return state;
                                 }
                                 const item = state.items[action.payload.name];
-                                const slot = item.slot;
+                                const slot = item.slot[0];
+                                let idx = 0;
+                                for (;; idx++) {
+                                        if (state.equip[slot + idx].name === action.payload.name) {
+                                                break;
+                                        }
+                                }
                                 return {
                                         ...state,
                                         equip: {
                                                 ...state.equip,
-                                                [slot]: new EmptySlot(slot)
+                                                [slot + idx]: new EmptySlot(item.slot)
                                         }
                                 };
                         }
