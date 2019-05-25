@@ -1,3 +1,4 @@
+/*
 .app_container {
         text-align: center;
 }
@@ -20,7 +21,7 @@
 }
 
 .app_body {
-        background-color: #282c34;
+        background-color: #280c34;
         min-height: 1vh;
         display: flex;
         flex-direction: column;
@@ -54,3 +55,4 @@
                 transform: rotate(360deg);
         }
 }
+*/

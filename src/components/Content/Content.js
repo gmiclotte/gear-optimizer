@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import {default as ItemTable} from '../ItemTable';
+import {default as ItemTable} from '../ItemTable/ItemTable';
 
 import './Content.css';
 
@@ -18,10 +18,8 @@ class Content extends Component {
         render() {
                 return (<div className={this.props.className}>
                         <div className="content__container">
-                                <div className="content__p">
-                                        <ItemTable {...this.props} type='items' handleClickItem={this.props.handleEquipItem}/>
-                                        <ItemTable {...this.props} type='equip' handleClickItem={this.props.handleUnequipItem}/>
-                                </div>
+                                <ItemTable {...this.props} group={'slot'} type='equip' handleClickItem={this.props.handleUnequipItem}/>
+                                <ItemTable {...this.props} group={'zone'} type='items' handleClickItem={this.props.handleEquipItem}/>
                         </div>
                 </div>);
         };

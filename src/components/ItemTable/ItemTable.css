@@ -1,0 +1,16 @@
+.item-table {
+        /*display: flex;
+        justify-content: center;
+        align-items: center;
+        */
+        width: 50vw;
+        height: 90vh;
+        margin: auto;
+        overflow-y: auto;
+        overflow-x: hidden;
+}
+
+.item-section {
+        min-width: 50vw;
+        display: block
+}
