@@ -921,7 +921,7 @@ export const ITEMLIST = [
         [Stat.MAGIC_POWER, 50000],
         [Stat.RES3_CAP, 40],
     ]),
-    new Item('The Triple Flubber', Slot.ACCESSORY, SetName.OTHER, 100, [
+    new Item('The Triple Flubber', Slot.ACCESSORY, SetName.TRAINING, 100, [
         [Stat.RESPAWN, 8],
     ]),
     new Item('Edgy Chest', Slot.CHEST, SetName.EDGY, 100, [

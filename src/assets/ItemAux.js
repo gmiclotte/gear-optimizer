@@ -73,16 +73,13 @@ export const Stat = {
 
 export const SetName = {
         HEART: [
-                'Hearts', -4
+                'Sellout Shop', -3
         ],
         FOREST_PENDANT: [
-                'Forest Pendants', -3
+                'Forest Pendant', -2
         ],
         LOOTY: [
-                'Looty', -2
-        ],
-        OTHER: [
-                'Other', -1
+                'Looty', -1
         ],
         ITOPOD: [
                 'ITOPOD', 0
@@ -91,52 +88,52 @@ export const SetName = {
                 'Safe Zone', 1
         ],
         TRAINING: [
-                'Training Set', 2
+                'Tutorial Zone', 2
         ],
         SEWERS: [
-                'Sewers Set', 3
+                'Sewers', 3
         ],
         FOREST: [
-                'Forest Set', 4
+                'Forest', 4
         ],
         CAVE: [
-                'Cave Set', 5
+                'Cave of Many Things', 5
         ],
         SKY: [
                 'The Sky', 6
         ],
         HSB: [
-                'HSB Set', 7
+                'High Security Base', 7
         ],
         GRB: [
-                'Gordon Ramsay bolton', 8
+                'Gordon Ramsay Bolton', 8
         ],
         CLOCK: [
-                'Clock Set', 9
+                'Clock Dimension', 9
         ],
         GCT: [
                 'Grand Corrupted Tree', 10
         ],
         TWO_D: [
-                '2D Set', 11
+                'The 2D Universe', 11
         ],
         SPOOPY: [
-                'Spoopy Set', 12
+                'Ancient Battlefield', 12
         ],
         JAKE: [
-                'Jake Set', 13
+                'Jake from Accounting', 13
         ],
         GAUDY: [
-                'Gaudy Set', 14
+                'A Very Strange Place', 14
         ],
         MEGA: [
-                'Mega Set', 15
+                'Mega Lands', 15
         ],
         UUG_RINGS: [
-                'UUG', 16
+                'UUG, The Unmentionable', 16
         ],
         BEARDVERSE: [
-                'Beardverse', 17
+                'The Beardverse', 17
         ],
         WANDERER: [
                 'Walderp', 18
@@ -145,43 +142,43 @@ export const SetName = {
                 'Walderp', 18
         ],
         BADLY_DRAWN: [
-                'Badly Drawn Set', 19
+                'Badly Drawn World', 19
         ],
         STEALTH: [
-                'Stealth Set', 20
+                'Boring-Ass Earth', 20
         ],
         SLIMY: [
-                'Slimy Set', 21
+                'The Beast', 21
         ],
         CHOCO: [
-                'Choco Set', 22
+                'Chocolate World', 22
         ],
         EDGY: [
-                'Edgy Set', 23
+                'The Evilverse', 23
         ],
         PINK: [
-                'Pretty Pink Princess Set', 24
+                'Pretty Pink Princess Land', 24
         ],
         NERD: [
-                'Greasy Nerd Set', 25
+                'Greasy Nerd', 25
         ],
         META: [
-                'Meta Set', 26
+                'Meta Land', 26
         ],
         PARTY: [
-                'Party Set', 27
+                'Interdimensional Party', 27
         ],
         MOBSTER: [
-                'Mobster Set', 28
+                'The Godmother', 28
         ],
         TYPO: [
-                'Typo Set', 29
+                'Typo Zonw', 29
         ],
         FAD: [
-                'Fad Set', 30
+                'The Fad-lands', 30
         ],
         JRPG: [
-                'Jrpg Set', 31
+                'JRPGVille', 31
         ],
-        EXILE: ['Exile Set', 32]
+        EXILE: ['The Exile', 32]
 }
