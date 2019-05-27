@@ -2,6 +2,7 @@ import {LOCALSTORAGE_NAME} from '../constants';
 import {ITEMLIST} from '../assets/Items'
 import {Slot, EmptySlot} from '../assets/ItemAux'
 
+import {DISABLE_ITEM} from '../actions/DisableItem';
 import {EQUIP_ITEM} from '../actions/EquipItem';
 import {UNEQUIP_ITEM} from '../actions/UnequipItem';
 import {LOAD_STATE_LOCALSTORAGE} from '../actions/LoadStateLocalStorage';
@@ -70,6 +71,19 @@ console.log(INITIAL_STATE);
 
 const ItemsReducer = (state = INITIAL_STATE, action) => {
         switch (action.type) {
+                case DISABLE_ITEM:
+                        {
+                                return {
+                                        ...state,
+                                        items: {
+                                                ...state.items,
+                                                [action.payload.name]: {
+                                                        ...state.items[action.payload.name],
+                                                        disable: !state.items[action.payload.name].disable
+                                                }
+                                        }
+                                };
+                        }
                 case EQUIP_ITEM:
                         {
                                 const item = state.items[action.payload.name];

@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux'
+import {connect} from 'react-redux';
 
 import {default as AppLayout} from '../components/AppLayout/AppLayout';
 
+import {DisableItem} from '../actions/DisableItem';
 import {EquipItem} from '../actions/EquipItem';
 import {UnequipItem} from '../actions/UnequipItem';
 import {LoadStateLocalStorage} from '../actions/LoadStateLocalStorage';
@@ -22,6 +23,7 @@ class App extends Component {
 const mapStateToProps = state => ({items: state.todos.items, equip: state.todos.equip});
 
 const mapDispatchToProps = {
+        handleDisableItem: DisableItem,
         handleEquipItem: EquipItem,
         handleUnequipItem: UnequipItem,
         handleSaveStateLocalStorage: SaveStateLocalStorage,

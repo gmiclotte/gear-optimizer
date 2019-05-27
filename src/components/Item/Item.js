@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-//import './Item.css';
+import './Item.css';
 
 function importAll(r) {
         let images = {};
@@ -20,21 +20,25 @@ export default class Item extends Component {
         };
 
         render() {
-                if (this.props.item === undefined) {
+                let item = this.props.item;
+                if (item === undefined) {
                         return (<span><img data-tip='Empty slot' style={{
                                         'width' : '50px',
                                         'height' : '50px'
                                 }} src={images.logo} className="App-logo" alt='Empty'/>
                         </span>);
                 }
-                let tt = this.props.item.name + ' lvl ' + this.props.item.level + '<br />';
-                this.props.item.stats.map((stat, idx) => {
-                        tt += '<br />' + stat[0] + ': ' + stat[1];
+                let tt = item.name + ' lvl ' + item.level + '<br />';
+                item.statnames.map((stat, idx) => {
+                        tt += '<br />' + stat + ': ' + item[stat];
                         return undefined;
                 })
-                return (<img onClick={() => this.props.handleClickItem(this.props.item.name)} data-tip={tt} style={{
+                let classNames = item.disable
+                        ? 'disable-item '
+                        : '';
+                return (<img className={classNames} onClick={() => this.props.handleClickItem(item.name)} onDoubleClick={() => this.props.handleDoubleClickItem(item.name)} data-tip={tt} style={{
                                 'width' : '50px',
                                 'height' : '50px'
-                        }} src={images[this.props.item.name]} alt={this.props.item.name} key='item'/>);
+                        }} src={images[item.name]} alt={item.name} key='item'/>);
         }
 }

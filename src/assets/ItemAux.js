@@ -4,9 +4,11 @@ export class Item {
                 this.slot = slot;
                 this.zone = zone;
                 this.level = level;
-                this.stats = []
+                this.statnames = []
+                this.disable = false;
                 for (let i = 0; i < props.length; i++) {
-                        this.stats.push(props[i]);
+                        this.statnames.push(props[i][0]);
+                        this[props[i][0]] = props[i][1];
                 }
         }
 }
@@ -15,6 +17,21 @@ export class EmptySlot extends Item {
         constructor(slot) {
                 super('Empty ' + slot[0] + ' Slot', slot, undefined, 0, []);
                 this.empty = true;
+        }
+}
+
+export class TotalItem extends Item {
+        constructor() {
+                super('total', undefined, undefined, 100, []);
+                for (var property in Stat) {
+                        if (Stat.hasOwnProperty(property)) {
+                                this[Stat[property]] = 100;
+                                this.statnames.push(Stat[property]);
+                        }
+                }
+                this[Stat.POWER] = 0;
+                this[Stat.TOUGHNESS] = 0;
+                this.items = [];
         }
 }
 
