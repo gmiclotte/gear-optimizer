@@ -3,7 +3,7 @@ import React from 'react';
 import Item from '../Item/Item'
 import {TotalItem, Stat, Slot} from '../../assets/ItemAux'
 import './ItemTable.css';
-import {pareto, format_number, knapsack} from '../../util'
+import {clone, pareto, format_number, knapsack} from '../../util'
 
 function compare_factory(key) {
         return function(prop) {
@@ -28,7 +28,7 @@ function group(a, b, g) {
         return a[g][1] !== b[g][1];
 }
 
-function add_equip(equip, item) {
+function add_equip(equip, item, track_gear = false) {
         for (let i = 0; i < item.statnames.length; i++) {
                 const stat = item.statnames[i];
                 if (stat === Stat.RESPAWN) {
@@ -37,7 +37,24 @@ function add_equip(equip, item) {
                         equip[stat] += item[stat];
                 }
         }
-        equip.items.push(item);
+        if (track_gear) {
+                equip.items.push(item);
+        }
+        return equip;
+}
+
+function remove_equip(equip, item, track_gear = false) {
+        for (let i = 0; i < item.statnames.length; i++) {
+                const stat = item.statnames[i];
+                if (stat === Stat.RESPAWN) {
+                        equip[stat] += item[stat];
+                } else {
+                        equip[stat] -= item[stat];
+                }
+        }
+        if (track_gear) {
+                equip.items.filter((x) => (x.name !== item.name));
+        }
         return equip;
 }
 
@@ -51,7 +68,7 @@ const outfits = (options) => {
         let tmp = cartesian(...options).map((items) => {
                 let equip = new TotalItem();
                 for (let i = 0; i < items.length; i++) {
-                        add_equip(equip, items[i]);
+                        add_equip(equip, items[i], true);
                 }
                 return equip;
         })
@@ -156,23 +173,32 @@ export default class ItemTable extends React.Component {
                         options = options.map((x) => (gear_slot(sorted, this.props[this.props.type], Slot[x])))
                         let factor = Factors.NGUSHACK;
                         let remaining = options.map((x) => (pareto(x, factor)));
-                        console.log(options);
-                        console.log(remaining);
                         if (remaining.map((x) => (x.length)).reduce((a, b) => (a * b)) > 5000) {
                                 console.log('Too many options (' + remaining.map((x) => (x.length)).reduce((a, b) => (a * b)) + '), sorry!', remaining)
                         } else {
+                                let accslots = 12;
                                 let bases = outfits(remaining);
-                                let optimal = new TotalItem();
+                                let optimal = [new TotalItem(), []];
                                 console.log(bases.length);
                                 bases = pareto(bases, factor);
                                 console.log(bases.length);
+                                let accs = gear_slot(sorted, this.props[this.props.type], Slot.ACCESSORY);
+                                console.log(accs, pareto(accs, factor, 12));
                                 for (let idx in bases) {
-                                        let accs = gear_slot(sorted, this.props[this.props.type], Slot.ACCESSORY);
-                                        let candidate = knapsack(accs, 12, bases[idx], (a) => (1), add_equip, (x) => (score_product(x, factor)));
-                                        if (score_product(optimal, factor) < score_product(candidate, factor)) {
+                                        console.log(accs.length);
+                                        let candidate = knapsack(accs, accslots, bases[idx], (a) => (1), add_equip, (x) => (score_product(x, factor)));
+                                        if (score_product(optimal[0], factor) < score_product(candidate[0], factor)) {
                                                 optimal = candidate;
                                         }
                                 }
+                                optimal[1] = optimal[1].map((x) => ([
+                                        score_product(remove_equip(clone(optimal[0]), x), factor),
+                                        x
+                                ])).sort();
+                                for (let i = 0; i < optimal[1].length; i++) {
+                                        optimal[0].items.push(optimal[1][i][1]);
+                                }
+                                optimal = optimal[0];
                                 console.log(optimal);
                         }
                 }

@@ -1,3 +1,5 @@
+import {EmptySlot} from './assets/ItemAux'
+
 export function format_number(n) {
         if (n < 10000) {
                 return n.toFixed(2);
@@ -82,15 +84,18 @@ export function knapsack(items, capacity, zero_state, weight, add, score) {
                         remaining -= weight(items[i - 1]);
                 }
         }
-        //console.log("Max Benefit: ", format_number(score(matrix_weight[n][capacity])));
-        //console.log("Max Benefit From: ", solution_array)
-        return matrix_weight[n][capacity];
+        return [
+                matrix_weight[n][capacity],
+                solution_array
+        ];
 }
 
-export function dominates(major, minor, stats) {
+/*
+        set <equal> to <false> if equal results result in a dominate call
+*/
+export function dominates(major, minor, stats, equal = true) {
         let major_stats = new Array(stats.length).fill(0);
         let minor_stats = new Array(stats.length).fill(0);
-        let equal = true;
         for (let i = 0; i < stats.length; i++) {
                 let stat = stats[i];
                 let idx = major.statnames.indexOf(stat);
@@ -111,21 +116,34 @@ export function dominates(major, minor, stats) {
         return !equal;
 }
 
-export function pareto(list, stats) {
+export function pareto(list, stats, cutoff = 1) {
         let dominated = new Array(list.length).fill(false);
+        console.log(list[0])
+        let empty = new EmptySlot(list[0].slot);
         for (let i = list.length - 1; i > -1; i--) {
-                if (dominated[i]) {
+                if (dominates(empty, list[i], stats, false)) {
+                        dominated[i] = cutoff;
+                } else {
+                        //console.log(empty, list[i])
+                }
+                if (dominated[i] === cutoff) {
                         continue;
                 }
                 for (let j = list.length - 1; j > -1; j--) {
-                        if (dominated[j]) {
+                        if (dominated[j] === cutoff) {
                                 continue;
                         }
-                        dominated[j] = dominates(list[i], list[j], stats);
+                        dominated[j] += dominates(list[i], list[j], stats)
+                                ? 1
+                                : 0;
                 }
         }
-        return dominated.map((val, idx) => (
-                !val
+        let result = dominated.map((val, idx) => (
+                val < cutoff
                 ? list[idx]
-                : val)).filter((val) => (val !== true));
+                : false)).filter((val) => (val !== false));
+        if (result.length === 0) {
+                result = [empty];
+        }
+        return result;
 }
