@@ -1,10 +1,121 @@
-import {EmptySlot} from './assets/ItemAux'
+import {Slot, EmptySlot, Equip} from './assets/ItemAux'
 
-export function format_number(n) {
-        if (n < 10000) {
-                return n.toFixed(2);
+export function compute_optimal(item_names, items, factor, accslots, base_layout) {
+        // find all possible items that can be equiped in main slots
+        let options = Object.getOwnPropertyNames(Slot).filter((x) => {
+                if (Slot[x][0] === 'Accessory') {
+                        return false;
+                }
+                if (base_layout.counts[Slot[x][0]] > 0) {
+                        return false;
+                }
+                return true;
+        }).map((x) => (gear_slot(item_names, items, Slot[x], base_layout)));
+        let s = [options.map((x) => (x.length)).reduce((a, b) => (a * b))];
+        let remaining = options.map((x) => (pareto(x, factor)));
+        s.push(remaining.map((x) => (x.length)).reduce((a, b) => (a * b)));
+        let layouts = outfits(remaining, base_layout);
+        let optimal = [new Equip(), []];
+        layouts = pareto(layouts, factor);
+        s.push(layouts.length);
+        // find all possible accessories
+        let accs = gear_slot(item_names, items, Slot.ACCESSORY, base_layout);
+        s.push(accs.length);
+        accs = pareto(accs, factor, accslots);
+        s.push(accs.length);
+        console.log('Processing ' + s[2] + ' out of ' + s[1] + ' out of ' + s[0] + ' gear layouts and ' + s[4] + ' out of ' + s[3] + ' accessories.');
+        for (let idx in layouts) {
+                let candidate = knapsack(accs, accslots, layouts[idx], (a) => (1), add_equip, (x) => (score_product(x, factor)));
+                if (score_product(optimal[0], factor) < score_product(candidate[0], factor)) {
+                        optimal = candidate;
+                }
         }
-        return n.toExponential(2);
+        optimal[1] = optimal[1].map((x) => ([
+                score_product(remove_equip(clone(optimal[0]), x), factor),
+                x
+        ])).sort();
+        for (let i = 0; i < optimal[1].length; i++) {
+                optimal[0].items.push(optimal[1][i][1]);
+                optimal[0].counts['Accessory'] += 1;
+        }
+        return optimal[0];
+}
+
+export function add_equip(equip, item, track_gear = false) {
+        if (item.empty) {
+                return equip;
+        }
+        for (let i = 0; i < item.statnames.length; i++) {
+                const stat = item.statnames[i];
+                /*if (stat === Stat.RESPAWN) {
+                        equip[stat] -= item[stat];
+                } else {*/
+                equip[stat] += item[stat];
+                //}
+        }
+        if (track_gear) {
+                equip.items.push(item);
+                equip.counts[item.slot[0]] += 1;
+        }
+        return equip;
+}
+
+export function remove_equip(equip, item, track_gear = false) {
+        if (item.empty) {
+                return equip;
+        }
+        for (let i = 0; i < item.statnames.length; i++) {
+                const stat = item.statnames[i];
+                equip[stat] -= item[stat];
+        }
+        if (track_gear) {
+                equip.items.filter((x) => (x.name !== item.name));
+                equip.counts[item.slot[0]] -= 1;
+        }
+        return equip;
+}
+
+const cart_aux = (a, b) => [].concat(...a.map(d => b.map(e => [].concat(d, e))));
+const cartesian = (a, b, ...c) => (
+        b
+        ? cartesian(cart_aux(a, b), ...c)
+        : a);
+
+export const outfits = (options, base) => {
+        let tmp = cartesian(...options).map((items) => {
+                let equip = clone(base);
+                for (let i = 0; i < items.length; i++) {
+                        add_equip(equip, items[i], true);
+                }
+                return equip;
+        })
+        return tmp;
+};
+
+export function score_product(equip, stats) {
+        let score = 1;
+        for (let idx in stats) {
+                let stat = stats[idx];
+                score *= equip[stat] / 100;
+        }
+        return score;
+}
+
+export function gear_slot(names, list, type, equip) {
+        const equiped = equip.items.filter((item) => (item.slot[0] === type[0])).map((x) => (x.name));
+        return names.filter((name) => {
+                if (list[name].empty) {
+                        return false;
+                }
+                return list[name].slot[0] === type[0];
+        }).map((name) => (list[name])).filter((item) => (!item.disable && !equiped.includes(item.name)));
+}
+
+export function format_number(n, d = 2) {
+        if (n < 10000) {
+                return n.toFixed(d);
+        }
+        return n.toExponential(d);
 }
 
 export function clone(obj) {
@@ -118,13 +229,12 @@ export function dominates(major, minor, stats, equal = true) {
 
 export function pareto(list, stats, cutoff = 1) {
         let dominated = new Array(list.length).fill(false);
-        console.log(list[0])
-        let empty = new EmptySlot(list[0].slot);
+        let empty = list[0].slot === undefined
+                ? new Equip()
+                : new EmptySlot(list[0].slot);
         for (let i = list.length - 1; i > -1; i--) {
                 if (dominates(empty, list[i], stats, false)) {
                         dominated[i] = cutoff;
-                } else {
-                        //console.log(empty, list[i])
                 }
                 if (dominated[i] === cutoff) {
                         continue;

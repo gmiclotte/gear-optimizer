@@ -1,9 +1,9 @@
 import React from 'react';
 
 import Item from '../Item/Item'
-import {TotalItem, Stat, Slot} from '../../assets/ItemAux'
+import {Equip, Factors} from '../../assets/ItemAux'
 import './ItemTable.css';
-import {clone, pareto, format_number, knapsack} from '../../util'
+import {format_number, score_product, add_equip} from '../../util'
 
 function compare_factory(key) {
         return function(prop) {
@@ -26,103 +26,6 @@ function group(a, b, g) {
                 return false;
         }
         return a[g][1] !== b[g][1];
-}
-
-function add_equip(equip, item, track_gear = false) {
-        for (let i = 0; i < item.statnames.length; i++) {
-                const stat = item.statnames[i];
-                if (stat === Stat.RESPAWN) {
-                        equip[stat] -= item[stat];
-                } else {
-                        equip[stat] += item[stat];
-                }
-        }
-        if (track_gear) {
-                equip.items.push(item);
-        }
-        return equip;
-}
-
-function remove_equip(equip, item, track_gear = false) {
-        for (let i = 0; i < item.statnames.length; i++) {
-                const stat = item.statnames[i];
-                if (stat === Stat.RESPAWN) {
-                        equip[stat] += item[stat];
-                } else {
-                        equip[stat] -= item[stat];
-                }
-        }
-        if (track_gear) {
-                equip.items.filter((x) => (x.name !== item.name));
-        }
-        return equip;
-}
-
-const cart_aux = (a, b) => [].concat(...a.map(d => b.map(e => [].concat(d, e))));
-const cartesian = (a, b, ...c) => (
-        b
-        ? cartesian(cart_aux(a, b), ...c)
-        : a);
-
-const outfits = (options) => {
-        let tmp = cartesian(...options).map((items) => {
-                let equip = new TotalItem();
-                for (let i = 0; i < items.length; i++) {
-                        add_equip(equip, items[i], true);
-                }
-                return equip;
-        })
-        return tmp;
-};
-
-export function score_product(equip, stats) {
-        let score = 1;
-        for (let idx in stats) {
-                let stat = stats[idx];
-                score *= equip[stat] / 100;
-        }
-        return score;
-}
-
-export const Factors = {
-        ENGU: [
-                Stat.ENERGY_CAP, Stat.ENERGY_POWER, Stat.NGU_SPEED
-        ],
-        MNGU: [
-                Stat.MAGIC_CAP, Stat.MAGIC_POWER, Stat.NGU_SPEED
-        ],
-        NGUS: [
-                Stat.ENERGY_CAP,
-                Stat.ENERGY_POWER,
-                Stat.NGU_SPEED,
-                Stat.MAGIC_CAP,
-                Stat.MAGIC_POWER,
-                Stat.NGU_SPEED
-        ],
-        HACK: [
-                Stat.RES3_CAP, Stat.RES3_POWER, Stat.HACK_SPEED
-        ],
-        NGUSHACK: [
-                Stat.ENERGY_CAP,
-                Stat.ENERGY_POWER,
-                Stat.NGU_SPEED,
-                Stat.MAGIC_CAP,
-                Stat.MAGIC_POWER,
-                Stat.NGU_SPEED,
-                Stat.RES3_CAP,
-                Stat.RES3_POWER,
-                Stat.HACK_SPEED
-        ],
-        RESPAWN: [Stat.RESPAWN]
-}
-
-function gear_slot(names, list, type) {
-        return names.filter((name) => {
-                if (list[name].empty) {
-                        return false;
-                }
-                return list[name].slot[0] === type[0];
-        }).map((name) => (list[name])).filter((item) => (!item.disable));
 }
 
 export default class ItemTable extends React.Component {
@@ -155,7 +58,7 @@ export default class ItemTable extends React.Component {
                         </div>);
                 }
                 if (this.props.type === 'equip') {
-                        let equip = new TotalItem();
+                        let equip = new Equip();
                         for (let idx = 0; idx < sorted.length; idx++) {
                                 const name = sorted[idx];
                                 const item = this.props[this.props.type][name];
@@ -166,41 +69,8 @@ export default class ItemTable extends React.Component {
                                 Magic NGU: {format_number(score_product(equip, Factors.MNGU))}x<br/>
                                 Hack: {format_number(score_product(equip, Factors.HACK))}x<br/>
                                 EM NGU * Hack: {format_number(score_product(equip, Factors.NGUSHACK))}x<br/>
-                                Respawn: {format_number(score_product(equip, Factors.RESPAWN))}x<br/>
+                                Respawn: {format_number(score_product(equip, Factors.RESPAWN) * 100, 0)}% reduction<br/>
                         </p>);
-                } else {
-                        let options = Object.getOwnPropertyNames(Slot).filter((x) => (x !== 'ACCESSORY'))
-                        options = options.map((x) => (gear_slot(sorted, this.props[this.props.type], Slot[x])))
-                        let factor = Factors.NGUSHACK;
-                        let remaining = options.map((x) => (pareto(x, factor)));
-                        if (remaining.map((x) => (x.length)).reduce((a, b) => (a * b)) > 5000) {
-                                console.log('Too many options (' + remaining.map((x) => (x.length)).reduce((a, b) => (a * b)) + '), sorry!', remaining)
-                        } else {
-                                let accslots = 12;
-                                let bases = outfits(remaining);
-                                let optimal = [new TotalItem(), []];
-                                console.log(bases.length);
-                                bases = pareto(bases, factor);
-                                console.log(bases.length);
-                                let accs = gear_slot(sorted, this.props[this.props.type], Slot.ACCESSORY);
-                                console.log(accs, pareto(accs, factor, 12));
-                                for (let idx in bases) {
-                                        console.log(accs.length);
-                                        let candidate = knapsack(accs, accslots, bases[idx], (a) => (1), add_equip, (x) => (score_product(x, factor)));
-                                        if (score_product(optimal[0], factor) < score_product(candidate[0], factor)) {
-                                                optimal = candidate;
-                                        }
-                                }
-                                optimal[1] = optimal[1].map((x) => ([
-                                        score_product(remove_equip(clone(optimal[0]), x), factor),
-                                        x
-                                ])).sort();
-                                for (let i = 0; i < optimal[1].length; i++) {
-                                        optimal[0].items.push(optimal[1][i][1]);
-                                }
-                                optimal = optimal[0];
-                                console.log(optimal);
-                        }
                 }
                 return (<div className='item-table'>
                         {buffer}

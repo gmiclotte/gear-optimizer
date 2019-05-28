@@ -4,10 +4,12 @@
         align-items: center;
         */
         width: 50vw;
-        height: 90vh;
+        height: 85vh;
         margin: auto;
         overflow-y: auto;
         overflow-x: hidden;
+        border: 2px solid blue;
+        border-radius: 5px;
 }
 
 .item-section {

@@ -3,8 +3,10 @@ import {connect} from 'react-redux';
 
 import {default as AppLayout} from '../components/AppLayout/AppLayout';
 
+import {Crement} from '../actions/Crement'
 import {DisableItem} from '../actions/DisableItem';
 import {EquipItem} from '../actions/EquipItem';
+import {OptimizeGear} from '../actions/OptimizeGear';
 import {UnequipItem} from '../actions/UnequipItem';
 import {LoadStateLocalStorage} from '../actions/LoadStateLocalStorage';
 import {SaveStateLocalStorage} from '../actions/SaveStateLocalStorage';
@@ -20,11 +22,13 @@ class App extends Component {
         }
 }
 
-const mapStateToProps = state => ({items: state.todos.items, equip: state.todos.equip});
+const mapStateToProps = state => ({items: state.optimizer.items, equip: state.optimizer.equip, accslots: state.optimizer.accslots, respawn: state.optimizer.respawn});
 
 const mapDispatchToProps = {
+        handleCrement: Crement,
         handleDisableItem: DisableItem,
         handleEquipItem: EquipItem,
+        handleOptimizeGear: OptimizeGear,
         handleUnequipItem: UnequipItem,
         handleSaveStateLocalStorage: SaveStateLocalStorage,
         handleLoadStateLocalStorage: LoadStateLocalStorage

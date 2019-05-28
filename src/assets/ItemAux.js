@@ -24,18 +24,24 @@ export class EmptySlot extends Item {
         }
 }
 
-export class TotalItem extends Item {
+export class Equip extends Item {
         constructor() {
                 super('total', undefined, undefined, 100, []);
-                for (var property in Stat) {
-                        if (Stat.hasOwnProperty(property)) {
-                                this[Stat[property]] = 100;
-                                this.statnames.push(Stat[property]);
-                        }
-                }
+                this.items = [];
+                this.counts = {};
+                Object.getOwnPropertyNames(Slot).map((x) => {
+                        this.counts[Slot[x][0]] = 0;
+                        return undefined;
+                });
+                Object.getOwnPropertyNames(Stat).map((x) => {
+                        this[Stat[x]] = 100;
+                        this.statnames.push(Stat[x]);
+                        return undefined;
+                });
+                // correct POWER, TOUGHNESS and RESPAWN since these are additive from 0 instead of 100%
                 this[Stat.POWER] = 0;
                 this[Stat.TOUGHNESS] = 0;
-                this.items = [];
+                this[Stat.RESPAWN] = 0;
         }
 }
 
@@ -90,6 +96,38 @@ export const Stat = {
         WANDOOS_SPEED: 'Wandoos Speed',
         WISH_SPEED: 'Wish Speed',
         YGGDRASIL_YIELD: 'Yggdrasil Yield'
+}
+
+export const Factors = {
+        ENGU: [
+                Stat.ENERGY_CAP, Stat.ENERGY_POWER, Stat.NGU_SPEED
+        ],
+        MNGU: [
+                Stat.MAGIC_CAP, Stat.MAGIC_POWER, Stat.NGU_SPEED
+        ],
+        NGUS: [
+                Stat.ENERGY_CAP,
+                Stat.ENERGY_POWER,
+                Stat.NGU_SPEED,
+                Stat.MAGIC_CAP,
+                Stat.MAGIC_POWER,
+                Stat.NGU_SPEED
+        ],
+        HACK: [
+                Stat.RES3_CAP, Stat.RES3_POWER, Stat.HACK_SPEED
+        ],
+        NGUSHACK: [
+                Stat.ENERGY_CAP,
+                Stat.ENERGY_POWER,
+                Stat.NGU_SPEED,
+                Stat.MAGIC_CAP,
+                Stat.MAGIC_POWER,
+                Stat.NGU_SPEED,
+                Stat.RES3_CAP,
+                Stat.RES3_POWER,
+                Stat.HACK_SPEED
+        ],
+        RESPAWN: [Stat.RESPAWN]
 }
 
 export const SetName = {

@@ -21,11 +21,10 @@ export default class Item extends Component {
 
         render() {
                 let item = this.props.item;
+
+                let classNames = 'item';
                 if (item === undefined) {
-                        return (<span><img data-tip='Empty slot' style={{
-                                        'width' : '50px',
-                                        'height' : '50px'
-                                }} src={images.logo} className="App-logo" alt='Empty'/>
+                        return (<span><img className={classNames} data-tip='Empty slot' src={images.logo} alt='Empty'/>
                         </span>);
                 }
                 let tt = item.name + ' lvl ' + item.level + '<br />';
@@ -33,12 +32,9 @@ export default class Item extends Component {
                         tt += '<br />' + stat + ': ' + item[stat];
                         return undefined;
                 })
-                let classNames = item.disable
-                        ? 'disable-item '
+                classNames += item.disable
+                        ? ' disable-item '
                         : '';
-                return (<img className={classNames} onClick={() => this.props.handleClickItem(item.name)} onDoubleClick={() => this.props.handleDoubleClickItem(item.name)} data-tip={tt} style={{
-                                'width' : '50px',
-                                'height' : '50px'
-                        }} src={images[item.name]} alt={item.name} key='item'/>);
+                return (<img className={classNames} onClick={() => this.props.handleClickItem(item.name)} onDoubleClick={() => this.props.handleDoubleClickItem(item.name)} data-tip={tt} src={images[item.name]} alt={item.name} key='item'/>);
         }
 }
