@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactTooltip from 'react-tooltip'
 
 import Item from '../Item/Item'
 import {Equip, Factors} from '../../assets/ItemAux'
@@ -29,6 +30,10 @@ function group(a, b, g) {
 }
 
 export default class ItemTable extends React.Component {
+        componentDidUpdate() {
+                ReactTooltip.rebuild();
+        }
+
         render() {
                 //TODO: sorting on every change seems very inefficient
                 let buffer = [];

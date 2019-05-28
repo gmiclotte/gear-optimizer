@@ -48,7 +48,7 @@ const INITIAL_STATE = {
         items: ITEMS,
         equip: EQUIP,
         loadouts: [],
-        accslots: 12,
+        accslots: accslots,
         respawn: 3,
         factors: [Factors.HACK, Factors.NGUS]
 };
@@ -207,7 +207,9 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         return {
                                                 ...state,
                                                 items: localStorageState.items,
-                                                equip: localStorageState.equip
+                                                equip: localStorageState.equip,
+                                                accslots: localStorageState.accslots,
+                                                respawn: localStorageState.respawn
                                         };
                                 }
                                 return state;
