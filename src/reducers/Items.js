@@ -1,19 +1,13 @@
 import {LOCALSTORAGE_NAME} from '../constants';
 import {ITEMLIST} from '../assets/Items'
-import {
-        Equip,
-        Stat,
-        Slot,
-        EmptySlot,
-        Factors,
-        update_level
-} from '../assets/ItemAux'
+import {Equip, Slot, EmptySlot, Factors, update_level} from '../assets/ItemAux'
 import {clone, compute_optimal} from '../util'
 
 import {CREMENT} from '../actions/Crement'
 import {DISABLE_ITEM} from '../actions/DisableItem';
 import {TOGGLE_EDIT} from '../actions/ToggleEdit';
 import {EDIT_ITEM} from '../actions/EditItem';
+import {EDIT_FACTOR} from '../actions/EditFactor';
 import {EQUIP_ITEM} from '../actions/EquipItem';
 import {OPTIMIZE_GEAR} from '../actions/OptimizeGear';
 import {UNEQUIP_ITEM} from '../actions/UnequipItem';
@@ -58,14 +52,13 @@ const INITIAL_STATE = {
         equip: EQUIP,
         loadouts: [],
         accslots: accslots,
-        respawn: 3,
+        respawn: 1,
+        daycare: 1,
         factors: [
-                Factors.HACK, Factors.NGUS
+                Factors.RESPAWN, Factors.DAYCARE_SPEED, Factors.HACK, Factors.NGUS, Factors.NGUSHACK
         ],
         editItem: [false, undefined, undefined]
 };
-
-//console.log(INITIAL_STATE);
 
 const ItemsReducer = (state = INITIAL_STATE, action) => {
         switch (action.type) {
@@ -145,9 +138,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         return state;
                                 }
                                 let item = state.items[state.editItem[1]];
-                                console.log(item)
                                 update_level(item, action.payload.val);
-                                console.log(item)
                                 return {
                                         ...state,
                                         editItem: {
@@ -159,6 +150,20 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 [item.name]: item
                                         }
                                 }
+                        }
+
+                case EDIT_FACTOR:
+                        {
+                                let f = Object.getOwnPropertyNames(Factors).filter((x) => (Factors[x][0] === action.payload.name))[0];
+                                return {
+                                        ...state,
+                                        factors: state.factors.map((item, index) => {
+                                                if (index === action.payload.idx) {
+                                                        return Factors[f];
+                                                }
+                                                return item;
+                                        })
+                                };
                         }
 
                 case EQUIP_ITEM:
@@ -222,13 +227,19 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
 
                 case OPTIMIZE_GEAR:
                         {
-                                let base_layout = new Equip();
-                                base_layout = compute_optimal(state.items.names, state.items, [Stat.RESPAWN], state.respawn, base_layout);
+                                let base_layout = [new Equip()];
                                 for (let idx = 0; idx < state.factors.length; idx++) {
                                         let factor = state.factors[idx][1];
-                                        const accslots = state.accslots - base_layout.counts['Accessory'];
-                                        base_layout = compute_optimal(state.items.names, state.items, factor, accslots, base_layout);
+                                        let maxslots = state.accslots;
+                                        if (state.factors[idx] === Factors.RESPAWN) {
+                                                maxslots = state.respawn;
+                                        }
+                                        if (state.factors[idx] === Factors.DAYCARE_SPEED) {
+                                                maxslots = state.daycare;
+                                        }
+                                        base_layout = compute_optimal(state.items.names, state.items, factor, state.accslots, maxslots, base_layout);
                                 }
+                                base_layout = base_layout[Math.floor(Math.random() * base_layout.length)];
                                 let equip = new ItemContainer(slotlist(state.accslots));
                                 let counts = Object.getOwnPropertyNames(Slot).map((x) => (0));
                                 for (let idx in base_layout.items) {

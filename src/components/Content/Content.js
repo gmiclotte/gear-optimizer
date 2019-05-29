@@ -6,6 +6,7 @@ import {default as Crement} from '../Crement/Crement';
 import {default as ItemTable} from '../ItemTable/ItemTable';
 import {default as EquipTable} from '../ItemTable/EquipTable';
 import {default as OptimizeButton} from '../OptimizeButton/OptimizeButton';
+import {default as FactorForm} from '../FactorForm/FactorForm'
 import {default as ItemForm} from '../ItemForm/ItemForm'
 
 import './Content.css';
@@ -42,10 +43,14 @@ class Content extends Component {
         render() {
                 return (<div className={this.props.className}>
                         <div className="content__container">
-                                <div className='button-section'>
+                                <div className='button-section' key='slots'>
                                         <Crement header='Accessory slots' value={this.props.accslots} name='accslots' handleClick={this.props.handleCrement} min={0} max={100}/>
-                                        <Crement header='Max respawn items' value={this.props.respawn} name='respawn' handleClick={this.props.handleCrement} min={0} max={this.props.accslots}/>
+                                        <Crement header='Force respawn items' value={this.props.respawn} name='respawn' handleClick={this.props.handleCrement} min={0} max={this.props.accslots}/>
+                                        <Crement header='Force daycare items' value={this.props.daycare} name='daycare' handleClick={this.props.handleCrement} min={0} max={this.props.accslots}/>
                                         <OptimizeButton {...this.props} handleClick={this.props.handleOptimizeGear}/>
+                                </div>
+                                <div className='button-section' key='factorforms'>
+                                        {[...this.props.factors.keys()].map((idx) => (<div key={'factorform' + idx}><FactorForm {...this.props} idx={idx}/></div>))}
                                 </div>
                         </div>
                         <div className="content__container">

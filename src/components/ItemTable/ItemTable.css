@@ -1,15 +1,15 @@
 .item-table {
-        /*display: flex;
-        justify-content: center;
-        align-items: center;
-        */
         width: 50vw;
-        height: 83.5vh;
+        height: 75vh;
         margin: auto;
         overflow-y: auto;
         overflow-x: hidden;
         border: 2px solid black;
         border-radius: 5px;
+        margin: 5px;
+}
+
+.stats-section {
         margin: 5px;
 }
 

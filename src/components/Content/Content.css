@@ -8,6 +8,7 @@
 }
 
 .button-section {
-        min-width: 33vw;
+        width: 50vw;
         display: block;
+        margin: 10px;
 }

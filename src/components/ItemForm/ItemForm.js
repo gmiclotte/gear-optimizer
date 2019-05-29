@@ -12,7 +12,6 @@ export default class ItemForm extends React.Component {
         }
 
         handleSubmit(event) {
-                console.log('Submitting item level change.')
                 this.props.handleEditItem(this.state.value)
                 event.preventDefault();
                 this.props.closeEditModal();
@@ -44,7 +43,7 @@ export default class ItemForm extends React.Component {
                                         }} type="text" value={this.state.value} onChange={this.handleChange}/>
                         </label>
                         <br/>
-                        <input type="submit" value="Update"/>
+                        <input type='submit' value='Update'/>
                         <button onClick={this.props.closeEditModal}>Cancel</button>
                 </form>);
         }

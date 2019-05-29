@@ -108,11 +108,14 @@ export const Stat = {
 }
 
 export const Factors = {
+        NONE: [
+                'None', []
+        ],
         RESPAWN: [
                 'Respawn',
                 [Stat.RESPAWN]
         ],
-        DAYCARE: [
+        DAYCARE_SPEED: [
                 'Daycare',
                 [Stat.DAYCARE_SPEED]
         ],
