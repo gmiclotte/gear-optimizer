@@ -5,6 +5,8 @@ import {default as AppLayout} from '../components/AppLayout/AppLayout';
 
 import {Crement} from '../actions/Crement'
 import {DisableItem} from '../actions/DisableItem';
+import {ToggleEdit} from '../actions/ToggleEdit';
+import {EditItem} from '../actions/EditItem';
 import {EquipItem} from '../actions/EquipItem';
 import {OptimizeGear} from '../actions/OptimizeGear';
 import {UnequipItem} from '../actions/UnequipItem';
@@ -22,11 +24,13 @@ class App extends Component {
         }
 }
 
-const mapStateToProps = state => ({items: state.optimizer.items, equip: state.optimizer.equip, accslots: state.optimizer.accslots, respawn: state.optimizer.respawn});
+const mapStateToProps = state => ({items: state.optimizer.items, equip: state.optimizer.equip, accslots: state.optimizer.accslots, respawn: state.optimizer.respawn, editItem: state.optimizer.editItem});
 
 const mapDispatchToProps = {
         handleCrement: Crement,
         handleDisableItem: DisableItem,
+        handleToggleEdit: ToggleEdit,
+        handleEditItem: EditItem,
         handleEquipItem: EquipItem,
         handleOptimizeGear: OptimizeGear,
         handleUnequipItem: UnequipItem,

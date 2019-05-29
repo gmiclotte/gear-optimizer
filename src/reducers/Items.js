@@ -1,10 +1,19 @@
 import {LOCALSTORAGE_NAME} from '../constants';
 import {ITEMLIST} from '../assets/Items'
-import {Equip, Stat, Slot, EmptySlot, Factors} from '../assets/ItemAux'
+import {
+        Equip,
+        Stat,
+        Slot,
+        EmptySlot,
+        Factors,
+        update_level
+} from '../assets/ItemAux'
 import {clone, compute_optimal} from '../util'
 
 import {CREMENT} from '../actions/Crement'
 import {DISABLE_ITEM} from '../actions/DisableItem';
+import {TOGGLE_EDIT} from '../actions/ToggleEdit';
+import {EDIT_ITEM} from '../actions/EditItem';
 import {EQUIP_ITEM} from '../actions/EquipItem';
 import {OPTIMIZE_GEAR} from '../actions/OptimizeGear';
 import {UNEQUIP_ITEM} from '../actions/UnequipItem';
@@ -50,7 +59,10 @@ const INITIAL_STATE = {
         loadouts: [],
         accslots: accslots,
         respawn: 3,
-        factors: [Factors.HACK, Factors.NGUS]
+        factors: [
+                Factors.HACK, Factors.NGUS
+        ],
+        editItem: [false, undefined, undefined]
 };
 
 //console.log(INITIAL_STATE);
@@ -109,6 +121,44 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 }
                                         }
                                 };
+                        }
+
+                case TOGGLE_EDIT:
+                        {
+                                let item = state.items[action.payload.name];
+                                return {
+                                        ...state,
+                                        editItem: [
+                                                action.payload.on, action.payload.name, item === undefined
+                                                        ? undefined
+                                                        : item.level
+                                        ]
+                                };
+                        }
+
+                case EDIT_ITEM:
+                        {
+                                if (isNaN(action.payload.val)) {
+                                        return state;
+                                }
+                                if (0 > action.payload.val || action.payload.val > 100) {
+                                        return state;
+                                }
+                                let item = state.items[state.editItem[1]];
+                                console.log(item)
+                                update_level(item, action.payload.val);
+                                console.log(item)
+                                return {
+                                        ...state,
+                                        editItem: {
+                                                ...state.editItem,
+                                                2: action.payload.val
+                                        },
+                                        items: {
+                                                ...state.items,
+                                                [item.name]: item
+                                        }
+                                }
                         }
 
                 case EQUIP_ITEM:

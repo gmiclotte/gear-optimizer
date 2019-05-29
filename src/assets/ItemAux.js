@@ -5,12 +5,21 @@ export class Item {
                 this.zone = zone;
                 this.level = level;
                 this.statnames = []
+                this.base = {}
                 this.disable = false;
                 for (let i = 0; i < props.length; i++) {
                         this.statnames.push(props[i][0]);
                         this[props[i][0]] = props[i][1];
+                        this.base[props[i][0]] = props[i][1] / 2;
                 }
         }
+}
+
+export function update_level(item, level) {
+        for (let stat in item.base) {
+                item[stat] = item.base[stat] * (1 + level / 100);
+        }
+        item.level = level;
 }
 
 export class EmptySlot extends Item {

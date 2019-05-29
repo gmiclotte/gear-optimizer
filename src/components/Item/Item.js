@@ -16,7 +16,9 @@ const images = importAll(require.context('../../assets/img/', false, /\.(png|jpe
 export default class Item extends Component {
         static propTypes = {
                 item: PropTypes.shape({name: PropTypes.string.isRequired, level: PropTypes.number.isRequired}),
-                handleClickItem: PropTypes.func.isRequired
+                handleClickItem: PropTypes.func.isRequired,
+                handleRightClickItem: PropTypes.func.isRequired,
+                handleDoubleClickItem: PropTypes.func.isRequired
         };
 
         render() {
@@ -35,6 +37,9 @@ export default class Item extends Component {
                 classNames += item.disable
                         ? ' disable-item '
                         : '';
-                return (<img className={classNames} onClick={() => this.props.handleClickItem(item.name)} onDoubleClick={() => this.props.handleDoubleClickItem(item.name)} data-tip={tt} src={images[item.name]} alt={item.name} key='item'/>);
+                return (<img className={classNames} onClick={() => this.props.handleClickItem(item.name)} onContextMenu={(e) => {
+                        this.props.handleRightClickItem(item.name, true);
+                        e.preventDefault();
+                }} onDoubleClick={() => this.props.handleDoubleClickItem(item.name)} data-tip={tt} src={images[item.name]} alt={item.name} key='item'/>);
         }
 }
