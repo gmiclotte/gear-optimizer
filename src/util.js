@@ -1,8 +1,12 @@
 import {Slot, EmptySlot, Equip} from './assets/ItemAux'
 
 export function compute_optimal(item_names, items, factor, totalslots, maxslots, base_layouts) {
-        let optimal = base_layouts;
-        let optimal_layout_size = 0;
+        let optimal = clone(base_layouts);
+        optimal.map((x) => {
+                x.score = score_product(x, factor);
+                x.item_count = x.items.length;
+        })
+        optimal.sort((a, b) => (b.score - a.score));
         let changed = false;
         for (let layout = 0; layout < base_layouts.length; layout++) {
                 const base_layout = base_layouts[layout];
@@ -37,7 +41,10 @@ export function compute_optimal(item_names, items, factor, totalslots, maxslots,
                         let candidate = knapsack(accs, accslots, layouts[idx], (a) => (1), add_equip, factor);
                         if (score_product(optimal[0], factor) < score_product(candidate[0], factor)) {
                                 optimal = candidate;
-                                optimal_layout_size = layouts[idx].items.length;
+                                changed = true;
+                        }
+                        if (score_product(optimal[0], factor) === score_product(candidate[0], factor)) {
+                                optimal.push(...candidate);
                                 changed = true;
                         }
                 }
@@ -48,12 +55,12 @@ export function compute_optimal(item_names, items, factor, totalslots, maxslots,
         for (let idx in optimal) {
                 let optimal_size = optimal[idx].items.length;
                 let scores = [];
-                for (let jdx = optimal_layout_size; jdx < optimal_size; jdx++) {
+                for (let jdx = optimal[idx].item_count; jdx < optimal_size; jdx++) {
                         let item = optimal[idx].items[jdx];
                         let score = score_product(remove_equip(clone(optimal[idx]), item), factor);
                         scores.push([score, item])
                 }
-                for (let jdx = optimal_layout_size; jdx < optimal_size; jdx++) {
+                for (let jdx = optimal[idx].item_count; jdx < optimal_size; jdx++) {
                         optimal[idx].items.pop();
                 }
                 scores = scores.sort((a, b) => (a[0] - b[0]));
@@ -61,7 +68,36 @@ export function compute_optimal(item_names, items, factor, totalslots, maxslots,
                         optimal[idx].items.push(scores[jdx][1]);
                 }
         }
-        return optimal;
+        optimal.sort((a, b) => (b.score - a.score))
+        let top_score = optimal[0].score;
+        optimal = optimal.filter((x) => (x.score === top_score));
+        // filter duplicates, wherever they may come from
+        let filtered = [optimal[0]];
+        for (let idx = 1; idx < optimal.length; idx++) {
+                let done = false;
+                let l = optimal[idx].items.length;
+                for (let jdx = 0; jdx < filtered.length; jdx++) {
+                        if (filtered[jdx].items.length !== l) {
+                                continue;
+                        }
+                        let tmp = {};
+                        optimal[idx].items.map((item) => {
+                                tmp[item.name] = true;
+                        });
+                        filtered[jdx].items.map((item) => {
+                                tmp[item.name] = true;
+                        });
+                        if (Object.getOwnPropertyNames(tmp).length !== l) {
+                                continue;
+                        }
+                        done = true;
+                        break;
+                }
+                if (!done) {
+                        filtered.push(optimal[idx]);
+                }
+        }
+        return filtered;
 }
 
 export function add_equip(equip, item) {
@@ -109,6 +145,7 @@ export const outfits = (options, base) => {
                 for (let i = 0; i < items.length; i++) {
                         add_equip(equip, items[i]);
                 }
+                equip.item_count = equip.items.length;
                 return equip;
         })
         return tmp;
@@ -214,6 +251,7 @@ export function knapsack(items, capacity, zero_state, weight, add, factor) {
                 }
         }
         matrix_weight[n][capacity].sort((a, b) => (b.score - a.score))
+        //console.log(matrix_weight[n][capacity])
         let top_score = matrix_weight[n][capacity][0].score;
         return matrix_weight[n][capacity].filter((x) => (x.score === top_score));
 }
