@@ -225,7 +225,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                 let base_layout = new Equip();
                                 base_layout = compute_optimal(state.items.names, state.items, [Stat.RESPAWN], state.respawn, base_layout);
                                 for (let idx = 0; idx < state.factors.length; idx++) {
-                                        let factor = state.factors[idx];
+                                        let factor = state.factors[idx][1];
                                         const accslots = state.accslots - base_layout.counts['Accessory'];
                                         base_layout = compute_optimal(state.items.names, state.items, factor, accslots, base_layout);
                                 }

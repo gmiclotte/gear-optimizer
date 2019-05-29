@@ -29,6 +29,21 @@ function group(a, b, g) {
         return a[g][1] !== b[g][1];
 }
 
+class BonusLine extends React.Component {
+        render() {
+                let val = score_product(this.props.equip, this.props.factor[1]);
+                let text = 'x';
+                if (this.props.factor[0] === Factors.RESPAWN[0]) {
+                        val *= 100;
+                        text = '% reduction';
+                }
+                text = this.props.factor[0] + ': ' + format_number(val) + text
+                return (<> {
+                        text
+                }<br/></>);
+        }
+}
+
 export default class EquipTable extends React.Component {
         componentDidUpdate() {
                 ReactTooltip.rebuild();
@@ -68,11 +83,7 @@ export default class EquipTable extends React.Component {
                                 add_equip(equip, item);
                         }
                         buffer.push(<p key='stats'>
-                                Energy NGU: {format_number(score_product(equip, Factors.ENGU))}x<br/>
-                                Magic NGU: {format_number(score_product(equip, Factors.MNGU))}x<br/>
-                                Hack: {format_number(score_product(equip, Factors.HACK))}x<br/>
-                                EM NGU * Hack: {format_number(score_product(equip, Factors.NGUSHACK))}x<br/>
-                                Respawn: {format_number(score_product(equip, Factors.RESPAWN) * 100, 0)}% reduction<br/>
+                                {Object.getOwnPropertyNames(Factors).map((factor) => (<BonusLine equip={equip} factor={Factors[factor]} key={Factors[factor][0]}/>))}
                         </p>);
                 } {
                         sorted = this.props.items.names.filter((name) => (this.props.items[name].level !== 100));

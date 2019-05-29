@@ -10,7 +10,7 @@ const headerPropTypes = {
 const Header = ({className}) => (<div className={className}>
         <div className="header__container">
                 <nav className="navbar">
-                        <span className="header__span">Gear Optimizer</span>
+                        <span className="header__span">NGU Idle Gear Optimizer</span>
                 </nav>
         </div>
 </div>);

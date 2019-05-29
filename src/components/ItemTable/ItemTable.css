@@ -8,12 +8,13 @@
         margin: auto;
         overflow-y: auto;
         overflow-x: hidden;
-        border: 2px solid blue;
+        border: 2px solid black;
         border-radius: 5px;
-        margin: 1px;
+        margin: 5px;
 }
 
 .item-section {
         min-width: 50vw;
-        display: block
+        display: block;
+        margin: 5px;
 }
