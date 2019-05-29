@@ -161,6 +161,16 @@ export const Factors = {
                         Stat.RES3_POWER,
                         Stat.HACK_SPEED
                 ]
+        ],
+        DROP_CHANCE: [
+                'Drop chance',
+                [Stat.DROP_CHANCE]
+        ],
+        WANDOOS: [
+                'Wandoos',
+                [
+                        Stat.ENERGY_CAP, Stat.WANDOOS_SPEED, Stat.MAGIC_CAP, Stat.WANDOOS_SPEED
+                ]
         ]
 }
 

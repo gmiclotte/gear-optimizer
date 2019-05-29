@@ -6,7 +6,7 @@ export default class ItemForm extends React.Component {
         constructor(props) {
                 super(props);
                 this.state = {
-                        value: this.props.factors[this.props.idx][0]
+                        value: Factors[this.props.factors[this.props.idx]][0]
                 };
                 this.handleChange = this.handleChange.bind(this);
                 this.handleSubmit = this.handleSubmit.bind(this);
@@ -14,7 +14,7 @@ export default class ItemForm extends React.Component {
 
         handleChange(event) {
                 this.setState({value: event.target.value});
-                this.props.handleEditFactor(this.props.idx, event.target.value)
+                this.props.handleEditFactor(this.props.idx, Object.getOwnPropertyNames(Factors).filter((factor) => (Factors[factor][0] === event.target.value))[0])
         }
 
         handleSubmit(event) {
@@ -22,7 +22,11 @@ export default class ItemForm extends React.Component {
         }
 
         render() {
-                return (<label>
+                //HACK: this sets the dropdown to the correct value after loading
+                if (this.state.value !== Factors[this.props.factors[this.props.idx]][0]) {
+                        this.state.value = Factors[this.props.factors[this.props.idx]][0];
+                }
+                return (<label key={this.props.factors[this.props.idx]}>
                         {'Priority '}
                         {Number(this.props.idx) + 1}
                         {': '}

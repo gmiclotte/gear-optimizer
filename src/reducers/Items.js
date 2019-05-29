@@ -55,7 +55,7 @@ const INITIAL_STATE = {
         respawn: 1,
         daycare: 1,
         factors: [
-                Factors.RESPAWN, Factors.DAYCARE_SPEED, Factors.HACK, Factors.NGUS, Factors.NGUSHACK
+                'RESPAWN', 'DAYCARE_SPEED', 'HACK', 'NGUS', 'NGUSHACK'
         ],
         editItem: [false, undefined, undefined]
 };
@@ -154,12 +154,11 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
 
                 case EDIT_FACTOR:
                         {
-                                let f = Object.getOwnPropertyNames(Factors).filter((x) => (Factors[x][0] === action.payload.name))[0];
                                 return {
                                         ...state,
                                         factors: state.factors.map((item, index) => {
                                                 if (index === action.payload.idx) {
-                                                        return Factors[f];
+                                                        return action.payload.name;
                                                 }
                                                 return item;
                                         })
@@ -229,12 +228,13 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                         {
                                 let base_layout = [new Equip()];
                                 for (let idx = 0; idx < state.factors.length; idx++) {
-                                        let factor = state.factors[idx][1];
+                                        let factorname = state.factors[idx]
+                                        let factor = Factors[factorname][1];
                                         let maxslots = state.accslots;
-                                        if (state.factors[idx] === Factors.RESPAWN) {
+                                        if (factorname === 'RESPAWN') {
                                                 maxslots = state.respawn;
                                         }
-                                        if (state.factors[idx] === Factors.DAYCARE_SPEED) {
+                                        if (factorname === 'DAYCARE_SPEED') {
                                                 maxslots = state.daycare;
                                         }
                                         base_layout = compute_optimal(state.items.names, state.items, factor, state.accslots, maxslots, base_layout);
@@ -265,12 +265,15 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                 const localStorageState = JSON.parse(lc);
                                 if (localStorageState) {
                                         // TODO: Validate local storage state.
+                                        console.log(localStorageState.respawn, localStorageState.factors)
                                         return {
                                                 ...state,
                                                 items: localStorageState.items,
                                                 equip: localStorageState.equip,
                                                 accslots: localStorageState.accslots,
-                                                respawn: localStorageState.respawn
+                                                respawn: localStorageState.respawn,
+                                                daycare: localStorageState.daycare,
+                                                factors: localStorageState.factors
                                         };
                                 }
                                 return state;
