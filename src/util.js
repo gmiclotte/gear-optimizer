@@ -219,11 +219,6 @@ function knapsack_combine_single(last, list, item, add, factor) {
         last = last.sort((a, b) => (b.score - a.score));
         return pareto(last, factor);
 }
-/* Energy NGU: 7.33e+6x
-Magic NGU: 9.18e+6x
-Hack: 3.44x
-EM NGU * Hack: 2.31e+14x
-Respawn: 20% reduction */
 
 export function knapsack(items, capacity, zero_state, weight, add, factor) {
         let n = items.length;
@@ -251,7 +246,6 @@ export function knapsack(items, capacity, zero_state, weight, add, factor) {
                 }
         }
         matrix_weight[n][capacity].sort((a, b) => (b.score - a.score))
-        //console.log(matrix_weight[n][capacity])
         let top_score = matrix_weight[n][capacity][0].score;
         return matrix_weight[n][capacity].filter((x) => (x.score === top_score));
 }

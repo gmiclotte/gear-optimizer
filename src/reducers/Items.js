@@ -1,7 +1,7 @@
 import {LOCALSTORAGE_NAME} from '../constants';
 import {ITEMLIST} from '../assets/Items'
-import {Equip, Slot, EmptySlot, Factors, update_level} from '../assets/ItemAux'
-import {clone, compute_optimal} from '../util'
+import {ItemContainer, Slot, EmptySlot, update_level, slotlist} from '../assets/ItemAux'
+import {clone} from '../util'
 
 import {CREMENT} from '../actions/Crement'
 import {DISABLE_ITEM} from '../actions/DisableItem';
@@ -10,38 +10,15 @@ import {EDIT_ITEM} from '../actions/EditItem';
 import {EDIT_FACTOR} from '../actions/EditFactor';
 import {EQUIP_ITEM} from '../actions/EquipItem';
 import {OPTIMIZE_GEAR} from '../actions/OptimizeGear';
+import {OPTIMIZING_GEAR} from '../actions/OptimizingGear';
+import {TERMINATE} from '../actions/Terminate'
 import {UNEQUIP_ITEM} from '../actions/UnequipItem';
 import {LOAD_STATE_LOCALSTORAGE} from '../actions/LoadStateLocalStorage';
 import {SAVE_STATE_LOCALSTORAGE} from '../actions/SaveStateLocalStorage';
 
-class ItemContainer {
-        constructor(items) {
-                this.names = [];
-                for (let i = 0; i < items.length; i++) {
-                        this.names.push(items[i][0]);
-                        this[items[i][0]] = items[i][1];
-                }
-        }
-}
-
 let ITEMS = new ItemContainer(ITEMLIST.map((item, index) => {
         return [item.name, item];
 }));
-
-const slotlist = (accslots) => {
-        let list = Object.getOwnPropertyNames(Slot).map((x) => ([
-                Slot[x][0] + 0,
-                new EmptySlot(Slot[x])
-        ])).filter((x) => (x[0] !== Slot.ACCESSORY[0] + 0));
-        let slot = Slot.ACCESSORY
-        for (let jdx = 0; jdx < accslots; jdx++) {
-                list.push([
-                        slot[0] + jdx,
-                        new EmptySlot(slot)
-                ]);
-        }
-        return list;
-}
 
 const accslots = 12;
 
@@ -57,7 +34,10 @@ const INITIAL_STATE = {
         factors: [
                 'RESPAWN', 'DAYCARE_SPEED', 'HACK', 'NGUS', 'NGUSHACK'
         ],
-        editItem: [false, undefined, undefined]
+        editItem: [
+                false, undefined, undefined
+        ],
+        running: false
 };
 
 const ItemsReducer = (state = INITIAL_STATE, action) => {
@@ -226,33 +206,37 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
 
                 case OPTIMIZE_GEAR:
                         {
-                                let base_layout = [new Equip()];
-                                for (let idx = 0; idx < state.factors.length; idx++) {
-                                        let factorname = state.factors[idx]
-                                        let factor = Factors[factorname][1];
-                                        let maxslots = state.accslots;
-                                        if (factorname === 'RESPAWN') {
-                                                maxslots = state.respawn;
-                                        }
-                                        if (factorname === 'DAYCARE_SPEED') {
-                                                maxslots = state.daycare;
-                                        }
-                                        base_layout = compute_optimal(state.items.names, state.items, factor, state.accslots, maxslots, base_layout);
+                                if (!state.running) {
+                                        return state;
                                 }
-                                base_layout = base_layout[Math.floor(Math.random() * base_layout.length)];
-                                let equip = new ItemContainer(slotlist(state.accslots));
-                                let counts = Object.getOwnPropertyNames(Slot).map((x) => (0));
-                                for (let idx in base_layout.items) {
-                                        const item = base_layout.items[idx];
-                                        equip[item.slot[0] + counts[item.slot[1]]] = item;
-                                        counts[item.slot[1]]++;
-                                }
+                                console.log('worker finished')
                                 return {
                                         ...state,
-                                        equip: equip
+                                        equip: action.payload.equip,
+                                        running: false
                                 };
                         }
 
+                case OPTIMIZING_GEAR:
+                        {
+                                if (state.running) {
+                                        return state;
+                                }
+                                console.log('worker running');
+                                return {
+                                        ...state,
+                                        running: true
+                                };
+                        }
+
+                case TERMINATE:
+                        {
+                                console.log('terminated worker')
+                                return {
+                                        ...state,
+                                        running: false
+                                }
+                        }
                 case SAVE_STATE_LOCALSTORAGE:
                         {
                                 window.localStorage.setItem(LOCALSTORAGE_NAME, JSON.stringify(action.payload.state));
@@ -265,7 +249,6 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                 const localStorageState = JSON.parse(lc);
                                 if (localStorageState) {
                                         // TODO: Validate local storage state.
-                                        console.log(localStorageState.respawn, localStorageState.factors)
                                         return {
                                                 ...state,
                                                 items: localStorageState.items,

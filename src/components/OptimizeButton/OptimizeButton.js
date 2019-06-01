@@ -3,12 +3,20 @@ import PropTypes from 'prop-types';
 
 export default class OptimizeButton extends Component {
         static propTypes = {
-                handleClick: PropTypes.func.isRequired
+                running: PropTypes.bool.isRequired,
+                abort: PropTypes.func.isRequired,
+                optimize: PropTypes.func.isRequired
         };
 
         render() {
-                return (<button onClick={() => this.props.handleClick()}>
-                        Optimize Gear
-                </button>);
+                if (this.props.running) {
+                        return (<button onClick={() => this.props.abort()}>
+                                Abort
+                        </button>);
+                } else {
+                        return (<button onClick={() => this.props.optimize()}>
+                                Optimize Gear
+                        </button>);
+                }
         }
 }

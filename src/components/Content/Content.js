@@ -47,7 +47,7 @@ class Content extends Component {
                                         <Crement header='Accessory slots' value={this.props.accslots} name='accslots' handleClick={this.props.handleCrement} min={0} max={100}/>
                                         <Crement header='Force respawn items' value={this.props.respawn} name='respawn' handleClick={this.props.handleCrement} min={0} max={this.props.accslots}/>
                                         <Crement header='Force daycare items' value={this.props.daycare} name='daycare' handleClick={this.props.handleCrement} min={0} max={this.props.accslots}/>
-                                        <OptimizeButton {...this.props} handleClick={this.props.handleOptimizeGear}/>
+                                        <OptimizeButton running={this.props.running} abort={this.props.handleTerminate} optimize={this.props.handleOptimizeGear}/>
                                 </div>
                                 <div className='button-section' key='factorforms'>
                                         {[...this.props.factors.keys()].map((idx) => (<div key={'factorform' + idx}><FactorForm {...this.props} idx={idx}/></div>))}
