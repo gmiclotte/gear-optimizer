@@ -1,6 +1,13 @@
 import {LOCALSTORAGE_NAME} from '../constants';
 import {ITEMLIST} from '../assets/Items'
-import {ItemContainer, Slot, EmptySlot, update_level, slotlist} from '../assets/ItemAux'
+import {
+        ItemContainer,
+        Slot,
+        EmptySlot,
+        update_level,
+        slotlist,
+        SetName
+} from '../assets/ItemAux'
 import {clone} from '../util'
 
 import {CREMENT} from '../actions/Crement'
@@ -9,6 +16,7 @@ import {TOGGLE_EDIT} from '../actions/ToggleEdit';
 import {EDIT_ITEM} from '../actions/EditItem';
 import {EDIT_FACTOR} from '../actions/EditFactor';
 import {EQUIP_ITEM} from '../actions/EquipItem';
+import {HIDE_ZONE} from '../actions/HideZone';
 import {OPTIMIZE_GEAR} from '../actions/OptimizeGear';
 import {OPTIMIZING_GEAR} from '../actions/OptimizingGear';
 import {TERMINATE} from '../actions/Terminate'
@@ -24,6 +32,12 @@ const accslots = 12;
 
 const EQUIP = new ItemContainer(slotlist(accslots));
 
+const maxZone = 28;
+const zoneDict = {};
+Object.getOwnPropertyNames(SetName).map(x => {
+        zoneDict[SetName[x][1]] = 0 < SetName[x][1] && SetName[x][1] < maxZone;
+});
+
 const INITIAL_STATE = {
         items: ITEMS,
         equip: EQUIP,
@@ -37,7 +51,9 @@ const INITIAL_STATE = {
         editItem: [
                 false, undefined, undefined
         ],
-        running: false
+        running: false,
+        zone: maxZone,
+        hidden: zoneDict
 };
 
 const ItemsReducer = (state = INITIAL_STATE, action) => {
@@ -182,6 +198,17 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                 };
                         }
 
+                case HIDE_ZONE:
+                        {
+                                return {
+                                        ...state,
+                                        hidden: {
+                                                ...state.hidden,
+                                                [action.payload.idx]: !state.hidden[action.payload.idx]
+                                        }
+                                }
+                        }
+
                 case UNEQUIP_ITEM:
                         {
                                 if (action.payload.name.indexOf('Empty ') === 0 && action.payload.name.indexOf(' Slot') > 0) {
@@ -256,7 +283,8 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 accslots: localStorageState.accslots,
                                                 respawn: localStorageState.respawn,
                                                 daycare: localStorageState.daycare,
-                                                factors: localStorageState.factors
+                                                factors: localStorageState.factors,
+                                                zone: localStorageState.zone
                                         };
                                 }
                                 return state;

@@ -38,8 +38,8 @@ export default class Item extends Component {
                         ? ' disable-item '
                         : '';
                 return (<img className={classNames} onClick={() => this.props.handleClickItem(item.name)} onContextMenu={(e) => {
-                        this.props.handleRightClickItem(item.name, true);
-                        e.preventDefault();
-                }} onDoubleClick={() => this.props.handleDoubleClickItem(item.name)} data-tip={tt} src={images[item.name]} alt={item.name} key='item'/>);
+                                this.props.handleRightClickItem(item.name, true);
+                                e.preventDefault();
+                        }} onDoubleClick={() => this.props.handleDoubleClickItem(item.name)} data-tip={tt} src={images[item.name]} alt={item.name} key='item'/>);
         }
 }

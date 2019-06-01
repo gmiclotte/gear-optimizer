@@ -1,6 +1,6 @@
 import {Slot, EmptySlot, Equip} from './assets/ItemAux'
 
-export function compute_optimal(item_names, items, factor, totalslots, maxslots, base_layouts) {
+export function compute_optimal(item_names, items, factor, totalslots, maxslots, base_layouts, zone) {
         let optimal = clone(base_layouts);
         optimal.map((x) => {
                 x.score = score_product(x, factor);
@@ -23,7 +23,7 @@ export function compute_optimal(item_names, items, factor, totalslots, maxslots,
                                 return false;
                         }
                         return true;
-                }).map((x) => (gear_slot(item_names, items, Slot[x], base_layout)));
+                }).map((x) => (gear_slot(item_names, items, Slot[x], base_layout, zone)));
                 let s = [options.map((x) => (x.length)).reduce((a, b) => (a * b), 1)];
                 let remaining = options.map((x) => (pareto(x, factor)));
                 s.push(remaining.map((x) => (x.length)).reduce((a, b) => (a * b), 1));
@@ -31,10 +31,11 @@ export function compute_optimal(item_names, items, factor, totalslots, maxslots,
                 layouts = pareto(layouts, factor);
                 s.push(layouts.length);
                 // find all possible accessories
-                let accs = gear_slot(item_names, items, Slot.ACCESSORY, base_layout);
+                let accs = gear_slot(item_names, items, Slot.ACCESSORY, base_layout, zone);
                 s.push(accs.length);
                 accs = pareto(accs, factor, accslots);
                 s.push(accs.length);
+                accs.sort((a, b) => (score_product(b, factor, true) - score_product(a, factor, true)));
                 console.log('Processing ' + s[2] + ' out of ' + s[1] + ' out of ' + s[0] + ' gear layouts and ' + s[4] + ' out of ' + s[3] + ' accessories.');
                 for (let idx in layouts) {
                         console.log(s[4]);
@@ -151,19 +152,27 @@ export const outfits = (options, base) => {
         return tmp;
 };
 
-export function score_product(equip, stats) {
+export function score_product(equip, stats, add_one = false) {
         let score = 1;
         for (let idx in stats) {
                 let stat = stats[idx];
-                score *= equip[stat] / 100;
+                if (equip[stat] !== undefined) {
+                        score *= (
+                                add_one
+                                ? 1
+                                : 0) + equip[stat] / 100;
+                }
         }
         return score;
 }
 
-export function gear_slot(names, list, type, equip) {
+export function gear_slot(names, list, type, equip, zone) {
         const equiped = equip.items.filter((item) => (item.slot[0] === type[0])).map((x) => (x.name));
         return names.filter((name) => {
                 if (list[name].empty) {
+                        return false;
+                }
+                if (list[name].zone[1] > zone) {
                         return false;
                 }
                 return list[name].slot[0] === type[0];

@@ -200,8 +200,8 @@ export const Factors = {
 }
 
 export const SetName = {
-        HEART: [
-                'Sellout Shop', -3
+        MISC: [
+                'Miscellaneous', -3
         ],
         FOREST_PENDANT: [
                 'Forest Pendant', -2

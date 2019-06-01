@@ -9,13 +9,12 @@ export default class Crement extends Component {
 
         render() {
                 return (<div>
-                        {this.props.header + ': ' + this.props.value + ' '}
                         <button onClick={() => this.props.handleClick(this.props.name, -1, this.props.min, this.props.max)}>
                                 -
                         </button>
                         <button onClick={() => this.props.handleClick(this.props.name, 1, this.props.min, this.props.max)}>
                                 +
-                        </button>
+                        </button>{' ' + this.props.header + ': ' + this.props.value + ' '}
                 </div>);
         }
 }

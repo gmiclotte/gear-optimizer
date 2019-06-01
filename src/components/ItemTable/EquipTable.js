@@ -86,8 +86,8 @@ export default class EquipTable extends React.Component {
                                 {
                                         Object.getOwnPropertyNames(Factors).map((factor) => (
                                                 factor === 'NONE'
-                                                        ? <div key={factor}/>
-                                                        : <BonusLine equip={equip} factor={Factors[factor]} key={factor}/>))
+                                                ? <div key={factor}/>
+                                                : <BonusLine equip={equip} factor={Factors[factor]} key={factor}/>))
                                 }
                         </div>);
                 } {

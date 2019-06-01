@@ -25,7 +25,7 @@ function optimize(e) {
                 if (factorname === 'DAYCARE_SPEED') {
                         maxslots = state.daycare;
                 }
-                base_layout = compute_optimal(state.items.names, state.items, factor, state.accslots, maxslots, base_layout);
+                base_layout = compute_optimal(state.items.names, state.items, factor, state.accslots, maxslots, base_layout, state.zone);
         }
         base_layout = base_layout[Math.floor(Math.random() * base_layout.length)];
         let equip = new ItemContainer(slotlist(state.accslots));

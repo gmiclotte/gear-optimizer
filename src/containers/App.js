@@ -9,6 +9,7 @@ import {ToggleEdit} from '../actions/ToggleEdit';
 import {EditItem} from '../actions/EditItem';
 import {EditFactor} from '../actions/EditFactor';
 import {EquipItem} from '../actions/EquipItem';
+import {HideZone} from '../actions/HideZone'
 import {OptimizeGearAsync} from '../actions/OptimizeGear';
 import {Terminate} from '../actions/Terminate'
 import {UnequipItem} from '../actions/UnequipItem';
@@ -34,7 +35,9 @@ const mapStateToProps = state => ({
         daycare: state.optimizer.daycare,
         editItem: state.optimizer.editItem,
         factors: state.optimizer.factors,
-        running: state.optimizer.running
+        running: state.optimizer.running,
+        zone: state.optimizer.zone,
+        hidden: state.optimizer.hidden
 });
 
 const mapDispatchToProps = {
@@ -44,6 +47,7 @@ const mapDispatchToProps = {
         handleEditItem: EditItem,
         handleEditFactor: EditFactor,
         handleEquipItem: EquipItem,
+        handleHideZone: HideZone,
         handleOptimizeGear: OptimizeGearAsync,
         handleTerminate: Terminate,
         handleUnequipItem: UnequipItem,

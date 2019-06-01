@@ -9,6 +9,8 @@ import {default as OptimizeButton} from '../OptimizeButton/OptimizeButton';
 import {default as FactorForm} from '../FactorForm/FactorForm'
 import {default as ItemForm} from '../ItemForm/ItemForm'
 
+import {SetName} from '../../assets/ItemAux'
+
 import './Content.css';
 
 function do_nothing() {}
@@ -41,12 +43,20 @@ class Content extends Component {
         closeEditModal = () => (this.props.handleToggleEdit(undefined, false));
 
         render() {
+                let maxzone = 1;
+                const zone = SetName[Object.getOwnPropertyNames(SetName).filter(x => {
+                                maxzone = SetName[x][1] > maxzone
+                                        ? SetName[x][1]
+                                        : maxzone;
+                                return this.props.zone === SetName[x][1];
+                        })[0]][0];
                 return (<div className={this.props.className}>
                         <div className="content__container">
                                 <div className='button-section' key='slots'>
+                                        <Crement header='Highest zone' value={zone} name='zone' handleClick={this.props.handleCrement} min={1} max={maxzone}/>
                                         <Crement header='Accessory slots' value={this.props.accslots} name='accslots' handleClick={this.props.handleCrement} min={0} max={100}/>
-                                        <Crement header='Force respawn items' value={this.props.respawn} name='respawn' handleClick={this.props.handleCrement} min={0} max={this.props.accslots}/>
-                                        <Crement header='Force daycare items' value={this.props.daycare} name='daycare' handleClick={this.props.handleCrement} min={0} max={this.props.accslots}/>
+                                        <Crement header='Max respawn items' value={this.props.respawn} name='respawn' handleClick={this.props.handleCrement} min={0} max={this.props.accslots}/>
+                                        <Crement header='Max daycare items' value={this.props.daycare} name='daycare' handleClick={this.props.handleCrement} min={0} max={this.props.accslots}/>
                                         <OptimizeButton running={this.props.running} abort={this.props.handleTerminate} optimize={this.props.handleOptimizeGear}/>
                                 </div>
                                 <div className='button-section' key='factorforms'>
