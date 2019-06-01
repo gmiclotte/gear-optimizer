@@ -9,7 +9,8 @@ import {ToggleEdit} from '../actions/ToggleEdit';
 import {EditItem} from '../actions/EditItem';
 import {EditFactor} from '../actions/EditFactor';
 import {EquipItem} from '../actions/EquipItem';
-import {OptimizeGear} from '../actions/OptimizeGear';
+import {OptimizeGearAsync} from '../actions/OptimizeGear';
+import {Terminate} from '../actions/Terminate'
 import {UnequipItem} from '../actions/UnequipItem';
 import {LoadStateLocalStorage} from '../actions/LoadStateLocalStorage';
 import {SaveStateLocalStorage} from '../actions/SaveStateLocalStorage';
@@ -32,7 +33,8 @@ const mapStateToProps = state => ({
         respawn: state.optimizer.respawn,
         daycare: state.optimizer.daycare,
         editItem: state.optimizer.editItem,
-        factors: state.optimizer.factors
+        factors: state.optimizer.factors,
+        running: state.optimizer.running
 });
 
 const mapDispatchToProps = {
@@ -42,7 +44,8 @@ const mapDispatchToProps = {
         handleEditItem: EditItem,
         handleEditFactor: EditFactor,
         handleEquipItem: EquipItem,
-        handleOptimizeGear: OptimizeGear,
+        handleOptimizeGear: OptimizeGearAsync,
+        handleTerminate: Terminate,
         handleUnequipItem: UnequipItem,
         handleSaveStateLocalStorage: SaveStateLocalStorage,
         handleLoadStateLocalStorage: LoadStateLocalStorage

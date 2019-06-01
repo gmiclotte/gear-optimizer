@@ -52,6 +52,7 @@
     "react-redux": "^7.0.3",
     "react-tooltip": "^3.10.0",
     "redux": "^4.0.1",
+    "redux-saga": "^1.0.2",
     "resolve": "1.10.0",
     "sass-loader": "7.1.0",
     "semver": "6.0.0",
@@ -136,5 +137,8 @@
     "presets": [
       "react-app"
     ]
+  },
+  "devDependencies": {
+    "worker-loader": "^2.0.0"
   }
 }

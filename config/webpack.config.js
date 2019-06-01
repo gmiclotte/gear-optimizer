@@ -174,6 +174,8 @@ module.exports = function(webpackEnv) {
               .replace(/\\/g, '/')
         : isEnvDevelopment &&
           (info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
+      // https://github.com/webpack/webpack/issues/6642
+      globalObject: 'this',
     },
     optimization: {
       minimize: isEnvProduction,

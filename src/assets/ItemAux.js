@@ -54,6 +54,31 @@ export class Equip extends Item {
         }
 }
 
+export class ItemContainer {
+        constructor(items) {
+                this.names = [];
+                for (let i = 0; i < items.length; i++) {
+                        this.names.push(items[i][0]);
+                        this[items[i][0]] = items[i][1];
+                }
+        }
+}
+
+export const slotlist = (accslots) => {
+        let list = Object.getOwnPropertyNames(Slot).map((x) => ([
+                Slot[x][0] + 0,
+                new EmptySlot(Slot[x])
+        ])).filter((x) => (x[0] !== Slot.ACCESSORY[0] + 0));
+        let slot = Slot.ACCESSORY
+        for (let jdx = 0; jdx < accslots; jdx++) {
+                list.push([
+                        slot[0] + jdx,
+                        new EmptySlot(slot)
+                ]);
+        }
+        return list;
+}
+
 export const Slot = {
         WEAPON: [
                 'Weapon', 0
