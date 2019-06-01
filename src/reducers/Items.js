@@ -284,7 +284,8 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 respawn: localStorageState.respawn,
                                                 daycare: localStorageState.daycare,
                                                 factors: localStorageState.factors,
-                                                zone: localStorageState.zone
+                                                zone: localStorageState.zone,
+                                                hidden: localStorageState.hidden
                                         };
                                 }
                                 return state;
