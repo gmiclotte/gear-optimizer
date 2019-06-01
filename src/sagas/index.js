@@ -5,7 +5,7 @@ import {OPTIMIZING_GEAR} from '../actions/OptimizingGear'
 import {TERMINATE_ASYNC, TERMINATE} from '../actions/Terminate'
 
 /* eslint-disable-next-line */
-import Worker from 'worker-loader!./optimize.worker'
+import Worker from './optimize.worker'
 let worker;
 
 const doOptimize = (state, worker) => new Promise(async function(resolve, reject) {

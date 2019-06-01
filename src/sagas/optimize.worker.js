@@ -1,5 +1,3 @@
-/* eslint-disable-next-line no-restricted globals */
-
 import {
         ItemContainer,
         Equip,
@@ -11,7 +9,10 @@ import {
 } from '../assets/ItemAux'
 import {clone, compute_optimal} from '../util'
 
-self.onmessage = function(e) {
+// eslint-disable-next-line
+self.addEventListener("message", optimize);
+
+function optimize(e) {
         let state = e.data.state;
         let base_layout = [new Equip()];
         for (let idx = 0; idx < state.factors.length; idx++) {
@@ -34,6 +35,6 @@ self.onmessage = function(e) {
                 equip[item.slot[0] + counts[item.slot[1]]] = item;
                 counts[item.slot[1]]++;
         }
-        self.postMessage({equip: equip});
-        self.close();
+        this.postMessage({equip: equip});
+        this.close();
 }
