@@ -30,16 +30,50 @@ function group(a, b, g) {
 }
 
 class BonusLine extends React.Component {
+        diffstyle(old, val) {
+                let col = 'black';
+                if (old < val) {
+                        col = 'green';
+                } else if (old > val) {
+                        col = 'red';
+                }
+                let diffstyle = {
+                        color: col
+                };
+                return diffstyle;
+        }
         render() {
                 let val = score_product(this.props.equip, this.props.factor[1]);
+                let old = score_product(this.props.lastequip, this.props.factor[1]);
                 let text = 'x';
+                let diff_val;
                 if (this.props.factor[0] === Factors.RESPAWN[0]) {
                         val *= 100;
+                        old *= 100;
+                        diff_val = val - old;
                         text = '% reduction';
+                } else {
+                        diff_val = 100 * (val / old - 1);
                 }
-                text = this.props.factor[0] + ': ' + format_number(val) + text
+                let diffstyle = this.diffstyle(old, val);
+                text = this.props.factor[0] + ': ' + format_number(val) + text + ' (';
+                let diff = <span style={diffstyle}>
+                        {
+                                (
+                                        diff_val >= 0
+                                        ? '+'
+                                        : '') + format_number(diff_val) + (
+                                        this.props.factor[0] === Factors.RESPAWN[0]
+                                        ? 'pp'
+                                        : '%')
+                        }
+                </span>;
                 return (<> {
                         text
+                } {
+                        diff
+                } {
+                        ')'
                 }<br/></>);
         }
 }
@@ -49,14 +83,23 @@ export default class EquipTable extends React.Component {
                 ReactTooltip.rebuild();
         }
 
+        compute_equip(state) {
+                let equip = new Equip();
+                for (let idx = 0; idx < state.names.length; idx++) {
+                        const name = state.names[idx];
+                        const item = state[name];
+                        add_equip(equip, item);
+                }
+                return equip;
+        }
+
         render() {
                 //TODO: sorting on every change seems very inefficient
                 let buffer = [];
-                let sorted;
                 let class_idx = 0;
                 {
                         let compare = compare_factory(this.props.group)(this.props[this.props.type]);
-                        sorted = [...this.props[this.props.type].names].sort(compare);
+                        let sorted = [...this.props.equip.names].sort(compare);
                         let localbuffer = [];
                         let last = new EmptySlot();
                         for (let idx = 0; idx < sorted.length; idx++) {
@@ -76,22 +119,18 @@ export default class EquipTable extends React.Component {
                                 <span>Accessories<br/></span>{localbuffer}
                         </div>);
                 } {
-                        let equip = new Equip();
-                        for (let idx = 0; idx < sorted.length; idx++) {
-                                const name = sorted[idx];
-                                const item = this.props[this.props.type][name];
-                                add_equip(equip, item);
-                        }
+                        let equip = this.compute_equip(this.props.equip)
+                        let lastequip = this.compute_equip(this.props.lastequip);
                         buffer.push(<div className='stats-section' key='stats'>
                                 {
                                         Object.getOwnPropertyNames(Factors).map((factor) => (
                                                 factor === 'NONE'
                                                 ? <div key={factor}/>
-                                                : <BonusLine equip={equip} factor={Factors[factor]} key={factor}/>))
+                                                : <BonusLine equip={equip} lastequip={lastequip} factor={Factors[factor]} key={factor}/>))
                                 }
                         </div>);
                 } {
-                        sorted = this.props.items.names.filter((name) => (this.props.items[name].level !== 100));
+                        let sorted = this.props.items.names.filter((name) => (this.props.items[name].level !== 100));
                         let localbuffer = [];
                         for (let idx = 0; idx < sorted.length; idx++) {
                                 let name = sorted[idx];
@@ -104,7 +143,7 @@ export default class EquipTable extends React.Component {
                                 </div>);
                         }
                 } {
-                        sorted = this.props.items.names.filter((name) => (this.props.items[name].disable));
+                        let sorted = this.props.items.names.filter((name) => (this.props.items[name].disable));
                         let localbuffer = [];
                         for (let idx = 0; idx < sorted.length; idx++) {
                                 let name = sorted[idx];

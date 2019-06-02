@@ -54,6 +54,9 @@ class Content extends Component {
                                         <div><Crement header='Highest zone' value={zone} name='zone' handleClick={this.props.handleCrement} min={1} max={maxzone}/></div>
                                         <div><Crement header='Accessory slots' value={this.props.accslots} name='accslots' handleClick={this.props.handleCrement} min={0} max={100}/></div>
                                         <OptimizeButton running={this.props.running} abort={this.props.handleTerminate} optimize={this.props.handleOptimizeGear}/>
+                                        <button onClick={() => this.props.handleUndo()}>
+                                                Load previous
+                                        </button>
                                 </div>
                                 <div className='button-section' key='factorforms'>
                                         {[...this.props.factors.keys()].map((idx) => (<div key={'factorform' + idx}><FactorForm {...this.props} idx={idx}/></div>))}

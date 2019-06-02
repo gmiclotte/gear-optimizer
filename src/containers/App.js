@@ -12,6 +12,7 @@ import {EquipItem} from '../actions/EquipItem';
 import {HideZone} from '../actions/HideZone'
 import {OptimizeGearAsync} from '../actions/OptimizeGear';
 import {Terminate} from '../actions/Terminate'
+import {Undo} from '../actions/Undo'
 import {UnequipItem} from '../actions/UnequipItem';
 import {LoadStateLocalStorage} from '../actions/LoadStateLocalStorage';
 import {SaveStateLocalStorage} from '../actions/SaveStateLocalStorage';
@@ -30,6 +31,7 @@ class App extends Component {
 const mapStateToProps = state => ({
         items: state.optimizer.items,
         equip: state.optimizer.equip,
+        lastequip: state.optimizer.lastequip,
         accslots: state.optimizer.accslots,
         editItem: state.optimizer.editItem,
         factors: state.optimizer.factors,
@@ -49,6 +51,7 @@ const mapDispatchToProps = {
         handleHideZone: HideZone,
         handleOptimizeGear: OptimizeGearAsync,
         handleTerminate: Terminate,
+        handleUndo: Undo,
         handleUnequipItem: UnequipItem,
         handleSaveStateLocalStorage: SaveStateLocalStorage,
         handleLoadStateLocalStorage: LoadStateLocalStorage

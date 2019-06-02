@@ -20,6 +20,7 @@ import {HIDE_ZONE} from '../actions/HideZone';
 import {OPTIMIZE_GEAR} from '../actions/OptimizeGear';
 import {OPTIMIZING_GEAR} from '../actions/OptimizingGear';
 import {TERMINATE} from '../actions/Terminate'
+import {UNDO} from '../actions/Undo'
 import {UNEQUIP_ITEM} from '../actions/UnequipItem';
 import {LOAD_STATE_LOCALSTORAGE} from '../actions/LoadStateLocalStorage';
 import {SAVE_STATE_LOCALSTORAGE} from '../actions/SaveStateLocalStorage';
@@ -41,6 +42,7 @@ Object.getOwnPropertyNames(SetName).map(x => {
 const INITIAL_STATE = {
         items: ITEMS,
         equip: EQUIP,
+        lastequip: EQUIP,
         loadouts: [],
         accslots: accslots,
         factors: [
@@ -77,6 +79,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                         ...state,
                                                         [action.payload.name]: state[action.payload.name] + action.payload.val,
                                                         equip: equip,
+                                                        lastequip: state.equip,
                                                         maxslots: state.maxslots.map((val, index) => {
                                                                 if (val === state[action.payload.name]) {
                                                                         return val + action.payload.val;
@@ -222,7 +225,8 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                         ...item,
                                                         disable: false
                                                 }
-                                        }
+                                        },
+                                        lastequip: state.equip
                                 };
                         }
 
@@ -234,6 +238,14 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 ...state.hidden,
                                                 [action.payload.idx]: !state.hidden[action.payload.idx]
                                         }
+                                }
+                        }
+                case UNDO:
+                        {
+                                return {
+                                        ...state,
+                                        equip: state.lastequip,
+                                        lastequip: state.equip
                                 }
                         }
 
@@ -255,7 +267,8 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         equip: {
                                                 ...state.equip,
                                                 [slot + idx]: new EmptySlot(item.slot)
-                                        }
+                                        },
+                                        lastequip: state.equip
                                 };
                         }
 
@@ -268,6 +281,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                 return {
                                         ...state,
                                         equip: action.payload.equip,
+                                        lastequip: state.equip,
                                         running: false
                                 };
                         }
@@ -308,6 +322,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 ...state,
                                                 items: localStorageState.items,
                                                 equip: localStorageState.equip,
+                                                lastequip: localStorageState.lastequip,
                                                 accslots: localStorageState.accslots,
                                                 factors: localStorageState.factors,
                                                 maxslots: localStorageState.maxslots,
