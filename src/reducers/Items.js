@@ -47,7 +47,7 @@ const INITIAL_STATE = {
                 'RESPAWN', 'DAYCARE_SPEED', 'HACK', 'NGUS', 'NONE'
         ],
         maxslots: [
-                3, 1, 0, 0, accslots
+                3, 1, 6, accslots, accslots
         ],
         editItem: [
                 false, undefined, undefined
