@@ -116,13 +116,12 @@ export default class EquipTable extends React.Component {
                                 last = item;
                         }
                         buffer.push(<div className='item-section' key={class_idx++}>
-                                <span>Accessories<br/></span>{localbuffer}
+                                <span>{'Accessories'}<br/></span>{localbuffer}
                         </div>);
                 } {
                         let equip = this.compute_equip(this.props.equip)
                         let savedequip = this.compute_equip(this.props.savedequip[this.props.savedidx]);
-                        buffer.push(<div className='stats-section' key='stats'>
-                                {
+                        buffer.push(<div className='item-section' key='stats'>{'Gear stats (change w.r.t. save slot)'}<br/><br/> {
                                         Object.getOwnPropertyNames(Factors).map((factor) => (
                                                 factor === 'NONE'
                                                 ? <div key={factor}/>
