@@ -52,9 +52,23 @@ class Content extends Component {
                                         <div><Crement header='Highest zone' value={zone} name='zone' handleClick={this.props.handleCrement} min={1} max={maxzone}/></div>
                                         <div><Crement header='Accessory slots' value={this.props.accslots} name='accslots' handleClick={this.props.handleCrement} min={0} max={100}/></div>
                                         <OptimizeButton running={this.props.running} abort={this.props.handleTerminate} optimize={this.props.handleOptimizeGear}/>
-                                        <button onClick={() => this.props.handleUndo()}>
-                                                Load previous
+                                        <button onClick={this.props.handleUndo}>
+                                                {'Load previous'}
                                         </button>
+                                        <div>
+                                                <Crement header={this.props.savedidx === this.props.maxsavedidx
+                                                                ? 'Empty save slot'
+                                                                : 'Save slot'} value={this.props.savedidx} name='savedidx' handleClick={this.props.handleCrement} min={0} max={this.props.maxsavedidx}/>
+                                                <button onClick={this.props.handleSaveSlot}>
+                                                        {'Save'}
+                                                </button>
+                                                <button onClick={this.props.handleLoadSlot}>
+                                                        {'Load'}
+                                                </button>
+                                                <button onClick={this.props.handleDeleteSlot}>
+                                                        {'Delete'}
+                                                </button>
+                                        </div>
                                 </div>
                                 <div className='button-section' key='factorforms'>
                                         {[...this.props.factors.keys()].map((idx) => (<div key={'factorform' + idx}><FactorForm {...this.props} idx={idx}/></div>))}

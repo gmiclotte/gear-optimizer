@@ -14,6 +14,9 @@ import {OptimizeGearAsync} from '../actions/OptimizeGear';
 import {Terminate} from '../actions/Terminate'
 import {Undo} from '../actions/Undo'
 import {UnequipItem} from '../actions/UnequipItem';
+import {DeleteSlot} from '../actions/DeleteSlot'
+import {LoadSlot} from '../actions/LoadSlot'
+import {SaveSlot} from '../actions/SaveSlot'
 import {LoadStateLocalStorage} from '../actions/LoadStateLocalStorage';
 import {SaveStateLocalStorage} from '../actions/SaveStateLocalStorage';
 
@@ -32,6 +35,9 @@ const mapStateToProps = state => ({
         items: state.optimizer.items,
         equip: state.optimizer.equip,
         lastequip: state.optimizer.lastequip,
+        savedequip: state.optimizer.savedequip,
+        savedidx: state.optimizer.savedidx,
+        maxsavedidx: state.optimizer.maxsavedidx,
         accslots: state.optimizer.accslots,
         editItem: state.optimizer.editItem,
         factors: state.optimizer.factors,
@@ -53,6 +59,9 @@ const mapDispatchToProps = {
         handleTerminate: Terminate,
         handleUndo: Undo,
         handleUnequipItem: UnequipItem,
+        handleDeleteSlot: DeleteSlot,
+        handleLoadSlot: LoadSlot,
+        handleSaveSlot: SaveSlot,
         handleSaveStateLocalStorage: SaveStateLocalStorage,
         handleLoadStateLocalStorage: LoadStateLocalStorage
 };

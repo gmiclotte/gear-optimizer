@@ -22,6 +22,9 @@ import {OPTIMIZING_GEAR} from '../actions/OptimizingGear';
 import {TERMINATE} from '../actions/Terminate'
 import {UNDO} from '../actions/Undo'
 import {UNEQUIP_ITEM} from '../actions/UnequipItem';
+import {DELETE_SLOT} from '../actions/DeleteSlot'
+import {LOAD_SLOT} from '../actions/LoadSlot'
+import {SAVE_SLOT} from '../actions/SaveSlot'
 import {LOAD_STATE_LOCALSTORAGE} from '../actions/LoadStateLocalStorage';
 import {SAVE_STATE_LOCALSTORAGE} from '../actions/SaveStateLocalStorage';
 
@@ -43,6 +46,9 @@ const INITIAL_STATE = {
         items: ITEMS,
         equip: EQUIP,
         lastequip: EQUIP,
+        savedequip: [EQUIP],
+        savedidx: 0,
+        maxsavedidx: 0,
         loadouts: [],
         accslots: accslots,
         factors: [
@@ -306,6 +312,66 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         running: false
                                 }
                         }
+
+                case SAVE_SLOT:
+                        {
+                                let saved = state.savedequip.map((equip, index) => {
+                                        if (index === state.savedidx) {
+                                                return {
+                                                        ...state.equip
+                                                };
+                                        }
+                                        return equip;
+                                })
+                                if (state.savedidx === state.maxsavedidx) {
+                                        if (state.savedidx + 1 >= saved.length) {
+                                                saved.push(EQUIP)
+                                        } else {
+                                                saved[state.savedidx + 1] = EQUIP;
+                                        }
+                                }
+                                while (saved.length > state.savedmaxidx + 2) {
+                                        saved.pop();
+                                }
+                                return {
+                                        ...state,
+                                        savedequip: saved,
+                                        maxsavedidx: state.maxsavedidx + (state.savedidx === state.maxsavedidx)
+                                }
+                        }
+
+                case LOAD_SLOT:
+                        {
+                                return {
+                                        ...state,
+                                        equip: state.savedequip[state.savedidx]
+                                }
+                        }
+
+                case DELETE_SLOT:
+                        {
+                                if (state.savedidx === state.savedequip.length - 1) {
+                                        return state;
+                                }
+                                return {
+                                        ...state,
+                                        savedequip: state.savedequip.map((equip, index) => {
+                                                if (index === state.maxsavedidx) {
+                                                        return undefined;
+                                                }
+                                                if (index >= state.savedidx) {
+                                                        return state.savedequip[index + 1];
+                                                }
+                                                return equip;
+                                        }),
+                                        savedidx: state.savedidx - (
+                                                state.savedidx === state.maxsavedidx
+                                                ? 1
+                                                : 0),
+                                        maxsavedidx: state.maxsavedidx - 1
+                                }
+                        }
+
                 case SAVE_STATE_LOCALSTORAGE:
                         {
                                 window.localStorage.setItem(LOCALSTORAGE_NAME, JSON.stringify(action.payload.state));
@@ -323,6 +389,9 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 items: localStorageState.items,
                                                 equip: localStorageState.equip,
                                                 lastequip: localStorageState.lastequip,
+                                                savedequip: localStorageState.savedequip,
+                                                savedidx: localStorageState.savedidx,
+                                                maxsavedidx: localStorageState.maxsavedidx,
                                                 accslots: localStorageState.accslots,
                                                 factors: localStorageState.factors,
                                                 maxslots: localStorageState.maxslots,

@@ -44,7 +44,7 @@ class BonusLine extends React.Component {
         }
         render() {
                 let val = score_product(this.props.equip, this.props.factor[1]);
-                let old = score_product(this.props.lastequip, this.props.factor[1]);
+                let old = score_product(this.props.savedequip, this.props.factor[1]);
                 let text = 'x';
                 let diff_val;
                 if (this.props.factor[0] === Factors.RESPAWN[0]) {
@@ -120,13 +120,13 @@ export default class EquipTable extends React.Component {
                         </div>);
                 } {
                         let equip = this.compute_equip(this.props.equip)
-                        let lastequip = this.compute_equip(this.props.lastequip);
+                        let savedequip = this.compute_equip(this.props.savedequip[this.props.savedidx]);
                         buffer.push(<div className='stats-section' key='stats'>
                                 {
                                         Object.getOwnPropertyNames(Factors).map((factor) => (
                                                 factor === 'NONE'
                                                 ? <div key={factor}/>
-                                                : <BonusLine equip={equip} lastequip={lastequip} factor={Factors[factor]} key={factor}/>))
+                                                : <BonusLine equip={equip} savedequip={savedequip} factor={Factors[factor]} key={factor}/>))
                                 }
                         </div>);
                 } {
