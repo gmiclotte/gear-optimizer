@@ -4,23 +4,18 @@ Gear Optimizer computes the optimal gear layout for specific features in [NGU Id
 
 ## How to
 
-Select up to 5 priorities, priority 1 is highest priority, if slots remain then the computation is continued with the remaining slots for priority 2 etc. Respawn and daycare have an explicit limit on allowed slots.  
-Increase or decrease number of desired respawn and daycare items, and the number of accessory slots. Filter an item by clicking it once in the items list, these items will be ignored for the optimalisation, but you can still manually equip them. Double click an item in the items list to equip it manually. Rightclick an item to change its level. Click an item in the equipment list to unequip it. Items with level `< 100` and filtered items are shown at the bottom of the left column, clicking items here has the same effect as in the main items list.  
+Select up to 5 priorities, priority 1 is highest priority, if slots remain then the computation is continued with the remaining slots for priority 2 etc. Each priority has an explicit limit on allowed accessory slots.  
+Increase or decrease number of allowed slots, and the total number of accessory slots. Move to your highest zone to prevent the optimization from taking items into account that you have no access to.
 
-Start the computation by clicking the `Optimize Gear` button. Right now it can be very slow if many items are available. Luckily you can simply choose to abort the current computation, or just come back tomorrow and hope it finished.
+Equip an item by clicking it once in the items list. Click an item in the equipment list to unequip it. 
+Rightclick an item to change its level or to filter it, filtered items will be ignored for the optimalisation, but you can still manually equip them. Items with level `< 100` and filtered items are shown at the bottom of the left column, clicking items here always opens the edit window. Click the name of a zone in the items list to hide all its items.
+
+Start the computation by clicking the `Optimize Gear` button. It should finish in milliseconds to minutes. Sometimes it can be a lot slower if many items are available. Luckily you can simply choose to abort the current computation, or just come back tomorrow and hope it finished.
 
 ## Algorithm
 
 WIP  
 Basis of the algorithm is pareto optimal filtering and dynamic programming knapsack algorithm.
-
-## TODO
-
-Speed up the computations by filtering more paths.  
-Clean the click behaviour, double click counting as three actions is ugly and bad.  
-Add filter for entire sets.  
-Add option to specify current zone, auto filter everything beyond
-Add some [issues](https://github.com/gmiclotte/gear-optimizer/issues) for these todos or just fix them.  
 
 ## Dev notes
 
