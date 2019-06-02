@@ -34,9 +34,14 @@ export default class ItemForm extends React.Component {
         }
 
         render() {
+                let able = 'Disable';
+                if (this.props.items[this.props.editItem[1]] !== undefined && this.props.items[this.props.editItem[1]].disable) {
+                        able = 'Enable'
+                }
                 return (<form onSubmit={this.handleSubmit}>
+                        {this.props.editItem[1]}<br/>
                         <label>
-                                Level:
+                                {'Level:'}
                                 <input style={{
                                                 width: '50px',
                                                 margin: '10px'
@@ -44,7 +49,8 @@ export default class ItemForm extends React.Component {
                         </label>
                         <br/>
                         <input type='submit' value='Update'/>
-                        <button onClick={this.props.closeEditModal}>Cancel</button>
+                        <button onClick={() => this.props.handleDisableItem(this.props.editItem[1])}>{able}</button><br/>
+                        <button onClick={this.props.closeEditModal}>{'Cancel'}</button>
                 </form>);
         }
 }

@@ -76,7 +76,7 @@ export default class ItemTable extends React.Component {
                                         class_idx = this.create_section(buffer, last, class_idx)
                                 }
                                 if (item.zone[1] <= this.props.zone) {
-                                        this.localbuffer.push(<Item item={item} handleClickItem={this.props.handleClickItem} handleRightClickItem={this.props.handleRightClickItem} handleDoubleClickItem={this.props.handleDoubleClickItem} key={name}/>);
+                                        this.localbuffer.push(<Item item={item} handleClickItem={this.props.handleClickItem} handleRightClickItem={this.props.handleRightClickItem} key={name}/>);
                                 }
                                 last = item;
                         }

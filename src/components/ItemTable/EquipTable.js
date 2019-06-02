@@ -112,7 +112,7 @@ export default class EquipTable extends React.Component {
                                         </div>);
                                         localbuffer = [];
                                 }
-                                localbuffer.push(<Item item={item} handleClickItem={this.props.handleClickItem} handleRightClickItem={this.props.handleRightClickItem} handleDoubleClickItem={this.props.handleDoubleClickItem} key={name}/>);
+                                localbuffer.push(<Item item={item} handleClickItem={this.props.handleClickItem} handleRightClickItem={this.props.handleRightClickItem} key={name}/>);
                                 last = item;
                         }
                         buffer.push(<div className='item-section' key={class_idx++}>
@@ -135,11 +135,11 @@ export default class EquipTable extends React.Component {
                         for (let idx = 0; idx < sorted.length; idx++) {
                                 let name = sorted[idx];
                                 const item = this.props.items[name];
-                                localbuffer.push(<Item item={item} handleClickItem={this.props.handleDisableItem} handleRightClickItem={this.props.handleRightClickItem} handleDoubleClickItem={() => (undefined)} key={name}/>);
+                                localbuffer.push(<Item item={item} handleClickItem={this.props.handleRightClickItem} handleRightClickItem={this.props.handleRightClickItem} key={name}/>);
                         }
                         if (localbuffer.length > 0) {
                                 buffer.push(<div className='item-section' key={class_idx++}>
-                                        <span>Not maxed<br/></span>{localbuffer}
+                                        <span>{'Not maxed'}<br/></span>{localbuffer}
                                 </div>);
                         }
                 } {
@@ -148,11 +148,11 @@ export default class EquipTable extends React.Component {
                         for (let idx = 0; idx < sorted.length; idx++) {
                                 let name = sorted[idx];
                                 const item = this.props.items[name];
-                                localbuffer.push(<Item item={item} handleClickItem={this.props.handleDisableItem} handleRightClickItem={this.props.handleRightClickItem} handleDoubleClickItem={() => (undefined)} key={name}/>);
+                                localbuffer.push(<Item item={item} handleClickItem={this.props.handleRightClickItem} handleRightClickItem={this.props.handleRightClickItem} key={name}/>);
                         }
                         if (localbuffer.length > 0) {
                                 buffer.push(<div className='item-section' key={class_idx++}>
-                                        <span>Disabled<br/></span>{localbuffer}
+                                        <span>{'Disabled'}<br/></span>{localbuffer}
                                 </div>);
                         }
                 }

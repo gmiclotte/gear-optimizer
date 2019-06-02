@@ -13,8 +13,6 @@ import {SetName} from '../../assets/ItemAux'
 
 import './Content.css';
 
-function do_nothing() {}
-
 const customStyles = {
         content: {
                 top: '50%',
@@ -63,8 +61,8 @@ class Content extends Component {
                                 </div>
                         </div>
                         <div className="content__container">
-                                <EquipTable {...this.props} group={'slot'} type='equip' handleClickItem={this.props.handleUnequipItem} handleRightClickItem={this.props.handleToggleEdit} handleDoubleClickItem={do_nothing}/>
-                                <ItemTable {...this.props} group={'zone'} type='items' handleClickItem={this.props.handleDisableItem} handleRightClickItem={this.props.handleToggleEdit} handleDoubleClickItem={this.props.handleEquipItem}/>
+                                <EquipTable {...this.props} group={'slot'} type='equip' handleClickItem={this.props.handleUnequipItem} handleRightClickItem={this.props.handleToggleEdit}/>
+                                <ItemTable {...this.props} group={'zone'} type='items' handleClickItem={this.props.handleEquipItem} handleRightClickItem={this.props.handleToggleEdit}/>
                         </div>
                         <Modal isOpen={this.props.editItem[0]} onAfterOpen={this.afterOpenModal} onRequestClose={this.closeEditModal} style={customStyles} contentLabel="Example Modal">
                                 <ItemForm {...this.props} closeEditModal={this.closeEditModal}/>

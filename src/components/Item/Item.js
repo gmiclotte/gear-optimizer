@@ -17,8 +17,7 @@ export default class Item extends Component {
         static propTypes = {
                 item: PropTypes.shape({name: PropTypes.string.isRequired, level: PropTypes.number.isRequired}),
                 handleClickItem: PropTypes.func.isRequired,
-                handleRightClickItem: PropTypes.func.isRequired,
-                handleDoubleClickItem: PropTypes.func.isRequired
+                handleRightClickItem: PropTypes.func.isRequired
         };
 
         render() {
@@ -38,8 +37,8 @@ export default class Item extends Component {
                         ? ' disable-item '
                         : '';
                 return (<img className={classNames} onClick={() => this.props.handleClickItem(item.name)} onContextMenu={(e) => {
-                                this.props.handleRightClickItem(item.name, true);
-                                e.preventDefault();
-                        }} onDoubleClick={() => this.props.handleDoubleClickItem(item.name)} data-tip={tt} src={images[item.name]} alt={item.name} key='item'/>);
+                        this.props.handleRightClickItem(item.name);
+                        e.preventDefault();
+                        }} data-tip={tt} src={images[item.name]} alt={item.name} key='item'/>);
         }
 }
