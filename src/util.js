@@ -7,58 +7,60 @@ export function compute_optimal(item_names, items, factor, totalslots, maxslots,
                 x.item_count = x.items.length;
         })
         optimal.sort((a, b) => (b.score - a.score));
-        let changed = false;
-        let acc_layouts = {};
-        for (let layout = 0; layout < base_layouts.length; layout++) {
-                const base_layout = base_layouts[layout];
-                let accslots = totalslots - base_layout.counts['Accessory'];
-                accslots = maxslots < accslots
-                        ? maxslots
-                        : accslots;
-                // find all possible items that can be equiped in main slots
-                let options = Object.getOwnPropertyNames(Slot).filter((x) => {
-                        if (Slot[x][0] === 'Accessory') {
-                                return false;
-                        }
-                        if (base_layout.counts[Slot[x][0]] > 0) {
-                                return false;
-                        }
-                        return true;
-                }).map((x) => (gear_slot(item_names, items, Slot[x], base_layout, zone)));
-                let s = [options.map((x) => (x.length)).reduce((a, b) => (a * b), 1)];
-                let remaining = options.map((x) => (pareto(x, factor)));
-                s.push(remaining.map((x) => (x.length)).reduce((a, b) => (a * b), 1));
-                let layouts = outfits(remaining, base_layout);
-                layouts = pareto(layouts, factor);
-                s.push(layouts.length);
-                // find all possible accessories
-                let accs = gear_slot(item_names, items, Slot.ACCESSORY, base_layout, zone);
-                s.push(accs.length);
-                accs = pareto(accs, factor, accslots);
-                s.push(accs.length);
-                accs.sort((a, b) => (score_product(b, factor, true) - score_product(a, factor, true)));
-                console.log('Processing ' + s[4] + ' out of ' + s[3] + ' accessories with ' + accslots + ' slots.');
-                if (acc_layouts[accslots] === undefined) {
-                        acc_layouts[accslots] = knapsack(accs, accslots, base_layout, (a) => (1), add_equip, factor);
-                }
-                console.log('Processing ' + s[2] + ' out of ' + s[1] + ' out of ' + s[0] + ' gear layouts.');
-                for (let idx in layouts) {
-                        console.log(s[4]);
-                        for (let jdx in acc_layouts[accslots]) {
-                                let candidate = clone(layouts[idx]);
-                                let acc_candidate = acc_layouts[accslots][jdx];
-                                for (let kdx = base_layout.items.length; kdx < acc_candidate.items.length; kdx++) {
-                                        add_equip(candidate, acc_candidate.items[kdx]);
+        {
+                let changed = false;
+                let acc_layouts = {};
+                for (let layout = 0; layout < base_layouts.length; layout++) {
+                        const base_layout = base_layouts[layout];
+                        let accslots = totalslots - base_layout.counts['Accessory'];
+                        accslots = maxslots < accslots
+                                ? maxslots
+                                : accslots;
+                        // find all possible items that can be equiped in main slots
+                        let options = Object.getOwnPropertyNames(Slot).filter((x) => {
+                                if (Slot[x][0] === 'Accessory') {
+                                        return false;
                                 }
-                                candidate.score = score_product(candidate, factor);
-                                candidate.item_count = candidate.items.length;
-                                optimal.push(candidate);
-                                changed = true;
+                                if (base_layout.counts[Slot[x][0]] > 0) {
+                                        return false;
+                                }
+                                return true;
+                        }).map((x) => (gear_slot(item_names, items, Slot[x], base_layout, zone)));
+                        let s = [options.map((x) => (x.length)).reduce((a, b) => (a * b), 1)];
+                        let remaining = options.map((x) => (pareto(x, factor)));
+                        s.push(remaining.map((x) => (x.length)).reduce((a, b) => (a * b), 1));
+                        let layouts = outfits(remaining, base_layout);
+                        layouts = pareto(layouts, factor);
+                        s.push(layouts.length);
+                        // find all possible accessories
+                        let accs = gear_slot(item_names, items, Slot.ACCESSORY, base_layout, zone);
+                        s.push(accs.length);
+                        accs = pareto(accs, factor, accslots);
+                        s.push(accs.length);
+                        accs.sort((a, b) => (score_product(b, factor, true) - score_product(a, factor, true)));
+                        console.log('Processing ' + s[4] + ' out of ' + s[3] + ' accessories with ' + accslots + ' slots.');
+                        if (acc_layouts[accslots] === undefined) {
+                                acc_layouts[accslots] = knapsack(accs, accslots, base_layout, (a) => (1), add_equip, factor);
+                        }
+                        console.log('Processing ' + s[2] + ' out of ' + s[1] + ' out of ' + s[0] + ' gear layouts.');
+                        for (let idx in layouts) {
+                                console.log(s[4]);
+                                for (let jdx in acc_layouts[accslots]) {
+                                        let candidate = clone(layouts[idx]);
+                                        let acc_candidate = acc_layouts[accslots][jdx];
+                                        for (let kdx = base_layout.items.length; kdx < acc_candidate.items.length; kdx++) {
+                                                add_equip(candidate, acc_candidate.items[kdx]);
+                                        }
+                                        candidate.score = score_product(candidate, factor);
+                                        candidate.item_count = candidate.items.length;
+                                        optimal.push(candidate);
+                                        changed = true;
+                                }
                         }
                 }
-        }
-        if (!changed) {
-                return base_layouts;
+                if (!changed) {
+                        return base_layouts;
+                }
         } {
                 // only keep best candidates
                 let tmp = optimal.length;
@@ -84,13 +86,7 @@ export function compute_optimal(item_names, items, factor, totalslots, maxslots,
                                 optimal[idx].items.push(scores[jdx][1]);
                         }
                 }
-        }
-        /*
-        optimal.sort((a, b) => (b.score - a.score))
-        let top_score = optimal[0].score;
-        optimal = optimal.filter((x) => (x.score === top_score));
-        */
-        {
+        } {
                 // filter duplicates, wherever they may come from
                 let filtered = [optimal[0]];
                 for (let idx = 1; idx < optimal.length; idx++) {
