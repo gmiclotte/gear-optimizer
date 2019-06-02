@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {Factors} from '../../assets/ItemAux'
+import {default as Crement} from '../Crement/Crement';
 
 export default class ItemForm extends React.Component {
         constructor(props) {
@@ -33,6 +34,7 @@ export default class ItemForm extends React.Component {
                         <select value={this.state.value} onChange={this.handleChange}>
                                 {Object.getOwnPropertyNames(Factors).map((factor) => (<option value={Factors[factor][0]} key={Factors[factor][0]}>{Factors[factor][0]}</option>))}
                         </select>
+                        <Crement header='slots' value={this.props.maxslots[this.props.idx]} name={['maxslots', this.props.idx]} handleClick={this.props.handleCrement} min={0} max={this.props.accslots}/>
                 </label>);
         }
 }

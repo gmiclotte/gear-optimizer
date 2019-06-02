@@ -31,10 +31,9 @@ const mapStateToProps = state => ({
         items: state.optimizer.items,
         equip: state.optimizer.equip,
         accslots: state.optimizer.accslots,
-        respawn: state.optimizer.respawn,
-        daycare: state.optimizer.daycare,
         editItem: state.optimizer.editItem,
         factors: state.optimizer.factors,
+        maxslots: state.optimizer.maxslots,
         running: state.optimizer.running,
         zone: state.optimizer.zone,
         hidden: state.optimizer.hidden

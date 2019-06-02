@@ -35,9 +35,7 @@ class Content extends Component {
 
         static defaultProps = {
                 items: [],
-                equip: [],
-                accslots: 0,
-                respawn: 0
+                equip: []
         };
 
         closeEditModal = () => (this.props.handleToggleEdit(undefined, false));
@@ -53,10 +51,8 @@ class Content extends Component {
                 return (<div className={this.props.className}>
                         <div className="content__container">
                                 <div className='button-section' key='slots'>
-                                        <Crement header='Highest zone' value={zone} name='zone' handleClick={this.props.handleCrement} min={1} max={maxzone}/>
-                                        <Crement header='Accessory slots' value={this.props.accslots} name='accslots' handleClick={this.props.handleCrement} min={0} max={100}/>
-                                        <Crement header='Max respawn items' value={this.props.respawn} name='respawn' handleClick={this.props.handleCrement} min={0} max={this.props.accslots}/>
-                                        <Crement header='Max daycare items' value={this.props.daycare} name='daycare' handleClick={this.props.handleCrement} min={0} max={this.props.accslots}/>
+                                        <div><Crement header='Highest zone' value={zone} name='zone' handleClick={this.props.handleCrement} min={1} max={maxzone}/></div>
+                                        <div><Crement header='Accessory slots' value={this.props.accslots} name='accslots' handleClick={this.props.handleCrement} min={0} max={100}/></div>
                                         <OptimizeButton running={this.props.running} abort={this.props.handleTerminate} optimize={this.props.handleOptimizeGear}/>
                                 </div>
                                 <div className='button-section' key='factorforms'>

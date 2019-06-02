@@ -187,6 +187,10 @@ export const Factors = {
                         Stat.HACK_SPEED
                 ]
         ],
+        GOLD_DROP: [
+                'Gold Drops',
+                [Stat.GOLD_DROP]
+        ],
         DROP_CHANCE: [
                 'Drop chance',
                 [Stat.DROP_CHANCE]

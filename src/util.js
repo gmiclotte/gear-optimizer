@@ -54,6 +54,7 @@ export function compute_optimal(item_names, items, factor, totalslots, maxslots,
                 return base_layouts;
         }
         for (let idx in optimal) {
+                console.log('idx', idx, optimal[idx].item_count, factor)
                 let optimal_size = optimal[idx].items.length;
                 let scores = [];
                 for (let jdx = optimal[idx].item_count; jdx < optimal_size; jdx++) {
@@ -139,6 +140,7 @@ const cartesian = (a, b, ...c) => (
 
 export const outfits = (options, base) => {
         if (options.length === 0) {
+                base.item_count = base.items.length;
                 return [base];
         }
         let tmp = cartesian(...options).map((items) => {

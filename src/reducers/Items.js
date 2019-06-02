@@ -43,10 +43,11 @@ const INITIAL_STATE = {
         equip: EQUIP,
         loadouts: [],
         accslots: accslots,
-        respawn: 1,
-        daycare: 1,
         factors: [
-                'RESPAWN', 'DAYCARE_SPEED', 'HACK', 'NGUS', 'NGUSHACK'
+                'RESPAWN', 'DAYCARE_SPEED', 'HACK', 'NGUS', 'NONE'
+        ],
+        maxslots: [
+                3, 1, 0, 0, accslots
         ],
         editItem: [
                 false, undefined, undefined
@@ -75,7 +76,13 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 return {
                                                         ...state,
                                                         [action.payload.name]: state[action.payload.name] + action.payload.val,
-                                                        equip: equip
+                                                        equip: equip,
+                                                        maxslots: state.maxslots.map((val, index) => {
+                                                                if (val === state[action.payload.name]) {
+                                                                        return val + action.payload.val;
+                                                                }
+                                                                return val;
+                                                        })
                                                 }
                                         }
                                         if (action.payload.val === 1) {
@@ -90,6 +97,27 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                                 [slot[0] + state[action.payload.name]]: new EmptySlot(slot)
                                                         }
                                                 }
+                                        }
+                                }
+                                if (action.payload.name[0] === 'maxslots') {
+                                        let name = action.payload.name[0];
+                                        let changed = action.payload.name[1];
+                                        let change = action.payload.val;
+                                        if (change < 0 && action.payload.min === state[name][changed]) {
+                                                return state;
+                                        }
+                                        if (change > 0 && action.payload.max === state[name][changed]) {
+                                                return state;
+                                        }
+                                        console.log(name, changed, change)
+                                        return {
+                                                ...state,
+                                                [name]: state.maxslots.map((val, index) => {
+                                                        if (index === changed) {
+                                                                return val + change;
+                                                        }
+                                                        return val;
+                                                })
                                         }
                                 }
                                 return {
@@ -281,9 +309,8 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 items: localStorageState.items,
                                                 equip: localStorageState.equip,
                                                 accslots: localStorageState.accslots,
-                                                respawn: localStorageState.respawn,
-                                                daycare: localStorageState.daycare,
                                                 factors: localStorageState.factors,
+                                                maxslots: localStorageState.maxslots,
                                                 zone: localStorageState.zone,
                                                 hidden: localStorageState.hidden
                                         };
