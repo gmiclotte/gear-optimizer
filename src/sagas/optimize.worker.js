@@ -13,6 +13,7 @@ import {clone, compute_optimal} from '../util'
 self.addEventListener("message", optimize);
 
 function optimize(e) {
+        let start_time = Date.now();
         let state = e.data.state;
         let base_layout = [new Equip()];
         for (let idx = 0; idx < state.factors.length; idx++) {
@@ -31,4 +32,5 @@ function optimize(e) {
         }
         this.postMessage({equip: equip});
         this.close();
+        console.log(Math.floor((Date.now() - start_time) / 10) / 100 + ' seconds')
 }
