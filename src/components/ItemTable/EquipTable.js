@@ -32,17 +32,14 @@ function group(a, b, g) {
 }
 
 class BonusLine extends React.Component {
-        diffstyle(old, val) {
-                let col = 'black';
+        diffclass(old, val) {
+                let className = 'same-stat';
                 if (old < val) {
-                        col = 'green';
+                        className = 'increase-stat';
                 } else if (old > val) {
-                        col = 'red';
+                        className = 'decrease-stat';
                 }
-                let diffstyle = {
-                        color: col
-                };
-                return diffstyle;
+                return className;
         }
         render() {
                 let val = score_product(this.props.equip, this.props.factor[1]);
@@ -57,9 +54,9 @@ class BonusLine extends React.Component {
                 } else {
                         diff_val = 100 * (val / old - 1);
                 }
-                let diffstyle = this.diffstyle(old, val);
+                let className = this.diffclass(old, val);
                 text = this.props.factor[0] + ': ' + format_number(val) + text + ' (';
-                let diff = <span style={diffstyle}>
+                let diff = <span className={className}>
                         {
                                 (
                                         diff_val >= 0
