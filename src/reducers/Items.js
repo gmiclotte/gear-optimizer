@@ -120,7 +120,6 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         if (change > 0 && action.payload.max === state[name][changed]) {
                                                 return state;
                                         }
-                                        console.log(name, changed, change)
                                         return {
                                                 ...state,
                                                 [name]: state.maxslots.map((val, index) => {

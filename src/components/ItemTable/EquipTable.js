@@ -121,7 +121,7 @@ export default class EquipTable extends React.Component {
                                 <span>{'Accessories'}<br/></span>{localbuffer}
                         </div>);
                 }
-                buffer.push(<SaveButtons {...this.props}/>)
+                buffer.push(<SaveButtons {...this.props} key='savebuttons'/>)
                 if (this.props.showsaved) {
                         let compare = compare_factory(this.props.group)(this.props[this.props.type]);
                         let sorted = [...this.props.savedequip[this.props.savedidx].names].sort(compare);
