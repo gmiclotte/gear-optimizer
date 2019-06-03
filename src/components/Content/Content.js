@@ -55,20 +55,6 @@ class Content extends Component {
                                         <button onClick={this.props.handleUndo}>
                                                 {'Load previous'}
                                         </button>
-                                        <div>
-                                                <Crement header={this.props.savedidx === this.props.maxsavedidx
-                                                                ? 'Empty save slot'
-                                                                : 'Save slot'} value={this.props.savedidx} name='savedidx' handleClick={this.props.handleCrement} min={0} max={this.props.maxsavedidx}/>
-                                                <button onClick={this.props.handleSaveSlot}>
-                                                        {'Save'}
-                                                </button>
-                                                <button onClick={this.props.handleLoadSlot}>
-                                                        {'Load'}
-                                                </button>
-                                                <button onClick={this.props.handleDeleteSlot}>
-                                                        {'Delete'}
-                                                </button>
-                                        </div>
                                 </div>
                                 <div className='button-section' key='factorforms'>
                                         {[...this.props.factors.keys()].map((idx) => (<div key={'factorform' + idx}><FactorForm {...this.props} idx={idx}/></div>))}

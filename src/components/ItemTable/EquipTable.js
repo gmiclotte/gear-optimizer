@@ -6,6 +6,8 @@ import {Equip, Factors, EmptySlot, Slot} from '../../assets/ItemAux'
 import './ItemTable.css';
 import {format_number, score_product, add_equip} from '../../util'
 
+import {default as SaveButtons} from './SaveButtons'
+
 function compare_factory(key) {
         return function(prop) {
                 return function(a, b) {
@@ -108,7 +110,7 @@ export default class EquipTable extends React.Component {
                                 let next = group(last, item, this.props.group);
                                 if (next && item.slot[0] === Slot.ACCESSORY[0]) {
                                         buffer.push(<div className='item-section' key={class_idx++}>
-                                                <span>Outfit<br/></span>{localbuffer}
+                                                <span>{'Outfit'}<br/></span>{localbuffer}
                                         </div>);
                                         localbuffer = [];
                                 }
@@ -117,6 +119,29 @@ export default class EquipTable extends React.Component {
                         }
                         buffer.push(<div className='item-section' key={class_idx++}>
                                 <span>{'Accessories'}<br/></span>{localbuffer}
+                        </div>);
+                }
+                buffer.push(<SaveButtons {...this.props}/>)
+                if (this.props.showsaved) {
+                        let compare = compare_factory(this.props.group)(this.props[this.props.type]);
+                        let sorted = [...this.props.savedequip[this.props.savedidx].names].sort(compare);
+                        let localbuffer = [];
+                        let last = new EmptySlot();
+                        for (let idx = 0; idx < sorted.length; idx++) {
+                                let name = sorted[idx];
+                                const item = this.props.savedequip[this.props.savedidx][name];
+                                let next = group(last, item, this.props.group);
+                                if (next && item.slot[0] === Slot.ACCESSORY[0]) {
+                                        buffer.push(<div className='item-section' key={class_idx++}>
+                                                <span>{'Saved outfit'}<br/></span>{localbuffer}
+                                        </div>);
+                                        localbuffer = [];
+                                }
+                                localbuffer.push(<Item item={item} handleClickItem={this.props.handleClickItem} handleRightClickItem={this.props.handleRightClickItem} key={name}/>);
+                                last = item;
+                        }
+                        buffer.push(<div className='item-section' key={class_idx++}>
+                                <span>{'Saved Accessories'}<br/></span>{localbuffer}
                         </div>);
                 } {
                         let equip = this.compute_equip(this.props.equip)

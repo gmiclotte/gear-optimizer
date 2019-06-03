@@ -25,6 +25,7 @@ import {UNEQUIP_ITEM} from '../actions/UnequipItem';
 import {DELETE_SLOT} from '../actions/DeleteSlot'
 import {LOAD_SLOT} from '../actions/LoadSlot'
 import {SAVE_SLOT} from '../actions/SaveSlot'
+import {TOGGLE_SAVED} from '../actions/ToggleSaved'
 import {LOAD_STATE_LOCALSTORAGE} from '../actions/LoadStateLocalStorage';
 import {SAVE_STATE_LOCALSTORAGE} from '../actions/SaveStateLocalStorage';
 
@@ -49,6 +50,7 @@ const INITIAL_STATE = {
         savedequip: [EQUIP],
         savedidx: 0,
         maxsavedidx: 0,
+        showsaved: false,
         loadouts: [],
         accslots: accslots,
         factors: [
@@ -372,6 +374,14 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                 }
                         }
 
+                case TOGGLE_SAVED:
+                        {
+                                return {
+                                        ...state,
+                                        showsaved: !state.showsaved
+                                };
+                        }
+
                 case SAVE_STATE_LOCALSTORAGE:
                         {
                                 window.localStorage.setItem(LOCALSTORAGE_NAME, JSON.stringify(action.payload.state));
@@ -392,6 +402,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 savedequip: localStorageState.savedequip,
                                                 savedidx: localStorageState.savedidx,
                                                 maxsavedidx: localStorageState.maxsavedidx,
+                                                showsaved: localStorageState.showsaved,
                                                 accslots: localStorageState.accslots,
                                                 factors: localStorageState.factors,
                                                 maxslots: localStorageState.maxslots,
