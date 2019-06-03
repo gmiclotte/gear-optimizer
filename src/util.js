@@ -3,6 +3,7 @@ import {Slot, EmptySlot, Equip} from './assets/ItemAux'
 function top_scorers(optimal) {
         // only keep best candidates
         let top_score = optimal[0].score;
+        /* eslint-disable-next-line array-callback-return */
         optimal.map((x) => {
                 top_score = x.score > top_score
                         ? x.score
@@ -25,9 +26,11 @@ function filter_duplicates(optimal) {
                                 continue;
                         }
                         let tmp = {};
+                        /* eslint-disable-next-line array-callback-return */
                         optimal[idx].items.map((item) => {
                                 tmp[item.name] = true;
                         });
+                        /* eslint-disable-next-line array-callback-return */
                         filtered[jdx].items.map((item) => {
                                 tmp[item.name] = true;
                         });
@@ -50,13 +53,13 @@ export function compute_optimal(item_names, items, factor, totalslots, maxslots,
                 return base_layouts;
         }
         let optimal = clone(base_layouts);
+        /* eslint-disable-next-line array-callback-return */
         optimal.map((x) => {
                 x.score = score_product(x, factor);
                 x.item_count = x.items.length;
         });
         optimal = top_scorers(optimal);
         {
-                let changed = false;
                 let acc_layouts = {};
                 for (let layout = 0; layout < base_layouts.length; layout++) {
                         const base_layout = base_layouts[layout];
@@ -114,13 +117,13 @@ export function compute_optimal(item_names, items, factor, totalslots, maxslots,
                                         candidate.score = score_product(candidate, factor);
                                         candidate.item_count = layouts[idx].items.length;
                                         optimal.push(candidate);
-                                        changed = true;
                                         optimal = top_scorers(optimal);
                                 }
                         }
                 }
         }
         optimal = filter_duplicates(optimal);
+        /* eslint-disable-next-line no-lone-blocks */
         {
                 // sort new accs per candidate
                 for (let idx in optimal) {
@@ -262,15 +265,13 @@ export function clone(obj) {
 }
 
 function knapsack_combine_single(last, list, item, add, factor) {
-        {
-                for(let idx in list) {
-                        let max_with = add(clone(list[idx]), item);
-                        max_with.score = score_product(max_with, factor);
-                        list[idx] = max_with;
-                }
-                list = list.sort((a, b) => (b.score - a.score));
-                list = pareto(list, factor);
+        for (let idx in list) {
+                let max_with = add(clone(list[idx]), item);
+                max_with.score = score_product(max_with, factor);
+                list[idx] = max_with;
         }
+        list = list.sort((a, b) => (b.score - a.score));
+        list = pareto(list, factor);
         //both list and last are pareto optimal internally, remains to compare them to eachother
         last = pareto_2(list, last, factor);
         list = pareto_2(last, list, factor)
@@ -282,7 +283,6 @@ function knapsack_combine_single(last, list, item, add, factor) {
 
 //Assumes all weights are 1.
 export function knapsack(items, capacity, zero_state, add, factor) {
-        let single_weight = 1;
         let n = items.length;
         zero_state.score = score_product(zero_state, factor);
         // init matrix
@@ -366,20 +366,6 @@ export function pareto(list, stats, cutoff = 1) {
                 result = [empty];
         }
         return result;
-}
-
-function split_stat(list, stat) {
-        let hasstat = [];
-        let hasnot = [];
-        for (let j = 0; j < list.length; j++) {
-                let item = list[j];
-                if (item[stat] !== undefined) {
-                        hasstat.push(item);
-                } else {
-                        hasnot.push(item);
-                }
-        }
-        return [hasstat, hasnot];
 }
 
 export function pareto_2(list, newlist, stats, cutoff = 1) {

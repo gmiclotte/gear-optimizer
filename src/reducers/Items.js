@@ -39,6 +39,7 @@ const EQUIP = new ItemContainer(slotlist(accslots));
 
 const maxZone = 28;
 const zoneDict = {};
+/* eslint-disable-next-line array-callback-return */
 Object.getOwnPropertyNames(SetName).map(x => {
         zoneDict[SetName[x][1]] = 0 < SetName[x][1] && SetName[x][1] < maxZone;
 });

@@ -25,6 +25,7 @@ export default class ItemForm extends React.Component {
         render() {
                 //HACK: this sets the dropdown to the correct value after loading
                 if (this.state.value !== Factors[this.props.factors[this.props.idx]][0]) {
+                        /* eslint-disable-next-line react/no-direct-mutation-state */
                         this.state.value = Factors[this.props.factors[this.props.idx]][0];
                 }
                 return (<label key={this.props.factors[this.props.idx]}>
