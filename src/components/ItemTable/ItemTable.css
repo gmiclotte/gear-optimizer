@@ -23,3 +23,15 @@
         border: 1px solid black;
         border-radius: 5px;
 }
+
+.increase-stat {
+        color: green;
+}
+
+.same-stat {
+        color: black;
+}
+
+.decrease-stat {
+        color: red;
+}
