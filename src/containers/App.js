@@ -47,7 +47,8 @@ const mapStateToProps = state => ({
         running: state.optimizer.running,
         zone: state.optimizer.zone,
         titanversion: state.optimizer.titanversion,
-        hidden: state.optimizer.hidden
+        hidden: state.optimizer.hidden,
+        version: state.optimizer.version
 });
 
 const mapDispatchToProps = {

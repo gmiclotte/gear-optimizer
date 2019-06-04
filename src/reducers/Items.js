@@ -66,7 +66,8 @@ const INITIAL_STATE = {
         running: false,
         zone: maxZone,
         titanversion: 1,
-        hidden: zoneDict
+        hidden: zoneDict,
+        version: '1.0.1'
 };
 
 const ItemsReducer = (state = INITIAL_STATE, action) => {
@@ -394,22 +395,26 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                 const lc = window.localStorage.getItem(LOCALSTORAGE_NAME);
                                 const localStorageState = JSON.parse(lc);
                                 if (localStorageState) {
+                                        console.log(localStorageState.version, state.version)
                                         // TODO: Validate local storage state.
-                                        return {
-                                                ...state,
-                                                items: localStorageState.items,
-                                                equip: localStorageState.equip,
-                                                lastequip: localStorageState.lastequip,
-                                                savedequip: localStorageState.savedequip,
-                                                savedidx: localStorageState.savedidx,
-                                                maxsavedidx: localStorageState.maxsavedidx,
-                                                showsaved: localStorageState.showsaved,
-                                                accslots: localStorageState.accslots,
-                                                factors: localStorageState.factors,
-                                                maxslots: localStorageState.maxslots,
-                                                zone: localStorageState.zone,
-                                                hidden: localStorageState.hidden
-                                        };
+                                        if (localStorageState.version !== undefined && localStorageState.version === state.version) {
+                                                return {
+                                                        ...state,
+                                                        items: localStorageState.items,
+                                                        equip: localStorageState.equip,
+                                                        lastequip: localStorageState.lastequip,
+                                                        savedequip: localStorageState.savedequip,
+                                                        savedidx: localStorageState.savedidx,
+                                                        maxsavedidx: localStorageState.maxsavedidx,
+                                                        showsaved: localStorageState.showsaved,
+                                                        accslots: localStorageState.accslots,
+                                                        factors: localStorageState.factors,
+                                                        maxslots: localStorageState.maxslots,
+                                                        zone: localStorageState.zone,
+                                                        titanversion: localStorageState.titanversion,
+                                                        hidden: localStorageState.hidden
+                                                };
+                                        }
                                 }
                                 return state;
                         }
