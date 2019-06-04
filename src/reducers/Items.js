@@ -386,7 +386,9 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
 
                 case SAVE_STATE_LOCALSTORAGE:
                         {
-                                window.localStorage.setItem(LOCALSTORAGE_NAME, JSON.stringify(action.payload.state));
+                                if (document.cookie.includes('accepts-cookies=true')) {
+                                        window.localStorage.setItem(LOCALSTORAGE_NAME, JSON.stringify(action.payload.state));
+                                }
                                 return state;
                         }
 
