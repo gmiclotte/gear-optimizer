@@ -20,7 +20,7 @@ function optimize(e) {
                 let factorname = state.factors[idx]
                 let factor = Factors[factorname][1];
                 let maxslots = state.maxslots[idx];
-                base_layout = compute_optimal(state.items.names, state.items, factor, state.accslots, maxslots, base_layout, state.zone);
+                base_layout = compute_optimal(state.items.names, state.items, factor, state.accslots, maxslots, base_layout, state.zone, state.titanversion);
         }
         base_layout = base_layout[Math.floor(Math.random() * base_layout.length)];
         let equip = new ItemContainer(slotlist(state.accslots));

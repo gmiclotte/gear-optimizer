@@ -256,7 +256,7 @@ export const SetName = {
                 'Jake from Accounting', 13
         ],
         GAUDY: [
-                'A Very Strange Place', 14
+                'Ary Strange Place', 14
         ],
         MEGA: [
                 'Mega Lands', 15
@@ -280,7 +280,16 @@ export const SetName = {
                 'Boring-Ass Earth', 20
         ],
         SLIMY: [
-                'The Beast', 21
+                'The Beast', 21, 1
+        ],
+        SLIMY2: [
+                'The Beast', 21, 2
+        ],
+        SLIMY3: [
+                'The Beast', 21, 3
+        ],
+        SLIMY4: [
+                'The Beast', 21, 4
         ],
         CHOCO: [
                 'Chocolate World', 22
@@ -292,7 +301,16 @@ export const SetName = {
                 'Pretty Pink Princess Land', 24
         ],
         NERD: [
-                'Greasy Nerd', 25
+                'Greasy Nerd', 25, 1
+        ],
+        NERD2: [
+                'Greasy Nerd', 25, 2
+        ],
+        NERD3: [
+                'Greasy Nerd', 25, 3
+        ],
+        NERD4: [
+                'Greasy Nerd', 25, 4
         ],
         META: [
                 'Meta Land', 26
@@ -301,7 +319,16 @@ export const SetName = {
                 'Interdimensional Party', 27
         ],
         MOBSTER: [
-                'The Godmother', 28
+                'The Godmother', 28, 1
+        ],
+        MOBSTER2: [
+                'The Godmother', 28, 2
+        ],
+        MOBSTER3: [
+                'The Godmother', 28, 3
+        ],
+        MOBSTER4: [
+                'The Godmother', 28, 4
         ],
         TYPO: [
                 'Typo Zonw', 29
@@ -312,5 +339,14 @@ export const SetName = {
         JRPG: [
                 'JRPGVille', 31
         ],
-        EXILE: ['The Exile', 32]
+        EXILE: [
+                'The Exile', 32, 1
+        ],
+        EXILE2: [
+                'The Exile', 32, 2
+        ],
+        EXILE3: [
+                'The Exile', 32, 3
+        ],
+        EXILE4: ['The Exile', 32, 4]
 }

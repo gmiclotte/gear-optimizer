@@ -46,6 +46,7 @@ const mapStateToProps = state => ({
         maxslots: state.optimizer.maxslots,
         running: state.optimizer.running,
         zone: state.optimizer.zone,
+        titanversion: state.optimizer.titanversion,
         hidden: state.optimizer.hidden
 });
 

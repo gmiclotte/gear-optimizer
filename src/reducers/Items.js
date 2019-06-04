@@ -65,6 +65,7 @@ const INITIAL_STATE = {
         ],
         running: false,
         zone: maxZone,
+        titanversion: 1,
         hidden: zoneDict
 };
 

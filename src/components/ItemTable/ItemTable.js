@@ -14,7 +14,10 @@ function compare_factory(key) {
                         }
                         let result;
                         if (a[key][1] !== b[key][1]) {
-                                if (a[key][1] * b[key][1] < 0) {
+                                // HACK: place items from different titan versions in same bucket
+                                if (a[key][0].substring(0, a[key][0].length - 2) === b[key][0].substring(0, b[key][0].length - 2)) {
+                                        result = a.slot[1] - b.slot[1];
+                                } else if (a[key][1] * b[key][1] < 0) {
                                         result = a[key][1] - b[key][1];
                                 } else {
                                         result = b[key][1] - a[key][1];
@@ -22,7 +25,6 @@ function compare_factory(key) {
                         } else {
                                 result = a.slot[1] - b.slot[1]
                         }
-                        //                        console.log(a[key][1], b[key][1], result)
                         return result;
                 }
         }
@@ -32,7 +34,8 @@ function group(a, b, g) {
         if (a === undefined || b === undefined) {
                 return false;
         }
-        return a[g][1] !== b[g][1];
+        // HACK: place items from different titan versions in same bucket
+        return a[g][0].substring(0, a[g][0].length - 2) !== b[g][0].substring(0, b[g][0].length - 2);
 }
 
 export default class ItemTable extends React.Component {
@@ -75,7 +78,7 @@ export default class ItemTable extends React.Component {
                                 if (next) {
                                         class_idx = this.create_section(buffer, last, class_idx)
                                 }
-                                if (item.zone[1] <= this.props.zone) {
+                                if (item.zone[1] <= this.props.zone && (item.zone[1] !== this.props.maxtitan[1] || item.zone[2] <= this.props.titanversion)) {
                                         this.localbuffer.push(<Item item={item} handleClickItem={this.props.handleClickItem} handleRightClickItem={this.props.handleRightClickItem} key={name}/>);
                                 }
                                 last = item;

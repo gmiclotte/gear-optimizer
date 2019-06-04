@@ -1,4 +1,32 @@
-import {Slot, EmptySlot, Equip} from './assets/ItemAux'
+import {Slot, EmptySlot, Equip, SetName} from './assets/ItemAux'
+
+export function get_zone(zone) {
+        return SetName[Object.getOwnPropertyNames(SetName).filter(x => {
+                        return zone === SetName[x][1];
+                })[0]];
+}
+
+export function get_max_zone(zone) {
+        let maxzone = 1;
+        Object.getOwnPropertyNames(SetName).map(x => {
+                maxzone = SetName[x][1] > maxzone
+                        ? SetName[x][1]
+                        : maxzone;
+        });
+        return maxzone;
+}
+
+export function get_max_titan(zone) {
+        let maxtitan = 21;
+        Object.getOwnPropertyNames(SetName).map(x => {
+                if (SetName[x].length === 3 && SetName[x][1] <= zone) {
+                        maxtitan = maxtitan[1] > SetName[x][1]
+                                ? maxtitan
+                                : SetName[x];
+                }
+        });
+        return maxtitan;
+}
 
 function top_scorers(optimal) {
         // only keep best candidates
@@ -48,10 +76,11 @@ function filter_duplicates(optimal) {
         return filtered;
 }
 
-export function compute_optimal(item_names, items, factor, totalslots, maxslots, base_layouts, zone) {
+export function compute_optimal(item_names, items, factor, totalslots, maxslots, base_layouts, zone, titanversion) {
         if (factor.length === 0) {
                 return base_layouts;
         }
+        const titan = get_max_titan(zone);
         let optimal = clone(base_layouts);
         /* eslint-disable-next-line array-callback-return */
         optimal.map((x) => {
@@ -76,7 +105,7 @@ export function compute_optimal(item_names, items, factor, totalslots, maxslots,
                                         return false;
                                 }
                                 return true;
-                        }).map((x) => (gear_slot(item_names, items, Slot[x], base_layout, zone)));
+                        }).map((x) => (gear_slot(item_names, items, Slot[x], base_layout, zone, titan, titanversion)));
                         let s = [options.map((x) => (x.length)).reduce((a, b) => (a * b), 1)];
                         let remaining = options.map((x) => (pareto(x, factor)));
                         s.push(remaining.map((x) => (x.length)).reduce((a, b) => (a * b), 1));
@@ -85,7 +114,7 @@ export function compute_optimal(item_names, items, factor, totalslots, maxslots,
                         s.push(layouts.length);
                         // find all possible accessories
                         if (acc_layouts[accslots] === undefined) {
-                                let accs = gear_slot(item_names, items, Slot.ACCESSORY, base_layout, zone);
+                                let accs = gear_slot(item_names, items, Slot.ACCESSORY, base_layout, zone, titan, titanversion);
                                 s.push(accs.length);
                                 accs = pareto(accs, factor, accslots);
                                 s.push(accs.length);
@@ -212,15 +241,21 @@ export function score_product(equip, stats, add_one = false) {
         return score;
 }
 
-export function gear_slot(names, list, type, equip, zone) {
+export function gear_slot(names, list, type, equip, zone, titan, titanversion) {
         const equiped = equip.items.filter((item) => (item.slot[0] === type[0])).map((x) => (x.name));
         return names.filter((name) => {
                 if (list[name].empty) {
                         return false;
                 }
                 if (list[name].zone[1] > zone) {
+                        // zone too high
                         return false;
                 }
+                if (list[name].zone[1] === titan[1] && list[name].zone[2] > titanversion) {
+                        // titan version too high
+                        return false;
+                }
+
                 return list[name].slot[0] === type[0];
         }).map((name) => (list[name])).filter((item) => (!item.disable && !equiped.includes(item.name)));
 }
