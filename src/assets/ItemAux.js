@@ -140,6 +140,14 @@ export const Factors = {
                 'Respawn',
                 [Stat.RESPAWN]
         ],
+        POWER: [
+                'Power',
+                [Stat.POWER]
+        ],
+        TOUGHNESS: [
+                'Toughness',
+                [Stat.TOUGHNESS]
+        ],
         DAYCARE_SPEED: [
                 'Daycare',
                 [Stat.DAYCARE_SPEED]
@@ -194,6 +202,10 @@ export const Factors = {
         DROP_CHANCE: [
                 'Drop chance',
                 [Stat.DROP_CHANCE]
+        ],
+        QUEST_DROP: [
+                'Quest Drop',
+                [Stat.QUEST_DROP]
         ],
         WANDOOS: [
                 'Wandoos',

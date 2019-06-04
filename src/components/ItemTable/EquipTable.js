@@ -31,6 +31,57 @@ function group(a, b, g) {
         return a[g][1] !== b[g][1];
 }
 
+const shorten = (val) => {
+        if (val < 10000) {
+                return val.toLocaleString(undefined, {maximumFractionDigits: 2});
+        }
+        let units = [
+                'k',
+                'M',
+                'B',
+                'T',
+                'Qa',
+                'Qi',
+                'Sx',
+                'Sp',
+                'Oc',
+                'No',
+                'Dc'
+        ];
+        let order = Math.floor(Math.log(val / 10) / Math.log(1000));
+        let unitname = units[(order - 1)];
+        let num = val / 1000 ** order;
+        return num.toLocaleString(undefined, {maximumFractionDigits: 2}) + unitname;
+}
+
+const formatted = (val, stat, d) => {
+        let num = shorten(Math.abs(val));
+        let pf = d
+                ? (
+                        val >= 0
+                        ? '(+'
+                        : '(-')
+                : '';
+
+        let sf = d
+                ? '%)'
+                : ''
+        if (stat === 'Power' || stat === 'Toughness') {
+                sf = d
+                        ? ')'
+                        : '';
+        } else if (stat === 'Respawn') {
+                sf = d
+                        ? 'pp)'
+                        : '% reduction';
+        } else {
+                pf = d
+                        ? pf
+                        : '×';
+        }
+        return pf + num + sf
+};
+
 class BonusLine extends React.Component {
         diffclass(old, val) {
                 let className = 'same-stat';
@@ -45,60 +96,8 @@ class BonusLine extends React.Component {
                 let val = score_product(this.props.equip, this.props.factor[1]);
                 let old = score_product(this.props.savedequip, this.props.factor[1]);
                 let diff_val;
-                const formatted = (val, d) => {
-                        let pf = d
-                                ? (
-                                        diff_val >= 0
-                                        ? '(+'
-                                        : '(')
-                                : '';
-                        let stat = this.props.factor[0];
-                        if (stat === 'Power' || stat === 'Toughness') {
-                                return pf + (
-                                        d
-                                        ? val
-                                        : 100 * val).toLocaleString(undefined, {maximumFractionDigits: 2}) + (
-                                        d
-                                        ? '%)'
-                                        : '');
-                        }
-                        if (stat === 'Respawn') {
-                                return pf + val.toLocaleString(undefined, {maximumFractionDigits: 2}) + (
-                                        d
-                                        ? 'pp)'
-                                        : '% reduction');
-                        }
-                        pf = d
-                                ? pf
-                                : '×';
-                        if (val < 100000) {
-                                return pf + val.toLocaleString(undefined, {maximumFractionDigits: 2}) + (
-                                        d
-                                        ? '%)'
-                                        : '');
-                        }
-                        let units = [
-                                'k',
-                                'M',
-                                'B',
-                                'T',
-                                'Qa',
-                                'Qi',
-                                'Sx',
-                                'Sp',
-                                'Oc',
-                                'No',
-                                'Dc'
-                        ];
-                        let order = Math.floor(Math.log(val / 10) / Math.log(1000));
-                        let unitname = units[(order - 1)];
-                        let num = val / 1000 ** order;
-                        return pf + num.toLocaleString(undefined, {maximumFractionDigits: 2}) + unitname + (
-                                d
-                                ? '%)'
-                                : '');
-                };
-                if (this.props.factor[0] === Factors.RESPAWN[0]) {
+                let stat = this.props.factor[0];
+                if (stat === 'Power' || stat === 'Toughness' || stat === 'Respawn') {
                         val *= 100;
                         old *= 100;
                         diff_val = val - old;
@@ -106,9 +105,9 @@ class BonusLine extends React.Component {
                         diff_val = 100 * (val / old - 1);
                 }
                 let className = this.diffclass(old, val);
-                let text = this.props.factor[0] + ': ' + formatted(val);
+                let text = this.props.factor[0] + ': ' + formatted(val, stat, false);
                 let diff = <span className={className}>
-                        {formatted(diff_val, true)}
+                        {formatted(diff_val, stat, true)}
                 </span>;
                 return (<> {
                         text
