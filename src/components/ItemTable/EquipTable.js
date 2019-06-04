@@ -54,9 +54,12 @@ class BonusLine extends React.Component {
                                 : '';
                         let stat = this.props.factor[0];
                         if (stat === 'Power' || stat === 'Toughness') {
-                                return pf + val.toLocaleString(undefined, {maximumFractionDigits: 2}) + (
+                                return pf + (
                                         d
-                                        ? ')'
+                                        ? val
+                                        : 100 * val).toLocaleString(undefined, {maximumFractionDigits: 2}) + (
+                                        d
+                                        ? '%)'
                                         : '');
                         }
                         if (stat === 'Respawn') {
