@@ -4,7 +4,7 @@ import ReactTooltip from 'react-tooltip'
 import Item from '../Item/Item'
 import {Equip, Factors, EmptySlot, Slot} from '../../assets/ItemAux'
 import './ItemTable.css';
-import {format_number, score_product, add_equip} from '../../util'
+import {score_product, add_equip} from '../../util'
 
 import {default as SaveButtons} from './SaveButtons'
 
@@ -44,35 +44,73 @@ class BonusLine extends React.Component {
         render() {
                 let val = score_product(this.props.equip, this.props.factor[1]);
                 let old = score_product(this.props.savedequip, this.props.factor[1]);
-                let text = 'x';
                 let diff_val;
+                const formatted = (val, d) => {
+                        let pf = d
+                                ? (
+                                        diff_val >= 0
+                                        ? '(+'
+                                        : '(')
+                                : '';
+                        let stat = this.props.factor[0];
+                        if (stat === 'Power' || stat === 'Toughness') {
+                                return pf + val.toLocaleString(undefined, {maximumFractionDigits: 2}) + (
+                                        d
+                                        ? ')'
+                                        : '');
+                        }
+                        if (stat === 'Respawn') {
+                                return pf + val.toLocaleString(undefined, {maximumFractionDigits: 2}) + (
+                                        d
+                                        ? 'pp)'
+                                        : '% reduction');
+                        }
+                        pf = d
+                                ? pf
+                                : '×';
+                        if (val < 100000) {
+                                return pf + val.toLocaleString(undefined, {maximumFractionDigits: 2}) + (
+                                        d
+                                        ? '%)'
+                                        : '');
+                        }
+                        let units = [
+                                'k',
+                                'M',
+                                'B',
+                                'T',
+                                'Qa',
+                                'Qi',
+                                'Sx',
+                                'Sp',
+                                'Oc',
+                                'No',
+                                'Dc'
+                        ];
+                        let order = Math.floor(Math.log(val / 10) / Math.log(1000));
+                        let unitname = units[(order - 1)];
+                        let num = val / 1000 ** order;
+                        return pf + num.toLocaleString(undefined, {maximumFractionDigits: 2}) + unitname + (
+                                d
+                                ? '%)'
+                                : '');
+                };
                 if (this.props.factor[0] === Factors.RESPAWN[0]) {
                         val *= 100;
                         old *= 100;
                         diff_val = val - old;
-                        text = '% reduction';
                 } else {
                         diff_val = 100 * (val / old - 1);
                 }
                 let className = this.diffclass(old, val);
-                text = this.props.factor[0] + ': ' + format_number(val) + text + ' (';
+                let text = this.props.factor[0] + ': ' + formatted(val);
                 let diff = <span className={className}>
-                        {
-                                (
-                                        diff_val >= 0
-                                        ? '+'
-                                        : '') + format_number(diff_val) + (
-                                        this.props.factor[0] === Factors.RESPAWN[0]
-                                        ? 'pp'
-                                        : '%')
-                        }
+                        {formatted(diff_val, true)}
                 </span>;
                 return (<> {
                         text
                 } {
                         diff
-                } {
-                        ')'
                 }<br/></>);
         }
 }

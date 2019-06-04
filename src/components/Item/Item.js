@@ -30,15 +30,21 @@ export default class Item extends Component {
                 }
                 let tt = item.name + ' lvl ' + item.level + '<br />';
                 item.statnames.map((stat, idx) => {
-                        tt += '<br />' + stat + ': ' + item[stat];
+                        const formatted = (val) => {
+                                if (stat === 'Power' || stat === 'Toughness') {
+                                        return val.toLocaleString(undefined, {maximumFractionDigits: 2});
+                                }
+                                return val.toLocaleString(undefined, {maximumFractionDigits: 2}) + '%';
+                        };
+                        tt += '<br />' + stat + ': ' + formatted(item[stat]);
                         return undefined;
                 })
                 classNames += item.disable
                         ? ' disable-item '
                         : '';
                 return (<img className={classNames} onClick={() => this.props.handleClickItem(item.name)} onContextMenu={(e) => {
-                        this.props.handleRightClickItem(item.name);
-                        e.preventDefault();
+                                this.props.handleRightClickItem(item.name);
+                                e.preventDefault();
                         }} data-tip={tt} src={images[item.name]} alt={item.name} key='item'/>);
         }
 }

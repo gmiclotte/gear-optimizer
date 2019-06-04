@@ -260,13 +260,6 @@ export function gear_slot(names, list, type, equip, zone, titan, titanversion) {
         }).map((name) => (list[name])).filter((item) => (!item.disable && !equiped.includes(item.name)));
 }
 
-export function format_number(n, d = 2) {
-        if (n < 10000) {
-                return n.toFixed(d);
-        }
-        return n.toExponential(d);
-}
-
 export function clone(obj) {
         let copy;
         // Handle the 3 simple types, and null or undefined
