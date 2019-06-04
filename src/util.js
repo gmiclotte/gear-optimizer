@@ -8,6 +8,7 @@ export function get_zone(zone) {
 
 export function get_max_zone(zone) {
         let maxzone = 1;
+        /* eslint-disable-next-line array-callback-return */
         Object.getOwnPropertyNames(SetName).map(x => {
                 maxzone = SetName[x][1] > maxzone
                         ? SetName[x][1]
@@ -18,6 +19,7 @@ export function get_max_zone(zone) {
 
 export function get_max_titan(zone) {
         let maxtitan = 21;
+        /* eslint-disable-next-line array-callback-return */
         Object.getOwnPropertyNames(SetName).map(x => {
                 if (SetName[x].length === 3 && SetName[x][1] <= zone) {
                         maxtitan = maxtitan[1] > SetName[x][1]
@@ -118,9 +120,7 @@ export function compute_optimal(item_names, items, factor, totalslots, maxslots,
                                 s.push(accs.length);
                                 accs = pareto(accs, factor, accslots);
                                 s.push(accs.length);
-                                if (accs.length === 1 && accs[0].name === (new EmptySlot(accs[0].slot)).name) {
-                                        continue;
-                                } {
+                                {
                                         let everything = new Equip();
                                         for (let idx = 0; idx < accs.length; idx++) {
                                                 add_equip(everything, accs[idx]);
