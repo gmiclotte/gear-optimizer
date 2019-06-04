@@ -394,29 +394,36 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                         {
                                 const lc = window.localStorage.getItem(LOCALSTORAGE_NAME);
                                 const localStorageState = JSON.parse(lc);
-                                if (localStorageState) {
-                                        console.log(localStorageState.version, state.version)
-                                        // TODO: Validate local storage state.
-                                        if (localStorageState.version !== undefined && localStorageState.version === state.version) {
-                                                return {
-                                                        ...state,
-                                                        items: localStorageState.items,
-                                                        equip: localStorageState.equip,
-                                                        lastequip: localStorageState.lastequip,
-                                                        savedequip: localStorageState.savedequip,
-                                                        savedidx: localStorageState.savedidx,
-                                                        maxsavedidx: localStorageState.maxsavedidx,
-                                                        showsaved: localStorageState.showsaved,
-                                                        accslots: localStorageState.accslots,
-                                                        factors: localStorageState.factors,
-                                                        maxslots: localStorageState.maxslots,
-                                                        zone: localStorageState.zone,
-                                                        titanversion: localStorageState.titanversion,
-                                                        hidden: localStorageState.hidden
-                                                };
-                                        }
+                                if (!Boolean(localStorageState)) {
+                                        console.log('No local storage found. Loading fresh v' + state.version + ' state.');
+                                        return state;
                                 }
-                                return state;
+                                if (!Boolean(localStorageState.version)) {
+                                        console.log('No valid version information found. Loading fresh v' + state.version + ' state.');
+                                        return state;
+                                }
+                                // TODO: Validate local storage state.
+                                if (localStorageState.version !== state.version) {
+                                        console.log('Saved local storage is v' + localStorageState + ', incompatible with current version. Loading fresh v' + state.version + ' state.');
+                                        return state;
+                                }
+                                console.log('Loading saved v' + state.version + ' state.');
+                                return {
+                                        ...state,
+                                        items: localStorageState.items,
+                                        equip: localStorageState.equip,
+                                        lastequip: localStorageState.lastequip,
+                                        savedequip: localStorageState.savedequip,
+                                        savedidx: localStorageState.savedidx,
+                                        maxsavedidx: localStorageState.maxsavedidx,
+                                        showsaved: localStorageState.showsaved,
+                                        accslots: localStorageState.accslots,
+                                        factors: localStorageState.factors,
+                                        maxslots: localStorageState.maxslots,
+                                        zone: localStorageState.zone,
+                                        titanversion: localStorageState.titanversion,
+                                        hidden: localStorageState.hidden
+                                };
                         }
 
                 default:
