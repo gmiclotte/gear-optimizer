@@ -104,15 +104,22 @@ class BonusLine extends React.Component {
                 } else {
                         diff_val = 100 * (val / old - 1);
                 }
-                let className = this.diffclass(old, val);
-                let text = this.props.factor[0] + ': ' + formatted(val, stat, false);
-                let diff = <span className={className}>
+                let classNameDiff = this.diffclass(old, val);
+                let diff = (<span className={classNameDiff}>
                         {formatted(diff_val, stat, true)}
-                </span>;
+                </span>);
+                let className;
+                for (let idx = 0; idx < this.props.factors.length; idx++) {
+                        if (stat === Factors[this.props.factors[idx]][0]) {
+                                className = ' priority-stat';
+                                break;
+                        }
+                }
+                let text = (<span className={className}>
+                        {this.props.factor[0] + ': ' + formatted(val, stat, false)}
+                        {diff}</span>);
                 return (<> {
                         text
-                } {
-                        diff
                 }<br/></>);
         }
 }
@@ -187,7 +194,7 @@ export default class EquipTable extends React.Component {
                                         Object.getOwnPropertyNames(Factors).map((factor) => (
                                                 factor === 'NONE'
                                                 ? <div key={factor}/>
-                                                : <BonusLine equip={equip} savedequip={savedequip} factor={Factors[factor]} key={factor}/>))
+                                                : <BonusLine equip={equip} savedequip={savedequip} factor={Factors[factor]} factors={this.props.factors} key={factor}/>))
                                 }
                         </div>);
                 } {

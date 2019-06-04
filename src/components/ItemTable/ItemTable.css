@@ -35,3 +35,7 @@
 .decrease-stat {
         color: red;
 }
+
+.priority-stat {
+        font-weight: bold;
+}

@@ -207,6 +207,24 @@ export const Factors = {
                 'Quest Drop',
                 [Stat.QUEST_DROP]
         ],
+        ENERGY_POWER: [
+                'Energy Power',
+                [Stat.ENERGY_POWER]
+        ],
+        MAGIC_POWER: [
+                'Magic Power',
+                [Stat.MAGIC_POWER]
+        ],
+        RES3_POWER: [
+                'R3 Power',
+                [Stat.RES3_POWER]
+        ],
+        TIMEMACHINE: [
+                'Time Machine',
+                [
+                        Stat.ENERGY_CAP, Stat.ENERGY_POWER, Stat.MAGIC_CAP, Stat.MAGIC_POWER
+                ]
+        ],
         WANDOOS: [
                 'Wandoos',
                 [
