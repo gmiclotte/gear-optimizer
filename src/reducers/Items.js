@@ -367,7 +367,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                         return state.savedequip[index + 1];
                                                 }
                                                 return equip;
-                                        }),
+                                        }).filter(x => x !== undefined),
                                         savedidx: state.savedidx - (
                                                 state.savedidx === state.maxsavedidx
                                                 ? 1
