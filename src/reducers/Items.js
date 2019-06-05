@@ -48,6 +48,7 @@ const INITIAL_STATE = {
         items: ITEMS,
         equip: EQUIP,
         lastequip: EQUIP,
+        lastslots: accslots,
         savedequip: [EQUIP],
         savedidx: 0,
         maxsavedidx: 0,
@@ -84,15 +85,16 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         let slot = Slot.ACCESSORY;
                                         let equip = clone(state.equip);
                                         if (action.payload.val === -1) {
-                                                delete equip[slot[0] + (state[action.payload.name] - 1)];
+                                                delete equip[slot[0] + (state.accslots - 1)];
                                                 equip.names.pop();
                                                 return {
                                                         ...state,
-                                                        [action.payload.name]: state[action.payload.name] + action.payload.val,
+                                                        accslots: state.accslots + action.payload.val,
                                                         equip: equip,
                                                         lastequip: state.equip,
+                                                        lastslots: state.accslots,
                                                         maxslots: state.maxslots.map((val, index) => {
-                                                                if (val === state[action.payload.name]) {
+                                                                if (val === state.accslots) {
                                                                         return val + action.payload.val;
                                                                 }
                                                                 return val;
@@ -101,14 +103,14 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         }
                                         if (action.payload.val === 1) {
                                                 let names = clone(state.equip.names);
-                                                names.push(slot[0] + state[action.payload.name]);
+                                                names.push(slot[0] + state.accslots);
                                                 return {
                                                         ...state,
-                                                        [action.payload.name]: state[action.payload.name] + action.payload.val,
+                                                        accslots: state.accslots + action.payload.val,
                                                         equip: {
                                                                 ...equip,
                                                                 names: names,
-                                                                [slot[0] + state[action.payload.name]]: new EmptySlot(slot)
+                                                                [slot[0] + state.accslots]: new EmptySlot(slot)
                                                         }
                                                 }
                                         }
@@ -236,7 +238,8 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                         disable: false
                                                 }
                                         },
-                                        lastequip: state.equip
+                                        lastequip: state.equip,
+                                        lastslots: state.accslots
                                 };
                         }
 
@@ -250,12 +253,21 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         }
                                 }
                         }
+
                 case UNDO:
                         {
                                 return {
                                         ...state,
                                         equip: state.lastequip,
-                                        lastequip: state.equip
+                                        accslots: state.lastslots,
+                                        maxslots: state.maxslots.map((val, index) => {
+                                                if (val > state.lastslots) {
+                                                        return state.lastslots;
+                                                }
+                                                return val;
+                                        }),
+                                        lastequip: state.equip,
+                                        lastslots: state.accslots
                                 }
                         }
 
@@ -288,10 +300,23 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         return state;
                                 }
                                 console.log('worker finished')
+                                const equip = action.payload.equip;
+                                let accslots = equip.names.reduce((slots, x) => (slots + (
+                                        x.includes('Accessory')
+                                        ? 1
+                                        : 0)), 0);
                                 return {
                                         ...state,
-                                        equip: action.payload.equip,
+                                        equip: equip,
+                                        accslots: accslots,
+                                        maxslots: state.maxslots.map((val, index) => {
+                                                if (val > accslots) {
+                                                        return accslots;
+                                                }
+                                                return val;
+                                        }),
                                         lastequip: state.equip,
+                                        lastslots: state.accslots,
                                         running: false
                                 };
                         }
@@ -310,7 +335,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
 
                 case TERMINATE:
                         {
-                                console.log('terminated worker')
+                                console.log('terminated worker');
                                 return {
                                         ...state,
                                         running: false
@@ -326,7 +351,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 };
                                         }
                                         return equip;
-                                })
+                                });
                                 if (state.savedidx === state.maxsavedidx) {
                                         if (state.savedidx + 1 >= saved.length) {
                                                 saved.push(EQUIP)
@@ -346,9 +371,21 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
 
                 case LOAD_SLOT:
                         {
+                                const save = state.savedequip[state.savedidx];
+                                let accslots = save.names.reduce((slots, x) => (slots + (
+                                        x.includes('Accessory')
+                                        ? 1
+                                        : 0)), 0);
                                 return {
                                         ...state,
-                                        equip: state.savedequip[state.savedidx]
+                                        equip: save,
+                                        accslots: accslots,
+                                        maxslots: state.maxslots.map((val, index) => {
+                                                if (val > accslots) {
+                                                        return accslots;
+                                                }
+                                                return val;
+                                        })
                                 }
                         }
 
@@ -414,7 +451,6 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         ...state,
                                         items: localStorageState.items,
                                         equip: localStorageState.equip,
-                                        lastequip: localStorageState.lastequip,
                                         savedequip: localStorageState.savedequip,
                                         savedidx: localStorageState.savedidx,
                                         maxsavedidx: localStorageState.maxsavedidx,
