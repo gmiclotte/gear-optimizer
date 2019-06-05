@@ -991,7 +991,7 @@ export const ITEMLIST = [
         [Stat.MAGIC_CAP, 720],
     ]),
     new Item('Clown Hat', Slot.HEAD, SetName.PINK, 100, [
-        [Stat.POWER, 12000],
+        [Stat.POWER, 120000],
         [Stat.TOUGHNESS, 1484000],
         [Stat.MAGIC_POWER, 11000],
         [Stat.ENERGY_CAP, 1100],
@@ -1095,7 +1095,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 16000],
         [Stat.MAGIC_POWER, 16000],
         [Stat.MAGIC_CAP, 1000],
-        [Stat.ENERGY_BARS, 16000],
+        [Stat.ENERGY_BARS, 12000],
     ]),
     new Item('The D8', Slot.ACCESSORY, SetName.NERD2, 100, [
         [Stat.POWER, 500000],
