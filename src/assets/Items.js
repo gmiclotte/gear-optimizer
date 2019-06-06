@@ -1,5 +1,11 @@
-import {Item, Stat, Slot, SetName} from './ItemAux'
+import {EmptySlot, Item, Stat, Slot, SetName} from './ItemAux'
 export const ITEMLIST = [
+    new EmptySlot(Slot.WEAPON),
+    new EmptySlot(Slot.HEAD),
+    new EmptySlot(Slot.CHEST),
+    new EmptySlot(Slot.PANTS),
+    new EmptySlot(Slot.BOOTS),
+    new EmptySlot(Slot.ACCESSORY),
     new Item('A triangle', Slot.WEAPON, SetName.TWO_D, 100, [
         [Stat.POWER, 9200],
         [Stat.TOUGHNESS, 600],
@@ -1633,3 +1639,7 @@ export const ITEMLIST = [
         [Stat.HACK_SPEED, 40],
     ]),
 ];
+
+
+export const LOOTIES = ITEMLIST.filter(x => x.zone !== undefined && x.zone[0] === SetName.LOOTY[0]).sort((a, b) => a.power - b.power).map(x=>x.name);
+export const PENDANTS = ITEMLIST.filter(x => x.zone !== undefined && x.zone[0] === SetName.FOREST_PENDANT[0]).sort((a, b) => a.power - b.power).map(x=>x.name);

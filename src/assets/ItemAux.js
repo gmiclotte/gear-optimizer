@@ -25,9 +25,9 @@ export function update_level(item, level) {
 export class EmptySlot extends Item {
         constructor(slot) {
                 if (slot === undefined) {
-                        super('Empty Slot', slot, undefined, 0, []);
+                        super('Empty Slot', slot, undefined, undefined, []);
                 } else {
-                        super('Empty ' + slot[0] + ' Slot', slot, undefined, 0, []);
+                        super('Empty ' + slot[0][0].toUpperCase() + slot[0].substring(1) + ' Slot', slot, undefined, undefined, []);
                 }
                 this.empty = true;
         }
@@ -64,38 +64,42 @@ export class ItemContainer {
         }
 }
 
-export const slotlist = (accslots) => {
-        let list = Object.getOwnPropertyNames(Slot).map((x) => ([
-                Slot[x][0] + 0,
-                new EmptySlot(Slot[x])
-        ])).filter((x) => (x[0] !== Slot.ACCESSORY[0] + 0));
-        let slot = Slot.ACCESSORY
-        for (let jdx = 0; jdx < accslots; jdx++) {
-                list.push([
-                        slot[0] + jdx,
-                        new EmptySlot(slot)
-                ]);
-        }
-        return list;
-}
+export const ItemNameContainer = (accslots) => {
+        let container = {};
+        const slotlist = Object.getOwnPropertyNames(Slot);
+        for (let idx in slotlist) {
+                const slot = slotlist[idx];
+                const slotname = Slot[slot][0];
+                let list = [];
+                if (slot === 'ACCESSORY') {
+                        for (let jdx = 0; jdx < accslots; jdx++) {
+                                list.push(new EmptySlot(Slot[slot]).name);
+                        }
+                } else {
+                        list.push(new EmptySlot(Slot[slot]).name);
+                }
+                container[slotname] = list;
+        };
+        return container;
+};
 
 export const Slot = {
         WEAPON: [
-                'Weapon', 0
+                'weapon', 0
         ],
         HEAD: [
-                'Head', 1
+                'head', 1
         ],
         CHEST: [
-                'Armor', 2
+                'armor', 2
         ],
         PANTS: [
-                'Pants', 3
+                'pants', 3
         ],
         BOOTS: [
-                'Boots', 4
+                'boots', 4
         ],
-        ACCESSORY: ['Accessory', 5]
+        ACCESSORY: ['accessory', 5]
 }
 
 export const Stat = {

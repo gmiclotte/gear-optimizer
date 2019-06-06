@@ -33,6 +33,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
+        itemdata: state.optimizer.itemdata,
         items: state.optimizer.items,
         equip: state.optimizer.equip,
         lastequip: state.optimizer.lastequip,
@@ -40,13 +41,14 @@ const mapStateToProps = state => ({
         savedidx: state.optimizer.savedidx,
         maxsavedidx: state.optimizer.maxsavedidx,
         showsaved: state.optimizer.showsaved,
-        accslots: state.optimizer.accslots,
         editItem: state.optimizer.editItem,
         factors: state.optimizer.factors,
         maxslots: state.optimizer.maxslots,
         running: state.optimizer.running,
         zone: state.optimizer.zone,
         titanversion: state.optimizer.titanversion,
+        looty: state.optimizer.looty,
+        pendant: state.optimizer.pendant,
         hidden: state.optimizer.hidden,
         version: state.optimizer.version
 });

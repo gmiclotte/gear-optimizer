@@ -2,9 +2,9 @@ import React from 'react';
 import ReactTooltip from 'react-tooltip'
 
 import Item from '../Item/Item'
-import {Equip, Factors, EmptySlot, Slot} from '../../assets/ItemAux'
+import {Factors, EmptySlot, Slot} from '../../assets/ItemAux'
 import './ItemTable.css';
-import {score_product, add_equip} from '../../util'
+import {score_equip} from '../../util'
 
 import {default as SaveButtons} from './SaveButtons'
 
@@ -92,9 +92,10 @@ class BonusLine extends React.Component {
                 }
                 return className;
         }
+
         render() {
-                let val = score_product(this.props.equip, this.props.factor[1]);
-                let old = score_product(this.props.savedequip, this.props.factor[1]);
+                let val = score_equip(this.props.itemdata, this.props.equip, this.props.factor[1]);
+                let old = score_equip(this.props.itemdata, this.props.savedequip, this.props.factor[1]);
                 let diff_val;
                 let stat = this.props.factor[0];
                 if (stat === 'Power' || stat === 'Toughness' || stat === 'Respawn') {
@@ -116,7 +117,7 @@ class BonusLine extends React.Component {
                         }
                 }
                 let text = (<span className={className}>
-                        {this.props.factor[0] + ': ' + formatted(val, stat, false)}
+                        {this.props.factor[0] + ': ' + formatted(val, stat, false) + ' '}
                         {diff}</span>);
                 return (<> {
                         text
@@ -129,101 +130,64 @@ export default class EquipTable extends React.Component {
                 ReactTooltip.rebuild();
         }
 
-        compute_equip(state) {
-                let equip = new Equip();
-                for (let idx = 0; idx < state.names.length; idx++) {
-                        const name = state.names[idx];
-                        const item = state[name];
-                        add_equip(equip, item);
+        render_equip(equip, prefix, compare, buffer, class_idx) {
+                let sorted = Object.getOwnPropertyNames(Slot).sort((a, b) => Slot[a][1] - Slot[b][1]).reduce((res, slot) => res.concat(equip[Slot[slot][0]]), []);
+                let localbuffer = [];
+                let last = new EmptySlot();
+                for (let idx = 0; idx < sorted.length; idx++) {
+                        const name = sorted[idx];
+                        const item = this.props.itemdata[name];
+                        const next = group(last, item, this.props.group);
+                        if (next && item.slot[0] === Slot.ACCESSORY[0]) {
+                                buffer.push(<div className='item-section' key={this.class_idx++}>
+                                        <span>{prefix + 'Outfit'}<br/></span>{localbuffer}
+                                </div>);
+                                localbuffer = [];
+                        }
+                        localbuffer.push(<Item item={item} handleClickItem={this.props.handleClickItem} handleRightClickItem={this.props.handleRightClickItem} key={name + idx}/>);
+                        last = item;
                 }
-                return equip;
+                buffer.push(<div className='item-section' key={this.class_idx++}>
+                        <span>{prefix + 'Accessories'}<br/></span>{localbuffer}
+                </div>);
+        }
+
+        render_conditional(condition, title, buffer) {
+                let sorted = this.props.items.filter((name) => (condition(name) && this.props.itemdata[name].level !== undefined));
+                let localbuffer = [];
+                for (let idx = 0; idx < sorted.length; idx++) {
+                        let name = sorted[idx];
+                        const item = this.props.itemdata[name];
+                        localbuffer.push(<Item item={item} handleClickItem={this.props.handleEquipItem} handleRightClickItem={this.props.handleRightClickItem} key={name}/>);
+                }
+                if (localbuffer.length > 0) {
+                        buffer.push(<div className='item-section' key={this.class_idx++}>
+                                <span>{title}<br/></span>{localbuffer}
+                        </div>);
+                }
         }
 
         render() {
-                //TODO: sorting on every change seems very inefficient
+                //TODO: sorting on every change is very inefficient
                 let buffer = [];
-                let class_idx = 0;
-                {
-                        let compare = compare_factory(this.props.group)(this.props[this.props.type]);
-                        let sorted = [...this.props.equip.names].sort(compare);
-                        let localbuffer = [];
-                        let last = new EmptySlot();
-                        for (let idx = 0; idx < sorted.length; idx++) {
-                                let name = sorted[idx];
-                                const item = this.props[this.props.type][name];
-                                let next = group(last, item, this.props.group);
-                                if (next && item.slot[0] === Slot.ACCESSORY[0]) {
-                                        buffer.push(<div className='item-section' key={class_idx++}>
-                                                <span>{'Outfit'}<br/></span>{localbuffer}
-                                        </div>);
-                                        localbuffer = [];
-                                }
-                                localbuffer.push(<Item item={item} handleClickItem={this.props.handleClickItem} handleRightClickItem={this.props.handleRightClickItem} key={name}/>);
-                                last = item;
-                        }
-                        buffer.push(<div className='item-section' key={class_idx++}>
-                                <span>{'Accessories'}<br/></span>{localbuffer}
-                        </div>);
-                }
+                this.class_idx = 0;
+                const compare = compare_factory(this.props.group)(this.props.itemdata);
+                const equip = this.props.equip;
+                const savedequip = this.props.savedequip[this.props.savedidx];
+                this.render_equip(equip, '', compare, buffer);
                 buffer.push(<SaveButtons {...this.props} key='savebuttons'/>)
                 if (this.props.showsaved) {
-                        let compare = compare_factory(this.props.group)(this.props[this.props.type]);
-                        let sorted = [...this.props.savedequip[this.props.savedidx].names].sort(compare);
-                        let localbuffer = [];
-                        let last = new EmptySlot();
-                        for (let idx = 0; idx < sorted.length; idx++) {
-                                let name = sorted[idx];
-                                const item = this.props.savedequip[this.props.savedidx][name];
-                                let next = group(last, item, this.props.group);
-                                if (next && item.slot[0] === Slot.ACCESSORY[0]) {
-                                        buffer.push(<div className='item-section' key={class_idx++}>
-                                                <span>{'Saved outfit'}<br/></span>{localbuffer}
-                                        </div>);
-                                        localbuffer = [];
-                                }
-                                localbuffer.push(<Item item={item} handleClickItem={this.props.handleClickItem} handleRightClickItem={this.props.handleRightClickItem} key={name}/>);
-                                last = item;
-                        }
-                        buffer.push(<div className='item-section' key={class_idx++}>
-                                <span>{'Saved Accessories'}<br/></span>{localbuffer}
-                        </div>);
-                } {
-                        let equip = this.compute_equip(this.props.equip)
-                        let savedequip = this.compute_equip(this.props.savedequip[this.props.savedidx]);
-                        buffer.push(<div className='item-section' key='stats'>{'Gear stats (change w.r.t. save slot)'}<br/><br/> {
-                                        Object.getOwnPropertyNames(Factors).map((factor) => (
-                                                factor === 'NONE'
-                                                ? <div key={factor}/>
-                                                : <BonusLine equip={equip} savedequip={savedequip} factor={Factors[factor]} factors={this.props.factors} key={factor}/>))
-                                }
-                        </div>);
-                } {
-                        let sorted = this.props.items.names.filter((name) => (this.props.items[name].level !== 100));
-                        let localbuffer = [];
-                        for (let idx = 0; idx < sorted.length; idx++) {
-                                let name = sorted[idx];
-                                const item = this.props.items[name];
-                                localbuffer.push(<Item item={item} handleClickItem={this.props.handleRightClickItem} handleRightClickItem={this.props.handleRightClickItem} key={name}/>);
-                        }
-                        if (localbuffer.length > 0) {
-                                buffer.push(<div className='item-section' key={class_idx++}>
-                                        <span>{'Not maxed'}<br/></span>{localbuffer}
-                                </div>);
-                        }
-                } {
-                        let sorted = this.props.items.names.filter((name) => (this.props.items[name].disable));
-                        let localbuffer = [];
-                        for (let idx = 0; idx < sorted.length; idx++) {
-                                let name = sorted[idx];
-                                const item = this.props.items[name];
-                                localbuffer.push(<Item item={item} handleClickItem={this.props.handleRightClickItem} handleRightClickItem={this.props.handleRightClickItem} key={name}/>);
-                        }
-                        if (localbuffer.length > 0) {
-                                buffer.push(<div className='item-section' key={class_idx++}>
-                                        <span>{'Disabled'}<br/></span>{localbuffer}
-                                </div>);
-                        }
+                        this.render_equip(savedequip, 'Saved ', compare, buffer);
                 }
+                buffer.push(<div className='item-section' key='stats'>{'Gear stats (change w.r.t. save slot)'}<br/><br/> {
+                                Object.getOwnPropertyNames(Factors).map((factor) => (
+                                        factor === 'NONE'
+                                        ? <div key={factor}/>
+                                        : <BonusLine itemdata={this.props.itemdata} equip={equip} savedequip={savedequip} factor={Factors[factor]} factors={this.props.factors} key={factor}/>))
+                        }
+                </div>);
+                this.render_conditional(name => this.props.itemdata[name].level !== 100, 'Not maxed', buffer);
+                this.render_conditional(name => this.props.itemdata[name].disable, 'Disabled', buffer);
                 return (<div className='item-table'>
                         {buffer}
                 </div>);
