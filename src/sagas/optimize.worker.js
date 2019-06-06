@@ -8,6 +8,7 @@ import {
         slotlist
 } from '../assets/ItemAux'
 import {clone, compute_optimal, get_limits} from '../util'
+import {Optimizer} from '../Optimizer'
 
 // eslint-disable-next-line
 self.addEventListener("message", optimize);
@@ -22,7 +23,8 @@ function optimize(e) {
                 let factorname = state.factors[idx]
                 let factor = Factors[factorname][1];
                 let maxslots = state.maxslots[idx];
-                base_layout = compute_optimal(state.items, state.itemdata, factor, accslots, maxslots, base_layout, limits);
+                let optimizer = new Optimizer(state);
+                base_layout = optimizer.compute_optimal(state.items, factor, accslots, maxslots, base_layout, limits);
         }
         base_layout = base_layout[Math.floor(Math.random() * base_layout.length)];
         let equip = ItemNameContainer(accslots);
