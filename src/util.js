@@ -1,4 +1,42 @@
 import {Slot, EmptySlot, Equip, SetName} from './assets/ItemAux'
+import {LOOTIES, PENDANTS} from './assets/Items'
+
+export function get_limits(state) {
+        return {
+                zone: state.zone,
+                titan: get_max_titan(state.zone),
+                titanversion: state.titanversion,
+                looty: state.looty,
+                pendant: state.pendant
+        }
+}
+
+export function allowed_zone(itemdata, limits, name) {
+        const zone = limits.zone;
+        const titan = limits.titan;
+        const titanversion = limits.titanversion;
+        const looty = limits.looty;
+        const pendant = limits.pendant;
+        const item = itemdata[name];
+        if (item.empty) {
+                return false;
+        }
+        if (item.zone[1] > zone) {
+                // zone too high
+                return false;
+        }
+        if (item.zone[1] === titan[1] && item.zone[2] > titanversion) {
+                // titan version too high
+                return false;
+        }
+        if (item.zone[0] === SetName.LOOTY[0] && LOOTIES.indexOf(name) > looty) {
+                return false;
+        }
+        if (item.zone[0] === SetName.FOREST_PENDANT[0] && PENDANTS.indexOf(name) > pendant) {
+                return false;
+        }
+        return true;
+}
 
 export function get_zone(zone) {
         return SetName[Object.getOwnPropertyNames(SetName).filter(x => {
@@ -78,11 +116,10 @@ function filter_duplicates(optimal) {
         return filtered;
 }
 
-export function compute_optimal(item_names, items, factor, totalslots, maxslots, base_layouts, zone, titanversion) {
+export function compute_optimal(item_names, items, factor, totalslots, maxslots, base_layouts, limits) {
         if (factor.length === 0) {
                 return base_layouts;
         }
-        const titan = get_max_titan(zone);
         let optimal = clone(base_layouts);
         /* eslint-disable-next-line array-callback-return */
         optimal.map((x) => {
@@ -95,6 +132,7 @@ export function compute_optimal(item_names, items, factor, totalslots, maxslots,
                 for (let layout = 0; layout < base_layouts.length; layout++) {
                         const base_layout = base_layouts[layout];
                         let accslots = totalslots - base_layout.counts['accessory'];
+                        console.log('layout', base_layout)
                         accslots = maxslots < accslots
                                 ? maxslots
                                 : accslots;
@@ -107,16 +145,17 @@ export function compute_optimal(item_names, items, factor, totalslots, maxslots,
                                         return false;
                                 }
                                 return true;
-                        }).map((x) => (gear_slot(item_names, items, Slot[x], base_layout, zone, titan, titanversion)));
+                        }).map((x) => (gear_slot(item_names, items, Slot[x], base_layout, limits)));
                         let s = [options.map((x) => (x.length)).reduce((a, b) => (a * b), 1)];
                         let remaining = options.map((x) => (pareto(x, factor)));
                         s.push(remaining.map((x) => (x.length)).reduce((a, b) => (a * b), 1));
                         let layouts = outfits(remaining, base_layout);
                         layouts = pareto(layouts, factor);
                         s.push(layouts.length);
+                        console.log(acc_layouts)
                         // find all possible accessories
                         if (acc_layouts[accslots] === undefined) {
-                                let accs = gear_slot(item_names, items, Slot.ACCESSORY, base_layout, zone, titan, titanversion);
+                                let accs = gear_slot(item_names, items, Slot.ACCESSORY, base_layout, limits);
                                 s.push(accs.length);
                                 accs = pareto(accs, factor, accslots);
                                 s.push(accs.length);
@@ -241,23 +280,14 @@ export function score_product(equip, stats, add_one = false) {
         return score;
 }
 
-export function gear_slot(names, list, type, equip, zone, titan, titanversion) {
+export function gear_slot(names, itemdata, type, equip, limits) {
         const equiped = equip.items.filter((item) => (item.slot[0] === type[0])).map((x) => (x.name));
         return names.filter((name) => {
-                if (list[name].empty) {
+                if (!allowed_zone(itemdata, limits, name)) {
                         return false;
                 }
-                if (list[name].zone[1] > zone) {
-                        // zone too high
-                        return false;
-                }
-                if (list[name].zone[1] === titan[1] && list[name].zone[2] > titanversion) {
-                        // titan version too high
-                        return false;
-                }
-
-                return list[name].slot[0] === type[0];
-        }).map((name) => (list[name])).filter((item) => (!item.disable && !equiped.includes(item.name)));
+                return itemdata[name].slot[0] === type[0];
+        }).map((name) => (itemdata[name])).filter((item) => (!item.disable && !equiped.includes(item.name)));
 }
 
 export function clone(obj) {

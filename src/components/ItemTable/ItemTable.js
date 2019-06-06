@@ -2,6 +2,7 @@ import React from 'react';
 import ReactTooltip from 'react-tooltip'
 
 import Item from '../Item/Item'
+import {allowed_zone, get_limits} from '../../util'
 
 import './ItemTable.css';
 
@@ -67,6 +68,7 @@ export default class ItemTable extends React.Component {
                 //TODO: sorting on every change is very inefficient
                 let buffer = [];
                 let class_idx = 0;
+                const limits = get_limits(this.props);
                 {
                         const compare = compare_factory(this.props.group)(this.props.itemdata);
                         const sorted = this.props.items.sort(compare);
@@ -81,7 +83,7 @@ export default class ItemTable extends React.Component {
                                 if (next) {
                                         class_idx = this.create_section(buffer, last, class_idx)
                                 }
-                                if (item.zone[1] <= this.props.zone && (item.zone[1] !== this.props.maxtitan[1] || item.zone[2] <= this.props.titanversion)) {
+                                if (allowed_zone(this.props.itemdata, limits, name)) {
                                         this.localbuffer.push(<Item item={item} handleClickItem={this.props.handleClickItem} handleRightClickItem={this.props.handleRightClickItem} key={name}/>);
                                 }
                                 last = item;

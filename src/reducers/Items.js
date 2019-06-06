@@ -62,6 +62,8 @@ const INITIAL_STATE = {
         ],
         running: false,
         zone: maxZone,
+        looty: 4,
+        pendant: 6,
         titanversion: 1,
         hidden: zoneDict,
         version: '1.0.1'
@@ -447,6 +449,8 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         maxslots: localStorageState.maxslots,
                                         zone: localStorageState.zone,
                                         titanversion: localStorageState.titanversion,
+                                        looty: localStorageState.looty,
+                                        pendant: localStorageState.pendant,
                                         hidden: localStorageState.hidden
                                 };
                         }

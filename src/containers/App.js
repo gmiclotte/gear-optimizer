@@ -47,6 +47,8 @@ const mapStateToProps = state => ({
         running: state.optimizer.running,
         zone: state.optimizer.zone,
         titanversion: state.optimizer.titanversion,
+        looty: state.optimizer.looty,
+        pendant: state.optimizer.pendant,
         hidden: state.optimizer.hidden,
         version: state.optimizer.version
 });

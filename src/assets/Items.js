@@ -1639,3 +1639,7 @@ export const ITEMLIST = [
         [Stat.HACK_SPEED, 40],
     ]),
 ];
+
+
+export const LOOTIES = ITEMLIST.filter(x => x.zone !== undefined && x.zone[0] === SetName.LOOTY[0]).sort((a, b) => a.power - b.power).map(x=>x.name);
+export const PENDANTS = ITEMLIST.filter(x => x.zone !== undefined && x.zone[0] === SetName.FOREST_PENDANT[0]).sort((a, b) => a.power - b.power).map(x=>x.name);
