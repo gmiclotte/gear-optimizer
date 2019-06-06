@@ -1,5 +1,5 @@
 import {Slot, EmptySlot, Equip, SetName} from './assets/ItemAux'
-import {allowed_zone, score_product, clone} from './util.js'
+import {allowed_zone, score_product, clone, get_limits} from './util.js'
 
 export class Optimizer {
         constructor(state, factor, accslots, maxslots) {
@@ -7,6 +7,7 @@ export class Optimizer {
                 this.factor = factor;
                 this.accslots = accslots;
                 this.maxslots = maxslots;
+                this.limits = get_limits(state);
         }
 
         top_scorers(optimal) {
@@ -57,7 +58,7 @@ export class Optimizer {
                 return filtered;
         }
 
-        compute_optimal(item_names, base_layouts, limits) {
+        compute_optimal(item_names, base_layouts) {
                 if (this.factor.length === 0) {
                         return base_layouts;
                 }
@@ -86,7 +87,7 @@ export class Optimizer {
                                                 return false;
                                         }
                                         return true;
-                                }).map((x) => (this.gear_slot(item_names, Slot[x], base_layout, limits)));
+                                }).map((x) => (this.gear_slot(item_names, Slot[x], base_layout)));
                                 let s = [options.map((x) => (x.length)).reduce((a, b) => (a * b), 1)];
                                 let remaining = options.map((x) => (this.pareto(x)));
                                 s.push(remaining.map((x) => (x.length)).reduce((a, b) => (a * b), 1));
@@ -96,7 +97,7 @@ export class Optimizer {
                                 console.log(acc_layouts)
                                 // find all possible accessories
                                 if (acc_layouts[accslots] === undefined) {
-                                        let accs = this.gear_slot(item_names, Slot.ACCESSORY, base_layout, limits);
+                                        let accs = this.gear_slot(item_names, Slot.ACCESSORY, base_layout);
                                         s.push(accs.length);
                                         accs = this.pareto(accs, accslots);
                                         s.push(accs.length);
@@ -207,10 +208,10 @@ export class Optimizer {
                 return tmp;
         };
 
-        gear_slot(names, type, equip, limits) {
+        gear_slot(names, type, equip) {
                 const equiped = equip.items.filter((item) => (item.slot[0] === type[0])).map((x) => (x.name));
                 return names.filter((name) => {
-                        if (!allowed_zone(this.itemdata, limits, name)) {
+                        if (!allowed_zone(this.itemdata, this.limits, name)) {
                                 return false;
                         }
                         return this.itemdata[name].slot[0] === type[0];

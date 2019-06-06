@@ -1,13 +1,4 @@
-import {
-        ItemNameContainer,
-        Equip,
-        Slot,
-        EmptySlot,
-        Factors,
-        update_level,
-        slotlist
-} from '../assets/ItemAux'
-import {clone, compute_optimal, get_limits} from '../util'
+import {ItemNameContainer, Equip, Slot, Factors} from '../assets/ItemAux'
 import {Optimizer} from '../Optimizer'
 
 // eslint-disable-next-line
@@ -18,13 +9,12 @@ function optimize(e) {
         let state = e.data.state;
         const accslots = state.equip.accessory.length;
         let base_layout = [new Equip()];
-        let limits = get_limits(state);
         for (let idx = 0; idx < state.factors.length; idx++) {
                 let factorname = state.factors[idx]
                 let factor = Factors[factorname][1];
                 let maxslots = state.maxslots[idx];
                 let optimizer = new Optimizer(state, factor, accslots, maxslots);
-                base_layout = optimizer.compute_optimal(state.items, base_layout, limits);
+                base_layout = optimizer.compute_optimal(state.items, base_layout);
         }
         base_layout = base_layout[Math.floor(Math.random() * base_layout.length)];
         let equip = ItemNameContainer(accslots);
