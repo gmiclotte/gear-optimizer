@@ -2,9 +2,11 @@ import {Slot, EmptySlot, Equip, SetName} from './assets/ItemAux'
 import {allowed_zone, score_product, clone} from './util.js'
 
 export class Optimizer {
-        constructor(state, factor) {
+        constructor(state, factor, accslots, maxslots) {
                 this.itemdata = state.itemdata;
                 this.factor = factor;
+                this.accslots = accslots;
+                this.maxslots = maxslots;
         }
 
         top_scorers(optimal) {
@@ -55,7 +57,7 @@ export class Optimizer {
                 return filtered;
         }
 
-        compute_optimal(item_names, totalslots, maxslots, base_layouts, limits) {
+        compute_optimal(item_names, base_layouts, limits) {
                 if (this.factor.length === 0) {
                         return base_layouts;
                 }
@@ -70,10 +72,10 @@ export class Optimizer {
                         let acc_layouts = {};
                         for (let layout = 0; layout < base_layouts.length; layout++) {
                                 const base_layout = base_layouts[layout];
-                                let accslots = totalslots - base_layout.counts['accessory'];
+                                let accslots = this.accslots - base_layout.counts['accessory'];
                                 console.log('layout', base_layout)
-                                accslots = maxslots < accslots
-                                        ? maxslots
+                                accslots = this.maxslots < accslots
+                                        ? this.maxslots
                                         : accslots;
                                 // find all possible items that can be equiped in main slots
                                 let options = Object.getOwnPropertyNames(Slot).filter((x) => {
