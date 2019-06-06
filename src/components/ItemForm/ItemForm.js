@@ -35,7 +35,7 @@ export default class ItemForm extends React.Component {
 
         render() {
                 let able = 'Disable';
-                if (this.props.items[this.props.editItem[1]] !== undefined && this.props.items[this.props.editItem[1]].disable) {
+                if (this.props.itemdata[this.props.editItem[1]] !== undefined && this.props.itemdata[this.props.editItem[1]].disable) {
                         able = 'Enable'
                 }
                 return (<form onSubmit={this.handleSubmit}>
