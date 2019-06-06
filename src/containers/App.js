@@ -24,7 +24,7 @@ import {SaveStateLocalStorage} from '../actions/SaveStateLocalStorage';
 import '../stylesheets/App.css';
 
 class App extends Component {
-        componentDidMount = () => this.props.handleLoadStateLocalStorage();
+        //componentDidMount = () => this.props.handleLoadStateLocalStorage();
         componentDidUpdate = () => this.props.handleSaveStateLocalStorage(this.props);
 
         render() {
@@ -33,6 +33,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
+        itemdata: state.optimizer.itemdata,
         items: state.optimizer.items,
         equip: state.optimizer.equip,
         lastequip: state.optimizer.lastequip,
@@ -40,7 +41,6 @@ const mapStateToProps = state => ({
         savedidx: state.optimizer.savedidx,
         maxsavedidx: state.optimizer.maxsavedidx,
         showsaved: state.optimizer.showsaved,
-        accslots: state.optimizer.accslots,
         editItem: state.optimizer.editItem,
         factors: state.optimizer.factors,
         maxslots: state.optimizer.maxslots,

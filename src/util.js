@@ -94,13 +94,13 @@ export function compute_optimal(item_names, items, factor, totalslots, maxslots,
                 let acc_layouts = {};
                 for (let layout = 0; layout < base_layouts.length; layout++) {
                         const base_layout = base_layouts[layout];
-                        let accslots = totalslots - base_layout.counts['Accessory'];
+                        let accslots = totalslots - base_layout.counts['accessory'];
                         accslots = maxslots < accslots
                                 ? maxslots
                                 : accslots;
                         // find all possible items that can be equiped in main slots
                         let options = Object.getOwnPropertyNames(Slot).filter((x) => {
-                                if (Slot[x][0] === 'Accessory') {
+                                if (Slot[x][0] === 'accessory') {
                                         return false;
                                 }
                                 if (base_layout.counts[Slot[x][0]] > 0) {
@@ -136,7 +136,7 @@ export function compute_optimal(item_names, items, factor, totalslots, maxslots,
                         }
                         console.log('Processing ' + s[2] + ' out of ' + s[1] + ' out of ' + s[0] + ' gear layouts.');
                         for (let idx in layouts) {
-                                console.log(s[4]);
+                                console.log(acc_layouts[accslots].length);
                                 for (let jdx in acc_layouts[accslots]) {
                                         let candidate = clone(layouts[idx]);
                                         let acc_candidate = acc_layouts[accslots][jdx];

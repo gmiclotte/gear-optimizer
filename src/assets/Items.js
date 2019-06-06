@@ -1,5 +1,11 @@
-import {Item, Stat, Slot, SetName} from './ItemAux'
+import {EmptySlot, Item, Stat, Slot, SetName} from './ItemAux'
 export const ITEMLIST = [
+    new EmptySlot(Slot.WEAPON),
+    new EmptySlot(Slot.HEAD),
+    new EmptySlot(Slot.CHEST),
+    new EmptySlot(Slot.PANTS),
+    new EmptySlot(Slot.BOOTS),
+    new EmptySlot(Slot.ACCESSORY),
     new Item('A triangle', Slot.WEAPON, SetName.TWO_D, 100, [
         [Stat.POWER, 9200],
         [Stat.TOUGHNESS, 600],

@@ -2,10 +2,10 @@ import {LOCALSTORAGE_NAME} from '../constants';
 import {ITEMLIST} from '../assets/Items'
 import {
         ItemContainer,
+        ItemNameContainer,
         Slot,
         EmptySlot,
         update_level,
-        slotlist,
         SetName
 } from '../assets/ItemAux'
 import {clone} from '../util'
@@ -34,9 +34,6 @@ let ITEMS = new ItemContainer(ITEMLIST.map((item, index) => {
 }));
 
 const accslots = 12;
-
-const EQUIP = new ItemContainer(slotlist(accslots));
-
 const maxZone = 28;
 const zoneDict = {};
 /* eslint-disable-next-line array-callback-return */
@@ -45,16 +42,15 @@ Object.getOwnPropertyNames(SetName).map(x => {
 });
 
 const INITIAL_STATE = {
-        items: ITEMS,
-        equip: EQUIP,
-        lastequip: EQUIP,
-        lastslots: accslots,
-        savedequip: [EQUIP],
+        itemdata: ITEMS,
+        items: ITEMS.names,
+        equip: ItemNameContainer(accslots),
+        lastequip: ItemNameContainer(accslots),
+        savedequip: [ItemNameContainer(accslots)],
         savedidx: 0,
         maxsavedidx: 0,
         showsaved: false,
         loadouts: [],
-        accslots: accslots,
         factors: [
                 'RESPAWN', 'DAYCARE_SPEED', 'HACK', 'NGUS', 'NONE'
         ],
@@ -85,16 +81,15 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         let slot = Slot.ACCESSORY;
                                         let equip = clone(state.equip);
                                         if (action.payload.val === -1) {
-                                                delete equip[slot[0] + (state.accslots - 1)];
-                                                equip.names.pop();
                                                 return {
                                                         ...state,
-                                                        accslots: state.accslots + action.payload.val,
-                                                        equip: equip,
+                                                        equip: {
+                                                                ...state.equip,
+                                                                accessory: state.equip.accessory.slice(0, -1)
+                                                        },
                                                         lastequip: state.equip,
-                                                        lastslots: state.accslots,
                                                         maxslots: state.maxslots.map((val, index) => {
-                                                                if (val === state.accslots) {
+                                                                if (0 < val && val === state.equip.accessory.length) {
                                                                         return val + action.payload.val;
                                                                 }
                                                                 return val;
@@ -102,15 +97,11 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 }
                                         }
                                         if (action.payload.val === 1) {
-                                                let names = clone(state.equip.names);
-                                                names.push(slot[0] + state.accslots);
                                                 return {
                                                         ...state,
-                                                        accslots: state.accslots + action.payload.val,
                                                         equip: {
                                                                 ...equip,
-                                                                names: names,
-                                                                [slot[0] + state.accslots]: new EmptySlot(slot)
+                                                                accessory: state.equip.accessory.concat([new EmptySlot(slot).name])
                                                         }
                                                 }
                                         }
@@ -143,13 +134,15 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
 
                 case DISABLE_ITEM:
                         {
+                                const name = action.payload.name;
+                                const item = state.itemdata[name];
                                 return {
                                         ...state,
-                                        items: {
-                                                ...state.items,
-                                                [action.payload.name]: {
-                                                        ...state.items[action.payload.name],
-                                                        disable: !state.items[action.payload.name].disable
+                                        itemdata: {
+                                                ...state.itemdata,
+                                                [name]: {
+                                                        ...item,
+                                                        disable: !item.disable
                                                 }
                                         }
                                 };
@@ -157,11 +150,12 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
 
                 case TOGGLE_EDIT:
                         {
-                                let item = state.items[action.payload.name];
+                                const name = action.payload.name;
+                                const item = state.itemdata[name];
                                 return {
                                         ...state,
                                         editItem: [
-                                                action.payload.on, action.payload.name, item === undefined
+                                                action.payload.on, name, item === undefined
                                                         ? undefined
                                                         : item.level
                                         ]
@@ -176,7 +170,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                 if (0 > action.payload.val || action.payload.val > 100) {
                                         return state;
                                 }
-                                let item = state.items[state.editItem[1]];
+                                let item = state.itemdata[state.editItem[1]];
                                 update_level(item, action.payload.val);
                                 return {
                                         ...state,
@@ -184,8 +178,8 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 ...state.editItem,
                                                 2: action.payload.val
                                         },
-                                        items: {
-                                                ...state.items,
+                                        itemdata: {
+                                                ...state.itemdata,
                                                 [item.name]: item
                                         }
                                 }
@@ -206,40 +200,32 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
 
                 case EQUIP_ITEM:
                         {
-                                let item = state.items[action.payload.name];
-                                const slot = item.slot[0];
-                                let equiped = false;
-                                let sel = undefined;
-                                for (let idx = 0;; idx++) {
-                                        if (state.equip[slot + idx] === undefined) {
-                                                if (sel === undefined) {
-                                                        sel = idx - 1;
-                                                }
-                                                break;
-                                        }
-                                        if (state.equip[slot + idx].empty) {
-                                                if (sel === undefined) {
+                                const name = action.payload.name;
+                                const slot = state.itemdata[name].slot[0];
+                                const count = state.equip[slot].length;
+                                let sel = count - 1;
+                                for (let idx = 0; idx < count; idx++) {
+                                        if (state.itemdata[state.equip[slot][idx]].empty) {
+                                                if (sel > idx) {
                                                         sel = idx;
                                                 }
                                         }
-                                        if (state.equip[slot + idx].name === action.payload.name) {
-                                                equiped = true;
+                                        if (state.equip[slot][idx] === name) {
+                                                return state;
                                         }
-                                }
-                                if (equiped) {
-                                        return state;
                                 }
                                 return {
                                         ...state,
                                         equip: {
                                                 ...state.equip,
-                                                [slot + sel]: {
-                                                        ...item,
-                                                        disable: false
-                                                }
+                                                [slot]: state.equip[slot].map((tmp, idx) => {
+                                                        if (idx === sel) {
+                                                                return name;
+                                                        }
+                                                        return tmp;
+                                                })
                                         },
-                                        lastequip: state.equip,
-                                        lastslots: state.accslots
+                                        lastequip: state.equip
                                 };
                         }
 
@@ -256,31 +242,31 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
 
                 case UNDO:
                         {
+                                let accslots = state.lastequip.accessory.length;
                                 return {
                                         ...state,
                                         equip: state.lastequip,
-                                        accslots: state.lastslots,
                                         maxslots: state.maxslots.map((val, index) => {
-                                                if (val > state.lastslots) {
-                                                        return state.lastslots;
+                                                if (val > accslots) {
+                                                        return accslots;
                                                 }
                                                 return val;
                                         }),
-                                        lastequip: state.equip,
-                                        lastslots: state.accslots
+                                        lastequip: state.equip
                                 }
                         }
 
                 case UNEQUIP_ITEM:
                         {
-                                if (action.payload.name.indexOf('Empty ') === 0 && action.payload.name.indexOf(' Slot') > 0) {
+                                const name = action.payload.name;
+                                if (state.itemdata[name].empty) {
                                         return state;
                                 }
-                                const item = state.items[action.payload.name];
+                                const item = state.itemdata[name];
                                 const slot = item.slot[0];
-                                let idx = 0;
-                                for (;; idx++) {
-                                        if (state.equip[slot + idx].name === action.payload.name) {
+                                let sel = 0;
+                                for (;; sel++) {
+                                        if (state.equip[slot][sel] === name) {
                                                 break;
                                         }
                                 }
@@ -288,7 +274,12 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         ...state,
                                         equip: {
                                                 ...state.equip,
-                                                [slot + idx]: new EmptySlot(item.slot)
+                                                [slot]: state.equip[slot].map((tmp, idx) => {
+                                                        if (idx === sel) {
+                                                                return new EmptySlot(item.slot).name;
+                                                        }
+                                                        return tmp;
+                                                })
                                         },
                                         lastequip: state.equip
                                 };
@@ -301,14 +292,10 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                 }
                                 console.log('worker finished')
                                 const equip = action.payload.equip;
-                                let accslots = equip.names.reduce((slots, x) => (slots + (
-                                        x.includes('Accessory')
-                                        ? 1
-                                        : 0)), 0);
+                                const accslots = equip.accessory.length;
                                 return {
                                         ...state,
                                         equip: equip,
-                                        accslots: accslots,
                                         maxslots: state.maxslots.map((val, index) => {
                                                 if (val > accslots) {
                                                         return accslots;
@@ -316,7 +303,6 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 return val;
                                         }),
                                         lastequip: state.equip,
-                                        lastslots: state.accslots,
                                         running: false
                                 };
                         }
@@ -344,42 +330,36 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
 
                 case SAVE_SLOT:
                         {
-                                let saved = state.savedequip.map((equip, index) => {
-                                        if (index === state.savedidx) {
-                                                return {
-                                                        ...state.equip
-                                                };
-                                        }
-                                        return equip;
-                                });
                                 if (state.savedidx === state.maxsavedidx) {
-                                        if (state.savedidx + 1 >= saved.length) {
-                                                saved.push(EQUIP)
-                                        } else {
-                                                saved[state.savedidx + 1] = EQUIP;
+                                        return {
+                                                ...state,
+                                                savedequip: state.savedequip.map((tmp, idx) => {
+                                                        if (idx === state.savedidx) {
+                                                                return state.equip;
+                                                        }
+                                                        return tmp;
+                                                }).concat([ItemNameContainer(state.equip.accessory.length)]),
+                                                maxsavedidx: state.maxsavedidx + 1
                                         }
-                                }
-                                while (saved.length > state.savedmaxidx + 2) {
-                                        saved.pop();
                                 }
                                 return {
                                         ...state,
-                                        savedequip: saved,
-                                        maxsavedidx: state.maxsavedidx + (state.savedidx === state.maxsavedidx)
+                                        savedequip: state.savedequip.map((tmp, idx) => {
+                                                if (idx === state.savedidx) {
+                                                        return state.equip;
+                                                }
+                                                return tmp;
+                                        })
                                 }
                         }
 
                 case LOAD_SLOT:
                         {
                                 const save = state.savedequip[state.savedidx];
-                                let accslots = save.names.reduce((slots, x) => (slots + (
-                                        x.includes('Accessory')
-                                        ? 1
-                                        : 0)), 0);
+                                let accslots = save.accessory.length;
                                 return {
                                         ...state,
                                         equip: save,
-                                        accslots: accslots,
                                         maxslots: state.maxslots.map((val, index) => {
                                                 if (val > accslots) {
                                                         return accslots;
@@ -455,7 +435,6 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         savedidx: localStorageState.savedidx,
                                         maxsavedidx: localStorageState.maxsavedidx,
                                         showsaved: localStorageState.showsaved,
-                                        accslots: localStorageState.accslots,
                                         factors: localStorageState.factors,
                                         maxslots: localStorageState.maxslots,
                                         zone: localStorageState.zone,

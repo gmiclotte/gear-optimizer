@@ -42,6 +42,7 @@ class Content extends Component {
                 const zone = get_zone(this.props.zone);
                 const maxzone = get_max_zone(this.props.zone);
                 const maxtitan = get_max_titan(this.props.zone);
+                const accslots = this.props.equip.accessory.length;
                 return (<div className={this.props.className}>
                         <div className="content__container">
                                 <div className='button-section' key='slots'>
@@ -51,7 +52,7 @@ class Content extends Component {
                                                         ? <div><Crement header={maxtitan[0] + ' version'} value={this.props.titanversion} name='titanversion' handleClick={this.props.handleCrement} min={1} max={4}/></div>
                                                         : ''
                                         }
-                                        <div><Crement header='Accessory slots' value={this.props.accslots} name='accslots' handleClick={this.props.handleCrement} min={0} max={100}/></div>
+                                        <div><Crement header='Accessory slots' value={accslots} name='accslots' handleClick={this.props.handleCrement} min={0} max={100}/></div>
                                         <OptimizeButton running={this.props.running} abort={this.props.handleTerminate} optimize={this.props.handleOptimizeGear}/>
                                         <button onClick={this.props.handleUndo}>
                                                 {'Load previous'}

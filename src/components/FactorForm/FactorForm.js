@@ -28,6 +28,7 @@ export default class ItemForm extends React.Component {
                         /* eslint-disable-next-line react/no-direct-mutation-state */
                         this.state.value = Factors[this.props.factors[this.props.idx]][0];
                 }
+                const accslots = this.props.equip.accessory.length;
                 return (<label key={this.props.factors[this.props.idx]}>
                         {'Priority '}
                         {Number(this.props.idx) + 1}
@@ -35,7 +36,7 @@ export default class ItemForm extends React.Component {
                         <select value={this.state.value} onChange={this.handleChange}>
                                 {Object.getOwnPropertyNames(Factors).map((factor) => (<option value={Factors[factor][0]} key={Factors[factor][0]}>{Factors[factor][0]}</option>))}
                         </select>
-                        <Crement header='slots' value={this.props.maxslots[this.props.idx]} name={['maxslots', this.props.idx]} handleClick={this.props.handleCrement} min={0} max={this.props.accslots}/>
+                        <Crement header='slots' value={this.props.maxslots[this.props.idx]} name={['maxslots', this.props.idx]} handleClick={this.props.handleCrement} min={0} max={accslots}/>
                 </label>);
         }
 }
