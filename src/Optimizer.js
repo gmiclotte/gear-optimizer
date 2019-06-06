@@ -2,8 +2,9 @@ import {Slot, EmptySlot, Equip, SetName} from './assets/ItemAux'
 import {allowed_zone, score_product, clone} from './util.js'
 
 export class Optimizer {
-        constructor(state) {
+        constructor(state, factor) {
                 this.itemdata = state.itemdata;
+                this.factor = factor;
         }
 
         top_scorers(optimal) {
@@ -54,14 +55,14 @@ export class Optimizer {
                 return filtered;
         }
 
-        compute_optimal(item_names, factor, totalslots, maxslots, base_layouts, limits) {
-                if (factor.length === 0) {
+        compute_optimal(item_names, totalslots, maxslots, base_layouts, limits) {
+                if (this.factor.length === 0) {
                         return base_layouts;
                 }
                 let optimal = clone(base_layouts);
                 /* eslint-disable-next-line array-callback-return */
                 optimal.map((x) => {
-                        x.score = score_product(x, factor);
+                        x.score = score_product(x, this.factor);
                         x.item_count = x.items.length;
                 });
                 optimal = this.top_scorers(optimal);
@@ -85,17 +86,17 @@ export class Optimizer {
                                         return true;
                                 }).map((x) => (this.gear_slot(item_names, Slot[x], base_layout, limits)));
                                 let s = [options.map((x) => (x.length)).reduce((a, b) => (a * b), 1)];
-                                let remaining = options.map((x) => (this.pareto(x, factor)));
+                                let remaining = options.map((x) => (this.pareto(x)));
                                 s.push(remaining.map((x) => (x.length)).reduce((a, b) => (a * b), 1));
                                 let layouts = this.outfits(remaining, base_layout);
-                                layouts = this.pareto(layouts, factor);
+                                layouts = this.pareto(layouts);
                                 s.push(layouts.length);
                                 console.log(acc_layouts)
                                 // find all possible accessories
                                 if (acc_layouts[accslots] === undefined) {
                                         let accs = this.gear_slot(item_names, Slot.ACCESSORY, base_layout, limits);
                                         s.push(accs.length);
-                                        accs = this.pareto(accs, factor, accslots);
+                                        accs = this.pareto(accs, accslots);
                                         s.push(accs.length);
                                         {
                                                 let everything = new Equip();
@@ -103,13 +104,13 @@ export class Optimizer {
                                                         this.add_equip(everything, accs[idx]);
                                                 }
                                                 accs.sort((a, b) => {
-                                                        let ascore = score_product(this.remove_equip(clone(everything), a), factor);
-                                                        let bscore = score_product(this.remove_equip(clone(everything), b), factor);
+                                                        let ascore = score_product(this.remove_equip(clone(everything), a), this.factor);
+                                                        let bscore = score_product(this.remove_equip(clone(everything), b), this.factor);
                                                         return bscore - ascore;
                                                 });
                                         }
                                         console.log('Processing ' + s[4] + ' out of ' + s[3] + ' accessories with ' + accslots + ' slots.');
-                                        acc_layouts[accslots] = this.knapsack(accs, accslots, base_layout, this.add_equip, factor);
+                                        acc_layouts[accslots] = this.knapsack(accs, accslots, base_layout, this.add_equip, this.factor);
                                 }
                                 console.log('Processing ' + s[2] + ' out of ' + s[1] + ' out of ' + s[0] + ' gear layouts.');
                                 for (let idx in layouts) {
@@ -120,7 +121,7 @@ export class Optimizer {
                                                 for (let kdx = base_layout.items.length; kdx < acc_candidate.items.length; kdx++) {
                                                         this.add_equip(candidate, acc_candidate.items[kdx]);
                                                 }
-                                                candidate.score = score_product(candidate, factor);
+                                                candidate.score = score_product(candidate, this.factor);
                                                 candidate.item_count = layouts[idx].items.length;
                                                 optimal.push(candidate);
                                                 optimal = this.top_scorers(optimal);
@@ -137,7 +138,7 @@ export class Optimizer {
                                 let scores = [];
                                 for (let jdx = optimal[idx].item_count; jdx < optimal_size; jdx++) {
                                         let item = optimal[idx].items[jdx];
-                                        let score = score_product(this.remove_equip(clone(optimal[idx]), item), factor);
+                                        let score = score_product(this.remove_equip(clone(optimal[idx]), item), this.factor);
                                         scores.push([score, item])
                                 }
                                 for (let jdx = optimal[idx].item_count; jdx < optimal_size; jdx++) {
@@ -214,17 +215,17 @@ export class Optimizer {
                 }).map((name) => (this.itemdata[name])).filter((item) => (!item.disable && !equiped.includes(item.name)));
         }
 
-        knapsack_combine_single(last, list, item, add, factor) {
+        knapsack_combine_single(last, list, item, add) {
                 for (let idx in list) {
                         let max_with = add(clone(list[idx]), item);
-                        max_with.score = score_product(max_with, factor);
+                        max_with.score = score_product(max_with, this.factor);
                         list[idx] = max_with;
                 }
                 list = list.sort((a, b) => (b.score - a.score));
-                list = this.pareto(list, factor);
+                list = this.pareto(list);
                 //both list and last are pareto optimal internally, remains to compare them to eachother
-                last = this.pareto_2(list, last, factor);
-                list = this.pareto_2(last, list, factor)
+                last = this.pareto_2(list, last);
+                list = this.pareto_2(last, list)
                 let all = last.concat(list);
                 //all is pareto optimal
                 all = all.sort((a, b) => (b.score - a.score));
@@ -232,9 +233,9 @@ export class Optimizer {
         }
 
         //Assumes all weights are 1.
-        knapsack(items, capacity, zero_state, add, factor) {
+        knapsack(items, capacity, zero_state, add) {
                 let n = items.length;
-                zero_state.score = score_product(zero_state, factor);
+                zero_state.score = score_product(zero_state, this.factor);
                 // init matrix
                 let matrix_weight = new Array(n + 1);
                 for (let i = 0; i < n + 1; i++) {
@@ -252,7 +253,7 @@ export class Optimizer {
                                 // clone earlier entries to avoid changing them
                                 let last = clone(matrix_weight[i - 1][w]);
                                 let list = clone(matrix_weight[i - 1][w - 1]);
-                                matrix_weight[i][w] = this.knapsack_combine_single(last, list, items[i - 1], add, factor)
+                                matrix_weight[i][w] = this.knapsack_combine_single(last, list, items[i - 1], add)
                         }
                         if (i === 0) {
                                 continue;
@@ -266,11 +267,12 @@ export class Optimizer {
         }
 
         //set <equal> to <false> if equal results result in a dominate call
-        dominates(major, minor, stats, equal = true) {
-                let major_stats = new Array(stats.length).fill(0);
-                let minor_stats = new Array(stats.length).fill(0);
-                for (let i = 0; i < stats.length; i++) {
-                        let stat = stats[i];
+        dominates(major, minor, equal = true) {
+                let l = this.factor.length;
+                let major_stats = new Array(l).fill(0);
+                let minor_stats = new Array(l).fill(0);
+                for (let i = 0; i < l; i++) {
+                        let stat = this.factor[i];
                         let idx = major.statnames.indexOf(stat);
                         if (idx >= 0) {
                                 major_stats[i] = major[stat];
@@ -289,13 +291,13 @@ export class Optimizer {
                 return !equal;
         }
 
-        pareto(list, stats, cutoff = 1) {
+        pareto(list, cutoff = 1) {
                 let dominated = new Array(list.length).fill(false);
                 let empty = list[0].slot === undefined
                         ? new Equip()
                         : new EmptySlot(list[0].slot);
                 for (let i = list.length - 1; i > -1; i--) {
-                        if (this.dominates(empty, list[i], stats, !empty.empty)) {
+                        if (this.dominates(empty, list[i], !empty.empty)) {
                                 dominated[i] = cutoff;
                         }
                         if (dominated[i] === cutoff) {
@@ -305,7 +307,7 @@ export class Optimizer {
                                 if (dominated[j] === cutoff) {
                                         continue;
                                 }
-                                dominated[j] += this.dominates(list[i], list[j], stats);
+                                dominated[j] += this.dominates(list[i], list[j]);
                         }
                 }
                 let result = dominated.map((val, idx) => (
@@ -318,7 +320,7 @@ export class Optimizer {
                 return result;
         }
 
-        pareto_2(list, newlist, stats, cutoff = 1) {
+        pareto_2(list, newlist, cutoff = 1) {
                 let dominated = new Array(newlist.length).fill(false);
                 let empty = list[0].slot === undefined
                         ? new Equip()
@@ -328,7 +330,7 @@ export class Optimizer {
                                 if (dominated[j] === cutoff) {
                                         continue;
                                 }
-                                dominated[j] += this.dominates(list[i], newlist[j], stats);
+                                dominated[j] += this.dominates(list[i], newlist[j]);
                         }
                 }
                 let result = dominated.map((val, idx) => (
