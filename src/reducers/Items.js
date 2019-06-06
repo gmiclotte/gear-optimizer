@@ -427,6 +427,14 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         return state;
                                 }
                                 console.log('Loading saved v' + state.version + ' state.');
+                                // update item store with changed levels and disabled items
+                                for (let idx = 0; idx < localStorageState.items.length; idx++) {
+                                        const name = localStorageState.items[idx];
+                                        const saveditem = localStorageState.itemdata[name];
+                                        let item = state.itemdata[name];
+                                        item.disable = saveditem.disable;
+                                        update_level(item, saveditem.level);
+                                }
                                 return {
                                         ...state,
                                         items: localStorageState.items,
