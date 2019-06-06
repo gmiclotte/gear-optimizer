@@ -1,4 +1,4 @@
-import {Slot, EmptySlot, Equip, SetName} from './assets/ItemAux'
+import {Slot, SetName} from './assets/ItemAux'
 import {LOOTIES, PENDANTS} from './assets/Items'
 
 export function clone(obj) {

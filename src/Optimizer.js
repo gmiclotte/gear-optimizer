@@ -1,4 +1,4 @@
-import {Slot, EmptySlot, Equip, SetName} from './assets/ItemAux'
+import {Slot, EmptySlot, Equip} from './assets/ItemAux'
 import {allowed_zone, score_product, clone, get_limits} from './util.js'
 
 export class Optimizer {
