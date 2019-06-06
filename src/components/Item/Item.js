@@ -15,20 +15,22 @@ const images = importAll(require.context('../../assets/img/', false, /\.(png|jpe
 
 export default class Item extends Component {
         static propTypes = {
-                item: PropTypes.shape({name: PropTypes.string.isRequired, level: PropTypes.number.isRequired}),
+                item: PropTypes.shape({name: PropTypes.string.isRequired, level: PropTypes.number}),
                 handleClickItem: PropTypes.func.isRequired,
                 handleRightClickItem: PropTypes.func.isRequired
         };
 
         render() {
                 let item = this.props.item;
-
                 let classNames = 'item';
                 if (item === undefined) {
                         return (<span><img className={classNames} data-tip='Empty slot' src={images.logo} alt='Empty'/>
                         </span>);
                 }
-                let tt = item.name + ' lvl ' + item.level + '<br />';
+                let tt = item.name + (
+                        item.empty
+                        ? ''
+                        : ' lvl ' + item.level) + '<br />';
                 item.statnames.map((stat, idx) => {
                         const formatted = (val) => {
                                 if (stat === 'Power' || stat === 'Toughness') {
