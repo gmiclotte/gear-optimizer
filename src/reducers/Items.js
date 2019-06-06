@@ -66,7 +66,7 @@ const INITIAL_STATE = {
         pendant: 6,
         titanversion: 1,
         hidden: zoneDict,
-        version: '1.0.1'
+        version: '1.1.0'
 };
 
 const ItemsReducer = (state = INITIAL_STATE, action) => {
@@ -425,7 +425,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                 }
                                 // TODO: Validate local storage state.
                                 if (localStorageState.version !== state.version) {
-                                        console.log('Saved local storage is v' + localStorageState + ', incompatible with current version. Loading fresh v' + state.version + ' state.');
+                                        console.log('Saved local storage is v' + localStorageState.version + ', incompatible with current version. Loading fresh v' + state.version + ' state.');
                                         return state;
                                 }
                                 console.log('Loading saved v' + state.version + ' state.');
