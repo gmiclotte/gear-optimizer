@@ -158,7 +158,7 @@ export default class EquipTable extends React.Component {
                 for (let idx = 0; idx < sorted.length; idx++) {
                         let name = sorted[idx];
                         const item = this.props.itemdata[name];
-                        localbuffer.push(<Item item={item} handleClickItem={this.props.handleRightClickItem} handleRightClickItem={this.props.handleRightClickItem} key={name}/>);
+                        localbuffer.push(<Item item={item} handleClickItem={this.props.handleEquipItem} handleRightClickItem={this.props.handleRightClickItem} key={name}/>);
                 }
                 if (localbuffer.length > 0) {
                         buffer.push(<div className='item-section' key={this.class_idx++}>
