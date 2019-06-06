@@ -266,6 +266,28 @@ export const outfits = (options, base) => {
         return tmp;
 };
 
+export function score_equip(data, equip, stats) {
+        const sorted = Object.getOwnPropertyNames(Slot).sort((a, b) => Slot[a][1] - Slot[b][1]).reduce((res, slot) => res.concat(equip[Slot[slot][0]]), []);
+        let vals = [];
+        for (let idx in stats) {
+                const stat = stats[idx];
+                if (stat === 'Respawn' || stat === 'Power' || stat === 'Toughness') {
+                        vals[idx] = 0;
+                } else {
+                        vals[idx] = 100;
+                }
+                for (let jdx in sorted) {
+                        const name = sorted[jdx];
+                        const val = data[name][stat];
+                        if (val === undefined) {
+                                continue;
+                        }
+                        vals[idx] += val;
+                }
+        }
+        return vals.reduce((res, val) => res * val / 100, 1);
+}
+
 export function score_product(equip, stats, add_one = false) {
         let score = 1;
         for (let idx in stats) {

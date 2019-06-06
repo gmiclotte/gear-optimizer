@@ -4,6 +4,7 @@ import ReactTooltip from 'react-tooltip'
 import Item from '../Item/Item'
 import {Factors, EmptySlot, Slot} from '../../assets/ItemAux'
 import './ItemTable.css';
+import {score_equip} from '../../util'
 
 import {default as SaveButtons} from './SaveButtons'
 
@@ -80,28 +81,6 @@ const formatted = (val, stat, d) => {
         }
         return pf + num + sf
 };
-
-function score_equip(data, equip, stats) {
-        const sorted = Object.getOwnPropertyNames(Slot).sort((a, b) => Slot[a][1] - Slot[b][1]).reduce((res, slot) => res.concat(equip[Slot[slot][0]]), []);
-        let vals = [];
-        for (let idx in stats) {
-                const stat = stats[idx];
-                if (stat === 'Respawn' || stat === 'Power' || stat === 'Toughness') {
-                        vals[idx] = 0;
-                } else {
-                        vals[idx] = 100;
-                }
-                for (let jdx in sorted) {
-                        const name = sorted[jdx];
-                        const val = data[name][stat];
-                        if (val === undefined) {
-                                continue;
-                        }
-                        vals[idx] += val;
-                }
-        }
-        return vals.reduce((res, val) => res * val / 100, 1);
-}
 
 class BonusLine extends React.Component {
         diffclass(old, val) {
