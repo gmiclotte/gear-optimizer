@@ -33,6 +33,10 @@ export default class ItemForm extends React.Component {
                 this.setState({value: val});
         }
 
+        handleFocus(event) {
+                event.target.select();
+        }
+
         render() {
                 let able = 'Disable';
                 if (this.props.itemdata[this.props.editItem[1]] !== undefined && this.props.itemdata[this.props.editItem[1]].disable) {
@@ -45,7 +49,7 @@ export default class ItemForm extends React.Component {
                                 <input style={{
                                                 width: '50px',
                                                 margin: '10px'
-                                        }} type="text" value={this.state.value} onChange={this.handleChange}/>
+                                        }} type="text" value={this.state.value} onChange={this.handleChange} autoFocus={true} onFocus={this.handleFocus}/>
                         </label>
                         <br/>
                         <input type='submit' value='Update'/>
