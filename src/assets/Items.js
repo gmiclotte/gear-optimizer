@@ -1090,8 +1090,8 @@ export const ITEMLIST = [
     new Item('An Ordinary Calculator', Slot.ACCESSORY, SetName.NERD, 100, [
         [Stat.POWER, 500000],
         [Stat.TOUGHNESS, 500000],
-        [Stat.ENERGY_BARS, 10000],
-        [Stat.MAGIC_BARS, 10000],
+        [Stat.ENERGY_BARS, 12000],
+        [Stat.MAGIC_BARS, 12000],
         [Stat.NGU_SPEED, 600],
         [Stat.RES3_POWER, 10],
     ]),
