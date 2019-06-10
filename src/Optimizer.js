@@ -199,8 +199,14 @@ export class Optimizer {
                 }
                 let tmp = this.cartesian(...options).map((items) => {
                         let equip = clone(base);
-                        for (let i = 0; i < items.length; i++) {
-                                this.add_equip(equip, items[i]);
+                        //HACK: items can be a single item sometimes, then items.length is undefined
+                        // and this hack provides a working work around
+                        if (items.length === undefined) {
+                                this.add_equip(equip, items);
+                        } else {
+                                for (let i = 0; i < items.length; i++) {
+                                        this.add_equip(equip, items[i]);
+                                }
                         }
                         equip.item_count = equip.items.length;
                         return equip;

@@ -75,7 +75,7 @@ class Content extends Component {
                                 <EquipTable {...this.props} group={'slot'} type='equip' handleClickItem={this.props.handleUnequipItem} handleRightClickItem={this.props.handleToggleEdit}/>
                                 <ItemTable {...this.props} maxtitan={maxtitan} group={'zone'} type='items' handleClickItem={this.props.handleEquipItem} handleRightClickItem={this.props.handleToggleEdit}/>
                         </div>
-                        <Modal className='edit-item-modal' overlayClassName='edit-item-overlay' isOpen={this.props.editItem[0]} onAfterOpen={this.afterOpenModal} onRequestClose={this.closeEditModal} style={customStyles} contentLabel="Example Modal">
+                        <Modal className='edit-item-modal' overlayClassName='edit-item-overlay' isOpen={this.props.editItem[0]} onAfterOpen={this.afterOpenModal} onRequestClose={this.closeEditModal} style={customStyles} contentLabel='Item Edit Modal' autoFocus={false}>
                                 <ItemForm {...this.props} closeEditModal={this.closeEditModal}/>
                         </Modal>
                 </div>);
