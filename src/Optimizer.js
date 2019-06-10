@@ -74,7 +74,6 @@ export class Optimizer {
                         for (let layout = 0; layout < base_layouts.length; layout++) {
                                 const base_layout = base_layouts[layout];
                                 let accslots = this.accslots - base_layout.counts['accessory'];
-                                console.log('layout', base_layout)
                                 accslots = this.maxslots < accslots
                                         ? this.maxslots
                                         : accslots;
@@ -94,7 +93,6 @@ export class Optimizer {
                                 let layouts = this.outfits(remaining, base_layout);
                                 layouts = this.pareto(layouts);
                                 s.push(layouts.length);
-                                console.log(acc_layouts)
                                 // find all possible accessories
                                 if (acc_layouts[accslots] === undefined) {
                                         let accs = this.gear_slot(item_names, Slot.ACCESSORY, base_layout);
