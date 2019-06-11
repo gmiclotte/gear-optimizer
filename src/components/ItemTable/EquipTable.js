@@ -94,8 +94,8 @@ class BonusLine extends React.Component {
         }
 
         render() {
-                let val = score_equip(this.props.itemdata, this.props.equip, this.props.factor[1]);
-                let old = score_equip(this.props.itemdata, this.props.savedequip, this.props.factor[1]);
+                let val = score_equip(this.props.itemdata, this.props.equip, this.props.factor);
+                let old = score_equip(this.props.itemdata, this.props.savedequip, this.props.factor);
                 let diff_val;
                 let stat = this.props.factor[0];
                 if (stat === 'Power' || stat === 'Toughness' || stat === 'Respawn') {

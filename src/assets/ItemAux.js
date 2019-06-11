@@ -103,7 +103,7 @@ export const Slot = {
 }
 
 export const Stat = {
-        ADVANCE_TRAINING: 'Advance Training',
+        ADVANCE_TRAINING: 'Advanced Training Speed',
         AP: 'AP',
         AUGMENT_SPEED: 'Augment Speed',
         BEARD_SPEED: 'Beard Speed',
@@ -125,9 +125,9 @@ export const Stat = {
         NGU_SPEED: 'NGU Speed',
         POWER: 'Power',
         QUEST_DROP: 'Quest Drops',
-        RES3_BARS: 'Res3 Bars',
-        RES3_CAP: 'Res3 Cap',
-        RES3_POWER: 'Res3 Power',
+        RES3_BARS: 'Resource 3 Bars',
+        RES3_CAP: 'Resource 3 Cap',
+        RES3_POWER: 'Resource 3 Power',
         RESPAWN: 'Respawn',
         SEED_DROP: 'Seed Gain',
         TOUGHNESS: 'Toughness',
@@ -136,7 +136,7 @@ export const Stat = {
         YGGDRASIL_YIELD: 'Yggdrasil Yield'
 }
 
-export const Factors = {
+let single_factors = {
         NONE: [
                 'None', []
         ],
@@ -156,6 +156,32 @@ export const Factors = {
                 'Daycare',
                 [Stat.DAYCARE_SPEED]
         ],
+        GOLD_DROP: [
+                'Gold Drops',
+                [Stat.GOLD_DROP]
+        ],
+        DROP_CHANCE: [
+                'Drop chance',
+                [Stat.DROP_CHANCE]
+        ],
+        QUEST_DROP: [
+                'Quest Drop',
+                [Stat.QUEST_DROP]
+        ]
+}
+
+let remaining_factors = {};
+
+Object.keys(Stat).forEach(key => {
+        if (single_factors[key] === undefined) {
+                remaining_factors[key] = [
+                        Stat[key],
+                        [Stat[key]]
+                ];
+        }
+});
+
+export const multiple_factors = {
         ENGU: [
                 'Energy NGU',
                 [
@@ -199,30 +225,6 @@ export const Factors = {
                         Stat.HACK_SPEED
                 ]
         ],
-        GOLD_DROP: [
-                'Gold Drops',
-                [Stat.GOLD_DROP]
-        ],
-        DROP_CHANCE: [
-                'Drop chance',
-                [Stat.DROP_CHANCE]
-        ],
-        QUEST_DROP: [
-                'Quest Drop',
-                [Stat.QUEST_DROP]
-        ],
-        ENERGY_POWER: [
-                'Energy Power',
-                [Stat.ENERGY_POWER]
-        ],
-        MAGIC_POWER: [
-                'Magic Power',
-                [Stat.MAGIC_POWER]
-        ],
-        RES3_POWER: [
-                'R3 Power',
-                [Stat.RES3_POWER]
-        ],
         TIMEMACHINE: [
                 'Time Machine',
                 [
@@ -234,8 +236,71 @@ export const Factors = {
                 [
                         Stat.ENERGY_CAP, Stat.WANDOOS_SPEED, Stat.MAGIC_CAP, Stat.WANDOOS_SPEED
                 ]
+        ],
+        AT: [
+                'Advanced Training',
+                [
+                        Stat.ENERGY_POWER, Stat.ENERGY_CAP, Stat.ADVANCE_TRAINING
+                ],
+                [
+                        .5, 1, 1
+                ]
+        ],
+        EBEARD: [
+                'Energy Beards',
+                [
+                        Stat.ENERGY_POWER, Stat.ENERGY_BARS, Stat.BEARD_SPEED
+                ],
+                [
+                        .5, 1, 1
+                ]
+        ],
+        MBEARD: [
+                'Magic Beards',
+                [
+                        Stat.MAGIC_POWER, Stat.MAGIC_BARS, Stat.BEARD_SPEED
+                ],
+                [
+                        .5, 1, 1
+                ]
+        ],
+        ECAPSPEED: [
+                'Energy Cap Speed',
+                [
+                        Stat.ENERGY_CAP, Stat.ENERGY_BARS
+                ],
+                [
+                        -1, 1
+                ]
+        ],
+        MCAPSPEED: [
+                'Magic Cap Speed',
+                [
+                        Stat.MAGIC_CAP, Stat.MAGIC_BARS
+                ],
+                [
+                        -1, 1
+                ]
+        ],
+        XCAPSPEED: [
+                'Resource 3 Cap Speed',
+                [
+                        Stat.RES3_CAP, Stat.RES3_BARS
+                ],
+                [
+                        -1, 1
+                ]
         ]
 }
+
+function extend(obj, src) {
+        Object.keys(src).forEach(function(key) {
+                obj[key] = src[key];
+        });
+        return obj;
+}
+
+export const Factors = extend(extend(single_factors, multiple_factors), remaining_factors);
 
 export const SetName = {
         MISC: [
