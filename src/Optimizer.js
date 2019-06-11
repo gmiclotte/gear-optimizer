@@ -2,9 +2,9 @@ import {Slot, EmptySlot, Equip} from './assets/ItemAux'
 import {allowed_zone, score_product, clone, get_limits} from './util.js'
 
 export class Optimizer {
-        constructor(state, factor, accslots, maxslots) {
+        constructor(state, factors, accslots, maxslots) {
                 this.itemdata = state.itemdata;
-                this.factor = factor;
+                this.factors = factors;
                 this.accslots = accslots;
                 this.maxslots = maxslots;
                 this.limits = get_limits(state);
@@ -59,13 +59,13 @@ export class Optimizer {
         }
 
         compute_optimal(item_names, base_layouts) {
-                if (this.factor.length === 0) {
+                if (this.factors.length === 0) {
                         return base_layouts;
                 }
                 let optimal = clone(base_layouts);
                 /* eslint-disable-next-line array-callback-return */
                 optimal.map((x) => {
-                        x.score = score_product(x, this.factor);
+                        x.score = score_product(x, this.factors);
                         x.item_count = x.items.length;
                 });
                 optimal = this.top_scorers(optimal);
@@ -105,13 +105,13 @@ export class Optimizer {
                                                         this.add_equip(everything, accs[idx]);
                                                 }
                                                 accs.sort((a, b) => {
-                                                        let ascore = score_product(this.remove_equip(clone(everything), a), this.factor);
-                                                        let bscore = score_product(this.remove_equip(clone(everything), b), this.factor);
+                                                        let ascore = score_product(this.remove_equip(clone(everything), a), this.factors);
+                                                        let bscore = score_product(this.remove_equip(clone(everything), b), this.factors);
                                                         return bscore - ascore;
                                                 });
                                         }
                                         console.log('Processing ' + s[4] + ' out of ' + s[3] + ' accessories with ' + accslots + ' slots.');
-                                        acc_layouts[accslots] = this.knapsack(accs, accslots, base_layout, this.add_equip, this.factor);
+                                        acc_layouts[accslots] = this.knapsack(accs, accslots, base_layout, this.add_equip);
                                 }
                                 console.log('Processing ' + s[2] + ' out of ' + s[1] + ' out of ' + s[0] + ' gear layouts.');
                                 for (let idx in layouts) {
@@ -122,7 +122,7 @@ export class Optimizer {
                                                 for (let kdx = base_layout.items.length; kdx < acc_candidate.items.length; kdx++) {
                                                         this.add_equip(candidate, acc_candidate.items[kdx]);
                                                 }
-                                                candidate.score = score_product(candidate, this.factor);
+                                                candidate.score = score_product(candidate, this.factors);
                                                 candidate.item_count = layouts[idx].items.length;
                                                 optimal.push(candidate);
                                                 optimal = this.top_scorers(optimal);
@@ -139,7 +139,7 @@ export class Optimizer {
                                 let scores = [];
                                 for (let jdx = optimal[idx].item_count; jdx < optimal_size; jdx++) {
                                         let item = optimal[idx].items[jdx];
-                                        let score = score_product(this.remove_equip(clone(optimal[idx]), item), this.factor);
+                                        let score = score_product(this.remove_equip(clone(optimal[idx]), item), this.factors);
                                         scores.push([score, item])
                                 }
                                 for (let jdx = optimal[idx].item_count; jdx < optimal_size; jdx++) {
@@ -225,7 +225,7 @@ export class Optimizer {
         knapsack_combine_single(last, list, item, add) {
                 for (let idx in list) {
                         let max_with = add(clone(list[idx]), item);
-                        max_with.score = score_product(max_with, this.factor);
+                        max_with.score = score_product(max_with, this.factors);
                         list[idx] = max_with;
                 }
                 list = list.sort((a, b) => (b.score - a.score));
@@ -242,7 +242,7 @@ export class Optimizer {
         //Assumes all weights are 1.
         knapsack(items, capacity, zero_state, add) {
                 let n = items.length;
-                zero_state.score = score_product(zero_state, this.factor);
+                zero_state.score = score_product(zero_state, this.factors);
                 // init matrix
                 let matrix_weight = new Array(n + 1);
                 for (let i = 0; i < n + 1; i++) {
@@ -275,11 +275,11 @@ export class Optimizer {
 
         //set <equal> to <false> if equal results result in a dominate call
         dominates(major, minor, equal = true) {
-                let l = this.factor.length;
+                let l = this.factors.length;
                 let major_stats = new Array(l).fill(0);
                 let minor_stats = new Array(l).fill(0);
                 for (let i = 0; i < l; i++) {
-                        let stat = this.factor[i];
+                        let stat = this.factors[1][i];
                         let idx = major.statnames.indexOf(stat);
                         if (idx >= 0) {
                                 major_stats[i] = major[stat];

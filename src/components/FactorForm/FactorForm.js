@@ -23,10 +23,11 @@ export default class ItemForm extends React.Component {
         }
 
         render() {
+                let factor = Factors[this.props.factors[this.props.idx]];
                 //HACK: this sets the dropdown to the correct value after loading
-                if (this.state.value !== Factors[this.props.factors[this.props.idx]][0]) {
+                if (this.state.value !== factor[0]) {
                         /* eslint-disable-next-line react/no-direct-mutation-state */
-                        this.state.value = Factors[this.props.factors[this.props.idx]][0];
+                        this.state.value = factor[0];
                 }
                 const accslots = this.props.equip.accessory.length;
                 return (<label key={this.props.factors[this.props.idx]}>

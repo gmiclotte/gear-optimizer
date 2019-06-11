@@ -11,9 +11,9 @@ function optimize(e) {
         let base_layout = [new Equip()];
         for (let idx = 0; idx < state.factors.length; idx++) {
                 let factorname = state.factors[idx]
-                let factor = Factors[factorname][1];
+                let factors = Factors[factorname];
                 let maxslots = state.maxslots[idx];
-                let optimizer = new Optimizer(state, factor, accslots, maxslots);
+                let optimizer = new Optimizer(state, factors, accslots, maxslots);
                 base_layout = optimizer.compute_optimal(state.items, base_layout);
         }
         base_layout = base_layout[Math.floor(Math.random() * base_layout.length)];
