@@ -231,6 +231,12 @@ export const multiple_factors = {
                         Stat.ENERGY_CAP, Stat.ENERGY_POWER, Stat.MAGIC_CAP, Stat.MAGIC_POWER
                 ]
         ],
+        BLOOD: [
+                'Blood Rituals',
+                [
+                        Stat.MAGIC_CAP, Stat.MAGIC_POWER
+                ]
+        ],
         WANDOOS: [
                 'Wandoos',
                 [
