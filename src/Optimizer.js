@@ -179,7 +179,7 @@ export class Optimizer {
                         const stat = item.statnames[i];
                         equip[stat] -= item[stat];
                 }
-                equip.items.filter((x) => (x.name !== item.name));
+                equip.items = equip.items.filter((x) => (x.name !== item.name));
                 equip.counts[item.slot[0]] -= 1;
                 return equip;
         }
