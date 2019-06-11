@@ -135,7 +135,7 @@ export function score_equip(data, equip, factors) {
 export function score_product(equip, factors) {
         const stats = factors[1];
         let vals = [];
-        for (let idx in stats) {
+        for (let idx = 0; idx < stats.length; idx++) {
                 const val = equip[stats[idx]];
                 vals.push(
                         val === undefined

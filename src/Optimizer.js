@@ -59,7 +59,7 @@ export class Optimizer {
         }
 
         compute_optimal(item_names, base_layouts) {
-                if (this.factors.length === 0) {
+                if (this.factors[1].length === 0) {
                         return base_layouts;
                 }
                 let optimal = clone(base_layouts);
@@ -275,7 +275,7 @@ export class Optimizer {
 
         //set <equal> to <false> if equal results result in a dominate call
         dominates(major, minor, equal = true) {
-                let l = this.factors.length;
+                let l = this.factors[1].length;
                 let major_stats = new Array(l).fill(0);
                 let minor_stats = new Array(l).fill(0);
                 for (let i = 0; i < l; i++) {
