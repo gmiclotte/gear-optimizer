@@ -62,7 +62,8 @@ class Content extends Component {
                                         <div><Crement header='Highest looty' value={looty} name='looty' handleClick={this.props.handleCrement} min={-1} max={LOOTIES.length - 1}/></div>
                                         <div><Crement header='Highest pendant' value={pendant} name='pendant' handleClick={this.props.handleCrement} min={-1} max={PENDANTS.length - 1}/></div>
                                         <div><Crement header='Accessory slots' value={accslots} name='accslots' handleClick={this.props.handleCrement} min={0} max={100}/></div>
-                                        <OptimizeButton running={this.props.running} abort={this.props.handleTerminate} optimize={this.props.handleOptimizeGear}/>
+                                        <OptimizeButton fast={false} running={this.props.running} abort={this.props.handleTerminate} optimize={this.props.handleOptimizeGear}/>
+                                        <OptimizeButton fast={true} running={this.props.running} abort={this.props.handleTerminate} optimize={this.props.handleOptimizeGear}/>
                                         <button onClick={this.props.handleUndo}>
                                                 {'Load previous'}
                                         </button>

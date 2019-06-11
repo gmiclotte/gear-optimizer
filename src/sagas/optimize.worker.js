@@ -14,7 +14,11 @@ function optimize(e) {
                 let factors = Factors[factorname];
                 let maxslots = state.maxslots[idx];
                 let optimizer = new Optimizer(state, factors, accslots, maxslots);
-                base_layout = optimizer.compute_optimal(state.items, base_layout);
+                if (e.data.fast) {
+                        base_layout = optimizer.fast_optimal(state.items, base_layout);
+                } else {
+                        base_layout = optimizer.compute_optimal(state.items, base_layout);
+                }
         }
         base_layout = base_layout[Math.floor(Math.random() * base_layout.length)];
         let equip = ItemNameContainer(accslots);

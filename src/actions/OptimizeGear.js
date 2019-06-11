@@ -5,6 +5,9 @@ export const OptimizeGear = state => ({type: OPTIMIZE_GEAR, payload: {
                 state
         }});
 
-export const OptimizeGearAsync = state => ({type: OPTIMIZE_GEAR_ASYNC, payload: {
-                state
-        }});
+export const OptimizeGearAsync = (fast) => ({
+        type: OPTIMIZE_GEAR_ASYNC,
+        payload: {
+                fast: fast
+        }
+});
