@@ -14,8 +14,12 @@ Start the computation by clicking the `Optimize Gear` button. It should finish i
 
 ## Algorithm
 
-WIP  
 Basis of the algorithm is pareto optimal filtering and dynamic programming knapsack algorithm.
+Fast algorithm iteratively replaces the worst candidate accessories with the best alternative, until no more swaps improve the build.
+
+## Acknowledgements
+
+Many thanks to TBlazeWarriorT#5348 and Crocketeer#8926 for the helpful discussions on Discord.
 
 ## Dev notes
 
