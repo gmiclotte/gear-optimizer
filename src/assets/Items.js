@@ -727,7 +727,7 @@ export const ITEMLIST = [
     new Item('UUG\'s \'Special\' Ring', Slot.ACCESSORY, SetName.UUG_RINGS, 100, [
         [Stat.POWER, 20000],
         [Stat.TOUGHNESS, 20000],
-        [Stat.BEARD_SPEED, 1600],
+        [Stat.BEARD_SPEED, 20],
         [Stat.NGU_SPEED, 200],
         [Stat.SEED_DROP, 30],
     ]),
