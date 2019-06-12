@@ -237,6 +237,18 @@ export const multiple_factors = {
                         Stat.MAGIC_CAP, Stat.MAGIC_POWER
                 ]
         ],
+        EWANDOOS: [
+                'Energy Wandoos',
+                [
+                        Stat.ENERGY_CAP, Stat.WANDOOS_SPEED
+                ]
+        ],
+        MWANDOOS: [
+                'Magic Wandoos',
+                [
+                        Stat.MAGIC_CAP, Stat.WANDOOS_SPEED
+                ]
+        ],
         WANDOOS: [
                 'Wandoos',
                 [
