@@ -10,12 +10,16 @@ export default class OptimizeButton extends Component {
 
         render() {
                 if (this.props.running) {
-                        return (<button onClick={() => this.props.abort()}>
+                        return (<button onClick={() => this.props.abort(this.props.fast)}>
                                 Abort
                         </button>);
                 } else {
-                        return (<button onClick={() => this.props.optimize()}>
-                                Optimize Gear
+                        return (<button onClick={() => this.props.optimize(this.props.fast)}>
+                                {
+                                        this.props.fast
+                                                ? 'Optimize Fast'
+                                                : 'Optimize Gear'
+                                }
                         </button>);
                 }
         }

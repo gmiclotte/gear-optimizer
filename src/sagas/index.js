@@ -8,17 +8,17 @@ import {TERMINATE_ASYNC, TERMINATE} from '../actions/Terminate'
 import Worker from './optimize.worker'
 let worker;
 
-const doOptimize = (state, worker) => new Promise(async function(resolve, reject) {
+const doOptimize = (state, worker, fast) => new Promise(async function(resolve, reject) {
         let output = await new Promise(function(resolve, reject) {
                 worker.onmessage = function(e) {
                         resolve(e.data);
                 };
-                worker.postMessage({state: state});
+                worker.postMessage({state: state, fast: fast});
         });
         await resolve(output.equip);
 })
 
-export function* optimizeAsync() {
+export function* optimizeAsync(action) {
         worker = new Worker();
         yield put({
                 type: OPTIMIZING_GEAR,
@@ -28,7 +28,7 @@ export function* optimizeAsync() {
         });
         const store = yield select();
         const state = store.optimizer;
-        let equip = yield doOptimize(state, worker);
+        let equip = yield doOptimize(state, worker, action.payload.fast);
         yield put({
                 type: OPTIMIZE_GEAR,
                 payload: {
