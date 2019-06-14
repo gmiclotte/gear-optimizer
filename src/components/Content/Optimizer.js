@@ -41,7 +41,7 @@ class Optimizer extends Component {
         closeEditModal = () => (this.props.handleToggleEdit(undefined, false));
 
         render() {
-                ReactGA.pageview('/');
+                ReactGA.pageview('/gear-optimizer/');
                 const zone = get_zone(this.props.zone);
                 const maxzone = get_max_zone(this.props.zone);
                 const maxtitan = get_max_titan(this.props.zone);

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactTooltip from 'react-tooltip'
 import CookieBanner from 'react-cookie-banner';
-import {BrowserRouter as Router, Route, NavLink} from 'react-router-dom';
+import {HashRouter as Router, Route, NavLink} from 'react-router-dom';
 import ReactGA from 'react-ga';
 
 import './AppLayout.css';
