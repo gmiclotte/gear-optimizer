@@ -2,6 +2,7 @@ import React from 'react';
 import ReactTooltip from 'react-tooltip'
 import CookieBanner from 'react-cookie-banner';
 import {BrowserRouter as Router, Route, NavLink} from 'react-router-dom';
+import ReactGA from 'react-ga';
 
 import './AppLayout.css';
 
@@ -9,6 +10,7 @@ import Optimizer from '../Content/Optimizer';
 import About from '../About/About';
 
 function HowTo() {
+        ReactGA.pageview('/howto');
         return <div className='howto'>
                 <ol>
                         <li>Perform the global item setup based on game progress.</li>
@@ -81,9 +83,9 @@ const AppLayout = props => (<div className='app_container'>
                                 </ul>
                         </nav>
 
-                        <Route exact='exact' path='/' render={(routeProps) => (<Optimizer {...routeProps} {...props} className='app_body'/>)}/>
-                        <Route exact='exact' path='/howto/' component={HowTo}/>
-                        <Route exact='exact' path='/about/' component={About}/>
+                        <Route exact={true} path='/' render={(routeProps) => (<Optimizer {...routeProps} {...props} className='app_body'/>)}/>
+                        <Route exact={true} path='/howto/' component={HowTo}/>
+                        <Route exact={true} path='/about/' component={About}/>
                 </div>
         </Router>
         <ReactTooltip multiline={true}/>

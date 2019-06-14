@@ -8,6 +8,7 @@
     "react": "^16.8.6",
     "react-cookie-banner": "^4.0.0",
     "react-dom": "^16.8.6",
+    "react-ga": "^2.5.7",
     "react-modal": "^3.8.1",
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.1",

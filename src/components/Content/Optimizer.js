@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Modal from 'react-modal';
+import ReactGA from 'react-ga';
 
 import {get_zone, get_max_zone, get_max_titan} from '../../util';
 import {LOOTIES, PENDANTS} from '../../assets/Items'
@@ -40,6 +41,7 @@ class Optimizer extends Component {
         closeEditModal = () => (this.props.handleToggleEdit(undefined, false));
 
         render() {
+                ReactGA.pageview('/');
                 const zone = get_zone(this.props.zone);
                 const maxzone = get_max_zone(this.props.zone);
                 const maxtitan = get_max_titan(this.props.zone);

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import ReactGA from 'react-ga';
 
 import {default as AppLayout} from '../components/AppLayout/AppLayout';
 
@@ -22,6 +23,8 @@ import {LoadStateLocalStorage} from '../actions/LoadStateLocalStorage';
 import {SaveStateLocalStorage} from '../actions/SaveStateLocalStorage';
 
 import '../stylesheets/App.css';
+
+ReactGA.initialize('UA-141463995-1');
 
 class App extends Component {
         componentDidMount = () => this.props.handleLoadStateLocalStorage();
