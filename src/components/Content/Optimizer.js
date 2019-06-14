@@ -12,7 +12,7 @@ import {default as OptimizeButton} from '../OptimizeButton/OptimizeButton';
 import {default as FactorForm} from '../FactorForm/FactorForm'
 import {default as ItemForm} from '../ItemForm/ItemForm'
 
-import './Content.css';
+import './Optimizer.css';
 
 const customStyles = {
         content: {
@@ -27,7 +27,7 @@ const customStyles = {
 
 Modal.setAppElement('#app');
 
-class Content extends Component {
+class Optimizer extends Component {
         static propTypes = {
                 className: PropTypes.string.isRequired
         };
@@ -84,4 +84,4 @@ class Content extends Component {
         };
 }
 
-export default Content;
+export default Optimizer;

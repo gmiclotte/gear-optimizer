@@ -56,3 +56,33 @@
         }
 }
 */
+.nav-bar-list {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        width: 100vw;
+        background-color: #333;
+}
+
+.nav-bar-item {
+        display: inline;
+        float: left;
+        border-right: 1px solid #bbb;
+}
+
+.nav-bar-item:last-child {
+        border-right: none;
+}
+
+.nav-link {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+}
+
+.active {
+        background-color: #33b;
+}
