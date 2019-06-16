@@ -211,6 +211,27 @@ export const multiple_factors = {
                         Stat.NGU_SPEED
                 ]
         ],
+        WISHES: [
+                'Wishes',
+                [
+                        Stat.ENERGY_CAP,
+                        Stat.ENERGY_POWER,
+                        Stat.MAGIC_CAP,
+                        Stat.MAGIC_POWER,
+                        Stat.RES3_CAP,
+                        Stat.RES3_POWER,
+                        Stat.WISH_SPEED
+                ],
+                [
+                        0.17,
+                        0.17,
+                        0.17,
+                        0.17,
+                        0.17,
+                        0.17,
+                        1
+                ]
+        ],
         NGUSHACK: [
                 'NGUs and Hacks',
                 [
