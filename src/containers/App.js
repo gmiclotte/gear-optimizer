@@ -38,6 +38,7 @@ class App extends Component {
 const mapStateToProps = state => ({
         itemdata: state.optimizer.itemdata,
         items: state.optimizer.items,
+        offhand: state.optimizer.offhand,
         equip: state.optimizer.equip,
         lastequip: state.optimizer.lastequip,
         savedequip: state.optimizer.savedequip,

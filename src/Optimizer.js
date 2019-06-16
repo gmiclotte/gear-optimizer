@@ -1,13 +1,20 @@
 import {Slot, EmptySlot, Equip} from './assets/ItemAux'
-import {allowed_zone, score_product, clone, get_limits} from './util.js'
+import {allowed_zone, score_equip, clone, get_limits, old2newequip} from './util.js'
 
 export class Optimizer {
-        constructor(state, factors, accslots, maxslots) {
+        constructor(state, factors, accslots, maxslots, offhand) {
+                this.itemnames = state.items;
                 this.itemdata = state.itemdata;
                 this.factors = factors;
                 this.accslots = accslots;
                 this.maxslots = maxslots;
+                this.offhand = offhand * 5;
                 this.limits = get_limits(state);
+        }
+
+        score_equip_wrapper(base_layout, factors) {
+                let equip = old2newequip(this.accslots, this.offhand, base_layout)
+                return score_equip(this.itemdata, equip, factors, this.offhand);
         }
 
         top_scorers(optimal) {
@@ -63,7 +70,7 @@ export class Optimizer {
                 let scores = [];
                 for (let jdx = equip.item_count; jdx < optimal_size; jdx++) {
                         let item = equip.items[jdx];
-                        let score = score_product(this.remove_equip(clone(equip), item), this.factors);
+                        let score = this.score_equip_wrapper(this.remove_equip(clone(equip), item), this.factors);
                         scores.push([score, item])
                 }
                 for (let jdx = equip.item_count; jdx < optimal_size; jdx++) {
@@ -76,14 +83,83 @@ export class Optimizer {
                 return equip;
         }
 
-        fast_optimal(item_names, base_layouts) {
+        count_accslots(base_layout) {
+                let accslots = this.accslots - base_layout.counts['accessory'];
+                accslots = this.maxslots < accslots
+                        ? this.maxslots
+                        : accslots;
+                return accslots;
+        }
+
+        optimize_layouts(base_layout, accslots, s) {
+                // find all possible items that can be equiped in main slots
+                let weapons = base_layout.counts['weapon'];
+                console.log(weapons)
+                let options = [
+                        [
+                                'WEAPON', 100, 'mainhand'
+                        ], // mainhand
+                        [
+                                'WEAPON', this.offhand, 'offhand'
+                        ], // offhand
+                        [
+                                'HEAD', 100
+                        ],
+                        [
+                                'CHEST', 100
+                        ],
+                        [
+                                'PANTS', 100
+                        ],
+                        [
+                                'BOOTS', 100
+                        ]
+                ].filter((x) => {
+                        if (x[1] === 0) {
+                                console.log(x[1], 'filtering')
+                                return false;
+                        }
+                        let slot = Slot[x[0]][0]
+                        if (slot === 'accessory') {
+                                return false;
+                        }
+                        if (slot === 'weapon' && x[2] === 'mainhand') {
+                                return weapons === 0;
+                        }
+                        if (slot === 'weapon' && x[2] === 'offhand') {
+                                return weapons < 2;
+                        }
+                        return base_layout.counts[slot] < 1;
+                }).map((x) => ([
+                        this.gear_slot(Slot[x[0]], base_layout),
+                        x[1]
+                ]));
+                s.push(options.map((x) => (x[0].length)).reduce((a, b) => (a * b), 1));
+                let remaining = options.map((x) => {
+                        let items = x[0];
+                        return [
+                                this.pareto(
+                                        items, items[0].slot[0] === 'weapon'
+                                        ? 2 - base_layout.counts['weapon']
+                                        : 1),
+                                x[1]
+                        ];
+                });
+                s.push(remaining.map((x) => (x[0].length)).reduce((a, b) => (a * b), 1));
+                let layouts = this.outfits(remaining, base_layout);
+                layouts = this.pareto(layouts);
+                s.push(layouts.length);
+                return layouts;
+        }
+
+        fast_optimal(base_layouts) {
                 if (this.factors[1].length === 0) {
                         return base_layouts;
                 }
                 let optimal = clone(base_layouts);
                 /* eslint-disable-next-line array-callback-return */
                 optimal.map((x) => {
-                        x.score = score_product(x, this.factors);
+                        x.score = this.score_equip_wrapper(x, this.factors);
                         x.item_count = x.items.length;
                 });
                 optimal = this.top_scorers(optimal);
@@ -91,29 +167,12 @@ export class Optimizer {
                         let acc_layouts = {};
                         for (let layout = 0; layout < base_layouts.length; layout++) {
                                 const base_layout = base_layouts[layout];
-                                let accslots = this.accslots - base_layout.counts['accessory'];
-                                accslots = this.maxslots < accslots
-                                        ? this.maxslots
-                                        : accslots;
-                                // find all possible items that can be equiped in main slots
-                                let options = Object.getOwnPropertyNames(Slot).filter((x) => {
-                                        if (Slot[x][0] === 'accessory') {
-                                                return false;
-                                        }
-                                        if (base_layout.counts[Slot[x][0]] > 0) {
-                                                return false;
-                                        }
-                                        return true;
-                                }).map((x) => (this.gear_slot(item_names, Slot[x], base_layout)));
-                                let s = [options.map((x) => (x.length)).reduce((a, b) => (a * b), 1)];
-                                let remaining = options.map((x) => (this.pareto(x)));
-                                s.push(remaining.map((x) => (x.length)).reduce((a, b) => (a * b), 1));
-                                let layouts = this.outfits(remaining, base_layout);
-                                layouts = this.pareto(layouts);
-                                s.push(layouts.length);
+                                let s = [];
+                                const accslots = this.count_accslots(base_layout);
+                                const layouts = this.optimize_layouts(base_layout, accslots, s);
                                 // find all possible accessories
                                 if (acc_layouts[accslots] === undefined) {
-                                        let accs = this.gear_slot(item_names, Slot.ACCESSORY, base_layout);
+                                        let accs = this.gear_slot(Slot.ACCESSORY, base_layout);
                                         s.push(accs.length);
                                         accs = this.pareto(accs, accslots);
                                         s.push(accs.length);
@@ -123,8 +182,8 @@ export class Optimizer {
                                                         this.add_equip(everything, accs[idx]);
                                                 }
                                                 accs.sort((a, b) => {
-                                                        let ascore = score_product(this.remove_equip(clone(everything), a), this.factors);
-                                                        let bscore = score_product(this.remove_equip(clone(everything), b), this.factors);
+                                                        let ascore = this.score_equip_wrapper(this.remove_equip(clone(everything), a), this.factors);
+                                                        let bscore = this.score_equip_wrapper(this.remove_equip(clone(everything), b), this.factors);
                                                         return ascore - bscore;
                                                 });
                                         }
@@ -137,17 +196,18 @@ export class Optimizer {
                                 console.log('Processing ' + s[2] + ' out of ' + s[1] + ' out of ' + s[0] + ' gear layouts.');
                                 for (let idx in layouts) {
                                         for (let jdx in acc_layouts[accslots]) {
+                                                // combine every gear with every accessory layout
                                                 let candidate = clone(layouts[idx]);
                                                 let acc_candidate = acc_layouts[accslots][jdx];
                                                 for (let kdx = base_layout.items.length; kdx < acc_candidate.items.length; kdx++) {
                                                         this.add_equip(candidate, acc_candidate.items[kdx]);
                                                 }
                                                 let changed = acc_candidate.items.length > 0;
-                                                let accs = this.gear_slot(item_names, Slot.ACCESSORY, base_layout);
+                                                let accs = this.gear_slot(Slot.ACCESSORY, base_layout);
                                                 accs = this.pareto(accs, accslots);
                                                 while (changed) {
                                                         candidate = this.sort_accs(candidate);
-                                                        let score = score_product(candidate, this.factors);
+                                                        let score = this.score_equip_wrapper(candidate, this.factors);
                                                         const atrisk = clone(candidate.items[candidate.items.length - 1]);
                                                         candidate = this.remove_equip(candidate, atrisk, true);
                                                         let winner = undefined;
@@ -163,7 +223,7 @@ export class Optimizer {
                                                                         continue;
                                                                 }
                                                                 const alt = this.add_equip(clone(candidate), accs[kdx]);
-                                                                const altscore = score_product(alt, this.factors);
+                                                                const altscore = this.score_equip_wrapper(alt, this.factors);
                                                                 if (altscore > score) {
                                                                         score = altscore;
                                                                         winner = alt;
@@ -176,7 +236,7 @@ export class Optimizer {
                                                                 candidate = winner;
                                                         }
                                                 }
-                                                candidate.score = score_product(candidate, this.factors);
+                                                candidate.score = this.score_equip_wrapper(candidate, this.factors);
                                                 candidate.item_count = layouts[idx].items.length;
                                                 optimal.push(candidate);
                                                 optimal = this.top_scorers(optimal);
@@ -192,14 +252,14 @@ export class Optimizer {
                 return optimal;
         }
 
-        compute_optimal(item_names, base_layouts) {
+        compute_optimal(base_layouts) {
                 if (this.factors[1].length === 0) {
                         return base_layouts;
                 }
                 let optimal = clone(base_layouts);
                 /* eslint-disable-next-line array-callback-return */
                 optimal.map((x) => {
-                        x.score = score_product(x, this.factors);
+                        x.score = this.score_equip_wrapper(x, this.factors);
                         x.item_count = x.items.length;
                 });
                 optimal = this.top_scorers(optimal);
@@ -207,29 +267,12 @@ export class Optimizer {
                         let acc_layouts = {};
                         for (let layout = 0; layout < base_layouts.length; layout++) {
                                 const base_layout = base_layouts[layout];
-                                let accslots = this.accslots - base_layout.counts['accessory'];
-                                accslots = this.maxslots < accslots
-                                        ? this.maxslots
-                                        : accslots;
-                                // find all possible items that can be equiped in main slots
-                                let options = Object.getOwnPropertyNames(Slot).filter((x) => {
-                                        if (Slot[x][0] === 'accessory') {
-                                                return false;
-                                        }
-                                        if (base_layout.counts[Slot[x][0]] > 0) {
-                                                return false;
-                                        }
-                                        return true;
-                                }).map((x) => (this.gear_slot(item_names, Slot[x], base_layout)));
-                                let s = [options.map((x) => (x.length)).reduce((a, b) => (a * b), 1)];
-                                let remaining = options.map((x) => (this.pareto(x)));
-                                s.push(remaining.map((x) => (x.length)).reduce((a, b) => (a * b), 1));
-                                let layouts = this.outfits(remaining, base_layout);
-                                layouts = this.pareto(layouts);
-                                s.push(layouts.length);
+                                let s = [];
+                                const accslots = this.count_accslots(base_layout);
+                                const layouts = this.optimize_layouts(base_layout, accslots, s);
                                 // find all possible accessories
                                 if (acc_layouts[accslots] === undefined) {
-                                        let accs = this.gear_slot(item_names, Slot.ACCESSORY, base_layout);
+                                        let accs = this.gear_slot(Slot.ACCESSORY, base_layout);
                                         s.push(accs.length);
                                         accs = this.pareto(accs, accslots);
                                         s.push(accs.length);
@@ -239,8 +282,8 @@ export class Optimizer {
                                                         this.add_equip(everything, accs[idx]);
                                                 }
                                                 accs.sort((a, b) => {
-                                                        let ascore = score_product(this.remove_equip(clone(everything), a), this.factors);
-                                                        let bscore = score_product(this.remove_equip(clone(everything), b), this.factors);
+                                                        let ascore = this.score_equip_wrapper(this.remove_equip(clone(everything), a), this.factors);
+                                                        let bscore = this.score_equip_wrapper(this.remove_equip(clone(everything), b), this.factors);
                                                         return bscore - ascore;
                                                 });
                                         }
@@ -256,7 +299,7 @@ export class Optimizer {
                                                 for (let kdx = base_layout.items.length; kdx < acc_candidate.items.length; kdx++) {
                                                         this.add_equip(candidate, acc_candidate.items[kdx]);
                                                 }
-                                                candidate.score = score_product(candidate, this.factors);
+                                                candidate.score = this.score_equip_wrapper(candidate, this.factors);
                                                 candidate.item_count = layouts[idx].items.length;
                                                 optimal.push(candidate);
                                                 optimal = this.top_scorers(optimal);
@@ -273,7 +316,7 @@ export class Optimizer {
                                 let scores = [];
                                 for (let jdx = optimal[idx].item_count; jdx < optimal_size; jdx++) {
                                         let item = optimal[idx].items[jdx];
-                                        let score = score_product(this.remove_equip(clone(optimal[idx]), item), this.factors);
+                                        let score = this.score_equip_wrapper(this.remove_equip(clone(optimal[idx]), item), this.factors);
                                         scores.push([score, item])
                                 }
                                 for (let jdx = optimal[idx].item_count; jdx < optimal_size; jdx++) {
@@ -288,13 +331,13 @@ export class Optimizer {
                 return optimal;
         }
 
-        add_equip(equip, item) {
+        add_equip(equip, item, effect = 100) {
                 if (item.empty) {
                         return equip;
                 }
                 for (let i = 0; i < item.statnames.length; i++) {
                         const stat = item.statnames[i];
-                        equip[stat] += item[stat];
+                        equip[stat] += item[stat] * effect / 100;
                 }
                 equip.items.push(item);
                 equip.counts[item.slot[0]] += 1;
@@ -329,16 +372,22 @@ export class Optimizer {
                         base.item_count = base.items.length;
                         return [base];
                 }
-                let tmp = this.cartesian(...options).map((items) => {
+                let tmp = this.cartesian(...options.map(x => x[0])).map((items) => {
+                        console.log(items)
+                        console.log(options.map(x => x[1]))
                         let equip = clone(base);
-                        //HACK: items can be a single item sometimes, then items.length is undefined
-                        // and this hack provides a working work around
                         if (items.length === undefined) {
-                                this.add_equip(equip, items);
-                        } else {
-                                for (let i = 0; i < items.length; i++) {
-                                        this.add_equip(equip, items[i]);
+                                // HACK: items can be a single item instead of a list for some reason.
+                                items = [items];
+                        }
+                        for (let i = 0; i < items.length; i++) {
+                                if (items[i].slot[0] === 'weapon') {
+                                        // check if weapon is already in mainhand slot
+                                        if (equip.items.map(item => item.name).filter(name => name === items[i].name).length > 0) {
+                                                continue;
+                                        }
                                 }
+                                this.add_equip(equip, items[i]);
                         }
                         equip.item_count = equip.items.length;
                         return equip;
@@ -346,9 +395,9 @@ export class Optimizer {
                 return tmp;
         };
 
-        gear_slot(names, type, equip) {
+        gear_slot(type, equip) {
                 const equiped = equip.items.filter((item) => (item.slot[0] === type[0])).map((x) => (x.name));
-                return names.filter((name) => {
+                return this.itemnames.filter((name) => {
                         if (!allowed_zone(this.itemdata, this.limits, name)) {
                                 return false;
                         }
@@ -359,7 +408,7 @@ export class Optimizer {
         knapsack_combine_single(last, list, item, add) {
                 for (let idx in list) {
                         let max_with = add(clone(list[idx]), item);
-                        max_with.score = score_product(max_with, this.factors);
+                        max_with.score = this.score_equip_wrapper(max_with, this.factors);
                         list[idx] = max_with;
                 }
                 list = list.sort((a, b) => (b.score - a.score));
@@ -376,7 +425,7 @@ export class Optimizer {
         //Assumes all weights are 1.
         knapsack(items, capacity, zero_state, add) {
                 let n = items.length;
-                zero_state.score = score_product(zero_state, this.factors);
+                zero_state.score = this.score_equip_wrapper(zero_state, this.factors);
                 // init matrix
                 let matrix_weight = new Array(n + 1);
                 for (let i = 0; i < n + 1; i++) {

@@ -39,7 +39,7 @@ function HowTo() {
                         <li>Optimize according to the previous configuration.</li>
                         <ul>
                                 <li>The "Optimize Gear" button computes an optimal loadout based on the configuration.</li>
-                                <li>The "Optimize Fast" button is usually faster. In all tested cases this also computed the optimal loadout.</li>
+                                <li>The "Optimize Fast" button is usually faster. In most tested cases this also computed the optimal loadout.</li>
                                 <li>If a computation takes too long, you can abort it by clicking the "abort" button. In this case consider using the fast approach.</li>
                         </ul>
                         <br/>

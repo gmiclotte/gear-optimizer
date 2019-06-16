@@ -34,6 +34,7 @@ let ITEMS = new ItemContainer(ITEMLIST.map((item, index) => {
 }));
 
 const accslots = 12;
+const offhand = 0;
 const maxZone = 28;
 const zoneDict = {};
 /* eslint-disable-next-line array-callback-return */
@@ -44,9 +45,10 @@ Object.getOwnPropertyNames(SetName).map(x => {
 const INITIAL_STATE = {
         itemdata: ITEMS,
         items: ITEMS.names,
-        equip: ItemNameContainer(accslots),
-        lastequip: ItemNameContainer(accslots),
-        savedequip: [ItemNameContainer(accslots)],
+        offhand: offhand,
+        equip: ItemNameContainer(accslots, offhand),
+        lastequip: ItemNameContainer(accslots, offhand),
+        savedequip: [ItemNameContainer(accslots, offhand)],
         savedidx: 0,
         maxsavedidx: 0,
         showsaved: false,
@@ -340,7 +342,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                                 return state.equip;
                                                         }
                                                         return tmp;
-                                                }).concat([ItemNameContainer(state.equip.accessory.length)]),
+                                                }).concat([ItemNameContainer(state.equip.accessory.length, state.offhand)]),
                                                 maxsavedidx: state.maxsavedidx + 1
                                         }
                                 }

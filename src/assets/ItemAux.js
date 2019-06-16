@@ -64,7 +64,7 @@ export class ItemContainer {
         }
 }
 
-export const ItemNameContainer = (accslots) => {
+export const ItemNameContainer = (accslots, offhand) => {
         let container = {};
         const slotlist = Object.getOwnPropertyNames(Slot);
         for (let idx in slotlist) {
@@ -76,6 +76,9 @@ export const ItemNameContainer = (accslots) => {
                                 list.push(new EmptySlot(Slot[slot]).name);
                         }
                 } else {
+                        list.push(new EmptySlot(Slot[slot]).name);
+                }
+                if (slot === 'WEAPON' && offhand > 0) {
                         list.push(new EmptySlot(Slot[slot]).name);
                 }
                 container[slotname] = list;
