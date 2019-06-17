@@ -4,6 +4,7 @@ import ReactGA from 'react-ga';
 
 import {default as AppLayout} from '../components/AppLayout/AppLayout';
 
+import {AugmentSettings, AugmentAsync} from '../actions/Augment'
 import {Crement} from '../actions/Crement'
 import {DisableItem} from '../actions/DisableItem';
 import {ToggleEdit} from '../actions/ToggleEdit';
@@ -53,6 +54,7 @@ const mapStateToProps = state => ({
         looty: state.optimizer.looty,
         pendant: state.optimizer.pendant,
         hidden: state.optimizer.hidden,
+        augment: state.optimizer.augment,
         version: state.optimizer.version
 });
 
@@ -72,6 +74,8 @@ const mapDispatchToProps = {
         handleLoadSlot: LoadSlot,
         handleSaveSlot: SaveSlot,
         handleToggleSaved: ToggleSaved,
+        handleAugmentSettings: AugmentSettings,
+        handleAugmentAsync: AugmentAsync,
         handleSaveStateLocalStorage: SaveStateLocalStorage,
         handleLoadStateLocalStorage: LoadStateLocalStorage
 };

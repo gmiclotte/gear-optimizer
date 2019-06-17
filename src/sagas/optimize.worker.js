@@ -1,8 +1,19 @@
 import {ItemNameContainer, Equip, Slot, Factors} from '../assets/ItemAux'
 import {Optimizer} from '../Optimizer'
+import {Augment} from '../Augment'
 
 // eslint-disable-next-line
-self.addEventListener("message", optimize);
+self.addEventListener("message", choose);
+
+function choose(e) {
+        if (e.data.command === 'optimize') {
+                optimize.call(this, e);
+        } else if (e.data.command === 'augment') {
+                augment.call(this, e);
+        } else {
+                console.log('Error: invalid web worker command: ' + e.data.command + '.')
+        }
+}
 
 function optimize(e) {
         let start_time = Date.now();
@@ -29,6 +40,16 @@ function optimize(e) {
                 counts[item.slot[1]]++;
         }
         this.postMessage({equip: equip});
+        console.log(Math.floor((Date.now() - start_time) / 10) / 100 + ' seconds');
         this.close();
-        console.log(Math.floor((Date.now() - start_time) / 10) / 100 + ' seconds')
+}
+
+function augment(e) {
+        const start_time = Date.now();
+        const state = e.data.state;
+        const augment = new Augment(state.augment.lsc, state.augment.time);
+        let vals = augment.optimize();
+        this.postMessage({vals: vals});
+        console.log(Math.floor((Date.now() - start_time) / 10) / 100 + ' seconds');
+        this.close();
 }
