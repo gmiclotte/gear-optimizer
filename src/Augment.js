@@ -211,15 +211,22 @@ export class Augment {
                         }
                         let inf = a;
                         let last = -1;
-                        while (inf != sup) {
+                        while (true) {
+                                if (inf === sup) {
+                                        a = sup;
+                                        break;
+                                }
                                 a = Math.floor((sup + inf) / 2);
                                 if (a === last) {
-                                        break;
+                                        inf += 1;
+                                        a += 1;
                                 }
                                 const c = this.get_cost_bb(idx, a);
                                 const flow = this.get_ratio(idx - 1, c)[2];
                                 const fhigh = this.get_ratio(idx, c)[2];
-                                if (fhigh < flow) {
+                                if (fhigh === flow) {
+                                        break
+                                } else if (fhigh < flow) {
                                         inf = a
                                 } else {
                                         sup = a
