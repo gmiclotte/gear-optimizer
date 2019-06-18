@@ -91,7 +91,6 @@ export class Optimizer {
         optimize_layouts(base_layout, accslots, s) {
                 // find all possible items that can be equiped in main slots
                 let weapons = base_layout.counts['weapon'];
-                console.log(weapons)
                 let options = [
                         [
                                 'WEAPON', 100, 'mainhand'
@@ -113,7 +112,6 @@ export class Optimizer {
                         ]
                 ].filter((x) => {
                         if (x[1] === 0) {
-                                console.log(x[1], 'filtering')
                                 return false;
                         }
                         let slot = Slot[x[0]][0]
@@ -352,8 +350,6 @@ export class Optimizer {
                         return [base];
                 }
                 let tmp = this.cartesian(...options.map(x => x[0])).map((items) => {
-                        console.log(items)
-                        console.log(options.map(x => x[1]))
                         let equip = clone(base);
                         if (items.length === undefined) {
                                 // HACK: items can be a single item instead of a list for some reason.
