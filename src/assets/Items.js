@@ -764,7 +764,7 @@ export const ITEMLIST = [
     ]),
     new Item('The Candy Cane of Destiny', Slot.WEAPON, SetName.WANDERER, 100, [
         [Stat.POWER, 340000],
-        [Stat.TOUGHNESS, 1020000],
+        [Stat.TOUGHNESS, 24000],
         [Stat.ENERGY_POWER, 2000],
         [Stat.ENERGY_CAP, 200],
         [Stat.ENERGY_BARS, 2000],
