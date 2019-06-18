@@ -150,6 +150,29 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 }
                                         }
                                 }
+                                if (action.payload.name === 'offhand') {
+                                        if (state.offhand === 1 && action.payload.val === -1) {
+                                                return {
+                                                        ...state,
+                                                        equip: {
+                                                                ...state.equip,
+                                                                weapon: state.equip.weapon.slice(0, 1)
+                                                        },
+                                                        offhand: 0
+                                                }
+                                        }
+                                        if (state.offhand === 0 && action.payload.val === 1) {
+                                                let slot = Slot.WEAPON;
+                                                return {
+                                                        ...state,
+                                                        equip: {
+                                                                ...state.equip,
+                                                                weapon: [state.equip.weapon[0], new EmptySlot(slot).name]
+                                                        },
+                                                        offhand: 1
+                                                }
+                                        }
+                                }
                                 if (action.payload.name[0] === 'maxslots') {
                                         let name = action.payload.name[0];
                                         let changed = action.payload.name[1];
@@ -287,6 +310,16 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                 case UNDO:
                         {
                                 let accslots = state.lastequip.accessory.length;
+                                let offhand = state.offhand;
+                                if (offhand === 0) {
+                                        offhand = state.lastequip.weapon.length > 1
+                                                ? 1
+                                                : 0;
+                                } else if (offhand > 0) {
+                                        offhand = state.lastequip.weapon.length > 1
+                                                ? offhand
+                                                : 0;
+                                }
                                 return {
                                         ...state,
                                         equip: state.lastequip,
@@ -296,7 +329,8 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 }
                                                 return val;
                                         }),
-                                        lastequip: state.equip
+                                        lastequip: state.equip,
+                                        offhand: offhand
                                 }
                         }
 
@@ -401,6 +435,16 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                         {
                                 const save = state.savedequip[state.savedidx];
                                 let accslots = save.accessory.length;
+                                let offhand = state.offhand;
+                                if (offhand === 0) {
+                                        offhand = save.weapon.length > 1
+                                                ? 1
+                                                : 0;
+                                } else if (offhand > 0) {
+                                        offhand = save.weapon.length > 1
+                                                ? offhand
+                                                : 0;
+                                }
                                 return {
                                         ...state,
                                         equip: save,
@@ -409,7 +453,8 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                         return accslots;
                                                 }
                                                 return val;
-                                        })
+                                        }),
+                                        offhand: offhand
                                 }
                         }
 
@@ -488,6 +533,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                 return {
                                         ...state,
                                         items: localStorageState.items,
+                                        offhand: localStorageState.offhand,
                                         equip: localStorageState.equip,
                                         savedequip: localStorageState.savedequip,
                                         savedidx: localStorageState.savedidx,
