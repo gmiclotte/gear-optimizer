@@ -7,6 +7,7 @@ import ReactGA from 'react-ga';
 import './AppLayout.css';
 
 import Optimizer from '../Content/Optimizer';
+import Augment from '../Content/Augment';
 import About from '../About/About';
 
 function HowTo() {
@@ -40,7 +41,7 @@ function HowTo() {
                         <ul>
                                 <li>The "Optimize Gear" button computes an optimal loadout based on the configuration.</li>
                                 <li>The "Optimize Fast" button is usually faster. In most tested cases this also computed the optimal loadout.</li>
-                                <li>If a computation takes too long, you can abort it by clicking the "abort" button. In this case consider using the fast approach.</li>
+                                <li>You should prefer "Optimize Gear". If a computation takes too long, you can abort it by clicking the "abort" button. Only in this case consider using the fast approach.</li>
                         </ul>
                         <br/>
                         <li>Save and compare loadouts.</li>
@@ -75,6 +76,9 @@ const AppLayout = props => (<div className='app_container'>
                                         <li className='nav-bar-item'>
                                                 <NavLink to='/howto' exact={true} className='nav-link' activeClassName='active'>How to</NavLink>
                                         </li>
+                                        <li className='nav-bar-item'>
+                                                <NavLink to='/augment' exact={true} className='nav-link' activeClassName='active'>Augments</NavLink>
+                                        </li>
                                         <li className='nav-bar-item' style={{
                                                         float: 'right'
                                                 }}>
@@ -84,6 +88,7 @@ const AppLayout = props => (<div className='app_container'>
                         </nav>
 
                         <Route exact={true} path='/' render={(routeProps) => (<Optimizer {...routeProps} {...props} className='app_body'/>)}/>
+                        <Route exact={true} path='/augment/' render={(routeProps) => (<Augment {...routeProps} {...props} className='app_body'/>)}/>
                         <Route exact={true} path='/howto/' component={HowTo}/>
                         <Route exact={true} path='/about/' component={About}/>
                 </div>

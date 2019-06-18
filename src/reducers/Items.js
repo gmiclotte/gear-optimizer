@@ -10,6 +10,7 @@ import {
 } from '../assets/ItemAux'
 import {clone} from '../util'
 
+import {AUGMENT, AUGMENT_SETTINGS} from '../actions/Augment';
 import {CREMENT} from '../actions/Crement'
 import {DISABLE_ITEM} from '../actions/DisableItem';
 import {TOGGLE_EDIT} from '../actions/ToggleEdit';
@@ -37,8 +38,7 @@ const accslots = 12;
 const offhand = 0;
 const maxZone = 28;
 const zoneDict = {};
-/* eslint-disable-next-line array-callback-return */
-Object.getOwnPropertyNames(SetName).map(x => {
+Object.getOwnPropertyNames(SetName).forEach(x => {
         zoneDict[SetName[x][1]] = 0 < SetName[x][1] && SetName[x][1] < maxZone;
 });
 
@@ -52,7 +52,6 @@ const INITIAL_STATE = {
         savedidx: 0,
         maxsavedidx: 0,
         showsaved: false,
-        loadouts: [],
         factors: [
                 'RESPAWN', 'DAYCARE_SPEED', 'HACK', 'NGUS', 'NONE'
         ],
@@ -68,11 +67,52 @@ const INITIAL_STATE = {
         pendant: 6,
         titanversion: 1,
         hidden: zoneDict,
+        augment: {
+                lsc: 20,
+                time: 1440,
+                vals: []
+        },
         version: '1.1.0'
 };
 
 const ItemsReducer = (state = INITIAL_STATE, action) => {
         switch (action.type) {
+                case AUGMENT:
+                        {
+                                if (!state.running) {
+                                        return state;
+                                }
+                                console.log('worker finished')
+                                return {
+                                        ...state,
+                                        augment: {
+                                                ...state.augment,
+                                                vals: action.payload.vals
+                                        },
+                                        running: false
+                                };
+                        }
+
+                case AUGMENT_SETTINGS:
+                        {
+                                let lsc = Number(action.payload.lsc);
+                                let time = Number(action.payload.time);
+                                if (isNaN(lsc)) {
+                                        lsc = 20;
+                                }
+                                if (isNaN(time)) {
+                                        time = 1440;
+                                }
+                                return {
+                                        ...state,
+                                        augment: {
+                                                ...state.augment,
+                                                lsc: lsc,
+                                                time: time
+                                        }
+                                };
+                        }
+
                 case CREMENT:
                         {
                                 if (action.payload.val < 0 && action.payload.min === state[action.payload.name]) {
@@ -416,7 +456,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                 case LOAD_STATE_LOCALSTORAGE:
                         {
                                 const lc = window.localStorage.getItem(LOCALSTORAGE_NAME);
-                                const localStorageState = JSON.parse(lc);
+                                let localStorageState = JSON.parse(lc);
                                 if (!Boolean(localStorageState)) {
                                         console.log('No local storage found. Loading fresh v' + state.version + ' state.');
                                         return state;
@@ -439,6 +479,12 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         item.disable = saveditem.disable;
                                         update_level(item, saveditem.level);
                                 }
+                                Object.getOwnPropertyNames(state).forEach(name => {
+                                        if (localStorageState[name] === undefined) {
+                                                localStorageState[name] = state[name];
+                                                console.log('Keeping default ' + name + ': ' + state[name]);
+                                        }
+                                });
                                 return {
                                         ...state,
                                         items: localStorageState.items,
@@ -453,7 +499,8 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         titanversion: localStorageState.titanversion,
                                         looty: localStorageState.looty,
                                         pendant: localStorageState.pendant,
-                                        hidden: localStorageState.hidden
+                                        hidden: localStorageState.hidden,
+                                        augment: localStorageState.augment
                                 };
                         }
 

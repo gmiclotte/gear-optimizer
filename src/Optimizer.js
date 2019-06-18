@@ -20,8 +20,7 @@ export class Optimizer {
         top_scorers(optimal) {
                 // only keep best candidates
                 let top_score = optimal[0].score;
-                /* eslint-disable-next-line array-callback-return */
-                optimal.map((x) => {
+                optimal.forEach((x) => {
                         top_score = x.score > top_score
                                 ? x.score
                                 : top_score;
@@ -43,12 +42,10 @@ export class Optimizer {
                                         continue;
                                 }
                                 let tmp = {};
-                                /* eslint-disable-next-line array-callback-return */
-                                optimal[idx].items.map((item) => {
+                                optimal[idx].items.forEach((item) => {
                                         tmp[item.name] = true;
                                 });
-                                /* eslint-disable-next-line array-callback-return */
-                                filtered[jdx].items.map((item) => {
+                                filtered[jdx].items.forEach((item) => {
                                         tmp[item.name] = true;
                                 });
                                 if (Object.getOwnPropertyNames(tmp).length !== l) {
@@ -157,8 +154,7 @@ export class Optimizer {
                         return base_layouts;
                 }
                 let optimal = clone(base_layouts);
-                /* eslint-disable-next-line array-callback-return */
-                optimal.map((x) => {
+                optimal.forEach((x) => {
                         x.score = this.score_equip_wrapper(x, this.factors);
                         x.item_count = x.items.length;
                 });
@@ -257,8 +253,7 @@ export class Optimizer {
                         return base_layouts;
                 }
                 let optimal = clone(base_layouts);
-                /* eslint-disable-next-line array-callback-return */
-                optimal.map((x) => {
+                optimal.forEach((x) => {
                         x.score = this.score_equip_wrapper(x, this.factors);
                         x.item_count = x.items.length;
                 });
@@ -308,25 +303,9 @@ export class Optimizer {
                         }
                 }
                 optimal = this.filter_duplicates(optimal);
-                /* eslint-disable-next-line no-lone-blocks */
-                {
-                        // sort new accs per candidate
-                        for (let idx in optimal) {
-                                let optimal_size = optimal[idx].items.length;
-                                let scores = [];
-                                for (let jdx = optimal[idx].item_count; jdx < optimal_size; jdx++) {
-                                        let item = optimal[idx].items[jdx];
-                                        let score = this.score_equip_wrapper(this.remove_equip(clone(optimal[idx]), item), this.factors);
-                                        scores.push([score, item])
-                                }
-                                for (let jdx = optimal[idx].item_count; jdx < optimal_size; jdx++) {
-                                        optimal[idx].items.pop();
-                                }
-                                scores = scores.sort((a, b) => (a[0] - b[0]));
-                                for (let jdx in scores) {
-                                        optimal[idx].items.push(scores[jdx][1]);
-                                }
-                        }
+                // sort new accs per candidate
+                for (let idx in optimal) {
+                        this.sort_accs(optimal[idx])
                 }
                 return optimal;
         }

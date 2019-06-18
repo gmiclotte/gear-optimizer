@@ -1,9 +1,20 @@
-import {Equip, Factors} from '../assets/ItemAux'
+import {Equip, Slot, Factors, ItemNameContainer} from '../assets/ItemAux'
 import {Optimizer} from '../Optimizer'
 import {old2newequip} from '../util'
+import {Augment} from '../Augment'
 
 // eslint-disable-next-line
-self.addEventListener("message", optimize);
+self.addEventListener("message", choose);
+
+function choose(e) {
+        if (e.data.command === 'optimize') {
+                optimize.call(this, e);
+        } else if (e.data.command === 'augment') {
+                augment.call(this, e);
+        } else {
+                console.log('Error: invalid web worker command: ' + e.data.command + '.')
+        }
+}
 
 function optimize(e) {
         let start_time = Date.now();
@@ -26,6 +37,24 @@ function optimize(e) {
         this.postMessage({
                 equip: old2newequip(accslots, offhand, base_layout)
         });
+        let equip = ItemNameContainer(accslots);
+        let counts = Object.getOwnPropertyNames(Slot).map((x) => (0));
+        for (let idx = 0; idx < base_layout.items.length; idx++) {
+                const item = base_layout.items[idx];
+                equip[item.slot[0]][counts[item.slot[1]]] = item.name;
+                counts[item.slot[1]]++;
+        }
+        this.postMessage({equip: equip});
+        console.log(Math.floor((Date.now() - start_time) / 10) / 100 + ' seconds');
         this.close();
-        console.log(Math.floor((Date.now() - start_time) / 10) / 100 + ' seconds')
+}
+
+function augment(e) {
+        const start_time = Date.now();
+        const state = e.data.state;
+        const augment = new Augment(state.augment.lsc, state.augment.time);
+        let vals = augment.optimize();
+        this.postMessage({vals: vals});
+        console.log(Math.floor((Date.now() - start_time) / 10) / 100 + ' seconds');
+        this.close();
 }
