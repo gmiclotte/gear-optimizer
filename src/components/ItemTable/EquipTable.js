@@ -130,7 +130,7 @@ export default class EquipTable extends React.Component {
                 ReactTooltip.rebuild();
         }
 
-        render_equip(equip, prefix, compare, buffer, class_idx) {
+        render_equip(equip, prefix, compare, buffer, handleClickItem) {
                 let sorted = Object.getOwnPropertyNames(Slot).sort((a, b) => Slot[a][1] - Slot[b][1]).reduce((res, slot) => res.concat(equip[Slot[slot][0]]), []);
                 let localbuffer = [];
                 let last = new EmptySlot();
@@ -144,7 +144,7 @@ export default class EquipTable extends React.Component {
                                 </div>);
                                 localbuffer = [];
                         }
-                        localbuffer.push(<Item item={item} handleClickItem={this.props.handleClickItem} handleRightClickItem={this.props.handleRightClickItem} key={name + idx}/>);
+                        localbuffer.push(<Item item={item} handleClickItem={handleClickItem} handleRightClickItem={this.props.handleRightClickItem} key={name + idx}/>);
                         last = item;
                 }
                 buffer.push(<div className='item-section' key={this.class_idx++}>
@@ -174,17 +174,17 @@ export default class EquipTable extends React.Component {
                 const compare = compare_factory(this.props.group)(this.props.itemdata);
                 const equip = this.props.equip;
                 const savedequip = this.props.savedequip[this.props.savedidx];
-                this.render_equip(equip, '', compare, buffer);
+                this.render_equip(equip, '', compare, buffer, this.props.handleClickItem);
                 buffer.push(<SaveButtons {...this.props} key='savebuttons'/>)
                 if (this.props.showsaved) {
-                        this.render_equip(savedequip, 'Saved ', compare, buffer);
+                        this.render_equip(savedequip, 'Saved ', compare, buffer, this.props.handleEquipItem);
                 }
                 buffer.push(<div className='item-section' key='stats'>{'Gear stats (change w.r.t. save slot)'}<br/><br/> {
-                        Object.getOwnPropertyNames(Factors).map((factor) => (
+                                Object.getOwnPropertyNames(Factors).map((factor) => (
                                         factor === 'NONE'
-                                                ? <div key={factor}/>
-                                                : <BonusLine itemdata={this.props.itemdata} equip={equip} savedequip={savedequip} factor={Factors[factor]} factors={this.props.factors} offhand={this.props.offhand * 5} key={factor}/>))
-                }
+                                        ? <div key={factor}/>
+                                        : <BonusLine itemdata={this.props.itemdata} equip={equip} savedequip={savedequip} factor={Factors[factor]} factors={this.props.factors} offhand={this.props.offhand * 5} key={factor}/>))
+                        }
                 </div>);
                 this.render_conditional(name => this.props.itemdata[name].level !== 100, 'Not maxed', buffer);
                 this.render_conditional(name => this.props.itemdata[name].disable, 'Disabled', buffer);
