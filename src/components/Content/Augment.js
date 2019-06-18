@@ -48,21 +48,29 @@ class Augment extends Component {
                 }
         }
 
+        names = [
+                'scissors',
+                'milk',
+                'cannon',
+                'mounted',
+                'buster',
+                'exo',
+                'laser sword'
+        ];
+
+        aug(idx, val, s) {
+                return val[s] + ' / ' + val[s + 1] + ' ' + this.names[idx];
+        }
+
+        line(val, idx) {
+                return <div key={idx}>{this.aug(idx, val, 0) + '\t==\t' + this.aug(idx + 1, val, 3) + '\n'}</div>;
+        }
+
         render() {
                 ReactGA.pageview('/augment/');
-                //if (this.props.augment.lsc != this.state.lsc || this.props.augment.time != this.state.time) {
-                //this.setState({lsc: this.props.augment.lsc, time: this.props.augment.time});
-                //}
                 const vals = this.props.augment.vals;
-                const names = [
-                        'scissors',
-                        'milk',
-                        'cannon',
-                        'mounted',
-                        'buster',
-                        'exo',
-                        'laser sword'
-                ];
+                let text = 'Augment thresholds. Assumes optimal energy ratio, i.e. the exponent ratio, between augment and upgrade. ';
+                text += 'Augments run for ' + this.props.augment.time + ' minutes, with ' + this.props.augment.lsc + ' laser sword challenge completions.';
                 return (<div className='center'>
                         <form onSubmit={this.handleSubmit}>
                                 <label>
@@ -84,9 +92,9 @@ class Augment extends Component {
                         <Button {...this.props} state={this.props.augment} abort={this.props.handleTerminate}/>
                         <br/>
                         <br/>
-                        <div>{'Augment thresholds. Assumes optimal energy ratio, i.e. the exponent ratio, between augment and upgrade. Augments run for ' + this.props.augment.time + ' minutes, with ' + this.props.augment.lsc + ' laser sword challenge completions.'}</div>
+                        <div>{text}</div>
                         <br/>
-                        <div>{vals.map((val, idx) => (<div key={idx}>{val[0] + '/' + val[1] + ' ' + names[idx] + '\t==\t' + val[3] + '/' + val[4] + ' ' + names[idx + 1] + '\n'}</div>))}</div>
+                        <div>{vals.map((val, idx) => (this.line(val, idx)))}</div>
                 </div>);
 
         };

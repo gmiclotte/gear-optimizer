@@ -48,6 +48,9 @@ export class Augment {
                 if (a === 0) {
                         return [1, 1];
                 }
+                if (a >= this.T) {
+                        return [this.T, 1];
+                }
                 let b = 1;
                 let m = 1;
                 let inf = 1;
@@ -74,8 +77,12 @@ export class Augment {
                                 last = m;
                         }
                 } else if (this.T < t) {
-                        while (this.T < t && a > 10 * sup) {
+                        while (this.T < t && a > sup) {
                                 sup *= 10;
+                                if (sup > a) {
+                                        sup = a;
+                                        break;
+                                }
                                 t = this.tbb(a, sup);
                         }
                         inf = sup / 10;
@@ -153,11 +160,11 @@ export class Augment {
                 for (let i in adds) {
                         const add = adds[i];
                         if (upgrade) {
-                                while (this.get_cost_bu(idx, a + add) < ca) {
+                                while (a + add <= this.T && this.get_cost_bu(idx, a + add) < ca) {
                                         a += add;
                                 }
                         } else {
-                                while (this.get_cost_ba(idx, a + add) < ca) {
+                                while (a + add <= this.T && this.get_cost_ba(idx, a + add) < ca) {
                                         a += add;
                                 }
                         }
@@ -170,16 +177,16 @@ export class Augment {
                 const ku = 1
                 const y = this.eu / this.ea(idx)
                 let a = Math.floor(this.get_level(idx, c, false))
-                const ca = this.get_cost_ba(idx, a)
-                let u = Math.floor(this.get_level(idx, c, true))
-                const cu = this.get_cost_bu(idx, u)
-                const c_ = ca + cu
                 if (a > this.T) {
                         a = this.T
                 }
+                const ca = this.get_cost_ba(idx, a)
+                let u = Math.floor(this.get_level(idx, c, true))
                 if (u > this.T) {
                         u = this.T;
                 }
+                const cu = this.get_cost_bu(idx, u)
+                const c_ = ca + cu
                 const fa = Math.floor(a) ** this.ea(idx) * ka;
                 const fu = Math.floor(1 + u) ** this.eu * ku;
                 const f = fa * fu;
@@ -198,6 +205,10 @@ export class Augment {
                                         break;
                                 }
                                 a *= 10;
+                                if (a > this.T) {
+                                        a = this.T;
+                                        break;
+                                }
                         }
                         let sup = a;
                         while (true) {
