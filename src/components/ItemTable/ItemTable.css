@@ -1,12 +1,12 @@
 .item-table {
-        width: 50vw;
-        height: 75vh;
+        width: 48vw;
+        height: 76vh;
         margin: auto;
         overflow-y: auto;
         overflow-x: hidden;
         border: 2px solid black;
         border-radius: 5px;
-        margin: 5px;
+        margin: 0vh 1vw;
 }
 
 .stats-section {

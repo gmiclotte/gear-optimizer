@@ -94,8 +94,8 @@ class BonusLine extends React.Component {
         }
 
         render() {
-                let val = score_equip(this.props.itemdata, this.props.equip, this.props.factor);
-                let old = score_equip(this.props.itemdata, this.props.savedequip, this.props.factor);
+                let val = score_equip(this.props.itemdata, this.props.equip, this.props.factor, this.props.offhand);
+                let old = score_equip(this.props.itemdata, this.props.savedequip, this.props.factor, this.props.offhand);
                 let diff_val;
                 let stat = this.props.factor[0];
                 if (stat === 'Power' || stat === 'Toughness' || stat === 'Respawn') {
@@ -180,11 +180,11 @@ export default class EquipTable extends React.Component {
                         this.render_equip(savedequip, 'Saved ', compare, buffer);
                 }
                 buffer.push(<div className='item-section' key='stats'>{'Gear stats (change w.r.t. save slot)'}<br/><br/> {
-                                Object.getOwnPropertyNames(Factors).map((factor) => (
+                        Object.getOwnPropertyNames(Factors).map((factor) => (
                                         factor === 'NONE'
-                                        ? <div key={factor}/>
-                                        : <BonusLine itemdata={this.props.itemdata} equip={equip} savedequip={savedequip} factor={Factors[factor]} factors={this.props.factors} key={factor}/>))
-                        }
+                                                ? <div key={factor}/>
+                                                : <BonusLine itemdata={this.props.itemdata} equip={equip} savedequip={savedequip} factor={Factors[factor]} factors={this.props.factors} offhand={this.props.offhand * 5} key={factor}/>))
+                }
                 </div>);
                 this.render_conditional(name => this.props.itemdata[name].level !== 100, 'Not maxed', buffer);
                 this.render_conditional(name => this.props.itemdata[name].disable, 'Disabled', buffer);

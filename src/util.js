@@ -1,5 +1,16 @@
-import {Slot, SetName} from './assets/ItemAux'
+import {ItemNameContainer, Slot, SetName} from './assets/ItemAux'
 import {LOOTIES, PENDANTS} from './assets/Items'
+
+export function old2newequip(accslots, offhand, base_layout) {
+        let equip = ItemNameContainer(accslots, offhand);
+        let counts = Object.getOwnPropertyNames(Slot).map((x) => (0));
+        for (let idx = 0; idx < base_layout.items.length; idx++) {
+                const item = base_layout.items[idx];
+                equip[item.slot[0]][counts[item.slot[1]]] = item.name;
+                counts[item.slot[1]]++;
+        }
+        return equip;
+}
 
 export function clone(obj) {
         let copy;
@@ -107,9 +118,9 @@ function score_vals(vals, factors) {
         return vals.reduce((res, val) => res * val, 1);
 }
 
-export function score_equip(data, equip, factors) {
+export function score_equip(data, equip, factors, offhand) {
         const stats = factors[1];
-        const sorted = Object.getOwnPropertyNames(Slot).sort((a, b) => Slot[a][1] - Slot[b][1]).reduce((res, slot) => res.concat(equip[Slot[slot][0]]), []);
+        const sorted = Object.getOwnPropertyNames(Slot).reduce((res, slot) => res.concat(equip[Slot[slot][0]]), []);
         let vals = [];
         for (let idx in stats) {
                 const stat = stats[idx];
@@ -118,10 +129,18 @@ export function score_equip(data, equip, factors) {
                 } else {
                         vals[idx] = 100;
                 }
+                let mainhand = true;
                 for (let jdx in sorted) {
                         const name = sorted[jdx];
-                        const val = data[name][stat];
-                        if (val === undefined) {
+                        let val = data[name][stat];
+                        if (data[name].slot[0] === 'weapon') {
+                                if (mainhand) {
+                                        mainhand = false;
+                                } else {
+                                        val *= offhand / 100
+                                }
+                        }
+                        if (val === undefined || isNaN(val)) {
                                 continue;
                         }
                         vals[idx] += val;

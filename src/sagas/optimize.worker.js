@@ -1,5 +1,6 @@
-import {ItemNameContainer, Equip, Slot, Factors} from '../assets/ItemAux'
+import {Equip, Slot, Factors, ItemNameContainer} from '../assets/ItemAux'
 import {Optimizer} from '../Optimizer'
+import {old2newequip} from '../util'
 import {Augment} from '../Augment'
 
 // eslint-disable-next-line
@@ -19,19 +20,23 @@ function optimize(e) {
         let start_time = Date.now();
         let state = e.data.state;
         const accslots = state.equip.accessory.length;
+        const offhand = state.offhand;
         let base_layout = [new Equip()];
         for (let idx = 0; idx < state.factors.length; idx++) {
                 let factorname = state.factors[idx]
                 let factors = Factors[factorname];
                 let maxslots = state.maxslots[idx];
-                let optimizer = new Optimizer(state, factors, accslots, maxslots);
+                let optimizer = new Optimizer(state, factors, accslots, maxslots, offhand);
                 if (e.data.fast) {
-                        base_layout = optimizer.fast_optimal(state.items, base_layout);
+                        base_layout = optimizer.fast_optimal(base_layout);
                 } else {
-                        base_layout = optimizer.compute_optimal(state.items, base_layout);
+                        base_layout = optimizer.compute_optimal(base_layout);
                 }
         }
         base_layout = base_layout[Math.floor(Math.random() * base_layout.length)];
+        this.postMessage({
+                equip: old2newequip(accslots, offhand, base_layout)
+        });
         let equip = ItemNameContainer(accslots);
         let counts = Object.getOwnPropertyNames(Slot).map((x) => (0));
         for (let idx = 0; idx < base_layout.items.length; idx++) {
