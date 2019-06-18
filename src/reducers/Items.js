@@ -38,8 +38,7 @@ const accslots = 12;
 const offhand = 0;
 const maxZone = 28;
 const zoneDict = {};
-/* eslint-disable-next-line array-callback-return */
-Object.getOwnPropertyNames(SetName).map(x => {
+Object.getOwnPropertyNames(SetName).forEach(x => {
         zoneDict[SetName[x][1]] = 0 < SetName[x][1] && SetName[x][1] < maxZone;
 });
 
@@ -480,7 +479,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         item.disable = saveditem.disable;
                                         update_level(item, saveditem.level);
                                 }
-                                Object.getOwnPropertyNames(state).map(name => {
+                                Object.getOwnPropertyNames(state).forEach(name => {
                                         if (localStorageState[name] === undefined) {
                                                 localStorageState[name] = state[name];
                                                 console.log('Keeping default ' + name + ': ' + state[name]);
