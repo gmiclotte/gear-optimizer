@@ -2,15 +2,14 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 100%;
-        height: 100%;
         background-color: #fff;
 }
 
 .button-section {
-        width: 50vw;
+        width: 48vw;
+        height: 16vh;
         display: block;
-        margin: 10px;
+        margin: 1vh 1vw;
 }
 
 .edit-item-modal {

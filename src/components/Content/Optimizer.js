@@ -65,14 +65,14 @@ class Optimizer extends Component {
                                         <div><Crement header='Highest pendant' value={pendant} name='pendant' handleClick={this.props.handleCrement} min={-1} max={PENDANTS.length - 1}/></div>
                                         <div><Crement header='Accessory slots' value={accslots} name='accslots' handleClick={this.props.handleCrement} min={0} max={100}/></div>
                                         <div><Crement header='Offhand power' value={this.props.offhand * 5 + '%'} name='offhand' handleClick={this.props.handleCrement} min={0} max={20}/></div>
+                                </div>
+                                <div className='button-section' key='factorforms'>
+                                        {[...this.props.factors.keys()].map((idx) => (<div key={'factorform' + idx}><FactorForm {...this.props} idx={idx}/></div>))}
                                         <OptimizeButton fast={false} running={this.props.running} abort={this.props.handleTerminate} optimize={this.props.handleOptimizeGear}/>
                                         <OptimizeButton fast={true} running={this.props.running} abort={this.props.handleTerminate} optimize={this.props.handleOptimizeGear}/>
                                         <button onClick={this.props.handleUndo}>
                                                 {'Load previous'}
                                         </button>
-                                </div>
-                                <div className='button-section' key='factorforms'>
-                                        {[...this.props.factors.keys()].map((idx) => (<div key={'factorform' + idx}><FactorForm {...this.props} idx={idx}/></div>))}
                                 </div>
                         </div>
                         <div className="content__container">

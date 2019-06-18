@@ -62,6 +62,7 @@
         padding: 0;
         overflow: hidden;
         width: 100vw;
+        height: 5vh;
         background-color: #333;
 }
 
@@ -79,7 +80,8 @@
         display: block;
         color: white;
         text-align: center;
-        padding: 14px 16px;
+        height: 3vh;
+        padding: 1vh 1vw;
         text-decoration: none;
 }
 
