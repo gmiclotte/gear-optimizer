@@ -163,6 +163,12 @@ export const ITEMLIST = [
         [Stat.GOLD_DROP, 600],
         [Stat.QUEST_DROP, 80],
     ]),
+    new Item('My Purple Heart', Slot.ACCESSORY, SetName.MISC, 100, [
+        [Stat.POWER, 200],
+        [Stat.TOUGHNESS, 2000],
+        [Stat.BEARD_SPEED, 80],
+        [Stat.DROP_CHANCE, 80],
+    ]),
     new Item('My Grey Heart', Slot.ACCESSORY, SetName.MISC, 100, [
         [Stat.POWER, 2000000],
         [Stat.TOUGHNESS, 2000000],
@@ -781,7 +787,7 @@ export const ITEMLIST = [
     ]),
     new Item('Wanderer\'s Chest', Slot.CHEST, SetName.WANDERER, 100, [
         [Stat.POWER, 2000],
-        [Stat.TOUGHNESS, 44000],
+        [Stat.TOUGHNESS, 46000],
         [Stat.ENERGY_BARS, 1200],
         [Stat.ENERGY_POWER, 1600],
         [Stat.MAGIC_CAP, 60],
@@ -1231,7 +1237,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 2400],
         [Stat.MAGIC_CAP, 2400],
         [Stat.ENERGY_BARS, 20000],
-        [Stat.MAGIC_POWER, 20000],
+        [Stat.ENERGY_POWER, 20000],
     ]),
     new Item('The God of Thunder\'s Hammer', Slot.WEAPON, SetName.PARTY, 100, [
         [Stat.POWER, 100000000],

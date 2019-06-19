@@ -532,7 +532,6 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                 });
                                 return {
                                         ...state,
-                                        items: localStorageState.items,
                                         offhand: localStorageState.offhand,
                                         equip: localStorageState.equip,
                                         savedequip: localStorageState.savedequip,
