@@ -12,9 +12,13 @@ export class Optimizer {
                 this.limits = get_limits(state);
         }
 
-        score_equip_wrapper(base_layout, factors) {
+        score_equip(equip) {
+                return score_equip(this.itemdata, equip, this.factors, this.offhand);
+        }
+
+        score_equip_wrapper(base_layout) {
                 let equip = old2newequip(this.accslots, this.offhand, base_layout)
-                return score_equip(this.itemdata, equip, factors, this.offhand);
+                return this.score_equip(equip);
         }
 
         top_scorers(optimal) {
@@ -67,7 +71,7 @@ export class Optimizer {
                 let scores = [];
                 for (let jdx = equip.item_count; jdx < optimal_size; jdx++) {
                         let item = equip.items[jdx];
-                        let score = this.score_equip_wrapper(this.remove_equip(clone(equip), item), this.factors);
+                        let score = this.score_equip_wrapper(this.remove_equip(clone(equip), item));
                         scores.push([score, item])
                 }
                 for (let jdx = equip.item_count; jdx < optimal_size; jdx++) {
@@ -153,7 +157,7 @@ export class Optimizer {
                 }
                 let optimal = clone(base_layouts);
                 optimal.forEach((x) => {
-                        x.score = this.score_equip_wrapper(x, this.factors);
+                        x.score = this.score_equip_wrapper(x);
                         x.item_count = x.items.length;
                 });
                 optimal = this.top_scorers(optimal);
@@ -176,8 +180,10 @@ export class Optimizer {
                                                         this.add_equip(everything, accs[idx]);
                                                 }
                                                 accs.sort((a, b) => {
-                                                        let ascore = this.score_equip_wrapper(this.remove_equip(clone(everything), a), this.factors);
-                                                        let bscore = this.score_equip_wrapper(this.remove_equip(clone(everything), b), this.factors);
+                                                        const lista = everything.items.filter((x) => (x.name !== undefined && x.name !== a.name)).map((x) => (x.name));
+                                                        const ascore = this.score_equip({accessory: lista});
+                                                        const listb = everything.items.filter((x) => (x.name !== undefined && x.name !== b.name)).map((x) => (x.name));
+                                                        const bscore = this.score_equip({accessory: listb});
                                                         return ascore - bscore;
                                                 });
                                         }
@@ -201,7 +207,7 @@ export class Optimizer {
                                                 accs = this.pareto(accs, accslots);
                                                 while (changed) {
                                                         candidate = this.sort_accs(candidate);
-                                                        let score = this.score_equip_wrapper(candidate, this.factors);
+                                                        let score = this.score_equip_wrapper(candidate);
                                                         const atrisk = clone(candidate.items[candidate.items.length - 1]);
                                                         candidate = this.remove_equip(candidate, atrisk, true);
                                                         let winner = undefined;
@@ -217,7 +223,7 @@ export class Optimizer {
                                                                         continue;
                                                                 }
                                                                 const alt = this.add_equip(clone(candidate), accs[kdx]);
-                                                                const altscore = this.score_equip_wrapper(alt, this.factors);
+                                                                const altscore = this.score_equip_wrapper(alt);
                                                                 if (altscore > score) {
                                                                         score = altscore;
                                                                         winner = alt;
@@ -230,7 +236,7 @@ export class Optimizer {
                                                                 candidate = winner;
                                                         }
                                                 }
-                                                candidate.score = this.score_equip_wrapper(candidate, this.factors);
+                                                candidate.score = this.score_equip_wrapper(candidate);
                                                 candidate.item_count = layouts[idx].items.length;
                                                 optimal.push(candidate);
                                                 optimal = this.top_scorers(optimal);
@@ -252,7 +258,7 @@ export class Optimizer {
                 }
                 let optimal = clone(base_layouts);
                 optimal.forEach((x) => {
-                        x.score = this.score_equip_wrapper(x, this.factors);
+                        x.score = this.score_equip_wrapper(x);
                         x.item_count = x.items.length;
                 });
                 optimal = this.top_scorers(optimal);
@@ -275,8 +281,8 @@ export class Optimizer {
                                                         this.add_equip(everything, accs[idx]);
                                                 }
                                                 accs.sort((a, b) => {
-                                                        let ascore = this.score_equip_wrapper(this.remove_equip(clone(everything), a), this.factors);
-                                                        let bscore = this.score_equip_wrapper(this.remove_equip(clone(everything), b), this.factors);
+                                                        let ascore = this.score_equip_wrapper(this.remove_equip(clone(everything), a));
+                                                        let bscore = this.score_equip_wrapper(this.remove_equip(clone(everything), b));
                                                         return bscore - ascore;
                                                 });
                                         }
@@ -292,7 +298,7 @@ export class Optimizer {
                                                 for (let kdx = base_layout.items.length; kdx < acc_candidate.items.length; kdx++) {
                                                         this.add_equip(candidate, acc_candidate.items[kdx]);
                                                 }
-                                                candidate.score = this.score_equip_wrapper(candidate, this.factors);
+                                                candidate.score = this.score_equip_wrapper(candidate);
                                                 candidate.item_count = layouts[idx].items.length;
                                                 optimal.push(candidate);
                                                 optimal = this.top_scorers(optimal);
@@ -383,7 +389,7 @@ export class Optimizer {
         knapsack_combine_single(last, list, item, add) {
                 for (let idx in list) {
                         let max_with = add(clone(list[idx]), item);
-                        max_with.score = this.score_equip_wrapper(max_with, this.factors);
+                        max_with.score = this.score_equip_wrapper(max_with);
                         list[idx] = max_with;
                 }
                 list = list.sort((a, b) => (b.score - a.score));
@@ -400,7 +406,7 @@ export class Optimizer {
         //Assumes all weights are 1.
         knapsack(items, capacity, zero_state, add) {
                 let n = items.length;
-                zero_state.score = this.score_equip_wrapper(zero_state, this.factors);
+                zero_state.score = this.score_equip_wrapper(zero_state);
                 // init matrix
                 let matrix_weight = new Array(n + 1);
                 for (let i = 0; i < n + 1; i++) {

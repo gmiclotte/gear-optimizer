@@ -120,7 +120,12 @@ function score_vals(vals, factors) {
 
 export function score_equip(data, equip, factors, offhand) {
         const stats = factors[1];
-        const sorted = Object.getOwnPropertyNames(Slot).reduce((res, slot) => res.concat(equip[Slot[slot][0]]), []);
+        const sorted = Object.getOwnPropertyNames(Slot).reduce((res, slot) => {
+                if (equip[Slot[slot][0]] !== undefined) {
+                        return res.concat(equip[Slot[slot][0]]);
+                }
+                return res;
+        }, []);
         let vals = [];
         for (let idx in stats) {
                 const stat = stats[idx];
