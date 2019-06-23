@@ -4,19 +4,19 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/gear-optimizer/03caed21a38e4f0742b3.worker.js"
   },
   {
-    "revision": "2eb9ecebea4fbcfd78a4bc9c2b9119c4",
+    "revision": "560379c1917d4d7ae86751aaf559959f",
     "url": "/gear-optimizer/index.html"
   },
   {
-    "revision": "f68789c080dad9c700d6",
-    "url": "/gear-optimizer/static/css/main.d98cf72f.chunk.css"
+    "revision": "fe160db1c209c6bd0239",
+    "url": "/gear-optimizer/static/css/main.ef3f1e3c.chunk.css"
   },
   {
     "revision": "95f15d7b6359460fa35f",
     "url": "/gear-optimizer/static/js/2.ed25ee9c.chunk.js"
   },
   {
-    "revision": "f68789c080dad9c700d6",
+    "revision": "fe160db1c209c6bd0239",
     "url": "/gear-optimizer/static/js/main.123556dc.chunk.js"
   },
   {
