@@ -9,6 +9,8 @@
         width: 48vw;
         height: 16vh;
         display: block;
+        overflow-y: auto;
+        overflow-x: hidden;
         margin: 1vh 1vw;
 }
 
