@@ -1345,8 +1345,8 @@ export const ITEMLIST = [
         [Stat.RES3_CAP, 5],
     ]),
     new Item('The Godmother\'s Wand', Slot.ACCESSORY, SetName.MOBSTER3, 100, [
-        [Stat.POWER, 3000000],
-        [Stat.TOUGHNESS, 3000000],
+        [Stat.POWER, 30000000],
+        [Stat.TOUGHNESS, 30000000],
         [Stat.ENERGY_CAP, 4000],
         [Stat.MAGIC_CAP, 4000],
         [Stat.ENERGY_POWER, 40000],
