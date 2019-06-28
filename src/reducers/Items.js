@@ -6,9 +6,9 @@ import {
         Slot,
         EmptySlot,
         update_level,
-        SetName
+        SetName,
+        Factors
 } from '../assets/ItemAux'
-import {clone} from '../util'
 
 import {AUGMENT, AUGMENT_SETTINGS} from '../actions/Augment';
 import {CREMENT} from '../actions/Crement'
@@ -18,6 +18,7 @@ import {EDIT_ITEM} from '../actions/EditItem';
 import {EDIT_FACTOR} from '../actions/EditFactor';
 import {EQUIP_ITEM} from '../actions/EquipItem';
 import {HIDE_ZONE} from '../actions/HideZone';
+import {LOCK_ITEM} from '../actions/LockItem'
 import {OPTIMIZE_GEAR} from '../actions/OptimizeGear';
 import {OPTIMIZING_GEAR} from '../actions/OptimizingGear';
 import {TERMINATE} from '../actions/Terminate'
@@ -42,11 +43,43 @@ Object.getOwnPropertyNames(SetName).forEach(x => {
         zoneDict[SetName[x][1]] = 0 < SetName[x][1] && SetName[x][1] < maxZone;
 });
 
+function cleanState(state) {
+        // clean locks
+        Object.getOwnPropertyNames(state.locked).forEach(slot => {
+                state.locked[slot] = state.locked[slot].filter(idx => {
+                        if (idx >= state.equip[slot].length) {
+                                return false;
+                        }
+                        return !state.itemdata[state.equip[slot][idx]].empty;
+                });
+        });
+        // clean maxslots
+        state.maxslots = state.maxslots.map((val, index) => {
+                if (val >= state.equip.accessory.length) {
+                        return state.equip.accessory.length;
+                }
+                return val;
+        })
+        // clean offhand
+        let offhand = state.offhand;
+        if (offhand === 0 && state.equip.weapon.length > 1) {
+                state.equip.weapon = [state.equip.weapon[0]];
+        } else if (offhand > 0 && state.equip.weapon.length < 2) {
+                state.equip.weapon = [
+                        state.equip.weapon[0],
+                        new EmptySlot(Slot['WEAPON']).name
+                ];
+        }
+        // return cleaned state
+        return state;
+}
+
 const INITIAL_STATE = {
         itemdata: ITEMS,
         items: ITEMS.names,
         offhand: offhand,
         equip: ItemNameContainer(accslots, offhand),
+        locked: {},
         lastequip: ItemNameContainer(accslots, offhand),
         savedequip: [ItemNameContainer(accslots, offhand)],
         savedidx: 0,
@@ -59,7 +92,7 @@ const INITIAL_STATE = {
                 3, 1, 6, accslots, accslots
         ],
         editItem: [
-                false, undefined, undefined
+                false, undefined, undefined, undefined
         ],
         running: false,
         zone: maxZone,
@@ -122,56 +155,20 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         return state;
                                 }
                                 if (action.payload.name === 'accslots') {
-                                        let slot = Slot.ACCESSORY;
-                                        let equip = clone(state.equip);
+                                        let accessory;
                                         if (action.payload.val === -1) {
-                                                return {
-                                                        ...state,
-                                                        equip: {
-                                                                ...state.equip,
-                                                                accessory: state.equip.accessory.slice(0, -1)
-                                                        },
-                                                        lastequip: state.equip,
-                                                        maxslots: state.maxslots.map((val, index) => {
-                                                                if (0 < val && val === state.equip.accessory.length) {
-                                                                        return val + action.payload.val;
-                                                                }
-                                                                return val;
-                                                        })
-                                                }
+                                                accessory = state.equip.accessory.slice(0, -1);
+                                        } else if (action.payload.val === 1) {
+                                                accessory = state.equip.accessory.concat([new EmptySlot(Slot.ACCESSORY).name]);
                                         }
-                                        if (action.payload.val === 1) {
-                                                return {
-                                                        ...state,
-                                                        equip: {
-                                                                ...equip,
-                                                                accessory: state.equip.accessory.concat([new EmptySlot(slot).name])
-                                                        }
-                                                }
-                                        }
-                                }
-                                if (action.payload.name === 'offhand') {
-                                        if (state.offhand === 1 && action.payload.val === -1) {
-                                                return {
-                                                        ...state,
-                                                        equip: {
-                                                                ...state.equip,
-                                                                weapon: state.equip.weapon.slice(0, 1)
-                                                        },
-                                                        offhand: 0
-                                                }
-                                        }
-                                        if (state.offhand === 0 && action.payload.val === 1) {
-                                                let slot = Slot.WEAPON;
-                                                return {
-                                                        ...state,
-                                                        equip: {
-                                                                ...state.equip,
-                                                                weapon: [state.equip.weapon[0], new EmptySlot(slot).name]
-                                                        },
-                                                        offhand: 1
-                                                }
-                                        }
+                                        return cleanState({
+                                                ...state,
+                                                equip: {
+                                                        ...state.equip,
+                                                        accessory: accessory
+                                                },
+                                                lastequip: state.equip
+                                        });
                                 }
                                 if (action.payload.name[0] === 'maxslots') {
                                         let name = action.payload.name[0];
@@ -193,10 +190,10 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 })
                                         }
                                 }
-                                return {
+                                return cleanState({
                                         ...state,
                                         [action.payload.name]: state[action.payload.name] + action.payload.val
-                                }
+                                });
                         }
 
                 case DISABLE_ITEM:
@@ -224,7 +221,8 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         editItem: [
                                                 action.payload.on, name, item === undefined
                                                         ? undefined
-                                                        : item.level
+                                                        : item.level,
+                                                action.payload.lockable
                                         ]
                                 };
                         }
@@ -250,6 +248,31 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 [item.name]: item
                                         }
                                 }
+                        }
+
+                case LOCK_ITEM:
+                        {
+                                const lock = action.payload.lock;
+                                const slot = action.payload.slot;
+                                const idx = action.payload.idx;
+                                let tmp = state.locked[slot];
+                                if (tmp === undefined) {
+                                        tmp = [];
+                                }
+                                if (lock) {
+                                        if (!tmp.includes(idx)) {
+                                                tmp.push(idx);
+                                        }
+                                } else {
+                                        tmp = tmp.filter(i => i !== idx);
+                                }
+                                return {
+                                        ...state,
+                                        locked: {
+                                                ...state.locked,
+                                                [slot]: tmp
+                                        }
+                                };
                         }
 
                 case EDIT_FACTOR:
@@ -309,29 +332,11 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
 
                 case UNDO:
                         {
-                                let accslots = state.lastequip.accessory.length;
-                                let offhand = state.offhand;
-                                if (offhand === 0) {
-                                        offhand = state.lastequip.weapon.length > 1
-                                                ? 1
-                                                : 0;
-                                } else if (offhand > 0) {
-                                        offhand = state.lastequip.weapon.length > 1
-                                                ? offhand
-                                                : 0;
-                                }
-                                return {
+                                return cleanState({
                                         ...state,
                                         equip: state.lastequip,
-                                        maxslots: state.maxslots.map((val, index) => {
-                                                if (val > accslots) {
-                                                        return accslots;
-                                                }
-                                                return val;
-                                        }),
-                                        lastequip: state.equip,
-                                        offhand: offhand
-                                }
+                                        lastequip: state.equip
+                                });
                         }
 
                 case UNEQUIP_ITEM:
@@ -348,7 +353,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 break;
                                         }
                                 }
-                                return {
+                                return cleanState({
                                         ...state,
                                         equip: {
                                                 ...state.equip,
@@ -360,7 +365,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 })
                                         },
                                         lastequip: state.equip
-                                };
+                                });
                         }
 
                 case OPTIMIZE_GEAR:
@@ -370,19 +375,12 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                 }
                                 console.log('worker finished')
                                 const equip = action.payload.equip;
-                                const accslots = equip.accessory.length;
-                                return {
+                                return cleanState({
                                         ...state,
                                         equip: equip,
-                                        maxslots: state.maxslots.map((val, index) => {
-                                                if (val > accslots) {
-                                                        return accslots;
-                                                }
-                                                return val;
-                                        }),
                                         lastequip: state.equip,
                                         running: false
-                                };
+                                });
                         }
 
                 case OPTIMIZING_GEAR:
@@ -413,7 +411,9 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 ...state,
                                                 savedequip: state.savedequip.map((tmp, idx) => {
                                                         if (idx === state.savedidx) {
-                                                                return state.equip;
+                                                                return {
+                                                                        ...state.equip
+                                                                };
                                                         }
                                                         return tmp;
                                                 }).concat([ItemNameContainer(state.equip.accessory.length, state.offhand)]),
@@ -424,7 +424,9 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         ...state,
                                         savedequip: state.savedequip.map((tmp, idx) => {
                                                 if (idx === state.savedidx) {
-                                                        return state.equip;
+                                                        return {
+                                                                ...state.equip
+                                                        };
                                                 }
                                                 return tmp;
                                         })
@@ -434,33 +436,18 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                 case LOAD_SLOT:
                         {
                                 const save = state.savedequip[state.savedidx];
-                                let accslots = save.accessory.length;
-                                let offhand = state.offhand;
-                                if (offhand === 0) {
-                                        offhand = save.weapon.length > 1
-                                                ? 1
-                                                : 0;
-                                } else if (offhand > 0) {
-                                        offhand = save.weapon.length > 1
-                                                ? offhand
-                                                : 0;
-                                }
-                                return {
+                                return cleanState({
                                         ...state,
-                                        equip: save,
-                                        maxslots: state.maxslots.map((val, index) => {
-                                                if (val > accslots) {
-                                                        return accslots;
-                                                }
-                                                return val;
-                                        }),
-                                        offhand: offhand
-                                }
+                                        equip: {
+                                                ...save
+                                        }
+                                });
                         }
 
                 case DELETE_SLOT:
                         {
                                 if (state.savedidx === state.savedequip.length - 1) {
+                                        // do not delete the last slot
                                         return state;
                                 }
                                 return {
@@ -520,6 +507,9 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                 for (let idx = 0; idx < localStorageState.items.length; idx++) {
                                         const name = localStorageState.items[idx];
                                         const saveditem = localStorageState.itemdata[name];
+                                        if (saveditem.empty) {
+                                                continue;
+                                        }
                                         let item = state.itemdata[name];
                                         item.disable = saveditem.disable;
                                         update_level(item, saveditem.level);
@@ -530,10 +520,18 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 console.log('Keeping default ' + name + ': ' + state[name]);
                                         }
                                 });
+                                const tmp_factors = Object.getOwnPropertyNames(Factors);
+                                localStorageState.factors = localStorageState.factors.map(name => {
+                                        if (!tmp_factors.includes(name)) {
+                                                return 'NONE';
+                                        }
+                                        return name;
+                                });
                                 return {
                                         ...state,
                                         offhand: localStorageState.offhand,
                                         equip: localStorageState.equip,
+                                        locked: localStorageState.locked,
                                         savedequip: localStorageState.savedequip,
                                         savedidx: localStorageState.savedidx,
                                         maxsavedidx: localStorageState.maxsavedidx,

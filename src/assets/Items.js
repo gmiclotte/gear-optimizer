@@ -44,7 +44,7 @@ export const ITEMLIST = [
         [Stat.TOUGHNESS, 1300],
     ]),
     new Item('King Circle\'s Amulet of Helping Random Stuff', Slot.ACCESSORY, SetName.TWO_D, 100, [
-        [Stat.ADVANCE_TRAINING, 80],
+        [Stat.AT_SPEED, 80],
         [Stat.WANDOOS_SPEED, 60],
     ]),
     new Item('Badly Drawn Gun', Slot.WEAPON, SetName.BADLY_DRAWN, 100, [
@@ -58,7 +58,7 @@ export const ITEMLIST = [
     ]),
     new Item('Badly Drawn Smiley Face', Slot.HEAD, SetName.BADLY_DRAWN, 100, [
         [Stat.TOUGHNESS, 120000],
-        [Stat.ADVANCE_TRAINING, 320],
+        [Stat.AT_SPEED, 320],
         [Stat.ENERGY_BARS, 900],
         [Stat.MAGIC_BARS, 900],
         [Stat.GOLD_DROP, 1200],
@@ -746,7 +746,7 @@ export const ITEMLIST = [
     new Item('Ring of Utility', Slot.ACCESSORY, SetName.UUG_RINGS, 100, [
         [Stat.POWER, 2000],
         [Stat.TOUGHNESS, 2000],
-        [Stat.ADVANCE_TRAINING, 100],
+        [Stat.AT_SPEED, 100],
         [Stat.NGU_SPEED, 100],
         [Stat.WANDOOS_SPEED, 100],
     ]),
@@ -766,7 +766,7 @@ export const ITEMLIST = [
     ]),
     new Item('Wanderer\'s Cane', Slot.WEAPON, SetName.WANDERER, 100, [
         [Stat.POWER, 340000],
-        [Stat.TOUGHNESS, 1020000],
+        [Stat.TOUGHNESS, 24000],
     ]),
     new Item('The Candy Cane of Destiny', Slot.WEAPON, SetName.WANDERER, 100, [
         [Stat.POWER, 340000],
@@ -1345,8 +1345,8 @@ export const ITEMLIST = [
         [Stat.RES3_CAP, 5],
     ]),
     new Item('The Godmother\'s Wand', Slot.ACCESSORY, SetName.MOBSTER3, 100, [
-        [Stat.POWER, 3000000],
-        [Stat.TOUGHNESS, 3000000],
+        [Stat.POWER, 30000000],
+        [Stat.TOUGHNESS, 30000000],
         [Stat.ENERGY_CAP, 4000],
         [Stat.MAGIC_CAP, 4000],
         [Stat.ENERGY_POWER, 40000],

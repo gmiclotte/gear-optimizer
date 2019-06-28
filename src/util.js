@@ -1,6 +1,17 @@
 import {ItemNameContainer, Slot, SetName} from './assets/ItemAux'
 import {LOOTIES, PENDANTS} from './assets/Items'
 
+export function getSlot(name, data) {
+        return data[name].slot;
+}
+
+export function getLock(slot, idx, locked) {
+        if (!Object.getOwnPropertyNames(locked).includes(slot)) {
+                return false;
+        }
+        return locked[slot].includes(idx);
+}
+
 export function old2newequip(accslots, offhand, base_layout) {
         let equip = ItemNameContainer(accslots, offhand);
         let counts = Object.getOwnPropertyNames(Slot).map((x) => (0));

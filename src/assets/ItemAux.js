@@ -82,6 +82,7 @@ export const ItemNameContainer = (accslots, offhand) => {
                         list.push(new EmptySlot(Slot[slot]).name);
                 }
                 container[slotname] = list;
+                container[slotname + 'lock'] = list.map(x => false);
         };
         return container;
 };
@@ -106,11 +107,10 @@ export const Slot = {
 }
 
 export const Stat = {
-        ADVANCE_TRAINING: 'Advanced Training Speed',
+        AT_SPEED: 'Advanced Training Speed',
         AP: 'AP',
         AUGMENT_SPEED: 'Augment Speed',
         BEARD_SPEED: 'Beard Speed',
-        COOKING: 'Cooking',
         DAYCARE_SPEED: 'Daycare Speed',
         DROP_CHANCE: 'Drop Chance',
         ENERGY_BARS: 'Energy Bars',
@@ -143,10 +143,6 @@ let single_factors = {
         NONE: [
                 'None', []
         ],
-        RESPAWN: [
-                'Respawn',
-                [Stat.RESPAWN]
-        ],
         POWER: [
                 'Power',
                 [Stat.POWER]
@@ -154,6 +150,10 @@ let single_factors = {
         TOUGHNESS: [
                 'Toughness',
                 [Stat.TOUGHNESS]
+        ],
+        RESPAWN: [
+                'Respawn',
+                [Stat.RESPAWN]
         ],
         DAYCARE_SPEED: [
                 'Daycare',
@@ -176,6 +176,9 @@ let single_factors = {
 let remaining_factors = {};
 
 Object.keys(Stat).forEach(key => {
+        if (key.includes('SPEED')) {
+                return;
+        }
         if (single_factors[key] === undefined) {
                 remaining_factors[key] = [
                         Stat[key],
@@ -197,12 +200,6 @@ export const multiple_factors = {
                         Stat.MAGIC_CAP, Stat.MAGIC_POWER, Stat.NGU_SPEED
                 ]
         ],
-        HACK: [
-                'Hacks',
-                [
-                        Stat.RES3_CAP, Stat.RES3_POWER, Stat.HACK_SPEED
-                ]
-        ],
         NGUS: [
                 'NGUs',
                 [
@@ -212,6 +209,12 @@ export const multiple_factors = {
                         Stat.MAGIC_CAP,
                         Stat.MAGIC_POWER,
                         Stat.NGU_SPEED
+                ]
+        ],
+        HACK: [
+                'Hacks',
+                [
+                        Stat.RES3_CAP, Stat.RES3_POWER, Stat.HACK_SPEED
                 ]
         ],
         WISHES: [
@@ -279,10 +282,16 @@ export const multiple_factors = {
                         Stat.ENERGY_CAP, Stat.WANDOOS_SPEED, Stat.MAGIC_CAP, Stat.WANDOOS_SPEED
                 ]
         ],
+        AUGMENTATION: [
+                'Augmentation',
+                [
+                        Stat.ENERGY_CAP, Stat.ENERGY_POWER, Stat.AUGMENT_SPEED
+                ]
+        ],
         AT: [
                 'Advanced Training',
                 [
-                        Stat.ENERGY_POWER, Stat.ENERGY_CAP, Stat.ADVANCE_TRAINING
+                        Stat.ENERGY_POWER, Stat.ENERGY_CAP, Stat.AT_SPEED
                 ],
                 [
                         .5, 1, 1
