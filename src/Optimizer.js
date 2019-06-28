@@ -145,8 +145,30 @@ export class Optimizer {
                         ];
                 });
                 s.push(remaining.map((x) => (x[0].length)).reduce((a, b) => (a * b), 1));
-                let layouts = this.outfits(remaining, base_layout);
-                layouts = this.pareto(layouts);
+                base_layout.item_count = base_layout.items.length;
+                let layouts = [base_layout];
+                for (let i = 0; i < remaining.length; i++) {
+                        let tmp = clone(layouts);
+                        for (let j = 0; j < layouts.length; j++) {
+                                for (let k = 0; k < remaining[i][0].length; k++) {
+                                        const item = remaining[i][0][k];
+                                        if (item.empty) {
+                                                continue;
+                                        }
+                                        let equip = clone(layouts[j]);
+                                        if (item.slot[0] === 'weapon') {
+                                                // check if weapon is already in mainhand slot
+                                                if (equip.items.map(val => val.name).filter(name => name === item.name).length > 0) {
+                                                        continue;
+                                                }
+                                        }
+                                        this.add_equip(equip, item);
+                                        equip.item_count = equip.items.length;
+                                        tmp.push(equip);
+                                }
+                        }
+                        layouts = this.pareto(tmp);
+                }
                 s.push(layouts.length);
                 return layouts;
         }
@@ -349,38 +371,6 @@ export class Optimizer {
                 equip.counts[item.slot[0]] -= 1;
                 return equip;
         }
-
-        cart_aux = (a, b) => [].concat(...a.map(d => b.map(e => [].concat(d, e))));
-        cartesian = (a, b, ...c) => (
-                b
-                ? this.cartesian(this.cart_aux(a, b), ...c)
-                : a);
-
-        outfits = (options, base) => {
-                if (options.length === 0) {
-                        base.item_count = base.items.length;
-                        return [base];
-                }
-                let tmp = this.cartesian(...options.map(x => x[0])).map((items) => {
-                        let equip = clone(base);
-                        if (items.length === undefined) {
-                                // HACK: items can be a single item instead of a list for some reason.
-                                items = [items];
-                        }
-                        for (let i = 0; i < items.length; i++) {
-                                if (items[i].slot[0] === 'weapon') {
-                                        // check if weapon is already in mainhand slot
-                                        if (equip.items.map(item => item.name).filter(name => name === items[i].name).length > 0) {
-                                                continue;
-                                        }
-                                }
-                                this.add_equip(equip, items[i]);
-                        }
-                        equip.item_count = equip.items.length;
-                        return equip;
-                })
-                return tmp;
-        };
 
         gear_slot(type, equip) {
                 const equiped = equip.items.filter((item) => (item.slot[0] === type[0])).map((x) => (x.name));
