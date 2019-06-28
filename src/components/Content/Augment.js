@@ -70,6 +70,7 @@ class Augment extends Component {
                 ReactGA.pageview('/augment/');
                 const vals = this.props.augment.vals;
                 let text = 'Augment thresholds. Assumes optimal energy ratio, i.e. the exponent ratio, between augment and upgrade. ';
+                text += 'Assumes you are limited by energy, not by gold. ';
                 text += 'Augments run for ' + this.props.augment.time + ' minutes, with ' + this.props.augment.lsc + ' laser sword challenge completions.';
                 return (<div className='center'>
                         <form onSubmit={this.handleSubmit}>
