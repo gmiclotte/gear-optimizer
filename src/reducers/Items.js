@@ -6,7 +6,8 @@ import {
         Slot,
         EmptySlot,
         update_level,
-        SetName
+        SetName,
+        Factors
 } from '../assets/ItemAux'
 import {clone} from '../util'
 
@@ -529,6 +530,13 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 localStorageState[name] = state[name];
                                                 console.log('Keeping default ' + name + ': ' + state[name]);
                                         }
+                                });
+                                const tmp_factors = Object.getOwnPropertyNames(Factors);
+                                localStorageState.factors = localStorageState.factors.map(name => {
+                                        if (!tmp_factors.includes(name)) {
+                                                return 'NONE';
+                                        }
+                                        return name;
                                 });
                                 return {
                                         ...state,
