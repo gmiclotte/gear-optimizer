@@ -12,6 +12,7 @@ import {EditItem} from '../actions/EditItem';
 import {EditFactor} from '../actions/EditFactor';
 import {EquipItem} from '../actions/EquipItem';
 import {HideZone} from '../actions/HideZone'
+import {LockItem} from '../actions/LockItem'
 import {OptimizeGearAsync} from '../actions/OptimizeGear';
 import {Terminate} from '../actions/Terminate'
 import {Undo} from '../actions/Undo'
@@ -41,6 +42,7 @@ const mapStateToProps = state => ({
         items: state.optimizer.items,
         offhand: state.optimizer.offhand,
         equip: state.optimizer.equip,
+        locked: state.optimizer.locked,
         lastequip: state.optimizer.lastequip,
         savedequip: state.optimizer.savedequip,
         savedidx: state.optimizer.savedidx,
@@ -64,6 +66,7 @@ const mapDispatchToProps = {
         handleDisableItem: DisableItem,
         handleToggleEdit: ToggleEdit,
         handleEditItem: EditItem,
+        handleLockItem: LockItem,
         handleEditFactor: EditFactor,
         handleEquipItem: EquipItem,
         handleHideZone: HideZone,

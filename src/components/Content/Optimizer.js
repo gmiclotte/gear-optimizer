@@ -38,7 +38,7 @@ class Optimizer extends Component {
                 equip: []
         };
 
-        closeEditModal = () => (this.props.handleToggleEdit(undefined, false));
+        closeEditModal = () => (this.props.handleToggleEdit(undefined, false, false));
 
         render() {
                 ReactGA.pageview('/gear-optimizer/');

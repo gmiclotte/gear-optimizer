@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {getLock} from '../../util'
 
 import './Item.css';
 
@@ -23,6 +24,10 @@ export default class Item extends Component {
         render() {
                 let item = this.props.item;
                 let classNames = 'item';
+                const locked = this.props.lockable && getLock(this.props.item.slot[0], this.props.idx, this.props.locked);
+                if (locked) {
+                        classNames += ' lock-item'
+                }
                 if (item === undefined) {
                         return (<span><img className={classNames} data-tip='Empty slot' src={images.logo} alt='Empty'/>
                         </span>);
@@ -42,11 +47,13 @@ export default class Item extends Component {
                         return undefined;
                 })
                 classNames += item.disable
-                        ? ' disable-item '
+                        ? ' disable-item'
                         : '';
                 return (<img className={classNames} onClick={() => this.props.handleClickItem(item.name)} onContextMenu={(e) => {
-                                this.props.handleRightClickItem(item.name);
-                                e.preventDefault();
+                        if (!item.empty) {
+                                this.props.handleRightClickItem(item.name, this.props.lockable);
+                        }
+                        e.preventDefault();
                         }} data-tip={tt} src={images[item.name]} alt={item.name} key='item'/>);
         }
 }

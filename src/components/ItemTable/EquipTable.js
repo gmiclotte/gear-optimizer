@@ -130,21 +130,25 @@ export default class EquipTable extends React.Component {
                 ReactTooltip.rebuild();
         }
 
-        render_equip(equip, prefix, compare, buffer, handleClickItem) {
+        render_equip(equip, prefix, compare, buffer, handleClickItem, lockable) {
                 let sorted = Object.getOwnPropertyNames(Slot).sort((a, b) => Slot[a][1] - Slot[b][1]).reduce((res, slot) => res.concat(equip[Slot[slot][0]]), []);
                 let localbuffer = [];
                 let last = new EmptySlot();
+                let typeIdx = 0;
                 for (let idx = 0; idx < sorted.length; idx++) {
                         const name = sorted[idx];
                         const item = this.props.itemdata[name];
                         const next = group(last, item, this.props.group);
-                        if (next && item.slot[0] === Slot.ACCESSORY[0]) {
-                                buffer.push(<div className='item-section' key={this.class_idx++}>
-                                        <span>{prefix + 'Outfit'}<br/></span>{localbuffer}
-                                </div>);
-                                localbuffer = [];
+                        if (next) {
+                                typeIdx = idx;
+                                if (item.slot[0] === Slot.ACCESSORY[0]) {
+                                        buffer.push(<div className='item-section' key={this.class_idx++}>
+                                                <span>{prefix + 'Outfit'}<br/></span>{localbuffer}
+                                        </div>);
+                                        localbuffer = [];
+                                }
                         }
-                        localbuffer.push(<Item item={item} handleClickItem={handleClickItem} handleRightClickItem={this.props.handleRightClickItem} key={name + idx}/>);
+                        localbuffer.push(<Item item={item} idx={idx - typeIdx} lockable={lockable} locked={this.props.locked} handleClickItem={handleClickItem} handleRightClickItem={this.props.handleRightClickItem} key={name + idx}/>);
                         last = item;
                 }
                 buffer.push(<div className='item-section' key={this.class_idx++}>
@@ -174,10 +178,10 @@ export default class EquipTable extends React.Component {
                 const compare = compare_factory(this.props.group)(this.props.itemdata);
                 const equip = this.props.equip;
                 const savedequip = this.props.savedequip[this.props.savedidx];
-                this.render_equip(equip, '', compare, buffer, this.props.handleClickItem);
+                this.render_equip(equip, '', compare, buffer, this.props.handleClickItem, true);
                 buffer.push(<SaveButtons {...this.props} key='savebuttons'/>)
                 if (this.props.showsaved) {
-                        this.render_equip(savedequip, 'Saved ', compare, buffer, this.props.handleEquipItem);
+                        this.render_equip(savedequip, 'Saved ', compare, buffer, this.props.handleEquipItem, false);
                 }
                 buffer.push(<div className='item-section' key='stats'>{'Gear stats (change w.r.t. save slot)'}<br/><br/> {
                                 Object.getOwnPropertyNames(Factors).map((factor) => (

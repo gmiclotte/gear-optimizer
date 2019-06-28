@@ -308,6 +308,12 @@ export class Optimizer {
                 return optimal;
         }
 
+        add_empty(equip, slot) {
+                equip.items.push(new EmptySlot(slot));
+                equip.counts[slot[0]] += 1;
+                return equip;
+        }
+
         add_equip(equip, item, effect = 100) {
                 if (item.empty) {
                         return equip;
