@@ -1,4 +1,23 @@
 import React from 'react';
+import {getSlot, getLock} from '../../util'
+
+class LockButton extends React.Component {
+        render() {
+                const name = this.props.editItem[1];
+                const lockable = this.props.editItem[3];
+                if (!lockable || this.props.itemdata[name].empty) {
+                        return <></>
+                }
+                const slot = getSlot(name, this.props.itemdata);
+                const idx = this.props.equip[slot[0]].indexOf(name);
+                const locked = getLock(slot[0], idx, this.props.locked);
+                return <button onClick={() => this.props.handleLockItem(!locked, slot[0], idx)}>{
+                                locked
+                                        ? 'Unlock'
+                                        : 'Lock'
+                        }</button>
+        }
+}
 
 export default class ItemForm extends React.Component {
         constructor(props) {
@@ -55,6 +74,7 @@ export default class ItemForm extends React.Component {
                         <input type='submit' value='Update'/>
                         <button onClick={() => this.props.handleDisableItem(this.props.editItem[1])}>{able}</button><br/>
                         <button onClick={this.props.closeEditModal}>{'Cancel'}</button>
+                        <LockButton {...this.props}/>
                 </form>);
         }
 }
