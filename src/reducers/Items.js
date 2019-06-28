@@ -31,7 +31,7 @@ import {TOGGLE_SAVED} from '../actions/ToggleSaved'
 import {LOAD_STATE_LOCALSTORAGE} from '../actions/LoadStateLocalStorage';
 import {SAVE_STATE_LOCALSTORAGE} from '../actions/SaveStateLocalStorage';
 
-let ITEMS = new ItemContainer(ITEMLIST.map((item, index) => {
+let ITEMS = new ItemContainer(ITEMLIST.map((item, idx) => {
         return [item.name, item];
 }));
 
@@ -54,7 +54,7 @@ function cleanState(state) {
                 });
         });
         // clean maxslots
-        state.maxslots = state.maxslots.map((val, index) => {
+        state.maxslots = state.maxslots.map((val, idx) => {
                 if (val >= state.equip.accessory.length) {
                         return state.equip.accessory.length;
                 }
@@ -182,8 +182,8 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         }
                                         return {
                                                 ...state,
-                                                [name]: state.maxslots.map((val, index) => {
-                                                        if (index === changed) {
+                                                [name]: state.maxslots.map((val, idx) => {
+                                                        if (idx === changed) {
                                                                 return val + change;
                                                         }
                                                         return val;
@@ -277,14 +277,49 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
 
                 case EDIT_FACTOR:
                         {
-                                return {
-                                        ...state,
-                                        factors: state.factors.map((item, index) => {
-                                                if (index === action.payload.idx) {
+                                let factors = [];
+                                let maxslots = [];
+                                if (action.payload.name === 'INSERT') {
+                                        state.factors.forEach((item, idx) => {
+                                                if (idx === action.payload.idx) {
+                                                        factors.push('NONE');
+                                                        maxslots.push(state.equip.accessory.length);
+                                                }
+                                                factors.push(item);
+                                                maxslots.push(state.maxslots[idx]);
+                                        });
+                                } else {
+                                        factors = state.factors.map((item, idx) => {
+                                                if (idx === action.payload.idx) {
                                                         return action.payload.name;
                                                 }
                                                 return item;
-                                        })
+                                        });
+                                        maxslots = state.maxslots;
+                                }
+                                // clean factors
+                                let tmpFactors = [];
+                                let tmpMaxslots = [];
+                                for (let i = 0; i < factors.length; i++) {
+                                        if (factors[i] !== 'DELETE') {
+                                                tmpFactors.push(factors[i]);
+                                                tmpMaxslots.push(maxslots[i]);
+                                        }
+                                }
+                                let i = tmpFactors.length - 1;
+                                while (tmpFactors.length > 1 && tmpFactors[i - 1] === 'NONE' && tmpFactors[i] === 'NONE') {
+                                        tmpFactors.pop();
+                                        tmpMaxslots.pop();
+                                        i--;
+                                }
+                                if (tmpFactors[tmpFactors.length - 1] !== 'NONE') {
+                                        tmpFactors.push('NONE');
+                                        tmpMaxslots.push(state.equip.accessory.length);
+                                }
+                                return {
+                                        ...state,
+                                        factors: tmpFactors,
+                                        maxslots: tmpMaxslots
                                 };
                         }
 
@@ -452,12 +487,12 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                 }
                                 return {
                                         ...state,
-                                        savedequip: state.savedequip.map((equip, index) => {
-                                                if (index === state.maxsavedidx) {
+                                        savedequip: state.savedequip.map((equip, idx) => {
+                                                if (idx === state.maxsavedidx) {
                                                         return undefined;
                                                 }
-                                                if (index >= state.savedidx) {
-                                                        return state.savedequip[index + 1];
+                                                if (idx >= state.savedidx) {
+                                                        return state.savedequip[idx + 1];
                                                 }
                                                 return equip;
                                         }).filter(x => x !== undefined),

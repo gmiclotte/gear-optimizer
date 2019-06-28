@@ -143,6 +143,12 @@ let single_factors = {
         NONE: [
                 'None', []
         ],
+        DELETE: [
+                'Delete', []
+        ],
+        INSERT: [
+                'Insert', []
+        ],
         POWER: [
                 'Power',
                 [Stat.POWER]
