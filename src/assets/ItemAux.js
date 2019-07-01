@@ -144,10 +144,10 @@ let single_factors = {
                 'None', []
         ],
         DELETE: [
-                'Delete', []
+                'Delete priority', []
         ],
         INSERT: [
-                'Insert', []
+                'Insert priority', []
         ],
         POWER: [
                 'Power',
