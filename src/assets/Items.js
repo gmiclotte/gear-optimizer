@@ -1355,13 +1355,13 @@ export const ITEMLIST = [
         [Stat.YGGDRASIL_YIELD, 15],
     ]),
     new Item('Left Fairy Wing', Slot.ACCESSORY, SetName.MOBSTER4, 100, [
+        [Stat.POWER, 80000000],
+        [Stat.TOUGHNESS, 80000000],
         [Stat.RES3_POWER, 66],
         [Stat.RES3_CAP, 10],
         [Stat.ENERGY_CAP, 6600],
     ]),
     new Item('Right Fairy Wing', Slot.ACCESSORY, SetName.MOBSTER4, 100, [
-        [Stat.POWER, 80000000],
-        [Stat.TOUGHNESS, 80000000],
         [Stat.MAGIC_POWER, 66000],
         [Stat.MAGIC_BARS, 66000],
         [Stat.MAGIC_CAP, 6600],
