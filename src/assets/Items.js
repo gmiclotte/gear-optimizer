@@ -1283,9 +1283,10 @@ export const ITEMLIST = [
     new Item('Mobster Pants', Slot.PANTS, SetName.MOBSTER, 100, [
         [Stat.POWER, 800000],
         [Stat.TOUGHNESS, 20000000],
+        [Stat.ENERGY_BARS, 34000],
+        [Stat.MAGIC_BARS, 34000],
         [Stat.ENERGY_POWER, 26000],
         [Stat.MAGIC_POWER, 26000],
-        [Stat.ENERGY_BARS, 24000],
         [Stat.ENERGY_CAP, 2800],
     ]),
     new Item('Cement Boots', Slot.BOOTS, SetName.MOBSTER, 100, [
@@ -1299,11 +1300,11 @@ export const ITEMLIST = [
     new Item('Tommy Gun', Slot.WEAPON, SetName.MOBSTER, 100, [
         [Stat.POWER, 200000000],
         [Stat.TOUGHNESS, 8000000],
-        [Stat.MAGIC_POWER, 20000],
-        [Stat.ENERGY_POWER, 20000],
+        [Stat.MAGIC_POWER, 26000],
+        [Stat.ENERGY_POWER, 26000],
         [Stat.MAGIC_CAP, 3600],
-        [Stat.ENERGY_BARS, 26000],
-        [Stat.MAGIC_BARS, 26000],
+        [Stat.ENERGY_BARS, 28000],
+        [Stat.MAGIC_BARS, 28000],
     ]),
     new Item('A Garrote', Slot.ACCESSORY, SetName.MOBSTER, 100, [
         [Stat.POWER, 8000000],
