@@ -92,6 +92,15 @@ export class Optimizer {
                 return this.get_vals(equip);
         }
 
+        swap_vals(vals, a, b) {
+                const valsa = this.get_vals({accessory: a});
+                const valsb = this.get_vals({accessory: b});
+                for (let idx in vals) {
+                        vals[idx] += valsb[idx] - valsa[idx];
+                }
+                return vals;
+        }
+
         top_scorers(optimal) {
                 const scores = optimal.map(x => score_equip(this.itemdata, x, this.factors, this.offhand));
                 const max = Math.max(...scores)
@@ -274,28 +283,36 @@ export class Optimizer {
                                                 }
                                                 let filter_accs = this.filter_accs(candidate, accslots);
                                                 let filter_idx = undefined;
-                                                //let vals = this.get_vals(candidate);
                                                 while (true) {
-                                                        candidate = this.sort_accs(candidate);
+                                                        let riskidx = undefined;
                                                         let score = this.score_equip_wrapper(candidate);
-                                                        const atrisk = candidate.items[candidate.items.length - 1].name;
-                                                        candidate = this.remove_equip(candidate, this.itemdata[atrisk], true);
+                                                        let riskscore = -1;
+                                                        let vals = this.get_vals_wrapper(candidate);
+                                                        for (let kdx = layouts[idx].items.length; kdx < candidate.items.length; kdx++) {
+                                                                const tmp = this.swap_vals([...vals], candidate.items[kdx].name, new EmptySlot(Slot['ACCESSORY']).name)
+                                                                const tmpscore = score_vals(tmp, this.factors);
+                                                                if (tmpscore > riskscore) {
+                                                                        riskidx = kdx;
+                                                                        riskscore = tmpscore;
+                                                                }
+                                                        }
+                                                        const atrisk = candidate.items[riskidx].name;
                                                         let winner = undefined;
                                                         for (let kdx in filter_accs) {
                                                                 const acc = filter_accs[kdx];
-                                                                const alt = this.add_equip(clone(candidate), this.itemdata[acc]);
-                                                                const altscore = this.score_equip_wrapper(alt);
-                                                                if (altscore > score) {
-                                                                        score = altscore;
-                                                                        winner = alt;
+                                                                const tmp = this.swap_vals([...vals], atrisk, acc);
+                                                                const tmpscore = score_vals(tmp, this.factors);
+                                                                if (tmpscore > score) {
+                                                                        score = tmpscore;
+                                                                        winner = acc;
                                                                         filter_idx = kdx;
                                                                 }
                                                         }
                                                         if (winner === undefined) {
-                                                                candidate = this.add_equip(candidate, this.itemdata[atrisk])
+                                                                candidate.items[riskidx] = this.itemdata[atrisk];
                                                                 break;
                                                         } else {
-                                                                candidate = winner;
+                                                                candidate.items[riskidx] = this.itemdata[winner];
                                                                 filter_accs[filter_idx] = atrisk;
                                                         }
                                                 }
