@@ -30,7 +30,7 @@ export class Optimizer {
                         }
                 });
                 // wrap base in an array
-                return [old2newequip(this.accslots, this.offhand, base)];
+                return [this.old2newequip(base)];
         }
 
         sort_locks(locked, equip, result) {
@@ -62,6 +62,10 @@ export class Optimizer {
                 return result;
         }
 
+        old2newequip(equip) {
+                return old2newequip(this.accslots, this.offhand, equip);
+        }
+
         new2oldequip(equip) {
                 let base = new Equip();
                 Object.getOwnPropertyNames(equip).forEach(slot => {
@@ -83,12 +87,12 @@ export class Optimizer {
         }
 
         score_equip_wrapper(base_layout) {
-                let equip = old2newequip(this.accslots, this.offhand, base_layout)
+                let equip = this.old2newequip(base_layout)
                 return this.score_equip(equip);
         }
 
         get_vals_wrapper(base_layout) {
-                let equip = old2newequip(this.accslots, this.offhand, base_layout)
+                let equip = this.old2newequip(base_layout)
                 return this.get_vals(equip);
         }
 
@@ -260,10 +264,10 @@ export class Optimizer {
                                         for (let idx = 0; idx < accs.length && idx < accslots; idx++) {
                                                 this.add_equip(tmp, accs[idx]);
                                         }
-                                        acc_layouts[accslots] = [old2newequip(this.accslots, this.offhand, tmp)];
+                                        acc_layouts[accslots] = [this.old2newequip(tmp)];
                                 }
                                 let s = [];
-                                const layouts = this.optimize_layouts(base_layout, accslots, s).map(x => old2newequip(this.accslots, this.offhand, x));
+                                const layouts = this.optimize_layouts(base_layout, accslots, s).map(x => this.old2newequip(x));
                                 console.log('Processing ' + s[2] + ' out of ' + s[1] + ' out of ' + s[0] + ' gear layouts.');
                                 //TODO: clean this
                                 const locked_accs = base_layouts[layout].accessory.reduce((res, x) => res + (
@@ -379,7 +383,7 @@ export class Optimizer {
                                                 for (let kdx = base_layout.items.length; kdx < acc_candidate.items.length; kdx++) {
                                                         this.add_equip(candidate, acc_candidate.items[kdx]);
                                                 }
-                                                candidates.push(old2newequip(this.accslots, this.offhand, candidate));
+                                                candidates.push(this.old2newequip(candidate));
                                         }
                                         candidates = this.top_scorers(candidates);
                                 }
