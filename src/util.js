@@ -120,7 +120,7 @@ export function get_max_titan(zone) {
         return maxtitan;
 }
 
-function score_vals(vals, factors) {
+export function score_vals(vals, factors) {
         vals = vals.map((val, idx) => val / 100);
         if (factors.length > 2) {
                 const exponents = factors[2];
@@ -129,7 +129,7 @@ function score_vals(vals, factors) {
         return vals.reduce((res, val) => res * val, 1);
 }
 
-export function score_equip(data, equip, factors, offhand) {
+export function get_vals(data, equip, factors, offhand) {
         const stats = factors[1];
         const sorted = Object.getOwnPropertyNames(Slot).reduce((res, slot) => {
                 if (equip[Slot[slot][0]] !== undefined) {
@@ -162,7 +162,11 @@ export function score_equip(data, equip, factors, offhand) {
                         vals[idx] += val;
                 }
         }
-        return score_vals(vals, factors);
+        return vals;
+}
+
+export function score_equip(data, equip, factors, offhand) {
+        return score_vals(get_vals(data, equip, factors, offhand), factors);
 }
 
 export function score_product(equip, factors) {

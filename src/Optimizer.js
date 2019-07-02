@@ -1,5 +1,13 @@
 import {Slot, EmptySlot, Equip, Factors} from './assets/ItemAux'
-import {allowed_zone, score_equip, clone, get_limits, old2newequip} from './util.js'
+import {
+        allowed_zone,
+        score_equip,
+        score_vals,
+        get_vals,
+        clone,
+        get_limits,
+        old2newequip
+} from './util.js'
 
 export class Optimizer {
         constructor(state, factors, maxslots) {
@@ -70,54 +78,24 @@ export class Optimizer {
                 return score_equip(this.itemdata, equip, this.factors, this.offhand);
         }
 
+        get_vals(equip) {
+                return get_vals(this.itemdata, equip, this.factors, this.offhand);
+        }
+
         score_equip_wrapper(base_layout) {
                 let equip = old2newequip(this.accslots, this.offhand, base_layout)
                 return this.score_equip(equip);
         }
 
-        top_scorers(optimal) {
-                // only keep best candidates
-                let top_score = optimal[0].score;
-                optimal.forEach((x) => {
-                        top_score = x.score > top_score
-                                ? x.score
-                                : top_score;
-                });
-                return optimal.filter((x) => (x.score === top_score));
+        get_vals_wrapper(base_layout) {
+                let equip = old2newequip(this.accslots, this.offhand, base_layout)
+                return this.get_vals(equip);
         }
 
-        filter_duplicates(optimal) {
-                if (optimal.length === 1) {
-                        return optimal;
-                }
-                // filter duplicates, wherever they may come from
-                let filtered = [optimal[0]];
-                for (let idx = 1; idx < optimal.length; idx++) {
-                        let done = false;
-                        let l = optimal[idx].items.length;
-                        for (let jdx = 0; jdx < filtered.length; jdx++) {
-                                if (filtered[jdx].items.length !== l) {
-                                        continue;
-                                }
-                                let tmp = {};
-                                optimal[idx].items.forEach((item) => {
-                                        tmp[item.name] = true;
-                                });
-                                filtered[jdx].items.forEach((item) => {
-                                        tmp[item.name] = true;
-                                });
-                                if (Object.getOwnPropertyNames(tmp).length !== l) {
-                                        continue;
-                                }
-                                done = true;
-                                break;
-                        }
-                        if (!done) {
-                                filtered.push(optimal[idx]);
-                        }
-                }
-                console.log('Keeping ' + filtered.length + ' out of ' + optimal.length + ' candidates.');
-                return filtered;
+        top_scorers(optimal) {
+                const scores = optimal.map(x => score_equip(this.itemdata, x, this.factors, this.offhand));
+                const max = Math.max(...scores)
+                return optimal.filter((x, idx) => scores[idx] === max);
         }
 
         sort_accs(equip) {
@@ -233,26 +211,16 @@ export class Optimizer {
                 if (this.factors[1].length === 0) {
                         return base_layouts;
                 }
-                base_layouts = base_layouts.map(x => this.new2oldequip(x));
-                let optimal = clone(base_layouts);
-                optimal.forEach((x) => {
-                        x.score = this.score_equip_wrapper(x);
-                        x.item_count = x.items.length;
-                });
-                optimal = this.top_scorers(optimal);
+                let candidates = this.top_scorers(base_layouts);
                 {
                         let acc_layouts = {};
                         for (let layout = 0; layout < base_layouts.length; layout++) {
-                                const base_layout = base_layouts[layout];
-                                let s = [];
+                                const base_layout = this.new2oldequip(base_layouts[layout]);
                                 const accslots = this.count_accslots(base_layout);
-                                const layouts = this.optimize_layouts(base_layout, accslots, s);
                                 // find all possible accessories
                                 if (acc_layouts[accslots] === undefined) {
                                         let accs = this.gear_slot(Slot.ACCESSORY, base_layout);
-                                        s.push(accs.length);
                                         accs = this.pareto(accs, accslots);
-                                        s.push(accs.length);
                                         {
                                                 let everything = new Equip();
                                                 for (let idx = 0; idx < accs.length; idx++) {
@@ -272,6 +240,8 @@ export class Optimizer {
                                         }
                                         acc_layouts[accslots] = [tmp];
                                 }
+                                let s = [];
+                                const layouts = this.optimize_layouts(base_layout, accslots, s);
                                 console.log('Processing ' + s[2] + ' out of ' + s[1] + ' out of ' + s[0] + ' gear layouts.');
                                 for (let idx in layouts) {
                                         for (let jdx in acc_layouts[accslots]) {
@@ -281,54 +251,57 @@ export class Optimizer {
                                                 for (let kdx = base_layout.items.length; kdx < acc_candidate.items.length; kdx++) {
                                                         this.add_equip(candidate, acc_candidate.items[kdx]);
                                                 }
-                                                let changed = acc_candidate.items.length > 0;
-                                                let accs = this.gear_slot(Slot.ACCESSORY, base_layout);
+                                                let changed = true;
+                                                let accs = this.gear_slot(Slot.ACCESSORY, candidate);
                                                 accs = this.pareto(accs, accslots);
+                                                let candidate_accs = candidate.items.filter(x => {
+                                                        if (x.slot[0] !== 'accessory') {
+                                                                // not an accessory
+                                                                return false;
+                                                        }
+                                                        if (!accs.map(y => y.name).includes(x.name)) {
+                                                                // locked accessory
+                                                                return false;
+                                                        }
+                                                        return true;
+                                                }).map(x => x.name);
+                                                let filter_accs = accs.map(x => x.name).filter(x => !candidate_accs.includes(x));
+                                                let filter_idx = undefined;
                                                 while (changed) {
                                                         candidate = this.sort_accs(candidate);
                                                         let score = this.score_equip_wrapper(candidate);
-                                                        const atrisk = clone(candidate.items[candidate.items.length - 1]);
-                                                        candidate = this.remove_equip(candidate, atrisk, true);
+                                                        const atrisk = candidate.items[candidate.items.length - 1].name;
+                                                        candidate = this.remove_equip(candidate, this.itemdata[atrisk], true);
                                                         let winner = undefined;
-                                                        for (let kdx = 0; kdx < accs.length; kdx++) {
-                                                                let skip = false;
-                                                                for (let ldx = 0; ldx < candidate.items.length; ldx++) {
-                                                                        if (candidate.items[ldx].name === accs[kdx].name) {
-                                                                                skip = true;
-                                                                                break;
-                                                                        }
-                                                                }
-                                                                if (skip) {
-                                                                        continue;
-                                                                }
-                                                                const alt = this.add_equip(clone(candidate), accs[kdx]);
+                                                        for (let kdx in filter_accs) {
+                                                                const acc = filter_accs[kdx];
+                                                                const alt = this.add_equip(clone(candidate), this.itemdata[acc]);
                                                                 const altscore = this.score_equip_wrapper(alt);
                                                                 if (altscore > score) {
                                                                         score = altscore;
                                                                         winner = alt;
+                                                                        filter_idx = kdx;
                                                                 }
                                                         }
                                                         if (winner === undefined) {
-                                                                candidate = this.add_equip(candidate, atrisk)
+                                                                candidate = this.add_equip(candidate, this.itemdata[atrisk])
                                                                 break;
                                                         } else {
                                                                 candidate = winner;
+                                                                filter_accs[filter_idx] = atrisk;
                                                         }
                                                 }
-                                                candidate.score = this.score_equip_wrapper(candidate);
-                                                candidate.item_count = layouts[idx].items.length;
-                                                optimal.push(candidate);
-                                                optimal = this.top_scorers(optimal);
+                                                candidates.push(old2newequip(this.accslots, this.offhand, candidate));
                                         }
+                                        candidates = this.top_scorers(candidates);
                                 }
                         }
                 }
-                optimal = this.filter_duplicates(optimal);
                 // sort new accs per candidate
-                for (let idx in optimal) {
-                        this.sort_accs(optimal[idx])
+                for (let idx in candidates) {
+                        //this.sort_accs(optimal[idx])
                 }
-                return optimal.map(x => old2newequip(this.accslots, this.offhand, x));
+                return candidates;
         }
 
         compute_optimal(base_layouts, factoridx) {
@@ -337,17 +310,11 @@ export class Optimizer {
                 if (this.factors[1].length === 0) {
                         return base_layouts;
                 }
-                base_layouts = base_layouts.map(x => this.new2oldequip(x));
-                let optimal = clone(base_layouts);
-                optimal.forEach((x) => {
-                        x.score = this.score_equip_wrapper(x);
-                        x.item_count = x.items.length;
-                });
-                optimal = this.top_scorers(optimal);
+                let candidates = this.top_scorers(base_layouts);
                 {
                         let acc_layouts = {};
                         for (let layout = 0; layout < base_layouts.length; layout++) {
-                                const base_layout = base_layouts[layout];
+                                const base_layout = this.new2oldequip(base_layouts[layout]);
                                 let s = [];
                                 const accslots = this.count_accslots(base_layout);
                                 const layouts = this.optimize_layouts(base_layout, accslots, s);
@@ -380,20 +347,17 @@ export class Optimizer {
                                                 for (let kdx = base_layout.items.length; kdx < acc_candidate.items.length; kdx++) {
                                                         this.add_equip(candidate, acc_candidate.items[kdx]);
                                                 }
-                                                candidate.score = this.score_equip_wrapper(candidate);
-                                                candidate.item_count = layouts[idx].items.length;
-                                                optimal.push(candidate);
-                                                optimal = this.top_scorers(optimal);
+                                                candidates.push(old2newequip(this.accslots, this.offhand, candidate));
                                         }
+                                        candidates = this.top_scorers(candidates);
                                 }
                         }
                 }
-                optimal = this.filter_duplicates(optimal);
                 // sort new accs per candidate
-                for (let idx in optimal) {
-                        this.sort_accs(optimal[idx])
+                for (let idx in candidates) {
+                        //this.sort_accs(optimal[idx])
                 }
-                return optimal.map(x => old2newequip(this.accslots, this.offhand, x));
+                return candidates;
         }
 
         add_empty(equip, slot) {
