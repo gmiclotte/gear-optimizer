@@ -248,10 +248,13 @@ export class Optimizer {
                                                 // combine every gear with every accessory layout
                                                 let candidate = clone(layouts[idx]);
                                                 let acc_candidate = acc_layouts[accslots][jdx];
+                                                if (acc_candidate.items.length === 0) {
+                                                        candidates.push(old2newequip(this.accslots, this.offhand, candidate));
+                                                        continue;
+                                                }
                                                 for (let kdx = base_layout.items.length; kdx < acc_candidate.items.length; kdx++) {
                                                         this.add_equip(candidate, acc_candidate.items[kdx]);
                                                 }
-                                                let changed = true;
                                                 let accs = this.gear_slot(Slot.ACCESSORY, candidate);
                                                 accs = this.pareto(accs, accslots);
                                                 let candidate_accs = candidate.items.filter(x => {
@@ -267,7 +270,7 @@ export class Optimizer {
                                                 }).map(x => x.name);
                                                 let filter_accs = accs.map(x => x.name).filter(x => !candidate_accs.includes(x));
                                                 let filter_idx = undefined;
-                                                while (changed) {
+                                                while (true) {
                                                         candidate = this.sort_accs(candidate);
                                                         let score = this.score_equip_wrapper(candidate);
                                                         const atrisk = candidate.items[candidate.items.length - 1].name;
