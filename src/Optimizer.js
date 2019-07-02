@@ -1,15 +1,69 @@
-import {Slot, EmptySlot, Equip} from './assets/ItemAux'
+import {Slot, EmptySlot, Equip, Factors} from './assets/ItemAux'
 import {allowed_zone, score_equip, clone, get_limits, old2newequip} from './util.js'
 
 export class Optimizer {
-        constructor(state, factors, accslots, maxslots, offhand) {
+        constructor(state, factors, maxslots) {
                 this.itemnames = state.items;
                 this.itemdata = state.itemdata;
-                this.factors = factors;
-                this.accslots = accslots;
-                this.maxslots = maxslots;
-                this.offhand = offhand * 5;
+                this.factorslist = state.factors;
+                this.maxslotslist = state.maxslots;
+                this.accslots = state.equip.accessory.length;
+                this.offhand = state.offhand * 5;
                 this.limits = get_limits(state);
+        }
+
+        construct_base(locked, equip) {
+                let base = new Equip();
+                Object.getOwnPropertyNames(locked).forEach(slot => {
+                        const locks = locked[slot];
+                        for (let i = 0; i < locks.length; i++) {
+                                const item = this.itemdata[equip[slot][locks[i]]];
+                                this.add_equip(base, item);
+                        }
+                });
+                // wrap base in an array
+                return [old2newequip(this.accslots, this.offhand, base)];
+        }
+
+        sort_locks(locked, equip, result) {
+                //sort locks
+                Object.getOwnPropertyNames(Slot).forEach(slotname => {
+                        const slot = Slot[slotname][0];
+                        const locks = locked[slot];
+                        if (locks === undefined) {
+                                return;
+                        }
+                        const items = [...result[slot]];
+                        let item_idx = locks.length;
+                        let sorted = [];
+                        // add the items in the correct order
+                        for (let slot_idx = 0; slot_idx < equip[slot].length; slot_idx++) {
+                                if (locks.includes(slot_idx)) {
+                                        const item = equip[slot][slot_idx];
+                                        sorted.push(item);
+                                } else if (item_idx < items.length) {
+                                        const item = items[item_idx];
+                                        sorted.push(item);
+                                        item_idx++;
+                                } else {
+                                        sorted.push(new EmptySlot(slot).name);
+                                }
+                        }
+                        result[slot] = sorted;
+                });
+                return result;
+        }
+
+        new2oldequip(equip) {
+                let base = new Equip();
+                Object.getOwnPropertyNames(equip).forEach(slot => {
+                        for (let i = 0; i < equip[slot].length; i++) {
+                                const name = equip[slot][i];
+                                const item = this.itemdata[name];
+                                this.add_equip(base, item);
+                        }
+                });
+                return base;
         }
 
         score_equip(equip) {
@@ -173,10 +227,13 @@ export class Optimizer {
                 return layouts;
         }
 
-        fast_optimal(base_layouts) {
+        fast_optimal(base_layouts, factoridx) {
+                this.factors = Factors[this.factorslist[factoridx]];
+                this.maxslots = this.maxslotslist[factoridx];
                 if (this.factors[1].length === 0) {
                         return base_layouts;
                 }
+                base_layouts = base_layouts.map(x => this.new2oldequip(x));
                 let optimal = clone(base_layouts);
                 optimal.forEach((x) => {
                         x.score = this.score_equip_wrapper(x);
@@ -271,13 +328,16 @@ export class Optimizer {
                 for (let idx in optimal) {
                         this.sort_accs(optimal[idx])
                 }
-                return optimal;
+                return optimal.map(x => old2newequip(this.accslots, this.offhand, x));
         }
 
-        compute_optimal(base_layouts) {
+        compute_optimal(base_layouts, factoridx) {
+                this.factors = Factors[this.factorslist[factoridx]];
+                this.maxslots = this.maxslotslist[factoridx];
                 if (this.factors[1].length === 0) {
                         return base_layouts;
                 }
+                base_layouts = base_layouts.map(x => this.new2oldequip(x));
                 let optimal = clone(base_layouts);
                 optimal.forEach((x) => {
                         x.score = this.score_equip_wrapper(x);
@@ -333,7 +393,7 @@ export class Optimizer {
                 for (let idx in optimal) {
                         this.sort_accs(optimal[idx])
                 }
-                return optimal;
+                return optimal.map(x => old2newequip(this.accslots, this.offhand, x));
         }
 
         add_empty(equip, slot) {

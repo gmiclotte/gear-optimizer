@@ -1,4 +1,4 @@
-import {Equip, Slot, Factors, ItemNameContainer} from '../assets/ItemAux'
+import {Slot} from '../assets/ItemAux'
 import {Optimizer} from '../Optimizer'
 import {old2newequip} from '../util'
 import {Augment} from '../Augment'
@@ -19,65 +19,20 @@ function choose(e) {
 function optimize(e) {
         let start_time = Date.now();
         let state = e.data.state;
-        const accslots = state.equip.accessory.length;
-        const offhand = state.offhand;
+        let optimizer = new Optimizer(state);
         // construct base layout from locks
-        let base_layout = new Equip();
-        {
-                let optimizer = new Optimizer(state, undefined, undefined, undefined, undefined);
-                Object.getOwnPropertyNames(state.locked).forEach(slot => {
-                        const locks = state.locked[slot];
-                        for (let i = 0; i < locks.length; i++) {
-                                const item = state.itemdata[state.equip[slot][locks[i]]];
-                                optimizer.add_equip(base_layout, item);
-                        }
-                });
-        }
-        // wrap base in an array
-        base_layout = [base_layout];
+        let base_layout = optimizer.construct_base(state.locked, state.equip);
         // optimize the priorities
         for (let idx = 0; idx < state.factors.length; idx++) {
-                let factorname = state.factors[idx]
-                let factors = Factors[factorname];
-                let maxslots = state.maxslots[idx];
-                let optimizer = new Optimizer(state, factors, accslots, maxslots, offhand);
                 if (e.data.fast) {
-                        base_layout = optimizer.fast_optimal(base_layout);
+                        base_layout = optimizer.fast_optimal(base_layout, idx);
                 } else {
-                        base_layout = optimizer.compute_optimal(base_layout);
+                        base_layout = optimizer.compute_optimal(base_layout, idx);
                 }
         }
         // select random remaining layout
         base_layout = base_layout[Math.floor(Math.random() * base_layout.length)];
-        let equip = old2newequip(accslots, offhand, base_layout);
-        {
-                //sort locks
-                let optimizer = new Optimizer(state, undefined, undefined, undefined, undefined);
-                Object.getOwnPropertyNames(Slot).forEach(slotname => {
-                        const slot = Slot[slotname][0];
-                        const locks = state.locked[slot];
-                        if (locks === undefined) {
-                                return;
-                        }
-                        const items = [...equip[slot]];
-                        let item_idx = locks.length;
-                        let sorted = [];
-                        // add the items in the correct order
-                        for (let slot_idx = 0; slot_idx < state.equip[slot].length; slot_idx++) {
-                                if (locks.includes(slot_idx)) {
-                                        const item = state.equip[slot][slot_idx];
-                                        sorted.push(item);
-                                } else if (item_idx < items.length) {
-                                        const item = items[item_idx];
-                                        sorted.push(item);
-                                        item_idx++;
-                                } else {
-                                        sorted.push(new EmptySlot(slot).name);
-                                }
-                        }
-                        equip[slot] = sorted;
-                });
-        }
+        let equip = optimizer.sort_locks(state.locked, state.equip, base_layout);
         this.postMessage({equip: equip});
         console.log(Math.floor((Date.now() - start_time) / 10) / 100 + ' seconds');
         this.close();
