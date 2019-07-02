@@ -49,6 +49,7 @@ function optimize(e) {
         }
         // select random remaining layout
         base_layout = base_layout[Math.floor(Math.random() * base_layout.length)];
+        let equip = old2newequip(accslots, offhand, base_layout);
         {
                 //sort locks
                 let optimizer = new Optimizer(state, undefined, undefined, undefined, undefined);
@@ -58,37 +59,24 @@ function optimize(e) {
                         if (locks === undefined) {
                                 return;
                         }
-                        const items = base_layout.items.filter(item => item.slot[0] === slot);
-                        // remove all items
-                        for (let i = 0; i < items.length; i++) {
-                                const item = items[i];
-                                optimizer.remove_equip(base_layout, item);
-                        }
+                        const items = [...equip[slot]];
                         let item_idx = locks.length;
+                        let sorted = [];
                         // add the items in the correct order
                         for (let slot_idx = 0; slot_idx < state.equip[slot].length; slot_idx++) {
                                 if (locks.includes(slot_idx)) {
-                                        const item = state.itemdata[state.equip[slot][slot_idx]];
-                                        optimizer.add_equip(base_layout, item);
+                                        const item = state.equip[slot][slot_idx];
+                                        sorted.push(item);
                                 } else if (item_idx < items.length) {
                                         const item = items[item_idx];
-                                        optimizer.add_equip(base_layout, item);
+                                        sorted.push(item);
                                         item_idx++;
                                 } else {
-                                        optimizer.add_empty(base_layout, Slot[slotname]);
+                                        sorted.push(new EmptySlot(slot).name);
                                 }
                         }
+                        equip[slot] = sorted;
                 });
-        }
-        this.postMessage({
-                equip: old2newequip(accslots, offhand, base_layout)
-        });
-        let equip = ItemNameContainer(accslots);
-        let counts = Object.getOwnPropertyNames(Slot).map((x) => (0));
-        for (let idx = 0; idx < base_layout.items.length; idx++) {
-                const item = base_layout.items[idx];
-                equip[item.slot[0]][counts[item.slot[1]]] = item.name;
-                counts[item.slot[1]]++;
         }
         this.postMessage({equip: equip});
         console.log(Math.floor((Date.now() - start_time) / 10) / 100 + ' seconds');
