@@ -260,31 +260,34 @@ export class Optimizer {
                                         for (let idx = 0; idx < accs.length && idx < accslots; idx++) {
                                                 this.add_equip(tmp, accs[idx]);
                                         }
-                                        acc_layouts[accslots] = [tmp];
+                                        acc_layouts[accslots] = [old2newequip(this.accslots, this.offhand, tmp)];
                                 }
                                 let s = [];
-                                const layouts = this.optimize_layouts(base_layout, accslots, s);
+                                const layouts = this.optimize_layouts(base_layout, accslots, s).map(x => old2newequip(this.accslots, this.offhand, x));
                                 console.log('Processing ' + s[2] + ' out of ' + s[1] + ' out of ' + s[0] + ' gear layouts.');
-                                //TODO: clean this up
-                                const locked_accs = old2newequip(this.accslots, this.offhand, base_layout).accessory.reduce((res, x) => res + (
+                                //TODO: clean this
+                                const locked_accs = base_layouts[layout].accessory.reduce((res, x) => res + (
                                         this.itemdata[x].empty
                                         ? 0
                                         : 1), 0);
                                 for (let idx in layouts) {
                                         for (let jdx in acc_layouts[accslots]) {
                                                 // combine every gear with every accessory layout
-                                                let candidate = clone(layouts[idx]);
+                                                let candidate = layouts[idx];
                                                 let acc_candidate = acc_layouts[accslots][jdx];
-                                                if (acc_candidate.items.length === 0) {
-                                                        candidates.push(old2newequip(this.accslots, this.offhand, candidate));
-                                                        continue;
-                                                }
                                                 let acc_count = 0;
-                                                for (let kdx = base_layout.items.length; kdx < acc_candidate.items.length; kdx++) {
-                                                        this.add_equip(candidate, acc_candidate.items[kdx]);
+                                                for (let kdx = locked_accs; kdx < acc_candidate.accessory.length; kdx++) {
+                                                        const acc = acc_candidate.accessory[kdx];
+                                                        if (this.itemdata[acc].empty) {
+                                                                break;
+                                                        }
+                                                        candidate.accessory[kdx] = acc;
                                                         acc_count++;
                                                 }
-                                                candidate = old2newequip(this.accslots, this.offhand, candidate)
+                                                if (acc_count === 0) {
+                                                        candidates.push(candidate);
+                                                        continue;
+                                                }
                                                 let filter_accs = this.filter_accs(candidate, accslots);
                                                 let filter_idx = undefined;
                                                 while (true) {
