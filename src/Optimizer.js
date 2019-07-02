@@ -205,6 +205,23 @@ export class Optimizer {
                 return layouts;
         }
 
+        filter_accs(candidate, accslots) {
+                let accs = this.gear_slot(Slot.ACCESSORY, candidate);
+                accs = this.pareto(accs, accslots);
+                let candidate_accs = candidate.items.filter(x => {
+                        if (x.slot[0] !== 'accessory') {
+                                // not an accessory
+                                return false;
+                        }
+                        if (!accs.map(y => y.name).includes(x.name)) {
+                                // locked accessory
+                                return false;
+                        }
+                        return true;
+                }).map(x => x.name);
+                return accs.map(x => x.name).filter(x => !candidate_accs.includes(x));
+        }
+
         fast_optimal(base_layouts, factoridx) {
                 this.factors = Factors[this.factorslist[factoridx]];
                 this.maxslots = this.maxslotslist[factoridx];
@@ -255,21 +272,9 @@ export class Optimizer {
                                                 for (let kdx = base_layout.items.length; kdx < acc_candidate.items.length; kdx++) {
                                                         this.add_equip(candidate, acc_candidate.items[kdx]);
                                                 }
-                                                let accs = this.gear_slot(Slot.ACCESSORY, candidate);
-                                                accs = this.pareto(accs, accslots);
-                                                let candidate_accs = candidate.items.filter(x => {
-                                                        if (x.slot[0] !== 'accessory') {
-                                                                // not an accessory
-                                                                return false;
-                                                        }
-                                                        if (!accs.map(y => y.name).includes(x.name)) {
-                                                                // locked accessory
-                                                                return false;
-                                                        }
-                                                        return true;
-                                                }).map(x => x.name);
-                                                let filter_accs = accs.map(x => x.name).filter(x => !candidate_accs.includes(x));
+                                                let filter_accs = this.filter_accs(candidate, accslots);
                                                 let filter_idx = undefined;
+                                                //let vals = this.get_vals(candidate);
                                                 while (true) {
                                                         candidate = this.sort_accs(candidate);
                                                         let score = this.score_equip_wrapper(candidate);
