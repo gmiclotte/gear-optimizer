@@ -82,7 +82,6 @@ export const ItemNameContainer = (accslots, offhand) => {
                         list.push(new EmptySlot(Slot[slot]).name);
                 }
                 container[slotname] = list;
-                container[slotname + 'lock'] = list.map(x => false);
         };
         return container;
 };
