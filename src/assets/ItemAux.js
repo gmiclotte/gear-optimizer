@@ -82,7 +82,6 @@ export const ItemNameContainer = (accslots, offhand) => {
                         list.push(new EmptySlot(Slot[slot]).name);
                 }
                 container[slotname] = list;
-                container[slotname + 'lock'] = list.map(x => false);
         };
         return container;
 };
@@ -142,6 +141,12 @@ export const Stat = {
 let single_factors = {
         NONE: [
                 'None', []
+        ],
+        DELETE: [
+                'Delete priority', []
+        ],
+        INSERT: [
+                'Insert priority', []
         ],
         POWER: [
                 'Power',

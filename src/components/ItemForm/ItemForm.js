@@ -71,10 +71,11 @@ export default class ItemForm extends React.Component {
                                         }} type="text" value={this.state.value} onChange={this.handleChange} autoFocus={true} onFocus={this.handleFocus}/>
                         </label>
                         <br/>
-                        <input type='submit' value='Update'/>
-                        <button onClick={() => this.props.handleDisableItem(this.props.editItem[1])}>{able}</button><br/>
-                        <button onClick={this.props.closeEditModal}>{'Cancel'}</button>
+                        <input type='submit' value='Update'/>{' '}
+                        <button onClick={() => this.props.handleDisableItem(this.props.editItem[1])}>{able}</button>{' '}
                         <LockButton {...this.props}/>
+                        <br/>
+                        <button onClick={this.props.closeEditModal}>{'Cancel'}</button>
                 </form>);
         }
 }

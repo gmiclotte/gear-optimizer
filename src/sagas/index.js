@@ -9,12 +9,12 @@ import {TERMINATE_ASYNC, TERMINATE} from '../actions/Terminate'
 import Worker from './optimize.worker'
 let worker;
 
-const doOptimize = (state, worker, fast) => new Promise(async function(resolve, reject) {
+const doOptimize = (state, worker) => new Promise(async function(resolve, reject) {
         let output = await new Promise(function(resolve, reject) {
                 worker.onmessage = function(e) {
                         resolve(e.data);
                 };
-                worker.postMessage({command: 'optimize', state: state, fast: fast});
+                worker.postMessage({command: 'optimize', state: state});
         });
         await resolve(output.equip);
 })
@@ -29,7 +29,7 @@ export function* optimizeAsync(action) {
         });
         const store = yield select();
         const state = store.optimizer;
-        let equip = yield doOptimize(state, worker, action.payload.fast);
+        let equip = yield doOptimize(state, worker);
         yield put({
                 type: OPTIMIZE_GEAR,
                 payload: {

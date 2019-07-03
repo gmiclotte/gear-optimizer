@@ -1,65 +1,116 @@
-import {Slot, EmptySlot, Equip} from './assets/ItemAux'
-import {allowed_zone, score_equip, clone, get_limits, old2newequip} from './util.js'
+import {Slot, EmptySlot, Equip, Factors} from './assets/ItemAux'
+import {
+        allowed_zone,
+        score_equip,
+        score_vals,
+        get_vals,
+        clone,
+        get_limits,
+        old2newequip
+} from './util.js'
+
+const EMPTY_ACCESSORY = new EmptySlot(Slot['ACCESSORY']).name;
 
 export class Optimizer {
-        constructor(state, factors, accslots, maxslots, offhand) {
+        constructor(state, factors, maxslots) {
                 this.itemnames = state.items;
                 this.itemdata = state.itemdata;
-                this.factors = factors;
-                this.accslots = accslots;
-                this.maxslots = maxslots;
-                this.offhand = offhand * 5;
+                this.factorslist = state.factors;
+                this.maxslotslist = state.maxslots;
+                this.accslots = state.equip.accessory.length;
+                this.offhand = state.offhand * 5;
                 this.limits = get_limits(state);
         }
 
-        score_equip_wrapper(base_layout, factors) {
-                let equip = old2newequip(this.accslots, this.offhand, base_layout)
-                return score_equip(this.itemdata, equip, factors, this.offhand);
+        construct_base(locked, equip) {
+                let base = new Equip();
+                Object.getOwnPropertyNames(locked).forEach(slot => {
+                        const locks = locked[slot];
+                        for (let i = 0; i < locks.length; i++) {
+                                const item = this.itemdata[equip[slot][locks[i]]];
+                                this.add_equip(base, item);
+                        }
+                });
+                // wrap base in an array
+                return [this.old2newequip(base)];
+        }
+
+        sort_locks(locked, equip, result) {
+                //sort locks
+                Object.getOwnPropertyNames(Slot).forEach(slotname => {
+                        const slot = Slot[slotname][0];
+                        const locks = locked[slot];
+                        if (locks === undefined) {
+                                return;
+                        }
+                        const items = [...result[slot]];
+                        let item_idx = locks.length;
+                        let sorted = [];
+                        // add the items in the correct order
+                        for (let slot_idx = 0; slot_idx < equip[slot].length; slot_idx++) {
+                                if (locks.includes(slot_idx)) {
+                                        const item = equip[slot][slot_idx];
+                                        sorted.push(item);
+                                } else if (item_idx < items.length) {
+                                        const item = items[item_idx];
+                                        sorted.push(item);
+                                        item_idx++;
+                                } else {
+                                        sorted.push(new EmptySlot(slot).name);
+                                }
+                        }
+                        result[slot] = sorted;
+                });
+                return result;
+        }
+
+        old2newequip(equip) {
+                return old2newequip(this.accslots, this.offhand, equip);
+        }
+
+        new2oldequip(equip) {
+                let base = new Equip();
+                Object.getOwnPropertyNames(equip).forEach(slot => {
+                        for (let i = 0; i < equip[slot].length; i++) {
+                                const name = equip[slot][i];
+                                const item = this.itemdata[name];
+                                this.add_equip(base, item);
+                        }
+                });
+                return base;
+        }
+
+        score_equip(equip) {
+                return score_equip(this.itemdata, equip, this.factors, this.offhand);
+        }
+
+        get_vals(equip) {
+                return get_vals(this.itemdata, equip, this.factors, this.offhand);
+        }
+
+        score_equip_wrapper(base_layout) {
+                let equip = this.old2newequip(base_layout)
+                return this.score_equip(equip);
+        }
+
+        get_vals_wrapper(base_layout) {
+                let equip = this.old2newequip(base_layout)
+                return this.get_vals(equip);
+        }
+
+        swap_vals(vals, a, b) {
+                const valsa = this.get_vals({accessory: a});
+                const valsb = this.get_vals({accessory: b});
+                for (let idx in vals) {
+                        vals[idx] += valsb[idx] - valsa[idx];
+                }
+                return vals;
         }
 
         top_scorers(optimal) {
-                // only keep best candidates
-                let top_score = optimal[0].score;
-                optimal.forEach((x) => {
-                        top_score = x.score > top_score
-                                ? x.score
-                                : top_score;
-                });
-                return optimal.filter((x) => (x.score === top_score));
-        }
-
-        filter_duplicates(optimal) {
-                if (optimal.length === 1) {
-                        return optimal;
-                }
-                // filter duplicates, wherever they may come from
-                let filtered = [optimal[0]];
-                for (let idx = 1; idx < optimal.length; idx++) {
-                        let done = false;
-                        let l = optimal[idx].items.length;
-                        for (let jdx = 0; jdx < filtered.length; jdx++) {
-                                if (filtered[jdx].items.length !== l) {
-                                        continue;
-                                }
-                                let tmp = {};
-                                optimal[idx].items.forEach((item) => {
-                                        tmp[item.name] = true;
-                                });
-                                filtered[jdx].items.forEach((item) => {
-                                        tmp[item.name] = true;
-                                });
-                                if (Object.getOwnPropertyNames(tmp).length !== l) {
-                                        continue;
-                                }
-                                done = true;
-                                break;
-                        }
-                        if (!done) {
-                                filtered.push(optimal[idx]);
-                        }
-                }
-                console.log('Keeping ' + filtered.length + ' out of ' + optimal.length + ' candidates.');
-                return filtered;
+                const scores = optimal.map(x => score_equip(this.itemdata, x, this.factors, this.offhand));
+                const max = Math.max(...scores)
+                return optimal.filter((x, idx) => scores[idx] === max);
         }
 
         sort_accs(equip) {
@@ -67,7 +118,7 @@ export class Optimizer {
                 let scores = [];
                 for (let jdx = equip.item_count; jdx < optimal_size; jdx++) {
                         let item = equip.items[jdx];
-                        let score = this.score_equip_wrapper(this.remove_equip(clone(equip), item), this.factors);
+                        let score = this.score_equip_wrapper(this.remove_equip(clone(equip), item));
                         scores.push([score, item])
                 }
                 for (let jdx = equip.item_count; jdx < optimal_size; jdx++) {
@@ -141,171 +192,167 @@ export class Optimizer {
                         ];
                 });
                 s.push(remaining.map((x) => (x[0].length)).reduce((a, b) => (a * b), 1));
-                let layouts = this.outfits(remaining, base_layout);
-                layouts = this.pareto(layouts);
+                base_layout.item_count = base_layout.items.length;
+                let layouts = [base_layout];
+                for (let i = 0; i < remaining.length; i++) {
+                        let tmp = clone(layouts);
+                        for (let j = 0; j < layouts.length; j++) {
+                                for (let k = 0; k < remaining[i][0].length; k++) {
+                                        const item = remaining[i][0][k];
+                                        if (item.empty) {
+                                                continue;
+                                        }
+                                        let equip = clone(layouts[j]);
+                                        if (item.slot[0] === 'weapon') {
+                                                // check if weapon is already in mainhand slot
+                                                if (equip.items.map(val => val.name).filter(name => name === item.name).length > 0) {
+                                                        continue;
+                                                }
+                                        }
+                                        this.add_equip(equip, item);
+                                        equip.item_count = equip.items.length;
+                                        tmp.push(equip);
+                                }
+                        }
+                        layouts = this.pareto(tmp);
+                }
                 s.push(layouts.length);
                 return layouts;
         }
 
-        fast_optimal(base_layouts) {
-                if (this.factors[1].length === 0) {
-                        return base_layouts;
-                }
-                let optimal = clone(base_layouts);
-                optimal.forEach((x) => {
-                        x.score = this.score_equip_wrapper(x, this.factors);
-                        x.item_count = x.items.length;
-                });
-                optimal = this.top_scorers(optimal);
-                {
-                        let acc_layouts = {};
-                        for (let layout = 0; layout < base_layouts.length; layout++) {
-                                const base_layout = base_layouts[layout];
-                                let s = [];
-                                const accslots = this.count_accslots(base_layout);
-                                const layouts = this.optimize_layouts(base_layout, accslots, s);
-                                // find all possible accessories
-                                if (acc_layouts[accslots] === undefined) {
-                                        let accs = this.gear_slot(Slot.ACCESSORY, base_layout);
-                                        s.push(accs.length);
-                                        accs = this.pareto(accs, accslots);
-                                        s.push(accs.length);
-                                        {
-                                                let everything = new Equip();
-                                                for (let idx = 0; idx < accs.length; idx++) {
-                                                        this.add_equip(everything, accs[idx]);
-                                                }
-                                                accs.sort((a, b) => {
-                                                        let ascore = this.score_equip_wrapper(this.remove_equip(clone(everything), a), this.factors);
-                                                        let bscore = this.score_equip_wrapper(this.remove_equip(clone(everything), b), this.factors);
-                                                        return ascore - bscore;
-                                                });
-                                        }
-                                        let tmp = clone(base_layout);
-                                        for (let idx = 0; idx < accs.length && idx < accslots; idx++) {
-                                                this.add_equip(tmp, accs[idx]);
-                                        }
-                                        acc_layouts[accslots] = [tmp];
-                                }
-                                console.log('Processing ' + s[2] + ' out of ' + s[1] + ' out of ' + s[0] + ' gear layouts.');
-                                for (let idx in layouts) {
-                                        for (let jdx in acc_layouts[accslots]) {
-                                                // combine every gear with every accessory layout
-                                                let candidate = clone(layouts[idx]);
-                                                let acc_candidate = acc_layouts[accslots][jdx];
-                                                for (let kdx = base_layout.items.length; kdx < acc_candidate.items.length; kdx++) {
-                                                        this.add_equip(candidate, acc_candidate.items[kdx]);
-                                                }
-                                                let changed = acc_candidate.items.length > 0;
-                                                let accs = this.gear_slot(Slot.ACCESSORY, base_layout);
-                                                accs = this.pareto(accs, accslots);
-                                                while (changed) {
-                                                        candidate = this.sort_accs(candidate);
-                                                        let score = this.score_equip_wrapper(candidate, this.factors);
-                                                        const atrisk = clone(candidate.items[candidate.items.length - 1]);
-                                                        candidate = this.remove_equip(candidate, atrisk, true);
-                                                        let winner = undefined;
-                                                        for (let kdx = 0; kdx < accs.length; kdx++) {
-                                                                let skip = false;
-                                                                for (let ldx = 0; ldx < candidate.items.length; ldx++) {
-                                                                        if (candidate.items[ldx].name === accs[kdx].name) {
-                                                                                skip = true;
-                                                                                break;
-                                                                        }
-                                                                }
-                                                                if (skip) {
-                                                                        continue;
-                                                                }
-                                                                const alt = this.add_equip(clone(candidate), accs[kdx]);
-                                                                const altscore = this.score_equip_wrapper(alt, this.factors);
-                                                                if (altscore > score) {
-                                                                        score = altscore;
-                                                                        winner = alt;
-                                                                }
-                                                        }
-                                                        if (winner === undefined) {
-                                                                candidate = this.add_equip(candidate, atrisk)
-                                                                break;
-                                                        } else {
-                                                                candidate = winner;
-                                                        }
-                                                }
-                                                candidate.score = this.score_equip_wrapper(candidate, this.factors);
-                                                candidate.item_count = layouts[idx].items.length;
-                                                optimal.push(candidate);
-                                                optimal = this.top_scorers(optimal);
-                                        }
-                                }
+        filter_accs(candidate, accslots, accs) {
+                let candidate_accs = candidate.accessory.filter(x => {
+                        if (!accs.includes(x)) {
+                                // locked accessory
+                                return false;
                         }
-                }
-                optimal = this.filter_duplicates(optimal);
-                // sort new accs per candidate
-                for (let idx in optimal) {
-                        this.sort_accs(optimal[idx])
-                }
-                return optimal;
+                        return true;
+                });
+                return accs.filter(x => !candidate_accs.includes(x));
         }
 
-        compute_optimal(base_layouts) {
+        get_accs(base_layout, accslots) {
+                let accs = this.gear_slot(Slot.ACCESSORY, base_layout);
+                accs = this.pareto(accs, accslots);
+                let everything = accs.concat(base_layout.items).map((x) => (x.name));
+                // sort accessories
+                accs = accs.map((x, idx) => idx).sort((a, b) => {
+                        // remove accessory a
+                        everything[a] = EMPTY_ACCESSORY;
+                        const ascore = this.score_equip({accessory: everything});
+                        everything[a] = accs[a].name;
+                        // remove accessory b
+                        everything[b] = EMPTY_ACCESSORY;
+                        const bscore = this.score_equip({accessory: everything});
+                        everything[b] = accs[b].name;
+                        // compare scores
+                        return ascore - bscore;
+                }).map(x => accs[x].name);
+                return accs;
+        }
+
+        compute_optimal(base_layouts, factoridx) {
+                this.factors = Factors[this.factorslist[factoridx]];
+                this.maxslots = this.maxslotslist[factoridx];
                 if (this.factors[1].length === 0) {
                         return base_layouts;
                 }
-                let optimal = clone(base_layouts);
-                optimal.forEach((x) => {
-                        x.score = this.score_equip_wrapper(x, this.factors);
-                        x.item_count = x.items.length;
-                });
-                optimal = this.top_scorers(optimal);
-                {
-                        let acc_layouts = {};
-                        for (let layout = 0; layout < base_layouts.length; layout++) {
-                                const base_layout = base_layouts[layout];
-                                let s = [];
-                                const accslots = this.count_accslots(base_layout);
-                                const layouts = this.optimize_layouts(base_layout, accslots, s);
-                                // find all possible accessories
-                                if (acc_layouts[accslots] === undefined) {
-                                        let accs = this.gear_slot(Slot.ACCESSORY, base_layout);
-                                        s.push(accs.length);
-                                        accs = this.pareto(accs, accslots);
-                                        s.push(accs.length);
-                                        {
-                                                let everything = new Equip();
-                                                for (let idx = 0; idx < accs.length; idx++) {
-                                                        this.add_equip(everything, accs[idx]);
-                                                }
-                                                accs.sort((a, b) => {
-                                                        let ascore = this.score_equip_wrapper(this.remove_equip(clone(everything), a), this.factors);
-                                                        let bscore = this.score_equip_wrapper(this.remove_equip(clone(everything), b), this.factors);
-                                                        return bscore - ascore;
-                                                });
-                                        }
-                                        console.log('Processing ' + s[4] + ' out of ' + s[3] + ' accessories with ' + accslots + ' slots.');
-                                        acc_layouts[accslots] = this.knapsack(accs, accslots, base_layout, this.add_equip);
+                // all base layouts should have the same number of available acc slots
+                const base_layout = this.new2oldequip(base_layouts[0]);
+                let accslots = this.count_accslots(base_layout);
+                //TODO: clean this
+                const locked_accs = base_layouts[0].accessory.reduce((res, x) => res + (
+                        this.itemdata[x].empty
+                        ? 0
+                        : 1), 0);
+                // find and sort possible accessories
+                const accs = this.get_accs(base_layout, accslots);
+                accslots = Math.min(accslots, accs.length);
+                let acc_candidate = accs.slice(0, accslots);
+                let candidates = this.top_scorers(base_layouts);
+                // expand layout and accessory candidate into proper candidate
+                for (let layout = 0; layout < base_layouts.length; layout++) {
+                        let s = [];
+                        const layouts = this.optimize_layouts(this.new2oldequip(base_layouts[layout]), accslots, s).map(x => this.old2newequip(x));
+                        console.log('Processing ' + s[2] + ' out of ' + s[1] + ' out of ' + s[0] + ' gear layouts.');
+                        for (let idx in layouts) {
+                                // combine every gear with every accessory layout
+                                let candidate = layouts[idx];
+                                let acc_count = 0;
+                                for (let kdx = 0; kdx < accslots; kdx++) {
+                                        candidate.accessory[locked_accs + kdx] = acc_candidate[kdx];
+                                        acc_count++;
                                 }
-                                console.log('Processing ' + s[2] + ' out of ' + s[1] + ' out of ' + s[0] + ' gear layouts.');
-                                for (let idx in layouts) {
-                                        console.log(acc_layouts[accslots].length);
-                                        for (let jdx in acc_layouts[accslots]) {
-                                                let candidate = clone(layouts[idx]);
-                                                let acc_candidate = acc_layouts[accslots][jdx];
-                                                for (let kdx = base_layout.items.length; kdx < acc_candidate.items.length; kdx++) {
-                                                        this.add_equip(candidate, acc_candidate.items[kdx]);
+                                if (acc_count === 0) {
+                                        candidates.push(candidate);
+                                        continue;
+                                }
+                                let filter_accs = this.filter_accs(candidate, accslots, accs);
+                                let filter_idx = undefined;
+                                while (true) {
+                                        let riskidx = undefined;
+                                        let score = this.score_equip(candidate);
+                                        let riskscore = -1;
+                                        let vals = this.get_vals(candidate);
+                                        for (let kdx = locked_accs; kdx < locked_accs + acc_count; kdx++) {
+                                                const tmp = this.swap_vals([...vals], candidate.accessory[kdx], EMPTY_ACCESSORY)
+                                                const tmpscore = score_vals(tmp, this.factors);
+                                                if (tmpscore > riskscore) {
+                                                        riskidx = kdx;
+                                                        riskscore = tmpscore;
                                                 }
-                                                candidate.score = this.score_equip_wrapper(candidate, this.factors);
-                                                candidate.item_count = layouts[idx].items.length;
-                                                optimal.push(candidate);
-                                                optimal = this.top_scorers(optimal);
+                                        }
+                                        const atrisk = candidate.accessory[riskidx];
+                                        let winner = undefined;
+                                        for (let kdx in filter_accs) {
+                                                const acc = filter_accs[kdx];
+                                                const tmp = this.swap_vals([...vals], atrisk, acc);
+                                                const tmpscore = score_vals(tmp, this.factors);
+                                                if (tmpscore > score) {
+                                                        score = tmpscore;
+                                                        winner = acc;
+                                                        filter_idx = kdx;
+                                                }
+                                        }
+                                        if (winner === undefined) {
+                                                candidate.accessory[riskidx] = atrisk;
+                                                break;
+                                        } else {
+                                                candidate.accessory[riskidx] = winner;
+                                                filter_accs[filter_idx] = atrisk;
                                         }
                                 }
+                                candidates.push(candidate);
+                                candidates = this.top_scorers(candidates);
                         }
                 }
-                optimal = this.filter_duplicates(optimal);
                 // sort new accs per candidate
-                for (let idx in optimal) {
-                        this.sort_accs(optimal[idx])
+                for (let idx in candidates) {
+                        let tmp = this.new2oldequip(candidates[idx]);
+                        tmp.item_count = tmp.items.length - accslots;
+                        candidates[idx] = this.old2newequip(this.sort_accs(tmp));
                 }
-                return optimal;
+                // construct alternative candidates
+                let alternatives = [...candidates];
+                let score = this.score_equip(candidates[0]);
+                candidates.forEach(candidate => {
+                        const remainder = accs.filter(x => !candidate.accessory.includes(x));
+                        for (let idx = 0; idx < accslots; idx++) {
+                                const tmp = candidate.accessory[locked_accs + idx];
+                                for (let jdx in remainder) {
+                                        candidate.accessory[locked_accs + idx] = remainder[jdx];
+                                        const tmp_score = this.score_equip(candidate);
+                                        if (tmp_score === score) {
+                                                alternatives.push(clone(candidate));
+                                        }
+                                        if (tmp_score > score) {
+                                                console.log('an error occured');
+                                        }
+                                }
+                                candidate.accessory[locked_accs + idx] = tmp;
+                        }
+                });
+                return alternatives;
         }
 
         add_empty(equip, slot) {
@@ -344,38 +391,6 @@ export class Optimizer {
                 return equip;
         }
 
-        cart_aux = (a, b) => [].concat(...a.map(d => b.map(e => [].concat(d, e))));
-        cartesian = (a, b, ...c) => (
-                b
-                ? this.cartesian(this.cart_aux(a, b), ...c)
-                : a);
-
-        outfits = (options, base) => {
-                if (options.length === 0) {
-                        base.item_count = base.items.length;
-                        return [base];
-                }
-                let tmp = this.cartesian(...options.map(x => x[0])).map((items) => {
-                        let equip = clone(base);
-                        if (items.length === undefined) {
-                                // HACK: items can be a single item instead of a list for some reason.
-                                items = [items];
-                        }
-                        for (let i = 0; i < items.length; i++) {
-                                if (items[i].slot[0] === 'weapon') {
-                                        // check if weapon is already in mainhand slot
-                                        if (equip.items.map(item => item.name).filter(name => name === items[i].name).length > 0) {
-                                                continue;
-                                        }
-                                }
-                                this.add_equip(equip, items[i]);
-                        }
-                        equip.item_count = equip.items.length;
-                        return equip;
-                })
-                return tmp;
-        };
-
         gear_slot(type, equip) {
                 const equiped = equip.items.filter((item) => (item.slot[0] === type[0])).map((x) => (x.name));
                 return this.itemnames.filter((name) => {
@@ -389,7 +404,7 @@ export class Optimizer {
         knapsack_combine_single(last, list, item, add) {
                 for (let idx in list) {
                         let max_with = add(clone(list[idx]), item);
-                        max_with.score = this.score_equip_wrapper(max_with, this.factors);
+                        max_with.score = this.score_equip_wrapper(max_with);
                         list[idx] = max_with;
                 }
                 list = list.sort((a, b) => (b.score - a.score));
@@ -406,7 +421,7 @@ export class Optimizer {
         //Assumes all weights are 1.
         knapsack(items, capacity, zero_state, add) {
                 let n = items.length;
-                zero_state.score = this.score_equip_wrapper(zero_state, this.factors);
+                zero_state.score = this.score_equip_wrapper(zero_state);
                 // init matrix
                 let matrix_weight = new Array(n + 1);
                 for (let i = 0; i < n + 1; i++) {

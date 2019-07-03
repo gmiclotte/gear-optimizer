@@ -28,21 +28,19 @@ function HowTo() {
                                 <li>Open/close a particular zone's item list by clicking the zone name.</li>
                                 <li>Rightclick an item in the list to open the item editing menu.</li>
                                 <li>In the item editing menu enable or disable the item, or change its level.</li>
+                                <li>Equip an item from the list by clicking it.</li>
+                                <li>Equiped items can be locked by rightclicking it in the equipped item list on the left.</li>
                         </ul>
                         <br/>
                         <li>Select your priorities.</li>
                         <ul>
-                                <li>Priorities are handled from top (1) to bottom (5).</li>
+                                <li>Priorities are handled from top (Priority 1) to bottom.</li>
                                 <li>When optimizing for a priority, the optimizer computes the optimal loadout for this priority, for any remaining empty slots that were not used by previous priorities.</li>
-                                <li>The slots amount limits the number of additional accessory slots that can be used for this priority. Of course, the global accessory slot limit always applies, it might be the case that no slots remain for a priority lower down the list.</li>
+                                <li>The slots amount limits the number of additional accessory slots that can be used for this priority.</li>
+                                <li>Of course, the global accessory slot limit always applies, it might be the case that no slots remain for a priority lower down the list.</li>
                         </ul>
                         <br/>
-                        <li>Optimize according to the previous configuration.</li>
-                        <ul>
-                                <li>The "Optimize Gear" button computes an optimal loadout based on the configuration.</li>
-                                <li>The "Optimize Fast" button is usually faster. In most tested cases this also computed the optimal loadout.</li>
-                                <li>You should prefer "Optimize Gear". If a computation takes too long, you can abort it by clicking the "abort" button. Only in this case consider using the fast approach.</li>
-                        </ul>
+                        <li>Click the "Optimize Gear" button to compute an optimal loadout based on the configuration.</li>
                         <br/>
                         <li>Save and compare loadouts.</li>
                         <ul>
@@ -55,7 +53,6 @@ function HowTo() {
                 </ol>
         </div>;
 }
-
 const AppLayout = props => (<div className='app_container'>
 
         <CookieBanner styles={{
