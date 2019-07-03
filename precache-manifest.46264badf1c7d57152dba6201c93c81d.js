@@ -4,20 +4,20 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/gear-optimizer/2e437ef209385e2577cf.worker.js"
   },
   {
-    "revision": "fed700a380abe8b8e4aea55c630debfb",
+    "revision": "7970a788a2299c8a863ceed8c82597b3",
     "url": "/gear-optimizer/index.html"
   },
   {
-    "revision": "23eca00a2b70c6cb8697",
-    "url": "/gear-optimizer/static/css/main.a0262491.chunk.css"
+    "revision": "a8a1cf3a33dbfe8bbd4c",
+    "url": "/gear-optimizer/static/css/main.133d5ae1.chunk.css"
   },
   {
-    "revision": "8b240eceeb52ea37a0ed",
-    "url": "/gear-optimizer/static/js/2.07064c60.chunk.js"
+    "revision": "35cee778c86c542bcd3d",
+    "url": "/gear-optimizer/static/js/2.db9218b6.chunk.js"
   },
   {
-    "revision": "23eca00a2b70c6cb8697",
-    "url": "/gear-optimizer/static/js/main.63a84745.chunk.js"
+    "revision": "a8a1cf3a33dbfe8bbd4c",
+    "url": "/gear-optimizer/static/js/main.1272fcb9.chunk.js"
   },
   {
     "revision": "e70c69565185911edd94",
@@ -362,10 +362,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "2b8990ce93789fd289bf8c4ac05ee19f",
     "url": "/gear-optimizer/static/media/Yellow Heart.2b8990ce.png"
-  },
-  {
-    "revision": "5d5d9eefa31e5e13a6610d9fa7a283bb",
-    "url": "/gear-optimizer/static/media/logo.5d5d9eef.svg"
   },
   {
     "revision": "7ce0dbce3f42a880fae973e667ba2756",

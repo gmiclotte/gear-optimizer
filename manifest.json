@@ -1,15 +1,16 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Gear Optimizer",
+  "name": "Gear Optimizer for NGU Idle",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "favicon-720.png",
+      "sizes": "720x720",
+      "type": "image/png"
     }
   ],
   "start_url": ".",
+  "scope": "/",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#333",
+  "background_color": "#fff"
 }
