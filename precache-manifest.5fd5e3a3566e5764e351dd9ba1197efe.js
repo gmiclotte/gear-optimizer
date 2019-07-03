@@ -4,7 +4,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/gear-optimizer/2e437ef209385e2577cf.worker.js"
   },
   {
-    "revision": "7970a788a2299c8a863ceed8c82597b3",
+    "revision": "31f2452426ae2a8bb833e5de7431bc09",
     "url": "/gear-optimizer/index.html"
   },
   {
