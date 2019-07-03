@@ -259,7 +259,7 @@ export class Optimizer {
                 }
                 // all base layouts should have the same number of available acc slots
                 const base_layout = this.new2oldequip(base_layouts[0]);
-                const accslots = this.count_accslots(base_layout);
+                let accslots = this.count_accslots(base_layout);
                 //TODO: clean this
                 const locked_accs = base_layouts[0].accessory.reduce((res, x) => res + (
                         this.itemdata[x].empty
@@ -267,77 +267,92 @@ export class Optimizer {
                         : 1), 0);
                 // find and sort possible accessories
                 const accs = this.get_accs(base_layout, accslots);
-                // expand layout and accessory candidate into proper candidate
+                accslots = Math.min(accslots, accs.length);
+                let acc_candidate = accs.slice(0, accslots);
                 let candidates = this.top_scorers(base_layouts);
-                {
-                        for (let layout = 0; layout < base_layouts.length; layout++) {
-                                let s = [];
-                                const layouts = this.optimize_layouts(this.new2oldequip(base_layouts[layout]), accslots, s).map(x => this.old2newequip(x));
-                                console.log('Processing ' + s[2] + ' out of ' + s[1] + ' out of ' + s[0] + ' gear layouts.');
-                                for (let idx in layouts) {
-                                        // combine every gear with every accessory layout
-                                        let candidate = layouts[idx];
-                                        let acc_count = 0;
-                                        for (let kdx = 0; kdx < Math.min(accslots, accs.length); kdx++) {
-                                                candidate.accessory[locked_accs + kdx] = accs[kdx];
-                                                acc_count++;
-                                        }
-                                        if (acc_count === 0) {
-                                                candidates.push(candidate);
-                                                continue;
-                                        }
-                                        let filter_accs = this.filter_accs(candidate, accslots, accs);
-                                        let filter_idx = undefined;
-                                        while (true) {
-                                                let riskidx = undefined;
-                                                let score = this.score_equip(candidate);
-                                                let riskscore = -1;
-                                                let vals = this.get_vals(candidate);
-                                                for (let kdx = locked_accs; kdx < locked_accs + acc_count; kdx++) {
-                                                        const tmp = this.swap_vals([...vals], candidate.accessory[kdx], EMPTY_ACCESSORY)
-                                                        const tmpscore = score_vals(tmp, this.factors);
-                                                        if (tmpscore > riskscore) {
-                                                                riskidx = kdx;
-                                                                riskscore = tmpscore;
-                                                        }
-                                                }
-                                                const atrisk = candidate.accessory[riskidx];
-                                                let winner = undefined;
-                                                for (let kdx in filter_accs) {
-                                                        const acc = filter_accs[kdx];
-                                                        const tmp = this.swap_vals([...vals], atrisk, acc);
-                                                        const tmpscore = score_vals(tmp, this.factors);
-                                                        if (tmpscore > score) {
-                                                                score = tmpscore;
-                                                                winner = acc;
-                                                                filter_idx = kdx;
-                                                        }
-                                                }
-                                                if (winner === undefined) {
-                                                        candidate.accessory[riskidx] = atrisk;
-                                                        break;
-                                                } else {
-                                                        candidate.accessory[riskidx] = winner;
-                                                        filter_accs[filter_idx] = atrisk;
-                                                }
-                                        }
-                                        candidates.push(candidate);
-                                        candidates = this.top_scorers(candidates);
+                // expand layout and accessory candidate into proper candidate
+                for (let layout = 0; layout < base_layouts.length; layout++) {
+                        let s = [];
+                        const layouts = this.optimize_layouts(this.new2oldequip(base_layouts[layout]), accslots, s).map(x => this.old2newequip(x));
+                        console.log('Processing ' + s[2] + ' out of ' + s[1] + ' out of ' + s[0] + ' gear layouts.');
+                        for (let idx in layouts) {
+                                // combine every gear with every accessory layout
+                                let candidate = layouts[idx];
+                                let acc_count = 0;
+                                for (let kdx = 0; kdx < accslots; kdx++) {
+                                        candidate.accessory[locked_accs + kdx] = acc_candidate[kdx];
+                                        acc_count++;
                                 }
+                                if (acc_count === 0) {
+                                        candidates.push(candidate);
+                                        continue;
+                                }
+                                let filter_accs = this.filter_accs(candidate, accslots, accs);
+                                let filter_idx = undefined;
+                                while (true) {
+                                        let riskidx = undefined;
+                                        let score = this.score_equip(candidate);
+                                        let riskscore = -1;
+                                        let vals = this.get_vals(candidate);
+                                        for (let kdx = locked_accs; kdx < locked_accs + acc_count; kdx++) {
+                                                const tmp = this.swap_vals([...vals], candidate.accessory[kdx], EMPTY_ACCESSORY)
+                                                const tmpscore = score_vals(tmp, this.factors);
+                                                if (tmpscore > riskscore) {
+                                                        riskidx = kdx;
+                                                        riskscore = tmpscore;
+                                                }
+                                        }
+                                        const atrisk = candidate.accessory[riskidx];
+                                        let winner = undefined;
+                                        for (let kdx in filter_accs) {
+                                                const acc = filter_accs[kdx];
+                                                const tmp = this.swap_vals([...vals], atrisk, acc);
+                                                const tmpscore = score_vals(tmp, this.factors);
+                                                if (tmpscore > score) {
+                                                        score = tmpscore;
+                                                        winner = acc;
+                                                        filter_idx = kdx;
+                                                }
+                                        }
+                                        if (winner === undefined) {
+                                                candidate.accessory[riskidx] = atrisk;
+                                                break;
+                                        } else {
+                                                candidate.accessory[riskidx] = winner;
+                                                filter_accs[filter_idx] = atrisk;
+                                        }
+                                }
+                                candidates.push(candidate);
+                                candidates = this.top_scorers(candidates);
                         }
                 }
-                /*
                 // sort new accs per candidate
-                const original_acc_count = this.new2oldequip(base_layouts[0]).items.filter(x => x.slot === 'accessory').length;
                 for (let idx in candidates) {
-                        console.log(candidates[idx].accessory);
                         let tmp = this.new2oldequip(candidates[idx]);
-                        tmp.item_count = Object.getOwnPropertyNames(candidates[idx]).reduce((res, x) => res + x.length, 0) - original_acc_count;
+                        tmp.item_count = tmp.items.length - accslots;
                         candidates[idx] = this.old2newequip(this.sort_accs(tmp));
-                        console.log(candidates[idx].accessory);
                 }
-                */
-                return candidates;
+                // construct alternative candidates
+                let alternatives = [...candidates];
+                let score = this.score_equip(candidates[0]);
+                candidates.forEach(candidate => {
+                        const remainder = accs.filter(x => !candidate.accessory.includes(x));
+                        for (let idx = 0; idx < accslots; idx++) {
+                                const tmp = candidate.accessory[locked_accs + idx];
+                                for (let jdx in remainder) {
+                                        candidate.accessory[locked_accs + idx] = remainder[jdx];
+                                        const tmp_score = this.score_equip(candidate);
+                                        if (tmp_score === score) {
+                                                alternatives.push(clone(candidate));
+                                        }
+                                        if (tmp_score > score) {
+                                                console.log('an error occured');
+                                        }
+                                }
+                                candidate.accessory[locked_accs + idx] = tmp;
+                        }
+                });
+                return alternatives;
         }
 
         compute_optimal(base_layouts, factoridx) {
@@ -376,7 +391,6 @@ export class Optimizer {
                                 }
                                 console.log('Processing ' + s[2] + ' out of ' + s[1] + ' out of ' + s[0] + ' gear layouts.');
                                 for (let idx in layouts) {
-                                        console.log(acc_layouts[accslots].length);
                                         for (let jdx in acc_layouts[accslots]) {
                                                 let candidate = clone(layouts[idx]);
                                                 let acc_candidate = acc_layouts[accslots][jdx];
