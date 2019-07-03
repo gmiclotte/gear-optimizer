@@ -4,7 +4,7 @@ import ReactGA from 'react-ga';
 class Button extends Component {
         render() {
                 if (this.props.running) {
-                        return (<button onClick={() => this.props.abort(this.props.fast)}>
+                        return (<button onClick={() => this.props.abort()}>
                                 Abort
                         </button>);
                 } else {

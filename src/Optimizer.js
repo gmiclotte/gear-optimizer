@@ -251,7 +251,7 @@ export class Optimizer {
                 return accs;
         }
 
-        fast_optimal(base_layouts, factoridx) {
+        compute_optimal(base_layouts, factoridx) {
                 this.factors = Factors[this.factorslist[factoridx]];
                 this.maxslots = this.maxslotslist[factoridx];
                 if (this.factors[1].length === 0) {
@@ -353,63 +353,6 @@ export class Optimizer {
                         }
                 });
                 return alternatives;
-        }
-
-        compute_optimal(base_layouts, factoridx) {
-                this.factors = Factors[this.factorslist[factoridx]];
-                this.maxslots = this.maxslotslist[factoridx];
-                if (this.factors[1].length === 0) {
-                        return base_layouts;
-                }
-                let candidates = this.top_scorers(base_layouts);
-                {
-                        let acc_layouts = {};
-                        for (let layout = 0; layout < base_layouts.length; layout++) {
-                                const base_layout = this.new2oldequip(base_layouts[layout]);
-                                let s = [];
-                                const accslots = this.count_accslots(base_layout);
-                                const layouts = this.optimize_layouts(base_layout, accslots, s);
-                                // find all possible accessories
-                                if (acc_layouts[accslots] === undefined) {
-                                        let accs = this.gear_slot(Slot.ACCESSORY, base_layout);
-                                        s.push(accs.length);
-                                        accs = this.pareto(accs, accslots);
-                                        s.push(accs.length);
-                                        {
-                                                let everything = new Equip();
-                                                for (let idx = 0; idx < accs.length; idx++) {
-                                                        this.add_equip(everything, accs[idx]);
-                                                }
-                                                accs.sort((a, b) => {
-                                                        let ascore = this.score_equip_wrapper(this.remove_equip(clone(everything), a));
-                                                        let bscore = this.score_equip_wrapper(this.remove_equip(clone(everything), b));
-                                                        return bscore - ascore;
-                                                });
-                                        }
-                                        console.log('Processing ' + s[4] + ' out of ' + s[3] + ' accessories with ' + accslots + ' slots.');
-                                        acc_layouts[accslots] = this.knapsack(accs, accslots, base_layout, this.add_equip);
-                                }
-                                console.log('Processing ' + s[2] + ' out of ' + s[1] + ' out of ' + s[0] + ' gear layouts.');
-                                for (let idx in layouts) {
-                                        for (let jdx in acc_layouts[accslots]) {
-                                                let candidate = clone(layouts[idx]);
-                                                let acc_candidate = acc_layouts[accslots][jdx];
-                                                for (let kdx = base_layout.items.length; kdx < acc_candidate.items.length; kdx++) {
-                                                        this.add_equip(candidate, acc_candidate.items[kdx]);
-                                                }
-                                                candidates.push(this.old2newequip(candidate));
-                                        }
-                                        candidates = this.top_scorers(candidates);
-                                }
-                        }
-                }
-                /*
-                // sort new accs per candidate
-                for (let idx in candidates) {
-                        this.sort_accs(candidates[idx])
-                }
-                */
-                return candidates;
         }
 
         add_empty(equip, slot) {

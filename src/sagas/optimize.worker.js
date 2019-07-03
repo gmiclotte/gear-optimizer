@@ -24,11 +24,7 @@ function optimize(e) {
         let base_layout = optimizer.construct_base(state.locked, state.equip);
         // optimize the priorities
         for (let idx = 0; idx < state.factors.length; idx++) {
-                if (e.data.fast) {
-                        base_layout = optimizer.fast_optimal(base_layout, idx);
-                } else {
-                        base_layout = optimizer.compute_optimal(base_layout, idx);
-                }
+                base_layout = optimizer.compute_optimal(base_layout, idx);
         }
         // select random remaining layout
         base_layout = base_layout[Math.floor(Math.random() * base_layout.length)];
