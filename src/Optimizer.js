@@ -355,12 +355,6 @@ export class Optimizer {
                 return alternatives;
         }
 
-        add_empty(equip, slot) {
-                equip.items.push(new EmptySlot(slot));
-                equip.counts[slot[0]] += 1;
-                return equip;
-        }
-
         add_equip(equip, item, effect = 100) {
                 if (item.empty) {
                         return equip;
@@ -399,57 +393,6 @@ export class Optimizer {
                         }
                         return this.itemdata[name].slot[0] === type[0];
                 }).map((name) => (this.itemdata[name])).filter((item) => (!item.disable && !equiped.includes(item.name)));
-        }
-
-        knapsack_combine_single(last, list, item, add) {
-                for (let idx in list) {
-                        let max_with = add(clone(list[idx]), item);
-                        max_with.score = this.score_equip_wrapper(max_with);
-                        list[idx] = max_with;
-                }
-                list = list.sort((a, b) => (b.score - a.score));
-                list = this.pareto(list);
-                //both list and last are pareto optimal internally, remains to compare them to eachother
-                last = this.pareto_2(list, last);
-                list = this.pareto_2(last, list)
-                let all = last.concat(list);
-                //all is pareto optimal
-                all = all.sort((a, b) => (b.score - a.score));
-                return all;
-        }
-
-        //Assumes all weights are 1.
-        knapsack(items, capacity, zero_state, add) {
-                let n = items.length;
-                zero_state.score = this.score_equip_wrapper(zero_state);
-                // init matrix
-                let matrix_weight = new Array(n + 1);
-                for (let i = 0; i < n + 1; i++) {
-                        matrix_weight[i] = new Array(capacity + 1);
-                }
-                // fill matrix
-                for (let i = 0; i <= n; i++) {
-                        let start_time = Date.now();
-                        for (let w = 0; w <= capacity; w++) {
-                                if (i === 0 || w === 0) {
-                                        matrix_weight[i][w] = [zero_state];
-                                        continue;
-                                }
-                                // compute optimal state with item i-1 added
-                                // clone earlier entries to avoid changing them
-                                let last = clone(matrix_weight[i - 1][w]);
-                                let list = clone(matrix_weight[i - 1][w - 1]);
-                                matrix_weight[i][w] = this.knapsack_combine_single(last, list, items[i - 1], add)
-                        }
-                        if (i === 0) {
-                                continue;
-                        }
-                        // clear memory
-                        matrix_weight[i - 1] = undefined;
-                        // print
-                        console.log(i + '/' + n + ' ' + Math.floor((Date.now() - start_time) / 10) / 100 + ' ' + matrix_weight[i].reduce((a, b) => (a + b.length), 0) + ' ' + items[i - 1].name);
-                }
-                return matrix_weight[n][capacity];
         }
 
         //set <equal> to <false> if equal results result in a dominate call
@@ -499,29 +442,6 @@ export class Optimizer {
                 let result = dominated.map((val, idx) => (
                         val < cutoff
                         ? list[idx]
-                        : false)).filter((val) => (val !== false));
-                if (result.length === 0) {
-                        result = [empty];
-                }
-                return result;
-        }
-
-        pareto_2(list, newlist, cutoff = 1) {
-                let dominated = new Array(newlist.length).fill(false);
-                let empty = list[0].slot === undefined
-                        ? new Equip()
-                        : new EmptySlot(list[0].slot);
-                for (let i = list.length - 1; i > -1; i--) {
-                        for (let j = newlist.length - 1; j > -1; j--) {
-                                if (dominated[j] === cutoff) {
-                                        continue;
-                                }
-                                dominated[j] += this.dominates(list[i], newlist[j]);
-                        }
-                }
-                let result = dominated.map((val, idx) => (
-                        val < cutoff
-                        ? newlist[idx]
                         : false)).filter((val) => (val !== false));
                 if (result.length === 0) {
                         result = [empty];
