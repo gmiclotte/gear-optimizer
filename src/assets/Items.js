@@ -161,7 +161,7 @@ export const ITEMLIST = [
         [Stat.POWER, 200],
         [Stat.TOUGHNESS, 200],
         [Stat.GOLD_DROP, 600],
-        [Stat.QUEST_DROP, 80],
+        [Stat.QUEST_DROP, 10],
     ]),
     new Item('My Purple Heart', Slot.ACCESSORY, SetName.MISC, 100, [
         [Stat.POWER, 200],
