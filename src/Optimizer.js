@@ -278,48 +278,44 @@ export class Optimizer {
                         for (let idx in layouts) {
                                 // combine every gear with every accessory layout
                                 let candidate = layouts[idx];
-                                let acc_count = 0;
-                                for (let kdx = 0; kdx < accslots; kdx++) {
-                                        candidate.accessory[locked_accs + kdx] = acc_candidate[kdx];
-                                        acc_count++;
-                                }
-                                if (acc_count === 0) {
-                                        candidates.push(candidate);
-                                        continue;
-                                }
-                                let filter_accs = this.filter_accs(candidate, accslots, accs);
-                                let filter_idx = undefined;
-                                while (true) {
-                                        let riskidx = undefined;
-                                        let score = this.score_equip(candidate);
-                                        let riskscore = -1;
-                                        let vals = this.get_vals(candidate);
-                                        for (let kdx = locked_accs; kdx < locked_accs + acc_count; kdx++) {
-                                                const tmp = this.swap_vals([...vals], candidate.accessory[kdx], EMPTY_ACCESSORY)
-                                                const tmpscore = score_vals(tmp, this.factors);
-                                                if (tmpscore > riskscore) {
-                                                        riskidx = kdx;
-                                                        riskscore = tmpscore;
-                                                }
+                                if (accslots > 0) {
+                                        for (let kdx = 0; kdx < accslots; kdx++) {
+                                                candidate.accessory[locked_accs + kdx] = acc_candidate[kdx];
                                         }
-                                        const atrisk = candidate.accessory[riskidx];
-                                        let winner = undefined;
-                                        for (let kdx in filter_accs) {
-                                                const acc = filter_accs[kdx];
-                                                const tmp = this.swap_vals([...vals], atrisk, acc);
-                                                const tmpscore = score_vals(tmp, this.factors);
-                                                if (tmpscore > score) {
-                                                        score = tmpscore;
-                                                        winner = acc;
-                                                        filter_idx = kdx;
+                                        let filter_accs = this.filter_accs(candidate, accslots, accs);
+                                        let filter_idx = undefined;
+                                        while (true) {
+                                                let riskidx = undefined;
+                                                let score = this.score_equip(candidate);
+                                                let riskscore = -1;
+                                                let vals = this.get_vals(candidate);
+                                                for (let kdx = locked_accs; kdx < locked_accs + accslots; kdx++) {
+                                                        const tmp = this.swap_vals([...vals], candidate.accessory[kdx], EMPTY_ACCESSORY)
+                                                        const tmpscore = score_vals(tmp, this.factors);
+                                                        if (tmpscore > riskscore) {
+                                                                riskidx = kdx;
+                                                                riskscore = tmpscore;
+                                                        }
                                                 }
-                                        }
-                                        if (winner === undefined) {
-                                                candidate.accessory[riskidx] = atrisk;
-                                                break;
-                                        } else {
-                                                candidate.accessory[riskidx] = winner;
-                                                filter_accs[filter_idx] = atrisk;
+                                                const atrisk = candidate.accessory[riskidx];
+                                                let winner = undefined;
+                                                for (let kdx in filter_accs) {
+                                                        const acc = filter_accs[kdx];
+                                                        const tmp = this.swap_vals([...vals], atrisk, acc);
+                                                        const tmpscore = score_vals(tmp, this.factors);
+                                                        if (tmpscore > score) {
+                                                                score = tmpscore;
+                                                                winner = acc;
+                                                                filter_idx = kdx;
+                                                        }
+                                                }
+                                                if (winner === undefined) {
+                                                        candidate.accessory[riskidx] = atrisk;
+                                                        break;
+                                                } else {
+                                                        candidate.accessory[riskidx] = winner;
+                                                        filter_accs[filter_idx] = atrisk;
+                                                }
                                         }
                                 }
                                 candidates.push(candidate);
