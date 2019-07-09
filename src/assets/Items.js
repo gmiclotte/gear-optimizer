@@ -1139,7 +1139,7 @@ export const ITEMLIST = [
     ]),
     new Item('A Bag of Trash', Slot.ACCESSORY, SetName.NERD4, 100, [
         [Stat.POWER, 1000000],
-        [Stat.TOUGHNESS, 3000000],
+        [Stat.TOUGHNESS, 1000000],
         [Stat.RES3_BARS, 10],
         [Stat.ENERGY_CAP, 2000],
         [Stat.MAGIC_CAP, 2000],
