@@ -70,9 +70,9 @@ export class Optimizer {
 
         new2oldequip(equip) {
                 let base = new Equip();
-                Object.getOwnPropertyNames(equip).forEach(slot => {
-                        for (let i = 0; i < equip[slot].length; i++) {
-                                const name = equip[slot][i];
+                Object.getOwnPropertyNames(Slot).forEach(slot => {
+                        for (let i = 0; i < equip[Slot[slot][0]].length; i++) {
+                                const name = equip[Slot[slot][0]][i];
                                 const item = this.itemdata[name];
                                 this.add_equip(base, item);
                         }
@@ -254,24 +254,27 @@ export class Optimizer {
         compute_optimal(base_layouts, factoridx) {
                 this.factors = Factors[this.factorslist[factoridx]];
                 this.maxslots = this.maxslotslist[factoridx];
+                console.log('Priority', factoridx + ':', this.factors[0], this.maxslots)
                 if (this.factors[1].length === 0) {
                         return base_layouts;
                 }
                 // all base layouts should have the same number of available acc slots
                 const base_layout = this.new2oldequip(base_layouts[0]);
-                let accslots = this.count_accslots(base_layout);
+                const empty_accslots = this.count_accslots(base_layout);
                 //TODO: clean this
                 const locked_accs = base_layouts[0].accessory.reduce((res, x) => res + (
                         this.itemdata[x].empty
                         ? 0
                         : 1), 0);
-                // find and sort possible accessories
-                const accs = this.get_accs(base_layout, accslots);
-                accslots = Math.min(accslots, accs.length);
-                let acc_candidate = accs.slice(0, accslots);
                 let candidates = this.top_scorers(base_layouts);
+                candidates.forEach(x => x.accslots = 0);
+                candidates.forEach(x => x.accs = []);
                 // expand layout and accessory candidate into proper candidate
                 for (let layout = 0; layout < base_layouts.length; layout++) {
+                        // find and sort possible accessories
+                        const accs = this.get_accs(this.new2oldequip(base_layouts[layout]), empty_accslots);
+                        const accslots = Math.min(empty_accslots, accs.length);
+                        const acc_candidate = accs.slice(0, accslots);
                         let s = [];
                         const layouts = this.optimize_layouts(this.new2oldequip(base_layouts[layout]), accslots, s).map(x => this.old2newequip(x));
                         console.log('Processing ' + s[2] + ' out of ' + s[1] + ' out of ' + s[0] + ' gear layouts.');
@@ -318,6 +321,8 @@ export class Optimizer {
                                                 }
                                         }
                                 }
+                                candidate.accslots = accslots;
+                                candidate.accs = [...accs];
                                 candidates.push(candidate);
                                 candidates = this.top_scorers(candidates);
                         }
@@ -325,15 +330,19 @@ export class Optimizer {
                 // sort new accs per candidate
                 for (let idx in candidates) {
                         let tmp = this.new2oldequip(candidates[idx]);
-                        tmp.item_count = tmp.items.length - accslots;
-                        candidates[idx] = this.old2newequip(this.sort_accs(tmp));
+                        tmp.item_count = tmp.items.length - candidates[idx].accslots;
+                        candidates[idx] = {
+                                ...this.old2newequip(this.sort_accs(tmp)),
+                                accslots: candidates[idx].accslots,
+                                accs: candidates[idx].accs
+                        };
                 }
                 // construct alternative candidates
                 let alternatives = [...candidates];
                 let score = this.score_equip(candidates[0]);
                 candidates.forEach(candidate => {
-                        const remainder = accs.filter(x => !candidate.accessory.includes(x));
-                        for (let idx = 0; idx < accslots; idx++) {
+                        const remainder = candidate.accs.filter(x => !candidate.accessory.includes(x));
+                        for (let idx = 0; idx < candidate.accslots; idx++) {
                                 const tmp = candidate.accessory[locked_accs + idx];
                                 for (let jdx in remainder) {
                                         candidate.accessory[locked_accs + idx] = remainder[jdx];
