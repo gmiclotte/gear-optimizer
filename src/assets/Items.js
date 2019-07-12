@@ -61,7 +61,7 @@ export const ITEMLIST = [
         [Stat.AT_SPEED, 320],
         [Stat.ENERGY_BARS, 900],
         [Stat.MAGIC_BARS, 900],
-        [Stat.GOLD_DROP, 1200],
+        [Stat.GOLD_DROP, 2400],
     ]),
     new Item('Badly Drawn Chest', Slot.CHEST, SetName.BADLY_DRAWN, 100, [
         [Stat.TOUGHNESS, 120000],
@@ -174,6 +174,11 @@ export const ITEMLIST = [
         [Stat.TOUGHNESS, 2000000],
         [Stat.RES3_CAP, 40],
         [Stat.RES3_BARS, 40],
+    ]),
+    new Item('My Pink Heart', Slot.ACCESSORY, SetName.MISC, 100, [
+        [Stat.POWER, 6000000],
+        [Stat.TOUGHNESS, 6000000],
+        [Stat.WISH_SPEED, 20],
     ]),
     new Item('Mole Hammer', Slot.WEAPON, SetName.CAVE, 100, [
         [Stat.POWER, 400],
@@ -1182,8 +1187,8 @@ export const ITEMLIST = [
         [Stat.TOUGHNESS, 4400000],
         [Stat.ENERGY_CAP, 2200],
         [Stat.MAGIC_BARS, 18000],
-        [Stat.ENERGY_POWER, 16000],
-        [Stat.MAGIC_POWER, 16000],
+        [Stat.ENERGY_POWER, 20000],
+        [Stat.MAGIC_POWER, 20000],
     ]),
     new Item('The Number 7', Slot.WEAPON, SetName.META, 100, [
         [Stat.POWER, 50000000],
