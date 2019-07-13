@@ -33,7 +33,10 @@ class Wishes extends Component {
                 let text = 'Input some things, then stuff happens. Power is total power, cap is amount you actually want to spend on wishes.';
                 text += ' If you value hacks and wishes equally set R3 cap to 22.45% of your total R3 cap.';
                 text += ' Take the wish speed modifier from the breakdown menu.';
+                text += ' Minimal wish time, is the time you want the final level to take.';
+                text += ' Wish number is the same as the wish index in game, so wish 1 is "I wish that wishes weren\'t so slow :c", etc.';
                 let wish = new Wish(this.props.wishstats);
+                const mincap = wish.min_cap();
                 return (<div className='center'>
                         <form onSubmit={this.handleSubmit}>
                                 {text}
@@ -47,14 +50,14 @@ class Wishes extends Component {
                                                                 <input style={{
                                                                                 width: '100px',
                                                                                 margin: '5px'
-                                                                        }} type="text" value={this.props.wishstats[x[0] + 'pow']} onChange={(e) => this.handleChange(e, x[0] + 'pow')}/>
+                                                                }} type="text" value={this.props.wishstats[x[0] + 'pow']} onChange={(e) => this.handleChange(e, x[0] + 'pow')}/>
                                                         </label>
                                                         <label >
                                                                 {' cap'}
                                                                 <input style={{
                                                                                 width: '100px',
                                                                                 margin: '5px'
-                                                                        }} type="text" value={this.props.wishstats[x[0] + 'cap']} onChange={(e) => this.handleChange(e, x[0] + 'cap')}/>
+                                                                }} type="text" value={this.props.wishstats[x[0] + 'cap']} onChange={(e) => this.handleChange(e, x[0] + 'cap')}/>
                                                         </label>
                                                 </div>)
                                         }
@@ -64,7 +67,7 @@ class Wishes extends Component {
                                         <input style={{
                                                         width: '40px',
                                                         margin: '5px'
-                                                }} type="text" value={this.props.wishstats.wishspeed} onChange={(e) => this.handleChange(e, 'wishspeed')} autoFocus={true} onFocus={this.handleFocus}/>
+                                        }} type="text" value={this.props.wishstats.wishspeed} onChange={(e) => this.handleChange(e, 'wishspeed')} autoFocus={true} onFocus={this.handleFocus}/>
                                 </label>
                                 <br/>
                                 <label>
@@ -72,7 +75,7 @@ class Wishes extends Component {
                                         <input style={{
                                                         width: '40px',
                                                         margin: '5px'
-                                                }} type="text" value={this.props.wishstats.wishcap} onChange={(e) => this.handleChange(e, 'wishcap')} autoFocus={true} onFocus={this.handleFocus}/> {' minutes'}
+                                        }} type="text" value={this.props.wishstats.wishcap} onChange={(e) => this.handleChange(e, 'wishcap')} autoFocus={true} onFocus={this.handleFocus}/> {' minutes'}
                                 </label>
                                 <br/>
                                 <label>
@@ -80,19 +83,23 @@ class Wishes extends Component {
                                         <input style={{
                                                         width: '40px',
                                                         margin: '5px'
-                                                }} type="text" value={this.props.wishstats.wishidx} onChange={(e) => this.handleChange(e, 'wishidx')} autoFocus={true} onFocus={this.handleFocus}/>
+                                        }} type="text" value={this.props.wishstats.wishidx} onChange={(e) => this.handleChange(e, 'wishidx')} autoFocus={true} onFocus={this.handleFocus}/>
                                 </label>
                                 <label>
                                         {' to level '}
                                         <input style={{
                                                         width: '20px',
                                                         margin: '5px'
-                                                }} type="text" value={this.props.wishstats.goal} onChange={(e) => this.handleChange(e, 'goal')} autoFocus={true} onFocus={this.handleFocus}/>
+                                        }} type="text" value={this.props.wishstats.goal} onChange={(e) => this.handleChange(e, 'goal')} autoFocus={true} onFocus={this.handleFocus}/>
                                 </label>
-                                <br/> {'requires: ' + wish.min_cap()}
+                                <br/> {'Requires: ' + mincap[0]}
+                                <br/> {
+                                        mincap[1].length > 0
+                                                ? 'Fastest possible final level in ' + mincap[1]
+                                                : ''
+                                }
                         </form>
-                </div>);
-
+                </div >);
         };
 }
 

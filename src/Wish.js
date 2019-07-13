@@ -7,11 +7,11 @@ export class Wish {
 
         min_cap() {
                 if (this.wishstats.wishidx >= WISHCOST.length) {
-                        return 'Unknown value!';
+                        return ['Unknown value!', ''];
                 }
                 const cost = WISHCOST[this.wishstats.wishidx] * this.wishstats.goal;
                 if (cost === 0) {
-                        return 'Unknown value!';
+                        return ['Unknown value!', ''];
                 }
                 const wishcap = this.wishstats.wishcap/* minutes */ * 60 * 50;
                 const powproduct = (this.wishstats.epow * this.wishstats.mpow * this.wishstats.rpow) ** .17;
@@ -34,7 +34,29 @@ export class Wish {
                                 ? val
                                 : 1;
                 });
-                return vals[0] + ' E; ' + vals[1] + ' M; ' + vals[2] + ' R3';
+                const maxcapproduct = this.wishstats.ecap * this.wishstats.mcap * this.wishstats.rcap;
+                const minticks = factor < this.wishstats.rcap
+                        ? wishcap
+                        : capreq * wishcap / maxcapproduct ** .17;
+                let minmins = Math.ceil(minticks / 50 / 60);
+                let result = [
+                        vals[0] + ' E; ' + vals[1] + ' M; ' + vals[2] + ' R3',
+                        ''
+                ];
+                if (factor >= this.wishstats.rcap) {
+                        let days = Math.floor(minmins / 60 / 24);
+                        minmins -= days * 24 * 60;
+                        let hours = Math.floor(minmins / 60);
+                        minmins -= hours * 60;
+                        if (days > 0) {
+                                result[1] += days + 'd ';
+                        }
+                        if (days > 0 || hours > 0) {
+                                result[1] += hours + 'h ';
+                        }
+                        result[1] += minmins + 'm.';
+                }
+                return result;
         }
 
         optimize() {
