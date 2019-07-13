@@ -11,6 +11,7 @@ import {
 } from '../assets/ItemAux'
 
 import {AUGMENT, AUGMENT_SETTINGS} from '../actions/Augment';
+import {WISH, WISH_SETTINGS} from '../actions/Wish';
 import {CREMENT} from '../actions/Crement'
 import {DISABLE_ITEM} from '../actions/DisableItem';
 import {TOGGLE_EDIT} from '../actions/ToggleEdit';
@@ -105,6 +106,18 @@ const INITIAL_STATE = {
                 time: 1440,
                 vals: []
         },
+        wishstats: {
+                epow: 1,
+                ecap: 1,
+                mpow: 1,
+                mcap: 1,
+                rpow: 1,
+                rcap: 1,
+                wishspeed: 1,
+                wishcap: 4 * 60,
+                wishidx: 1,
+                goal: 1
+        },
         version: '1.1.0'
 };
 
@@ -142,6 +155,32 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 ...state.augment,
                                                 lsc: lsc,
                                                 time: time
+                                        }
+                                };
+                        }
+
+                case WISH:
+                        {
+                                if (!state.running) {
+                                        return state;
+                                }
+                                console.log('worker finished')
+                                return {
+                                        ...state,
+                                        augment: {
+                                                ...state.augment,
+                                                vals: action.payload.vals
+                                        },
+                                        running: false
+                                };
+                        }
+
+                case WISH_SETTINGS:
+                        {
+                                return {
+                                        ...state,
+                                        wishstats: {
+                                                ...action.payload.wishstats
                                         }
                                 };
                         }
@@ -578,7 +617,8 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         looty: localStorageState.looty,
                                         pendant: localStorageState.pendant,
                                         hidden: localStorageState.hidden,
-                                        augment: localStorageState.augment
+                                        augment: localStorageState.augment,
+                                        wishstats: localStorageState.wishstats
                                 };
                         }
 

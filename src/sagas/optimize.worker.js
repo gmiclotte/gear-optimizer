@@ -2,6 +2,7 @@ import {Slot} from '../assets/ItemAux'
 import {Optimizer} from '../Optimizer'
 import {old2newequip} from '../util'
 import {Augment} from '../Augment'
+import {Wish} from '../Wish'
 
 // eslint-disable-next-line
 self.addEventListener("message", choose);
@@ -10,6 +11,8 @@ function choose(e) {
         if (e.data.command === 'optimize') {
                 optimize.call(this, e);
         } else if (e.data.command === 'augment') {
+                augment.call(this, e);
+        } else if (e.data.command === 'wishes') {
                 augment.call(this, e);
         } else {
                 console.log('Error: invalid web worker command: ' + e.data.command + '.')
@@ -39,6 +42,17 @@ function augment(e) {
         const state = e.data.state;
         const augment = new Augment(state.augment.lsc, state.augment.time);
         let vals = augment.optimize();
+        this.postMessage({vals: vals});
+        console.log(Math.floor((Date.now() - start_time) / 10) / 100 + ' seconds');
+        this.close();
+}
+
+function wish(e) {
+        const base = [1]
+        const start_time = Date.now();
+        const state = e.data.state;
+        const wish = new Wish(state.wishstats);
+        let vals = wish.optimize();
         this.postMessage({vals: vals});
         console.log(Math.floor((Date.now() - start_time) / 10) / 100 + ' seconds');
         this.close();
