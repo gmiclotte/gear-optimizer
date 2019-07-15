@@ -32,7 +32,7 @@ class Wishes extends Component {
                 ReactGA.pageview('/wishes/');
                 let text = 'Input some things, then stuff happens. Power is total power, cap is amount you actually want to spend on wishes.';
                 text += ' If you value hacks and wishes equally set R3 cap to 22.45% of your total R3 cap.';
-                text += ' Take the wish speed modifier from the breakdown menu.';
+                text += ' Take the wish speed modifier from the breakdown menu and write it as a decimal, i.e. "100%" becomes "1.00".';
                 text += ' Minimal wish time, is the time you want the final level to take.';
                 text += ' Wish number is the same as the wish index in game, so wish 1 is "I wish that wishes weren\'t so slow :c", etc.';
                 let wish = new Wish(this.props.wishstats);
