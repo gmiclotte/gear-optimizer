@@ -7,11 +7,11 @@ export class Wish {
 
         min_cap() {
                 if (this.wishstats.wishidx >= WISHCOST.length) {
-                        return ['Unknown value!', ''];
+                        return ['Wish ' + this.wishstats.wishidx + ' doesn\'t exist yet.'];
                 }
                 const cost = WISHCOST[this.wishstats.wishidx] * this.wishstats.goal;
                 if (cost === 0) {
-                        return ['Unknown value!', ''];
+                        return ['Base cost for wish ' + this.wishstats.wishidx + ' is not known yet.'];
                 }
                 const wishcap = this.wishstats.wishcap/* minutes */ * 60 * 50;
                 const powproduct = (this.wishstats.epow * this.wishstats.mpow * this.wishstats.rpow) ** .17;

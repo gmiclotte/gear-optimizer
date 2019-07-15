@@ -50,14 +50,14 @@ class Wishes extends Component {
                                                                 <input style={{
                                                                                 width: '100px',
                                                                                 margin: '5px'
-                                                                }} type="text" value={this.props.wishstats[x[0] + 'pow']} onChange={(e) => this.handleChange(e, x[0] + 'pow')}/>
+                                                                        }} type="text" value={this.props.wishstats[x[0] + 'pow']} onChange={(e) => this.handleChange(e, x[0] + 'pow')}/>
                                                         </label>
                                                         <label >
                                                                 {' cap'}
                                                                 <input style={{
                                                                                 width: '100px',
                                                                                 margin: '5px'
-                                                                }} type="text" value={this.props.wishstats[x[0] + 'cap']} onChange={(e) => this.handleChange(e, x[0] + 'cap')}/>
+                                                                        }} type="text" value={this.props.wishstats[x[0] + 'cap']} onChange={(e) => this.handleChange(e, x[0] + 'cap')}/>
                                                         </label>
                                                 </div>)
                                         }
@@ -67,7 +67,7 @@ class Wishes extends Component {
                                         <input style={{
                                                         width: '40px',
                                                         margin: '5px'
-                                        }} type="text" value={this.props.wishstats.wishspeed} onChange={(e) => this.handleChange(e, 'wishspeed')} autoFocus={true} onFocus={this.handleFocus}/>
+                                                }} type="text" value={this.props.wishstats.wishspeed} onChange={(e) => this.handleChange(e, 'wishspeed')} autoFocus={true} onFocus={this.handleFocus}/>
                                 </label>
                                 <br/>
                                 <label>
@@ -75,7 +75,7 @@ class Wishes extends Component {
                                         <input style={{
                                                         width: '40px',
                                                         margin: '5px'
-                                        }} type="text" value={this.props.wishstats.wishcap} onChange={(e) => this.handleChange(e, 'wishcap')} autoFocus={true} onFocus={this.handleFocus}/> {' minutes'}
+                                                }} type="text" value={this.props.wishstats.wishcap} onChange={(e) => this.handleChange(e, 'wishcap')} autoFocus={true} onFocus={this.handleFocus}/> {' minutes'}
                                 </label>
                                 <br/>
                                 <label>
@@ -83,19 +83,23 @@ class Wishes extends Component {
                                         <input style={{
                                                         width: '40px',
                                                         margin: '5px'
-                                        }} type="text" value={this.props.wishstats.wishidx} onChange={(e) => this.handleChange(e, 'wishidx')} autoFocus={true} onFocus={this.handleFocus}/>
+                                                }} type="text" value={this.props.wishstats.wishidx} onChange={(e) => this.handleChange(e, 'wishidx')} autoFocus={true} onFocus={this.handleFocus}/>
                                 </label>
                                 <label>
                                         {' to level '}
                                         <input style={{
                                                         width: '20px',
                                                         margin: '5px'
-                                        }} type="text" value={this.props.wishstats.goal} onChange={(e) => this.handleChange(e, 'goal')} autoFocus={true} onFocus={this.handleFocus}/>
+                                                }} type="text" value={this.props.wishstats.goal} onChange={(e) => this.handleChange(e, 'goal')} autoFocus={true} onFocus={this.handleFocus}/>
                                 </label>
-                                <br/> {'Requires: ' + mincap[0]}
                                 <br/> {
-                                        mincap[1].length > 0
-                                                ? 'Fastest possible final level in ' + mincap[1]
+                                        mincap.length > 1
+                                                ? 'Requires: ' + mincap[0]
+                                                : mincap[0]
+                                }
+                                <br/> {
+                                        mincap.length > 1 && mincap[1].length > 0
+                                                ? 'Fastest possible is ' + mincap[1]
                                                 : ''
                                 }
                         </form>
