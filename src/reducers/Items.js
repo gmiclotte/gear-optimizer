@@ -115,7 +115,7 @@ const INITIAL_STATE = {
                 rcap: 1,
                 wishspeed: 1,
                 wishcap: 4 * 60,
-                wishidx: 1,
+                wishidx: 0,
                 goal: 1
         },
         version: '1.1.0'
