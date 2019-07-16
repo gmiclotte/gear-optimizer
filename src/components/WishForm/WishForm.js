@@ -27,7 +27,6 @@ export default class WishForm extends React.Component {
                         /* eslint-disable-next-line react/no-direct-mutation-state */
                         this.state.value = this.props.wishstats.wishidx;
                 }
-                const accslots = this.props.equip.accessory.length;
                 return (<label key={this.props.factors[this.props.idx]}>
                         <select value={this.state.value} onChange={this.handleChange}>
                                 {Object.getOwnPropertyNames(Wishes).map((wish) => (<option value={wish} key={wish}>{'Wish ' + wish + ': ' + Wishes[wish][0]}</option>))}
