@@ -1,4 +1,4 @@
-import {WISHCOST} from './assets/ItemAux'
+import {Wishes} from './assets/ItemAux'
 
 export class Wish {
         constructor(wishstats) {
@@ -6,10 +6,10 @@ export class Wish {
         }
 
         min_cap() {
-                if (this.wishstats.wishidx >= WISHCOST.length) {
+                if (this.wishstats.wishidx >= Wishes.length) {
                         return ['Wish ' + this.wishstats.wishidx + ' doesn\'t exist yet.'];
                 }
-                const cost = WISHCOST[this.wishstats.wishidx] * this.wishstats.goal;
+                const cost = Wishes[this.wishstats.wishidx][1] * this.wishstats.goal;
                 if (cost === 0) {
                         return ['Base cost for wish ' + this.wishstats.wishidx + ' is not known yet.'];
                 }

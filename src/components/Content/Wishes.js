@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import ReactGA from 'react-ga';
 import {Wish} from '../../Wish';
+import {Wishes} from '../../assets/ItemAux'
+import WishForm from '../WishForm/WishForm'
 
-class Wishes extends Component {
+class WishComponent extends Component {
         constructor(props) {
                 super(props);
                 this.handleChange = this.handleChange.bind(this);
@@ -50,14 +52,14 @@ class Wishes extends Component {
                                                                 <input style={{
                                                                                 width: '100px',
                                                                                 margin: '5px'
-                                                                        }} type="text" value={this.props.wishstats[x[0] + 'pow']} onChange={(e) => this.handleChange(e, x[0] + 'pow')}/>
+                                                                }} type="text" value={this.props.wishstats[x[0] + 'pow']} onChange={(e) => this.handleChange(e, x[0] + 'pow')}/>
                                                         </label>
                                                         <label >
                                                                 {' cap'}
                                                                 <input style={{
                                                                                 width: '100px',
                                                                                 margin: '5px'
-                                                                        }} type="text" value={this.props.wishstats[x[0] + 'cap']} onChange={(e) => this.handleChange(e, x[0] + 'cap')}/>
+                                                                }} type="text" value={this.props.wishstats[x[0] + 'cap']} onChange={(e) => this.handleChange(e, x[0] + 'cap')}/>
                                                         </label>
                                                 </div>)
                                         }
@@ -67,7 +69,7 @@ class Wishes extends Component {
                                         <input style={{
                                                         width: '40px',
                                                         margin: '5px'
-                                                }} type="text" value={this.props.wishstats.wishspeed} onChange={(e) => this.handleChange(e, 'wishspeed')} autoFocus={true} onFocus={this.handleFocus}/>
+                                        }} type="text" value={this.props.wishstats.wishspeed} onChange={(e) => this.handleChange(e, 'wishspeed')} autoFocus={true} onFocus={this.handleFocus}/>
                                 </label>
                                 <br/>
                                 <label>
@@ -75,22 +77,15 @@ class Wishes extends Component {
                                         <input style={{
                                                         width: '40px',
                                                         margin: '5px'
-                                                }} type="text" value={this.props.wishstats.wishcap} onChange={(e) => this.handleChange(e, 'wishcap')} autoFocus={true} onFocus={this.handleFocus}/> {' minutes'}
+                                        }} type="text" value={this.props.wishstats.wishcap} onChange={(e) => this.handleChange(e, 'wishcap')} autoFocus={true} onFocus={this.handleFocus}/> {' minutes'}
                                 </label>
-                                <br/>
-                                <label>
-                                        {'Wish:'}
-                                        <input style={{
-                                                        width: '40px',
-                                                        margin: '5px'
-                                                }} type="text" value={this.props.wishstats.wishidx} onChange={(e) => this.handleChange(e, 'wishidx')} autoFocus={true} onFocus={this.handleFocus}/>
-                                </label>
+                                <br/> {[Wishes.keys()].map((idx) => (<div key={'factorform' + idx}><WishForm {...this.props} handleChange={this.handleChange} idx={idx}/></div>))}
                                 <label>
                                         {' to level '}
                                         <input style={{
                                                         width: '20px',
                                                         margin: '5px'
-                                                }} type="text" value={this.props.wishstats.goal} onChange={(e) => this.handleChange(e, 'goal')} autoFocus={true} onFocus={this.handleFocus}/>
+                                        }} type="text" value={this.props.wishstats.goal} onChange={(e) => this.handleChange(e, 'goal')} autoFocus={true} onFocus={this.handleFocus}/>
                                 </label>
                                 <br/> {
                                         mincap.length > 1
@@ -107,4 +102,4 @@ class Wishes extends Component {
         };
 }
 
-export default Wishes;
+export default WishComponent;
