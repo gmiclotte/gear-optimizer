@@ -6,7 +6,7 @@ export default class WishForm extends React.Component {
         constructor(props) {
                 super(props);
                 this.state = {
-                        value: this.props.wishstats.wishidx
+                        value: this.props.wishidx
                 };
                 this.handleChange = this.handleChange.bind(this);
                 this.handleSubmit = this.handleSubmit.bind(this);
@@ -14,7 +14,7 @@ export default class WishForm extends React.Component {
 
         handleChange(event) {
                 this.setState({value: event.target.value});
-                this.props.handleChange(event, 'wishidx');
+                this.props.handleChange(event, 'wishidx', this.props.idx);
         }
 
         handleSubmit(event) {
@@ -23,9 +23,9 @@ export default class WishForm extends React.Component {
 
         render() {
                 //HACK: this sets the dropdown to the correct value after loading
-                if (this.state.value !== this.props.wishstats.wishidx) {
+                if (this.state.value !== this.props.wishidx) {
                         /* eslint-disable-next-line react/no-direct-mutation-state */
-                        this.state.value = this.props.wishstats.wishidx;
+                        this.state.value = this.props.wishidx;
                 }
                 return (<label key={this.props.idx}>
                         {'Wish '}

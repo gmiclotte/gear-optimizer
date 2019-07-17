@@ -118,7 +118,22 @@ const INITIAL_STATE = {
                 wishtime: 4 * 60,
                 wishidx: 0,
                 start: 0,
-                goal: 1
+                goal: 1,
+                wishes: [
+                        {
+                                wishidx: 0,
+                                goal: 1
+                        }, {
+                                wishidx: 1,
+                                goal: 1
+                        }, {
+                                wishidx: 2,
+                                goal: 1
+                        }, {
+                                wishidx: 3,
+                                goal: 1
+                        }
+                ]
         },
         version: '1.1.0'
 };
@@ -194,6 +209,24 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                 }
                                 if (action.payload.val > 0 && action.payload.max === state[action.payload.name]) {
                                         return state;
+                                }
+                                if (action.payload.name === 'wishslots') {
+                                        let wishes = [...state.wishstats.wishes];
+                                        if (action.payload.val === -1) {
+                                                if (wishes.length === 1) {
+                                                        return state;
+                                                }
+                                                wishes.pop();
+                                        } else if (action.payload.val === 1) {
+                                                wishes.push({wishidx: 0, goal: 1});
+                                        }
+                                        return {
+                                                ...state,
+                                                wishstats: {
+                                                        ...state.wishstats,
+                                                        wishes: wishes
+                                                }
+                                        };
                                 }
                                 if (action.payload.name === 'accslots') {
                                         let accessory;
@@ -601,7 +634,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                 });
                                 if (localStorageState.version === '1.1.0') {
                                         // update to 1.2.0
-                                        console.log('Updating local storage to v' + state.version + ' state.');
+                                        console.log('Updating local storage for wishes, some wish data might be erased.');
                                         Object.getOwnPropertyNames(state.wishstats).forEach(name => {
                                                 if (localStorageState.wishstats[name] === undefined) {
                                                         localStorageState.wishstats[name] = state.wishstats[name];
@@ -614,7 +647,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                         delete localStorageState.wishstats[name];
                                                 }
                                         });
-                                        console.log(localStorageState.wishstats);
+                                        console.log('Wish data:', localStorageState.wishstats);
                                 }
                                 const tmp_factors = Object.getOwnPropertyNames(Factors);
                                 localStorageState.factors = localStorageState.factors.map(name => {

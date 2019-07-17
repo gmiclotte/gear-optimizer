@@ -5,14 +5,25 @@ export class Wish {
                 this.wishstats = wishstats;
         }
 
+        to_time(ticks) {
+                let result = '';
+                let mins = Math.floor(ticks / 50 / 60);
+                let days = Math.floor(mins / 60 / 24);
+                mins -= days * 24 * 60;
+                let hours = Math.floor(mins / 60);
+                mins -= hours * 60;
+                if (days > 0) {
+                        result += days + 'd ';
+                }
+                if (days > 0 || hours > 0) {
+                        result += hours + 'h ';
+                }
+                result += mins + 'm';
+                return result;
+        }
+
         min_cap() {
-                if (this.wishstats.wishidx >= Wishes.length) {
-                        return ['Wish ' + this.wishstats.wishidx + ' doesn\'t exist yet.'];
-                }
                 const cost = Wishes[this.wishstats.wishidx][1] * this.wishstats.goal;
-                if (cost === 0) {
-                        return ['Base cost for wish ' + this.wishstats.wishidx + ' is not known yet.'];
-                }
                 const wishcap = this.wishstats.wishcap/* minutes */ * 60 * 50;
                 const powproduct = (this.wishstats.epow * this.wishstats.mpow * this.wishstats.rpow) ** .17;
                 const capreq = cost / wishcap / this.wishstats.wishspeed / powproduct;
@@ -38,29 +49,105 @@ export class Wish {
                 const minticks = factor < this.wishstats.rcap
                         ? wishcap
                         : capreq * wishcap / maxcapproduct ** .17;
-                let minmins = Math.ceil(minticks / 50 / 60);
                 let result = [
                         vals[0] + ' E; ' + vals[1] + ' M; ' + vals[2] + ' R3',
                         ''
                 ];
                 if (factor >= this.wishstats.rcap) {
-                        let days = Math.floor(minmins / 60 / 24);
-                        minmins -= days * 24 * 60;
-                        let hours = Math.floor(minmins / 60);
-                        minmins -= hours * 60;
-                        if (days > 0) {
-                                result[1] += days + 'd ';
-                        }
-                        if (days > 0 || hours > 0) {
-                                result[1] += hours + 'h ';
-                        }
-                        result[1] += minmins + 'm.';
+                        result[1] = this.to_time(minticks);
                 }
                 return result;
         }
 
+        base(res) {
+                let assignment = res.map(x => Math.max(100, Math.floor(x / 1e3)));
+                return assignment;
+        }
+
+        update_res(r, A) {
+                return r.map((ri, i) => r[i] - A.reduce((res, a) => a[i] + res, 0));
+        }
+
+        score(cost, wishcap, res, x = -0.17) {
+                let result = cost;
+                for (let i = 0; i < res.length; i++) {
+                        result *= res[i] ** x;
+                }
+                return Math.max(wishcap, result)
+        }
+
         optimize() {
-                let vals = [];
-                return vals;
+                const resource_priority = [1, 0, 2];
+                const costs = this.wishstats.wishes.map(wish => Wishes[wish.wishidx][1] * wish.goal);
+                const wishcap = this.wishstats.wishcap/* minutes */ * 60 * 50;
+                const powproduct = (this.wishstats.epow * this.wishstats.mpow * this.wishstats.rpow) ** .17;
+                const capproduct = (this.wishstats.ecap * this.wishstats.mcap * this.wishstats.rcap) ** .17;
+                const capreqs = costs.map(cost => cost / this.wishstats.wishspeed / powproduct).sort((a, b) => a - b);
+                const totres = [
+                        Number(this.wishstats.ecap),
+                        Number(this.wishstats.mcap),
+                        Number(this.wishstats.rcap)
+                ];
+                let res = [...totres];
+                let coef = capreqs;
+                const exponent = 0.17;
+
+                let assignments = coef.map((_, i) => this.base(res));
+                res = this.update_res(totres, assignments);
+                const l = coef.length;
+                let scores = coef.map((_, i) => this.score(coef[i], wishcap, assignments[i]));
+                if (powproduct === 1 && capproduct === 1) {
+                        // quit early
+                        return [
+                                this.to_time(Math.max(...scores)),
+                                assignments.map(a => a[0].toExponential(2) + ' E; ' + a[1].toExponential(2) + ' M; ' + a[2].toExponential(2) + ' R3'),
+                                res[0].toExponential(2) + ' E; ' + res[1].toExponential(2) + ' M; ' + res[2].toExponential(2) + ' R3'
+                        ];
+                }
+                resource_priority.forEach((i) => {
+                        for (let j = l - 1; j >= 0; j--) {
+                                if (res[i] < l) {
+                                        break;
+                                }
+                                if (scores[l - 1] === wishcap) {
+                                        break;
+                                }
+                                const ref_score = j === 0
+                                        ? wishcap
+                                        : scores[j - 1]
+                                if (scores[l - 1] === ref_score) {
+                                        continue;
+                                }
+                                const ratio = scores[l - 1] / ref_score;
+                                let factor = ratio ** (1 / exponent);
+                                let s = 0;
+                                for (let k = j; k < l; k++) {
+                                        s += assignments[k][i];
+                                }
+                                factor = Math.min(factor, res[i] / s + 1)
+                                let required = assignments.map(a => a[i] * factor);
+                                /* eslint-disable-next-line no-loop-func */
+                                required = assignments.map((a, k) => Math.min(required[k] - a[i], res[i]));
+                                for (let k = j; k < l; k++) {
+                                        assignments[k][i] += Math.floor(required[k] + 1);
+                                }
+                                res = this.update_res(totres, assignments)
+                                scores = assignments.map((a, k) => this.score(coef[k], wishcap, a));
+                        }
+                });
+                scores = assignments.map((a, k) => this.score(coef[k], wishcap, a));
+                //unsort the assigned values
+                const idxs = coef.map((_, i) => i).sort((a, b) => costs[a] - costs[b]);
+                let tmp = Array(l);
+                for (let i = 0; i < l; i++) {
+                        tmp[idxs[i]] = assignments[i];
+                }
+                res = res.map(x => Math.max(0, x));
+                //console.log(scores.map(x => this.to_time(x)));
+                return [
+                        this.to_time(Math.max(...scores)),
+                        tmp.map(a => a[0].toExponential(2) + ' E; ' + a[1].toExponential(2) + ' M; ' + a[2].toExponential(2) + ' R3'),
+                        res[0].toExponential(2) + ' E; ' + res[1].toExponential(2) + ' M; ' + res[2].toExponential(2) + ' R3'
+                ];
         }
 }

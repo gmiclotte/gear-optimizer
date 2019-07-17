@@ -60,6 +60,7 @@ const mapStateToProps = state => ({
         hidden: state.optimizer.hidden,
         augment: state.optimizer.augment,
         wishstats: state.optimizer.wishstats,
+        wishes: state.optimizer.wishes,
         version: state.optimizer.version
 });
 
