@@ -115,7 +115,9 @@ const INITIAL_STATE = {
                 rcap: 1,
                 wishspeed: 1,
                 wishcap: 4 * 60,
+                wishtime: 4 * 60,
                 wishidx: 0,
+                start: 0,
                 goal: 1
         },
         version: '1.1.0'
@@ -572,7 +574,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         return state;
                                 }
                                 // TODO: Validate local storage state.
-                                if (localStorageState.version !== state.version) {
+                                if (localStorageState.version === '1.0.0') {
                                         console.log('Saved local storage is v' + localStorageState.version + ', incompatible with current version. Loading fresh v' + state.version + ' state.');
                                         return state;
                                 }
@@ -589,11 +591,31 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         update_level(item, saveditem.level);
                                 }
                                 Object.getOwnPropertyNames(state).forEach(name => {
+                                        if (name === 'version') {
+                                                return;
+                                        }
                                         if (localStorageState[name] === undefined) {
                                                 localStorageState[name] = state[name];
                                                 console.log('Keeping default ' + name + ': ' + state[name]);
                                         }
                                 });
+                                if (localStorageState.version === '1.1.0') {
+                                        // update to 1.2.0
+                                        console.log('Updating local storage to v' + state.version + ' state.');
+                                        Object.getOwnPropertyNames(state.wishstats).forEach(name => {
+                                                if (localStorageState.wishstats[name] === undefined) {
+                                                        localStorageState.wishstats[name] = state.wishstats[name];
+                                                        console.log('Keeping default wishstats ' + name + ': ' + state.wishstats[name]);
+                                                }
+                                        });
+                                        Object.getOwnPropertyNames(localStorageState.wishstats).forEach(name => {
+                                                if (state.wishstats[name] === undefined) {
+                                                        console.log('Removing saved wishstats ' + name + ': ' + localStorageState.wishstats[name]);
+                                                        delete localStorageState.wishstats[name];
+                                                }
+                                        });
+                                        console.log(localStorageState.wishstats);
+                                }
                                 const tmp_factors = Object.getOwnPropertyNames(Factors);
                                 localStorageState.factors = localStorageState.factors.map(name => {
                                         if (!tmp_factors.includes(name)) {

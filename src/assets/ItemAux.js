@@ -509,231 +509,231 @@ export const SetName = {
 export const Wishes = [
         //page 1
         [
-                'I wish that wishes kicked ass', 1e15, 1
+                'Kick-ass', 1e15, 1
         ],
         [
-                'I wish that wishes weren\'t so slow :c', 1e15, 10
+                'Wish Speed I', 1e15, 10
         ],
         [
-                'I wish MacGuffin drops mattered', 2e15, 5
+                'MacGuffin Drops', 2e15, 5
         ],
         [
-                'I wish V2/3/4 Titans had better rewards', 8e15, 3
+                'V2/3/4 Titan Rewards', 8e15, 3
         ],
         [
-                'I wish money pit didn\'t suck', 6e15, 1
+                'Money Pit Sucks', 6e15, 1
         ],
         [
-                'I wish I could beat up more bosses I', 3e15, 10
+                'Stats I', 3e15, 10
         ],
         [
-                'I wish I was stronger in Adventure mode I', 3e15, 10
+                'Adventure Stats I', 3e15, 10
         ],
         [
-                'I wish I had more Inventory space I', 4e15, 12
+                'Inventory Space I', 4e15, 12
         ],
         [
-                'I wish I had a cool new move for Adventure I', 6e15, 1
+                'Mega Buff', 6e15, 1
         ],
         [
-                'I wish I had more Energy Power I', 5e15, 10
+                'Energy Power I', 5e15, 10
         ],
         [
-                'I wish I had more Energy Cap I', 5e15, 10
+                'Energy Cap I', 5e15, 10
         ],
         [
-                'I wish I had more Energy Bars I', 5e15, 10
+                'Energy Bars I', 5e15, 10
         ],
         [
-                'I wish I had more Magic Power I', 5e15, 10
+                'Magic Power I', 5e15, 10
         ],
         [
-                'I wish I had more Magic Cap I', 5e15, 10
+                'Magic Cap I', 5e15, 10
         ],
         [
-                'I wish I had more Magic Bars I', 5e15, 10
+                'Magic Bars I', 5e15, 10
         ],
         [
-                'I wish I had more Resource 3 Power I', 5e15, 10
+                'Resource 3 Power I', 5e15, 10
         ],
         [
-                'I wish I had more Resource 3 Cap I', 5e15, 10
+                'Resource 3 Cap I', 5e15, 10
         ],
         [
-                'I wish I had more Resource 3 Bars I', 5e15, 10
+                'Resource 3 Bars I', 5e15, 10
         ],
         [
-                'I wish the Greasy Nerd took a shower', 1e16, 10
+                'Hack Speed I', 1e16, 10
         ],
         [
-                'I wish Active Quests were more Rewarding I', 2e16, 10
+                'Active Quest Reward I', 2e16, 10
         ],
         [
-                'I wish I didn\'t have to wait 3 minutes per rebirth', 3e16, 6
+                'Minimal Rebirth Time', 3e16, 6
         ],
         //page 2
         [
-                'I wish Wishes weren\'t so slow :c II', 5e16, 10
+                'Wish Speed II', 5e16, 10
         ],
         [
-                'I wish I had more Inventory space II', 8e16, 12
+                'Inventory space II', 8e16, 12
         ],
         [
-                'I wish Basic Training was EVEN FASTER >:)', 1e17, 1
+                'Faster Basic Training', 1e17, 1
         ],
         [
-                'I wish Blood MacGuffin α wasn\'t so random', 6e16, 1
+                'Blood MacGuffin α Target', 6e16, 1
         ],
         [
-                'I wish Fruit of MacGuffin α wasn\'t so random', 6e16, 1
+                'Fruit of MacGuffin α Target', 6e16, 1
         ],
         [
-                'I wish I were an Oscar Meyer Weiner', 1e18, 1
+                'Oscar Meyer Weiner', 1e18, 1
         ],
         [
-                'I wish the Daycare Kitty was even happier', 5e16, 10
+                'Daycare Kitty Happiness', 5e16, 10
         ],
         [
-                'I wish I could dual wield weapons', 3e17, 10
+                'Dual Wield I', 3e17, 10
         ],
         [
-                'I wish I was stronger in Adventure mode II', 2e17, 10
+                'Adventure Stats II', 2e17, 10
         ],
         [
-                'I wish I could beat up more bosses II', 2e17, 10
+                'Stats II', 2e17, 10
         ],
         [
-                'I wish I had more Energy Power II', 1e17, 10
+                'Energy Power II', 1e17, 10
         ],
         [
-                'I wish I had more Energy Cap II', 1e17, 10
+                'Energy Cap II', 1e17, 10
         ],
         [
-                'I wish I had more Energy Bars II', 1e17, 10
+                'Energy Bars II', 1e17, 10
         ],
         [
-                'I wish I had more Magic Power II', 1e17, 10
+                'Magic Power II', 1e17, 10
         ],
         [
-                'I wish I had more Magic Cap II', 1e17, 10
+                'Magic Cap II', 1e17, 10
         ],
         [
-                'I wish I had more Magic Bars II', 1e17, 10
+                'Magic Bars II', 1e17, 10
         ],
         [
-                'I wish I had more Resource 3 Power II', 1e17, 10
+                'Resource 3 Power II', 1e17, 10
         ],
         [
-                'I wish I had more Resource 3 Cap II', 1e17, 10
+                'Resource 3 Cap II', 1e17, 10
         ],
         [
-                'I wish I had more Resource 3 Bars II', 1e17, 10
+                'Resource 3 Bars II', 1e17, 10
         ],
         [
-                'I wish the Godmother would drop QP', 1e19, 1
+                'Godmother QP', 1e19, 1
         ],
         [
-                'I wish the Titan after Godmother would also drop QP', 3e20, 1
+                'Exile QP', 3e20, 1
         ],
         // page 3
         [
-                'I wish the Greasy Nerd took a shower II', 7e17, 10
+                'Hack Speed II', 7e17, 10
         ],
         [
-                'I wish Wishes weren\'t so slow :c III', 2e18, 10
+                'Wish Speed III', 2e18, 10
         ],
         [
-                'I wish there was more cute Daycare Kitty Art', 3e19, 1
+                'Daycare Kitty Art', 3e19, 1
         ],
         [
-                'I wish I could dual wield weapons II', 1e19, 10
+                'Dual Wield II', 1e19, 10
         ],
         [
-                'I wish enemies spawned faster', 6e18, 10
+                'Respawn Rate', 6e18, 10
         ],
         [
-                'I wish Quests gave more QP', 3e18, 10
+                'More QP', 3e18, 10
         ],
         [
-                'I wish I had more Energy Power III', 5e18, 10
+                'Energy Power III', 5e18, 10
         ],
         [
-                'I wish I had more Energy Cap III', 5e18, 10
+                'Energy Cap III', 5e18, 10
         ],
         [
-                'I wish I had more Energy Bars III', 5e18, 10
+                'Energy Bars III', 5e18, 10
         ],
         [
-                'I wish I had more Magic Power III', 5e18, 10
+                'Magic Power III', 5e18, 10
         ],
         [
-                'I wish I had more Magic Cap III', 5e18, 10
+                'Magic Cap III', 5e18, 10
         ],
         [
-                'I wish I had more Magic Bars III', 5e18, 10
+                'Magic Bars III', 5e18, 10
         ],
         [
-                'I wish I had more Resource 3 Power III', 5e18, 10
+                'Resource 3 Power III', 5e18, 10
         ],
         [
-                'I wish I had more Resource 3 Cap III', 5e18, 10
+                'Resource 3 Cap III', 5e18, 10
         ],
         [
-                'I wish I had more Resource 3 Bars III', 5e18, 10
+                'Resource 3 Bars III', 5e18, 10
         ],
         [
-                'I wish I had more Inventory space III', 8e19, 12
+                'Inventory space III', 8e19, 12
         ],
         [
-                'I wish I had another cool new move for adventure', 3e21, 1
+                'Oh Shit', 3e21, 1
         ],
         [
-                'I wish blood MacGuffin α also didn\'t suck', 4e20, 10
+                'Blood MacGuffin α Sucks', 4e20, 10
         ],
         [
-                'I wish Fruit of MacGuffin α also didn\'t suck', 4e20, 10
+                'Fruit of MacGuffin α Sucks', 4e20, 10
         ],
         [
-                'I wish I was more OP', 8e19, 10
+                'Exp Bonus', 8e19, 10
         ],
         [
-                'I wish Active Quests were more Rewarding II', 8e20, 10
+                'Active Quests II', 8e20, 10
         ],
         // page 4
         [
-                'I wish the Greasy Nerd could at least wear some body spray', 5e20, 10
+                'Hack Speed III', 5e20, 10
         ],
         [
-                'I wish I had more Energy Power IV', 3e20, 10
+                'Energy Power IV', 3e20, 10
         ],
         [
-                'I wish I had more Energy Cap IV', 3e20, 10
+                'Energy Cap IV', 3e20, 10
         ],
         [
-                'I wish I had more Energy Bars IV', 3e20, 10
+                'Energy Bars IV', 3e20, 10
         ],
         [
-                'I wish I had more Magic Power IV', 3e20, 10
+                'Magic Power IV', 3e20, 10
         ],
         [
-                'I wish I had more Magic Cap IV', 3e20, 10
+                'Magic Cap IV', 3e20, 10
         ],
         [
-                'I wish I had more Magic Bars IV', 3e20, 10
+                'Magic Bars IV', 3e20, 10
         ],
         [
-                'I wish I had more Resource 3 Power IV', 3e20, 10
+                'Resource 3 Power IV', 3e20, 10
         ],
         [
-                'I wish I had more Resource 3 Cap IV', 3e20, 10
+                'Resource 3 Cap IV', 3e20, 10
         ],
         [
-                'I wish I had more Resource 3 Bars IV', 3e20, 10
+                'Resource 3 Bars IV', 3e20, 10
         ],
         [
-                'I wish the Beast would drop some QP', 2e16, 1
+                'Beast QP', 2e16, 1
         ],
         [
-                'I wish the Greasy Nerd would drop some QP', 5.00E+17, 1
+                'Greasy Nerd QP', 5.00E+17, 1
         ]
 ];
