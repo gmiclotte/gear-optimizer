@@ -49,8 +49,9 @@ class WishComponent extends Component {
 
         goallevel(data) {
                 if (data.goal < 1) {
-                        return 1;
+                        return 0;
                 }
+                data.goal = Number(data.goal)
                 if (data.goal > Wishes[data.wishidx][2]) {
                         return Wishes[data.wishidx][2];
                 }
@@ -176,11 +177,12 @@ class WishComponent extends Component {
                                                         [Wishes.keys()].map(idx => (<div style={{
                                                                         display: 'inline'
                                                                 }} key={'wishform' + pos}><WishForm {...this.props} handleChange={this.handleChange} wishidx={wish.wishidx} idx={pos}/></div>))
-                                                }
-                                                {' Target level:'}<input style={{
+                                                }<label>
+                                                        {' Target level:'}<input style={{
                                                         width: '20px',
                                                         margin: '5px'
                                                 }} type="text" value={this.props.wishstats.wishes[pos].goal} onChange={(e) => this.handleChange(e, 'goal', pos)} autoFocus={true} onFocus={this.handleFocus}/>
+                                                </label>
                                         </div>)
                                 }{
                                         assignments.map((a, idx) => <div key={idx}>

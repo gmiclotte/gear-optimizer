@@ -96,6 +96,7 @@ export class Wish {
                 res = this.update_res(totres, assignments);
                 const l = coef.length;
                 let scores = coef.map((_, i) => this.score(coef[i], wishcap, assignments[i]));
+                res = res.map(x => Math.max(0, x));
                 if (powproduct === 1 && capproduct === 1) {
                         // quit early
                         return [

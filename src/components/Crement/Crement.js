@@ -8,12 +8,11 @@ export default class Crement extends Component {
         };
 
         render() {
-                return (<> < button onClick = {
-                        () => this.props.handleClick(this.props.name, -1, this.props.min, this.props.max)
-                } > - </button>
-        <button onClick={() => this.props.handleClick(this.props.name, 1, this.props.min, this.props.max)}> + </button>
-                        {
-                        ' ' + this.props.header + ': ' + this.props.value + ' '
-                } < />);
+                return (<>
+                        <button type="button" onClick={() => this.props.handleClick(this.props.name, -1, this.props.min, this.props.max)}> - </button>
+                        <button type="button" onClick={() => this.props.handleClick(this.props.name, 1, this.props.min, this.props.max)}> + </button>
+                        {' ' + this.props.header + ': ' + this.props.value + ' '}
+                </>);
         }
 }
+
