@@ -93,7 +93,7 @@ export const ITEMLIST = [
     ]),
     new Item('Groucho Marx Disguise', Slot.HEAD, SetName.BEARDVERSE, 100, [
         [Stat.POWER, 2200],
-        [Stat.TOUGHNESS, 22000],
+        [Stat.TOUGHNESS, 24000],
         [Stat.ENERGY_POWER, 360],
         [Stat.MAGIC_BARS, 480],
         [Stat.MAGIC_CAP, 96],
@@ -112,7 +112,7 @@ export const ITEMLIST = [
         [Stat.MAGIC_POWER, 580],
     ]),
     new Item('Fuzzy Orange Cheeto Slippers', Slot.BOOTS, SetName.BEARDVERSE, 100, [
-        [Stat.POWER, 2200],
+        [Stat.POWER, 2400],
         [Stat.TOUGHNESS, 25000],
         [Stat.ENERGY_BARS, 660],
         [Stat.ENERGY_POWER, 440],
