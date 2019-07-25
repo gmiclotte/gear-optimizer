@@ -24,3 +24,5 @@ yarn-error.log*
 
 *.out
 items/items.ts
+
+_git_commit.js

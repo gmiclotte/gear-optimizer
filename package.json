@@ -19,8 +19,9 @@
     "worker-loader": "^2.0.0"
   },
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
+    "git-info": "echo export default \"{\\\"logMessage\\\": \\\"$(git log -1 --oneline)\\\"}\"  > src/_git_commit.js",
+    "start": "npm run git-info; react-app-rewired start",
+    "build": "npm run git-info; react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
@@ -42,6 +43,7 @@
     ]
   },
   "devDependencies": {
+    "build-number-generator": "0.0.5",
     "react-app-rewired": "^2.1.3"
   }
 }
