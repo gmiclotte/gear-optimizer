@@ -125,15 +125,17 @@ bytes = file.read()
 h = [bytes[idx:idx + 1] for idx in range(len(bytes))]
 
 # get wishes
-idx = 2978248 - 12
-for _ in range(75):
+idx = 2982320 - 12
+count = 79
+for _ in range(count):
     print(f'Wish {_}')
     idx = getWishProperties(h, idx)
     print()
 
 # get hacks
-idx = 4089232 - 8
-for _ in range(14):
+idx = 4096472 - 8
+count = 15
+for _ in range(count):
     print(f'Hack {_}')
     idx = getHackProperties(h, idx)
     print()

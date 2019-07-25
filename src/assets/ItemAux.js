@@ -735,5 +735,17 @@ export const Wishes = [
         ],
         [
                 'Greasy Nerd QP', 5.00E+17, 1
+        ],
+        [
+                'Seek help.', 5.00E+21, 1
+        ],
+        [
+                'QP Hack Milestone I', 2.00E+17, 5
+        ],
+        [
+                'Number Hack Milestone I', 1.00E+19, 5
+        ],
+        [
+                'Hack Hack Milestone I', 6.00E+20, 10
         ]
 ];
