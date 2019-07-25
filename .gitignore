@@ -26,3 +26,6 @@ yarn-error.log*
 items/items.ts
 
 _git_commit.js
+
+.tags*
+licenses.json
