@@ -1,7 +1,7 @@
 {
   "homepage": "https://gmiclotte.github.io/gear-optimizer",
   "name": "gear-optimizer",
-  "version": "0.1.1",
+  "version": "0.1.0",
   "private": true,
   "dependencies": {
     "gh-pages": "^2.0.1",
@@ -20,12 +20,13 @@
   },
   "scripts": {
     "git-info": "echo export default \"{\\\"logMessage\\\": \\\"$(git log -1 --oneline)\\\"}\"  > src/_git_commit.js",
-    "start": "npm run git-info; react-app-rewired start",
-    "build": "npm run git-info; release-it && react-app-rewired build",
+    "start": "npm run release-it; npm run git-info; react-app-rewired start",
+    "build": "npm run release-it; npm run git-info; react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "release-it": "release-it; echo export default \"{$(grep version -m1 package.json)}\"  > src/_version.js"
   },
   "eslintConfig": {
     "extends": "react-app"
