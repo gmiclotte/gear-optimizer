@@ -1435,8 +1435,8 @@ export const ITEMLIST = [
         [Stat.TOUGHNESS, 44000000],
         [Stat.ENERGY_POWER, 122000],
         [Stat.MAGIC_POWER, 122000],
-        [Stat.RES3_POWER, 104],
-        [Stat.RES3_BARS, 124],
+        [Stat.RES3_POWER, 124],
+        [Stat.RES3_BARS, 104],
     ]),
     new Item('Demonic Flurbie Chestplate', Slot.CHEST, SetName.FAD, 100, [
         [Stat.POWER, 1800000],
