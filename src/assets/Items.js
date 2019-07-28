@@ -1621,8 +1621,8 @@ export const ITEMLIST = [
     new Item('The Skip Card', Slot.ACCESSORY, SetName.EXILE3, 100, [
         [Stat.POWER, 240000000],
         [Stat.TOUGHNESS, 240000000],
-        [Stat.ENERGY_POWER, 56000],
-        [Stat.MAGIC_POWER, 56000],
+        [Stat.ENERGY_POWER, 560000],
+        [Stat.MAGIC_POWER, 560000],
         [Stat.RES3_POWER, 520],
         [Stat.NGU_SPEED, 500],
     ]),
