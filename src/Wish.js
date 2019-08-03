@@ -37,7 +37,7 @@ export class Wish {
                 const vals = ratio.map(x => {
                         let val = (x * factor);
                         if (val > 1000) {
-                                val = val.toExponential(2);
+                                val = val.toExponential(3);
                         } else {
                                 val = Math.ceil(val);
                         }
@@ -101,8 +101,8 @@ export class Wish {
                         // quit early
                         return [
                                 this.to_time(Math.max(...scores)),
-                                assignments.map(a => a[0].toExponential(2) + ' E; ' + a[1].toExponential(2) + ' M; ' + a[2].toExponential(2) + ' R3'),
-                                res[0].toExponential(2) + ' E; ' + res[1].toExponential(2) + ' M; ' + res[2].toExponential(2) + ' R3'
+                                assignments.map(a => a[0].toExponential(3) + ' E; ' + a[1].toExponential(3) + ' M; ' + a[2].toExponential(3) + ' R3'),
+                                res[0].toExponential(3) + ' E; ' + res[1].toExponential(3) + ' M; ' + res[2].toExponential(3) + ' R3'
                         ];
                 }
                 resource_priority.forEach((i) => {
@@ -147,8 +147,8 @@ export class Wish {
                 //console.log(scores.map(x => this.to_time(x)));
                 return [
                         this.to_time(Math.max(...scores)),
-                        tmp.map(a => a[0].toExponential(2) + ' E; ' + a[1].toExponential(2) + ' M; ' + a[2].toExponential(2) + ' R3'),
-                        res[0].toExponential(2) + ' E; ' + res[1].toExponential(2) + ' M; ' + res[2].toExponential(2) + ' R3'
+                        tmp.map(a => a[0].toExponential(3) + ' E; ' + a[1].toExponential(3) + ' M; ' + a[2].toExponential(3) + ' R3'),
+                        res[0].toExponential(3) + ' E; ' + res[1].toExponential(3) + ' M; ' + res[2].toExponential(3) + ' R3'
                 ];
         }
 }

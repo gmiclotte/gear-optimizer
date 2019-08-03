@@ -177,7 +177,6 @@ export class Augment {
                 for (let tmp = 5; idx >= tmp; tmp++) {
                         ka *= 100;
                 }
-                console.log(idx, ka);
                 const ku = 1
                 const y = this.eu / this.ea(idx)
                 let a = Math.floor(this.get_level(idx, c, false))
