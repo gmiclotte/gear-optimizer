@@ -121,32 +121,10 @@ class WishComponent extends Component {
                                                         margin: '5px'
                                                 }} type="text" value={this.props.wishstats.wishcap} onChange={(e) => this.handleChange(e, 'wishcap')} autoFocus={true} onFocus={this.handleFocus}/> {' minutes'}
                                 </label>
-                                <br/>
-                                <br/>
-                                <br/> {[Wishes.keys()].map((idx) => (<div key={'wishform' + idx}><WishForm {...this.props} handleChange={this.handleChange} wishidx={this.props.wishstats.wishidx} idx={-1}/></div>))}
-                                <label>
-                                        {'Target level:'}
-                                        <input style={{
-                                                        width: '20px',
-                                                        margin: '5px'
-                                                }} type="text" value={this.props.wishstats.goal} onChange={(e) => this.handleChange(e, 'goal')} autoFocus={true} onFocus={this.handleFocus}/>
-                                </label>
-                                <br/> {
-                                        mincap.length > 1
-                                                ? 'Requires: ' + mincap[0] + ' to complete in ' + this.props.wishstats.wishcap + ' minutes.'
-                                                : mincap[0]
-                                }
-                                <br/> {
-                                        mincap.length > 1 && mincap[1].length > 0
-                                                ? 'With available resources it will take ' + mincap[1] + '.'
-                                                : ''
-                                }
-                                <br/>
-                                <br/>
                                 <br/> {'Resource spending order:'}
                                 {<ResourcePriorityForm {...this.props} handleChange={this.handleChange}/>}
                                 <div><Crement header='Wish slots' value={this.props.wishstats.wishes.length} name='wishslots' handleClick={this.props.handleCrement} min={1} max={100}/></div>
-                                {
+                                <br/> {
                                         this.props.wishstats.wishes.map((wish, pos) => <div key={pos}>
                                                 {
                                                         [Wishes.keys()].map(idx => (<div style={{
@@ -159,12 +137,13 @@ class WishComponent extends Component {
                                                 }} type="text" value={this.props.wishstats.wishes[pos].goal} onChange={(e) => this.handleChange(e, 'goal', pos)} autoFocus={true} onFocus={this.handleFocus}/>
                                                 </label>
                                         </div>)
-                                }{
+                                }
+                                <br/> {
                                         assignments.map((a, idx) => <div key={idx}>
                                                 {'Wish ' + this.props.wishstats.wishes[idx].wishidx + ' requires: ' + a}
                                         </div>)
-                                }
-                                {'After ' + score + ' all targets will be reached.'}
+                                }<br/> {'After ' + score + ' all targets will be reached.'}
+                                <br/>
                                 <br/> {'Spare resources: ' + remaining}
                         </form>
                 </div >);

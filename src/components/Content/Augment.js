@@ -69,7 +69,7 @@ class Augment extends Component {
         render() {
                 ReactGA.pageview('/augment/');
                 const vals = this.props.augment.vals;
-                let text = 'Equal cost and boost at the following numbers:';
+                let text = 'Augments / upgrades for equal energy cost and bonus:';
                 return (<div className='center'>
                         <form onSubmit={this.handleSubmit}>
                                 <label>
