@@ -11,7 +11,6 @@ export default class ResourcePriorityForm extends React.Component {
         }
 
         handleChange(event) {
-                console.log('event:', event.target.value)
                 this.setState({value: event.target.value});
                 this.props.handleChange(event, 'rp_idx', this.props.rp_idx);
         }

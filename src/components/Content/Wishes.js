@@ -79,7 +79,6 @@ class WishComponent extends Component {
         render() {
                 ReactGA.pageview('/wishes/');
                 let wish = new Wish(this.props.wishstats);
-                const mincap = wish.min_cap();
                 const results = wish.optimize();
                 const score = results[0];
                 const assignments = results[1];
