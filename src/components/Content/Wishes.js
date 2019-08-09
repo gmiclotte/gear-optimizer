@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import ReactGA from 'react-ga';
 import {Wish} from '../../Wish';
-import {Wishes} from '../../assets/ItemAux'
-import WishForm from '../WishForm/WishForm'
+import {Wishes} from '../../assets/ItemAux';
+import ResourcePriorityForm from '../ResourcePriorityForm/ResourcePriorityForm';
+import WishForm from '../WishForm/WishForm';
 import {default as Crement} from '../Crement/Crement';
 
 class WishComponent extends Component {
@@ -77,11 +78,6 @@ class WishComponent extends Component {
 
         render() {
                 ReactGA.pageview('/wishes/');
-                let text = 'Provide the required data in all input fields, please consider scientific notation, e.g. 1e6 instead of 1000000, or have fun counting zeroes.'
-                text += ' Power is total power, cap is amount you actually want to spend on wishes.';
-                text += ' For example: if you value hacks and wishes equally, then you could set R3 cap to 22.44% of your total R3 cap.';
-                text += ' Take the wish speed modifier from the breakdown menu and write it as a decimal, i.e. "100%" becomes "1.00".';
-                text += ' Minimal wish time, is the time you want the final level to take.';
                 let wish = new Wish(this.props.wishstats);
                 const mincap = wish.min_cap();
                 const results = wish.optimize();
@@ -90,11 +86,6 @@ class WishComponent extends Component {
                 const remaining = results[2];
                 return (<div className='center'>
                         <form onSubmit={this.handleSubmit}>
-                                {'Work In Progress: it might not work, some features aren\'t in yet, and it definitely won\'t look pretty.'}
-                                <br/>
-                                <br/> {text}
-                                <br/>
-                                <br/>
                                 <div>
                                         {
                                                 ['eE', 'mM', 'rR'].map(x => <div key={x}>
@@ -130,24 +121,9 @@ class WishComponent extends Component {
                                                         margin: '5px'
                                                 }} type="text" value={this.props.wishstats.wishcap} onChange={(e) => this.handleChange(e, 'wishcap')} autoFocus={true} onFocus={this.handleFocus}/> {' minutes'}
                                 </label>
-                                {/*<br/><label>
-                                        {'Total available time:'}
-                                        <input style={{
-                                        width: '40px',
-                                        margin: '5px'
-                                        }} type="text" value={this.props.wishstats.wishtime} onChange={(e) => this.handleChange(e, 'wishcap')} autoFocus={true} onFocus={this.handleFocus}/> {' minutes'}
-                                        </label>
-                                        */
-                                }
+                                <br/>
+                                <br/>
                                 <br/> {[Wishes.keys()].map((idx) => (<div key={'wishform' + idx}><WishForm {...this.props} handleChange={this.handleChange} wishidx={this.props.wishstats.wishidx} idx={-1}/></div>))}
-                                {/*<label>
-                                        {'Start level:'}
-                                        <input style={{
-                                        width: '20px',
-                                        margin: '5px'
-                                                }} type="text" value={this.props.wishstats.start} onChange={(e) => this.handleChange(e, 'goal')} autoFocus={true} onFocus={this.handleFocus}/>
-                                        </label>*/
-                                }
                                 <label>
                                         {'Target level:'}
                                         <input style={{
@@ -165,11 +141,10 @@ class WishComponent extends Component {
                                                 ? 'With available resources it will take ' + mincap[1] + '.'
                                                 : ''
                                 }
-                                <br/><br/> {'Select some wishes and target levels. For now it is assumed that you are at level "target - 1". '}
-                                {'A possible allocation of EMR cap will be suggested to reach the target level in each of these wishes in (close to) the shortest possible time. '}
-                                <br/> {'A small fraction (0.1%) of each resource cap is initially assigned to each wish. After this, resources are assigned in the following order: M>E>R. '}
-                                {'Other assignment priorities could be added, but let me know if you want that. '}
-                                <br/><br/>
+                                <br/>
+                                <br/>
+                                <br/> {'Resource spending order:'}
+                                {<ResourcePriorityForm {...this.props} handleChange={this.handleChange}/>}
                                 <div><Crement header='Wish slots' value={this.props.wishstats.wishes.length} name='wishslots' handleClick={this.props.handleCrement} min={1} max={100}/></div>
                                 {
                                         this.props.wishstats.wishes.map((wish, pos) => <div key={pos}>

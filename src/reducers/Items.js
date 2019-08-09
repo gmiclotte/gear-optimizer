@@ -133,7 +133,8 @@ const INITIAL_STATE = {
                                 wishidx: 3,
                                 goal: 1
                         }
-                ]
+                ],
+                rp_idx: 0
         },
         version: '1.1.0'
 };

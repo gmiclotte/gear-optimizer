@@ -1,4 +1,4 @@
-import {Wishes} from './assets/ItemAux'
+import {Wishes, resource_priorities} from './assets/ItemAux';
 
 export class Wish {
         constructor(wishstats) {
@@ -77,7 +77,7 @@ export class Wish {
         }
 
         optimize() {
-                const resource_priority = [1, 0, 2];
+                const resource_priority = resource_priorities[this.wishstats.rp_idx];
                 const costs = this.wishstats.wishes.map(wish => Wishes[wish.wishidx][1] * wish.goal);
                 const wishcap = this.wishstats.wishcap/* minutes */ * 60 * 50;
                 const powproduct = (this.wishstats.epow * this.wishstats.mpow * this.wishstats.rpow) ** .17;

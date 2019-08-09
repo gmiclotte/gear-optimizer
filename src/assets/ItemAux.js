@@ -749,3 +749,24 @@ export const Wishes = [
                 'Hack Hack Milestone I', 6.00E+20, 10
         ]
 ];
+
+export const resource_priorities = [
+        [
+                1, 0, 2
+        ],
+        [
+                1, 2, 0
+        ],
+        [
+                2, 1, 0
+        ],
+        [
+                0, 1, 2
+        ],
+        [
+                2, 0, 1
+        ],
+        [
+                0, 2, 1
+        ]
+];

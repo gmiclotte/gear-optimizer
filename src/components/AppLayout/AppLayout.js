@@ -15,6 +15,9 @@ function HowTo() {
         ReactGA.pageview('/howto');
         return <div className='howto'>
                 <ol>
+                        {'How to use the gear optimizer:'}
+                </ol>
+                <ol>
                         <li>Perform the global item setup based on game progress.</li>
                         <ul>
                                 <li>Select your highest zone.</li>
@@ -52,6 +55,32 @@ function HowTo() {
                                 <li>The current saved loadout can be shown or hidden by clicking the Show / Hide button.</li>
                         </ul>
                 </ol>
+                <br/>
+                <ol>
+                        {'How to use the augments calculator:'}
+                </ol>
+                <ol>
+                        <li>This assumes you are limited by energy, not by gold.</li>
+                        <li>This assumes you are spending energy on augments and upgrades in a ratio equal to the exponents of both. Augment exponent depends on laser sword challenge completions, while upgrade exponent is always 2. Of course, if you're BBing, then you can adjust this ratio to save some energy.</li>
+                        <li>Enter the number of laser sword challenge completions.</li>
+                        <li>Enter the amount of time spent on augments, in minutes.</li>
+                        <li>The point of equality between consecutive augments and upgrades is shown, if you get the number of augments and upgrades on the left or on the right, a similar boost to attack and defense is obtained with the same energy investment.</li>
+                        <li>In practice, this means that you should swap to the augment on the right, if you can reach the amount on the left, except when BBing, then you'll have to actually check if you can reach the amount on the right.</li>
+                </ol>
+                <br/>
+                <ol>
+                        {'How to use the wishes calculator:'}
+                </ol>
+                <ol>
+                        <li>Provide the required data in all input fields, please consider scientific notation, e.g. 1e6 instead of 1000000, or have fun counting zeroes.</li>
+                        <li>Power is total power, cap is amount you actually want to spend on wishes.</li>
+                        <li>For example: if you value hacks and wishes equally, then you could set R3 cap to 22.44% of your total R3 cap.</li>
+                        <li>Take the wish speed modifier from the breakdown menu and write it as a decimal, i.e. "100%" becomes "1.00".</li>
+                        <li>Minimal wish time, is the time you want the final level to take.</li>
+                        <li>Select some wishes and target levels. For now it is assumed that you are at level "target - 1", i.e. only the last level is taken into account.</li>
+                        <li>Decide the order in which resources should be spent.</li>
+                        <li>A small fraction (0.1%) of each resource cap is initially assigned to each wish. A possible allocation of EMR cap will be suggested to reach the target level in each of these wishes in (close to) the shortest possible time.</li>
+                </ol>
         </div>;
 }
 const AppLayout = props => (<div className='app_container'>
@@ -69,16 +98,16 @@ const AppLayout = props => (<div className='app_container'>
                         <nav>
                                 <ul className='nav-bar-list'>
                                         <li className='nav-bar-item'>
-                                                <NavLink to='/' exact={true} className='nav-link' activeClassName='active'>Gear Optimizer</NavLink>
-                                        </li>
-                                        <li className='nav-bar-item'>
-                                                <NavLink to='/howto' exact={true} className='nav-link' activeClassName='active'>How to</NavLink>
+                                                <NavLink to='/' exact={true} className='nav-link' activeClassName='active'>Gear</NavLink>
                                         </li>
                                         <li className='nav-bar-item'>
                                                 <NavLink to='/augment' exact={true} className='nav-link' activeClassName='active'>Augments</NavLink>
                                         </li>
                                         <li className='nav-bar-item'>
-                                                <NavLink to='/wishes' exact={true} className='nav-link' activeClassName='active'>Wishes [WIP]</NavLink>
+                                                <NavLink to='/wishes' exact={true} className='nav-link' activeClassName='active'>Wishes</NavLink>
+                                        </li>
+                                        <li className='nav-bar-item'>
+                                                <NavLink to='/howto' exact={true} className='nav-link' activeClassName='active'>How to</NavLink>
                                         </li>
                                         <li className='nav-bar-item' style={{
                                                         float: 'right'
