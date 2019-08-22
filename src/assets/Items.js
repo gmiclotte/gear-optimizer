@@ -688,9 +688,9 @@ export const ITEMLIST = [
         [Stat.POWER, 10000],
         [Stat.TOUGHNESS, 230000],
         [Stat.ENERGY_POWER, 1800],
-        [Stat.ENERGY_BARS, 1600],
+        [Stat.ENERGY_BARS, 3800],
         [Stat.MAGIC_POWER, 1800],
-        [Stat.MAGIC_BARS, 3800],
+        [Stat.MAGIC_BARS, 1600],
     ]),
     new Item('The Stealthiest Armour', Slot.CHEST, SetName.STEALTH, 100, [
         [Stat.POWER, 16000],
