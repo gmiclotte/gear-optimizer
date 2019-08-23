@@ -45,7 +45,7 @@ export class Wish {
                 return r.map((ri, i) => r[i] - A.reduce((res, a) => a[i] + res, 0));
         }
 
-        /*score(cost, wishcap, res, start, goal, x = -0.17) {
+        score(cost, wishcap, res, start, goal, tmp = false, x = -0.17) {
                 let result = cost;
                 for (let i = 0; i < res.length; i++) {
                         result *= res[i] ** x;
@@ -54,10 +54,10 @@ export class Wish {
                 for (let i = start + 1; i <= goal; i++) {
                         total += Math.max(wishcap, result / goal * i);
                 }
-                return total;
-        }*/
+                return Math.ceil(total);
+        }
 
-        score(cost, wishcap, res, start, goal, force = false, x = -0.17) {
+        score_raw(cost, wishcap, res, start, goal, force = false, x = -0.17) {
                 let result = cost;
                 for (let i = 0; i < res.length; i++) {
                         result *= res[i] ** x;
@@ -70,7 +70,7 @@ export class Wish {
                                 total += result / goal * i;
                         }
                 }
-                return total;
+                return Math.ceil(total);
         }
 
         spread_res(assignments, res, scores, resource_priority, wishcap, exponent, l, totres, coef, start, goal) {
@@ -82,7 +82,7 @@ export class Wish {
                                 if (scores[l - 1] === wishcap * (goal[j] - start[j])) {
                                         break;
                                 }
-                                const ref_score = j === 0
+                                const ref_score = j === 0 || scores[j - 1] === 0
                                         ? wishcap * (goal[j] - start[j])
                                         : scores[j - 1]
                                 if (scores[j] === ref_score) {
@@ -232,56 +232,97 @@ export class Wish {
                 // optimize
                 [assignments, res, scores] = this.spread_res(assignments, res, scores, resource_priority, wishcap, exponent, l, totres, coef, start, goal);
                 if (goal.filter(x => x > 0).length > 1) {
-                        for (let i = 0; i < 1000; i++) {
-                                [assignments, res, scores] = this.save_res(
-                                        assignments, res, scores, resource_priority, wishcap, exponent, l, totres, coef, start, goal, getRandomInt(0, 5) === 0
-                                        ? 1
-                                        : 2);
+                        const runs = 2222;
+                        for (let i = 0; i < runs; i++) {
+                                let save;
+                                if (i < runs * .1) {
+                                        save = getRandomInt(1, 3);
+                                } else if (i < runs * .55) {
+                                        save = 2;
+                                } else {
+                                        save = 1;
+                                };
+                                [assignments, res, scores] = this.save_res(assignments, res, scores, resource_priority, wishcap, exponent, l, totres, coef, start, goal, save);
                                 let max = Math.floor(Math.max(...scores));
-                                scores.forEach((s, k) => {
-                                        //console.log(s, k)
+                                for (let k = 0; k < coef.length; k++) {
                                         if (coef[k] === 0) {
                                                 return;
                                         }
-                                        resource_priority.forEach((i) => {
+                                        for (let j = 2; j > -1; j--) {
+                                                let spend = resource_priority[j];
+                                                let s = this.score(coef[k], wishcap, assignments[k], start[k], goal[k]);
+                                                const a = assignments[k][spend];
                                                 if (Math.ceil(s) < max) {
-                                                        if (s > max) {
-                                                                return;
+                                                        assignments[k][spend] = Math.ceil(assignments[k][spend] * (max / s) ** (-1 / exponent));
+                                                        s = Math.ceil(this.score(coef[k], wishcap, assignments[k], start[k], goal[k]));
+                                                        while (s > max) {
+                                                                //console.log(assignments[k][spend]);
+                                                                assignments[k][spend] = Math.max(Math.ceil((assignments[k][spend] + a) / 2 + a / 1000), a);
+                                                                s = Math.ceil(this.score(coef[k], wishcap, assignments[k], start[k], goal[k]));
                                                         }
-                                                        let a = assignments[k];
-                                                        a[i] = Math.ceil(a[i] * (max / s) ** (-1 / exponent));
-                                                        s = this.score(coef[k], wishcap, a, start[k], goal[k]);
                                                         res = this.update_res(totres, assignments);
                                                 }
-                                        });
-                                });
+                                        }
+                                };
+                                if (Math.floor(Math.max(...scores)) === mintottime) {
+                                        for (let k = 0; k < coef.length; k++) {
+                                                //console.log(s, k)
+                                                if (coef[k] === 0) {
+                                                        return;
+                                                }
+                                                if (scores[k] < mintottime) {
+                                                        return;
+                                                }
+                                                for (let j = 2; j > -1; j--) {
+                                                        let spend = resource_priority[j];
+                                                        let s = this.score(coef[k], wishcap, assignments[k], start[k], goal[k]);
+                                                        const a = assignments[k][spend];
+                                                        let b = a;
+                                                        while (s === mintottime) {
+                                                                b /= 1.1;
+                                                                if (b <= 1) {
+                                                                        b = 1;
+                                                                        break;
+                                                                }
+                                                                assignments[k][spend] = Math.floor(b);
+                                                                s = this.score(coef[k], wishcap, assignments[k], start[k], goal[k]);
+                                                        }
+                                                        b = Math.floor(b);
+                                                        if (b === 1 && s === mintottime) {
+                                                                break;
+                                                        }
+                                                        while (s > mintottime) {
+                                                                b *= 1.05;
+                                                                if (b >= a) {
+                                                                        b = a;
+                                                                        break;
+                                                                }
+                                                                assignments[k][spend] = Math.ceil(b);
+                                                                s = this.score(coef[k], wishcap, assignments[k], start[k], goal[k]);
+                                                        }
+                                                        res = this.update_res(totres, assignments);
+                                                }
+                                        }
+                                }
                                 res = this.update_res(totres, assignments);
                                 scores = assignments.map((a, k) => this.score(coef[k], wishcap, a, start[k], goal[k]));
                                 if (Math.floor(Math.max(...scores)) > mintottime + 100) {
-                                        [assignments, res, scores] = this.spread_res(assignments, res, scores, resource_priority, wishcap, exponent, l, totres, coef, start, goal);
-                                }
-                        }
-                        for (let i = 0; i < 100; i++) {
-                                [assignments, res, scores] = this.save_res(assignments, res, scores, resource_priority, wishcap, exponent, l, totres, coef, start, goal, 2);
-                                if (Math.floor(Math.max(...scores)) > mintottime + 100) {
-                                        [assignments, res, scores] = this.spread_res(assignments, res, scores, resource_priority, wishcap, exponent, l, totres, coef, start, goal);
-                                }
-                        }
-                        for (let i = 0; i < 100; i++) {
-                                [assignments, res, scores] = this.save_res(assignments, res, scores, resource_priority, wishcap, exponent, l, totres, coef, start, goal, 1);
-                                if (Math.floor(Math.max(...scores)) > mintottime + 100) {
+                                        console.log('reassign');
                                         [assignments, res, scores] = this.spread_res(assignments, res, scores, resource_priority, wishcap, exponent, l, totres, coef, start, goal);
                                 }
                         }
                 }
 
-                scores = assignments.map((a, k) => this.score(coef[k], wishcap, a, start[k], goal[k], true));
-
+                /*
                 console.log(coef)
                 console.log(start)
                 console.log(goal)
                 console.log(res);
+                scores = assignments.map((a, k) => this.score_raw(coef[k], wishcap, a, start[k], goal[k]));
+                console.log(scores.map(x => Math.floor(x)));
                 console.log(scores.map(x => Math.floor(x)))
+                */
+                scores = assignments.map((a, k) => this.score(coef[k], wishcap, a, start[k], goal[k]));
 
                 //unsort the assigned values
                 const idxs = coef.map((_, i) => i).sort((a, b) => costs[a] - costs[b]);

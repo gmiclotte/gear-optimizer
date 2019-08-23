@@ -122,15 +122,19 @@ const INITIAL_STATE = {
                 wishes: [
                         {
                                 wishidx: 0,
+                                start: 0,
                                 goal: 1
                         }, {
                                 wishidx: 1,
+                                start: 0,
                                 goal: 1
                         }, {
                                 wishidx: 2,
+                                start: 0,
                                 goal: 1
                         }, {
                                 wishidx: 3,
+                                start: 0,
                                 goal: 1
                         }
                 ],
@@ -185,10 +189,6 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                 console.log('worker finished')
                                 return {
                                         ...state,
-                                        augment: {
-                                                ...state.augment,
-                                                vals: action.payload.vals
-                                        },
                                         running: false
                                 };
                         }
@@ -219,7 +219,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 }
                                                 wishes.pop();
                                         } else if (action.payload.val === 1) {
-                                                wishes.push({wishidx: 0, goal: 1});
+                                                wishes.push({wishidx: 0, start: 0, goal: 1});
                                         }
                                         return {
                                                 ...state,
