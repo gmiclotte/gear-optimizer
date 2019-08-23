@@ -79,7 +79,7 @@ function HowTo() {
                         <li>Minimal wish time, is the time you want the final level to take.</li>
                         <li>Select some wishes and target levels. For now it is assumed that you are at level "target - 1", i.e. only the last level is taken into account.</li>
                         <li>Decide the order in which resources should be spent.</li>
-                        <li>A small fraction (0.1%) of each resource cap is initially assigned to each wish. A possible allocation of EMR cap will be suggested to reach the target level in each of these wishes in (close to) the shortest possible time.</li>
+                        <li>A possible allocation of EMR cap will be suggested to reach the target level in each of these wishes in (close to) the shortest possible time. This procedure is stochastic, so reruns might result in (slightly) different values.</li>
                 </ol>
         </div>;
 }
