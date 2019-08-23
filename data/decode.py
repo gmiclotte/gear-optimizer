@@ -59,7 +59,7 @@ def getWishProperties(h, idx):
     idx += 4
 
     # skip last properties
-    return idx + 20
+    return idx + 20, maxLevel
     # float effectPerLevel
 
     # difficulty difficultyRequirement
@@ -126,11 +126,15 @@ h = [bytes[idx:idx + 1] for idx in range(len(bytes))]
 
 # get wishes
 idx = 2982320 - 12
+l = 0
 count = 79
 for _ in range(count):
     print(f'Wish {_}')
-    idx = getWishProperties(h, idx)
+    idx, ml = getWishProperties(h, idx)
+    l += ml
     print()
+
+print(f'Total number of wish levels: {l}.')
 
 # get hacks
 idx = 4096472 - 8
