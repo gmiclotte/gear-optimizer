@@ -246,7 +246,7 @@ export class Wish {
                                 let max = Math.floor(Math.max(...scores));
                                 for (let k = 0; k < coef.length; k++) {
                                         if (coef[k] === 0) {
-                                                return;
+                                                continue;
                                         }
                                         for (let j = 2; j > -1; j--) {
                                                 let spend = resource_priority[j];
@@ -256,7 +256,6 @@ export class Wish {
                                                         assignments[k][spend] = Math.ceil(assignments[k][spend] * (max / s) ** (-1 / exponent));
                                                         s = Math.ceil(this.score(coef[k], wishcap, assignments[k], start[k], goal[k]));
                                                         while (s > max) {
-                                                                //console.log(assignments[k][spend]);
                                                                 assignments[k][spend] = Math.max(Math.ceil((assignments[k][spend] + a) / 2 + a / 1000), a);
                                                                 s = Math.ceil(this.score(coef[k], wishcap, assignments[k], start[k], goal[k]));
                                                         }
@@ -266,12 +265,11 @@ export class Wish {
                                 };
                                 if (Math.floor(Math.max(...scores)) === mintottime) {
                                         for (let k = 0; k < coef.length; k++) {
-                                                //console.log(s, k)
                                                 if (coef[k] === 0) {
-                                                        return;
+                                                        continue;
                                                 }
                                                 if (scores[k] < mintottime) {
-                                                        return;
+                                                        continue;
                                                 }
                                                 for (let j = 2; j > -1; j--) {
                                                         let spend = resource_priority[j];
@@ -307,7 +305,6 @@ export class Wish {
                                 res = this.update_res(totres, assignments);
                                 scores = assignments.map((a, k) => this.score(coef[k], wishcap, a, start[k], goal[k]));
                                 if (Math.floor(Math.max(...scores)) > mintottime + 100) {
-                                        console.log('reassign');
                                         [assignments, res, scores] = this.spread_res(assignments, res, scores, resource_priority, wishcap, exponent, l, totres, coef, start, goal);
                                 }
                         }
