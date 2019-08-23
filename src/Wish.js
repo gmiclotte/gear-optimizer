@@ -114,8 +114,11 @@ export class Wish {
                         ? spendidx
                         : resource_priority[getRandomInt(0, saveidx)];
                 let w1 = getRandomInt(0, l);
+                while (goal[w1] === 0) {
+                        w1 = getRandomInt(0, l);
+                }
                 let w2 = w1;
-                while (w1 === w2) {
+                while (w1 === w2 || goal[w2] === 0) {
                         w2 = getRandomInt(0, l);
                 };
                 scores = assignments.map((a, k) => this.score(coef[k], wishcap, a, start[k], goal[k]));
@@ -148,7 +151,7 @@ export class Wish {
                         return [assignments, res, scores];;
                 }*/
                 if (m * r === 1) {
-                        return [assignments, res, scores];;
+                        return [assignments, res, scores];
                 }
                 const d = (m * r * (m + 1) ** 2) ** 0.5;
                 const x1 = (m + 1 + d) / (1 - m * r);
@@ -228,7 +231,7 @@ export class Wish {
 
                 // optimize
                 [assignments, res, scores] = this.spread_res(assignments, res, scores, resource_priority, wishcap, exponent, l, totres, coef, start, goal);
-                if (l > 1) {
+                if (goal.filter(x => x > 0).length > 1) {
                         for (let i = 0; i < 1000; i++) {
                                 [assignments, res, scores] = this.save_res(
                                         assignments, res, scores, resource_priority, wishcap, exponent, l, totres, coef, start, goal, getRandomInt(0, 5) === 0
