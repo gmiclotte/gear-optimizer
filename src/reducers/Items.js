@@ -648,6 +648,12 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                         delete localStorageState.wishstats[name];
                                                 }
                                         });
+                                        localStorageState.wishstats.wishes = localStorageState.wishstats.wishes.map(wish => {
+                                                if (wish.start === undefined) {
+                                                        wish.start = 0;
+                                                }
+                                                return wish;
+                                        });
                                         console.log('Wish data:', localStorageState.wishstats);
                                 }
                                 const tmp_factors = Object.getOwnPropertyNames(Factors);
