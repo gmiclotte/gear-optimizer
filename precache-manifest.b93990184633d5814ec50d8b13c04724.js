@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "5878251f5223537aaa465cbcac60d011",
-    "url": "/gear-optimizer/e5c25e802bcd08ec2ebb.worker.js"
+    "revision": "8149092fcb20a5ca36cf0d46519d5572",
+    "url": "/gear-optimizer/bb33230f47b048de0b1f.worker.js"
   },
   {
-    "revision": "ceb983c12f87894a1822ce8b6f249b7f",
+    "revision": "7cbebc49b36407787b29d03ff7fa5e36",
     "url": "/gear-optimizer/index.html"
   },
   {
-    "revision": "6469c416d7b925764b5e",
+    "revision": "5582ccc62743ceb551f2",
     "url": "/gear-optimizer/static/css/main.133d5ae1.chunk.css"
   },
   {
-    "revision": "306fba76f0dc870bb141",
-    "url": "/gear-optimizer/static/js/2.155c280e.chunk.js"
+    "revision": "b20f8d1cba3d44cbbe1f",
+    "url": "/gear-optimizer/static/js/2.0e30a9cd.chunk.js"
   },
   {
-    "revision": "6469c416d7b925764b5e",
-    "url": "/gear-optimizer/static/js/main.9a3a463c.chunk.js"
+    "revision": "5582ccc62743ceb551f2",
+    "url": "/gear-optimizer/static/js/main.f32cbcad.chunk.js"
   },
   {
     "revision": "e70c69565185911edd94",
@@ -53,7 +53,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   },
   {
     "revision": "99aaabd964c0ade630cf6d270995561c",
-    "url": "/gear-optimizer/static/media/Amulet of Sunshin.99aaabd9.png"
+    "url": "/gear-optimizer/static/media/Amulet of Sunshine, Sparkles, and Gore.99aaabd9.png"
   },
   {
     "revision": "f4cfaf5974d5056be814c7e5e60bc84b",
@@ -100,16 +100,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/gear-optimizer/static/media/Bearded Axe.3e849dd6.png"
   },
   {
-    "revision": "f89577abf39d4c2c2afb6557492a792b",
-    "url": "/gear-optimizer/static/media/Blue Heart.f89577ab.png"
-  },
-  {
     "revision": "63898ed15ca0098aa8c2b78a6ba1b6fa",
     "url": "/gear-optimizer/static/media/Braided Beard Legs.63898ed1.png"
-  },
-  {
-    "revision": "24dc282611af9f3959b9789a8489574d",
-    "url": "/gear-optimizer/static/media/Brown Heart.24dc2826.png"
   },
   {
     "revision": "46868441af1b830082de54271c6823de",
@@ -168,10 +160,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/gear-optimizer/static/media/Gossamer Chest.8ad8583f.png"
   },
   {
-    "revision": "c89e7ceee7d1bff091c1234e8290bef0",
-    "url": "/gear-optimizer/static/media/Green Heart.c89e7cee.png"
-  },
-  {
     "revision": "01d3dec9c11404698e21b47aea73110a",
     "url": "/gear-optimizer/static/media/Groucho Marx Disguise.01d3dec9.png"
   },
@@ -202,6 +190,26 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "9d0d8f79ac2cd52d9f1d47d1cfaa1f1f",
     "url": "/gear-optimizer/static/media/Mega Helmet.9d0d8f79.png"
+  },
+  {
+    "revision": "f89577abf39d4c2c2afb6557492a792b",
+    "url": "/gear-optimizer/static/media/My Blue Heart 3.f89577ab.png"
+  },
+  {
+    "revision": "24dc282611af9f3959b9789a8489574d",
+    "url": "/gear-optimizer/static/media/My Brown Heart 3.24dc2826.png"
+  },
+  {
+    "revision": "c89e7ceee7d1bff091c1234e8290bef0",
+    "url": "/gear-optimizer/static/media/My Green Heart 3.c89e7cee.png"
+  },
+  {
+    "revision": "4f4e024db1a5480816f4c6db84017b38",
+    "url": "/gear-optimizer/static/media/My Red Heart 3.4f4e024d.png"
+  },
+  {
+    "revision": "2b8990ce93789fd289bf8c4ac05ee19f",
+    "url": "/gear-optimizer/static/media/My Yellow Heart 3.2b8990ce.png"
   },
   {
     "revision": "835f0d28132681222566df0faa7320f9",
@@ -240,8 +248,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/gear-optimizer/static/media/Rectangle Pants.84ee8689.png"
   },
   {
-    "revision": "4f4e024db1a5480816f4c6db84017b38",
-    "url": "/gear-optimizer/static/media/Red Heart.4f4e024d.png"
+    "revision": "9037a2eb0af15aaad830d2ce40f96889",
+    "url": "/gear-optimizer/static/media/Ring of Apathy.9037a2eb.png"
   },
   {
     "revision": "fc6825fc208508d5f79a495aa15e4beb",
@@ -265,7 +273,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   },
   {
     "revision": "d2e073ee611e20ce54a17b814fe1b4e6",
-    "url": "/gear-optimizer/static/media/Sir Looty McLootington II.d2e073ee.png"
+    "url": "/gear-optimizer/static/media/Sir Looty McLootington III, Esquire.d2e073ee.png"
   },
   {
     "revision": "70fe5e5c290cf3d77eafafef25632a48",
@@ -358,10 +366,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "092d677b84c585bbc967a7f7140f7771",
     "url": "/gear-optimizer/static/media/Wanderer's Pants.092d677b.png"
-  },
-  {
-    "revision": "2b8990ce93789fd289bf8c4ac05ee19f",
-    "url": "/gear-optimizer/static/media/Yellow Heart.2b8990ce.png"
   },
   {
     "revision": "7ce0dbce3f42a880fae973e667ba2756",
