@@ -140,7 +140,7 @@ const INITIAL_STATE = {
                 ],
                 rp_idx: 0
         },
-        version: '1.1.0'
+        version: '1.2.0'
 };
 
 const ItemsReducer = (state = INITIAL_STATE, action) => {
@@ -617,10 +617,30 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                 for (let idx = 0; idx < localStorageState.items.length; idx++) {
                                         const name = localStorageState.items[idx];
                                         const saveditem = localStorageState.itemdata[name];
+                                        let item = state.itemdata[name];
+                                        if (item === undefined) {
+                                                // item was renamed or removed
+                                                const slot = saveditem.slot[0];
+                                                localStorageState.equip[slot] = localStorageState.equip[slot].map(tmp => {
+                                                        if (tmp === name) {
+                                                                return new EmptySlot(saveditem.slot).name;
+                                                        }
+                                                        return tmp;
+                                                });
+                                                localStorageState.savedequip = localStorageState.savedequip.map(save => {
+                                                        save[slot] = save[slot].map(tmp => {
+                                                                if (tmp === name) {
+                                                                        return new EmptySlot(saveditem.slot).name;
+                                                                }
+                                                                return tmp;
+                                                        });
+                                                        return save;
+                                                })
+                                                continue;
+                                        }
                                         if (saveditem.empty) {
                                                 continue;
                                         }
-                                        let item = state.itemdata[name];
                                         item.disable = saveditem.disable;
                                         update_level(item, saveditem.level);
                                 }
