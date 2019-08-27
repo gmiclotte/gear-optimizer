@@ -620,6 +620,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         let item = state.itemdata[name];
                                         if (item === undefined) {
                                                 // item was renamed or removed
+                                                console.log('Item ' + name + ' was renamed or removed, this may result in changes in saved or equipped loadouts.')
                                                 const slot = saveditem.slot[0];
                                                 localStorageState.equip[slot] = localStorageState.equip[slot].map(tmp => {
                                                         if (tmp === name) {
