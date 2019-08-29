@@ -382,7 +382,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 60],
         [Stat.RESPAWN, 12],
     ]),
-    new Item('My Red Heart <3', Slot.ACCESSORY, SetName.MISC, 100, [
+    new Item('My Red Heart <3', Slot.ACCESSORY, SetName.HEART, 100, [
         [Stat.POWER, 200],
         [Stat.TOUGHNESS, 200],
         [Stat.EXPERIENCE, 10],
@@ -434,7 +434,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 200],
         [Stat.MAGIC_POWER, 200],
     ]),
-    new Item('My Yellow Heart <3', Slot.ACCESSORY, SetName.MISC, 100, [
+    new Item('My Yellow Heart <3', Slot.ACCESSORY, SetName.HEART, 100, [
         [Stat.POWER, 200],
         [Stat.TOUGHNESS, 200],
         [Stat.AP, 20],
@@ -644,7 +644,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 1000],
         [Stat.MAGIC_BARS, 1000],
     ]),
-    new Item('My Brown Heart <3', Slot.ACCESSORY, SetName.MISC, 100, [
+    new Item('My Brown Heart <3', Slot.ACCESSORY, SetName.HEART, 100, [
         [Stat.POWER, 200],
         [Stat.TOUGHNESS, 200],
         [Stat.SEED_DROP, 70],
@@ -705,7 +705,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 240],
         [Stat.MAGIC_CAP, 240],
     ]),
-    new Item('My Green Heart <3', Slot.ACCESSORY, SetName.MISC, 100, [
+    new Item('My Green Heart <3', Slot.ACCESSORY, SetName.HEART, 100, [
         [Stat.POWER, 200],
         [Stat.TOUGHNESS, 200],
         [Stat.DROP_CHANCE, 100],
@@ -842,13 +842,13 @@ export const ITEMLIST = [
         [Stat.MAGIC_POWER, 12000],
         [Stat.ENERGY_POWER, 12000],
     ]),
-    new Item('My Blue Heart <3', Slot.ACCESSORY, SetName.MISC, 100, [
+    new Item('My Blue Heart <3', Slot.ACCESSORY, SetName.HEART, 100, [
         [Stat.POWER, 840],
         [Stat.TOUGHNESS, 840],
         [Stat.GOLD_DROP, 200],
         [Stat.NGU_SPEED, 80],
     ]),
-    new Item('My Purple Heart <3', Slot.ACCESSORY, SetName.MISC, 100, [
+    new Item('My Purple Heart <3', Slot.ACCESSORY, SetName.HEART, 100, [
         [Stat.POWER, 200],
         [Stat.TOUGHNESS, 2000],
         [Stat.DROP_CHANCE, 80],
@@ -1357,7 +1357,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 180000],
         [Stat.MAGIC_POWER, 180000],
     ]),
-    new Item('My Orange Heart <3', Slot.ACCESSORY, SetName.MISC, 100, [
+    new Item('My Orange Heart <3', Slot.ACCESSORY, SetName.HEART, 100, [
         [Stat.POWER, 200],
         [Stat.TOUGHNESS, 2000],
         [Stat.QUEST_DROP, 10],
@@ -1378,7 +1378,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 50000],
         [Stat.MAGIC_POWER, 50000],
     ]),
-    new Item('My Grey Heart <3', Slot.ACCESSORY, SetName.MISC, 100, [
+    new Item('My Grey Heart <3', Slot.ACCESSORY, SetName.HEART, 100, [
         [Stat.POWER, 2000000],
         [Stat.TOUGHNESS, 2000000],
         [Stat.RES3_CAP, 40],
@@ -1663,7 +1663,7 @@ export const ITEMLIST = [
         [Stat.WISH_SPEED, 50],
         [Stat.HACK_SPEED, 40],
     ]),
-    new Item('My Pink Heart <3', Slot.ACCESSORY, SetName.MISC, 100, [
+    new Item('My Pink Heart <3', Slot.ACCESSORY, SetName.HEART, 100, [
         [Stat.POWER, 6000000],
         [Stat.TOUGHNESS, 6000000],
         [Stat.WISH_SPEED, 20],

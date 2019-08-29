@@ -360,7 +360,10 @@ export const Factors = extend(extend(single_factors, multiple_factors), remainin
 
 export const SetName = {
         MISC: [
-                'Miscellaneous', -3
+                'Miscellaneous', -4
+        ],
+        HEART: [
+                'My Hearts <3', -3
         ],
         FOREST_PENDANT: [
                 'Forest Pendant', -2
