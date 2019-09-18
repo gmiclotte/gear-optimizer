@@ -750,6 +750,99 @@ export const Wishes = [
         ],
         [
                 'Hack Hack Milestone I', 6.00E+20, 10
+        ],
+        [
+                'More Base PP', 2.00E+21, 10
+        ],
+        [
+                'Higher level quest drops I', 5.00E+17, 2
+        ],
+        [
+                'Higher level quest drops II', 1.00E+22, 2
+        ],
+        [
+                'Energy Power V', 5.00E+21, 10
+        ],
+        [
+                'Energy Bars V', 5.00E+21, 10
+        ],
+        [
+                'Energy Cap V', 5.00E+21, 10
+        ],
+        [
+                'Magic Power V', 5.00E+21, 10
+        ],
+        [
+                'Magic Bars V', 5.00E+21, 10
+        ],
+        [
+                'Magic Cap V', 5.00E+21, 10
+        ],
+        [
+                'Resource 3 Power V', 5.00E+21, 10
+        ],
+        [
+                'Resource 3 Bars V', 5.00E+21, 10
+        ],
+        [
+                'Resource 3 Cap V', 5.00E+21, 10
+        ],
+        [
+                'Energy Power VI', 1.00E+23, 10
+        ],
+        [
+                'Energy Bars VI', 1.00E+23, 10
+        ],
+        [
+                'Energy Cap VI', 1.00E+23, 10
+        ],
+        [
+                'Magic Power VI', 1.00E+23, 10
+        ],
+        [
+                'Magic Bars VI', 1.00E+23, 10
+        ],
+        [
+                'Magic Cap VI', 1.00E+23, 10
+        ],
+        [
+                'Resource 3 Power VI', 1.00E+23, 10
+        ],
+        [
+                'Resource 3 Bars VI', 1.00E+23, 10
+        ],
+        [
+                'Resource 3 Cap VI', 1.00E+23, 10
+        ],
+        [
+                'Titan 10 QP', 5.00E+22, 1
+        ],
+        [
+                'Major Quests Base QP', 1.00E+22, 10
+        ],
+        [
+                'Minor Quests Base QP', 1.80E+23, 2
+        ],
+        [
+                'Adventure Stats III', 1.00E+19, 10
+        ],
+        [
+                'Adventure Stats IV', 3.00E+21, 10
+        ],
+        [
+                'Stats III', 2.00E+19, 10
+        ],
+        [
+                'Stats IV', 1.00E+21, 10
+        ],
+        [
+                'Sadistic Boss Multiplier I ', 2.00E+22, 10
+        ],
+        [
+                'Sadistic Boss Multiplier II ', 5.00E+23, 10
+        ],
+        [
+                'Accessory Slot', 5.00E+24, 1
         ]
 ];
 
