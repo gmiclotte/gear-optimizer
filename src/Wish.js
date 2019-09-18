@@ -45,7 +45,7 @@ export class Wish {
                 return r.map((ri, i) => r[i] - A.reduce((res, a) => a[i] + res, 0));
         }
 
-        score(cost, wishcap, res, start, goal, tmp = false, x = -0.17) {
+        score(cost, wishcap, res, start, goal, x = -0.17) {
                 let result = cost;
                 for (let i = 0; i < res.length; i++) {
                         result *= res[i] ** x;
@@ -74,37 +74,53 @@ export class Wish {
         }
 
         spread_res(assignments, res, scores, resource_priority, wishcap, exponent, l, totres, coef, start, goal) {
+                const mincap = Math.max(...coef.map((_, i) => goal[i] - start[i])) * wishcap;
                 resource_priority.forEach((i) => {
                         for (let j = l - 1; j >= 0; j--) {
-                                if (res[i] < l) {
-                                        break;
+                                let count = 0;
+                                while (count < 1000) {
+                                        //might require quite a few iterations when doing
+                                        //a single wish with multiple levels, but probably less than 20
+                                        count++;
+                                        if (res[i] < l) {
+                                                break;
+                                        }
+                                        if (scores[l - 1] === wishcap * (goal[j] - start[j])) {
+                                                break;
+                                        }
+                                        const ref_score = j === 0 || scores[j - 1] === 0
+                                                ? mincap
+                                                : scores[j - 1] > mincap
+                                                        ? scores[j - 1]
+                                                        : mincap;
+                                        if (scores[j] === ref_score) {
+                                                break;
+                                        }
+                                        const ratio = scores[l - 1] / ref_score;
+                                        let factor = ratio ** (1 / exponent);
+                                        let s = 0;
+                                        for (let k = j; k < l; k++) {
+                                                s += assignments[k][i];
+                                        }
+                                        factor = Math.min(factor, res[i] / s + 1);
+                                        let required = assignments.map(a => a[i] * factor);
+                                        /* eslint-disable-next-line no-loop-func */
+                                        required = assignments.map((a, k) => Math.min(required[k] - a[i], res[i]));
+                                        if (required.reduce((res, a) => a + res, 0) / totres[i] < 0.0001) {
+                                                // nothing much is changing anymore
+                                                break;
+                                        }
+                                        // assign additional resources and update remainder and score
+                                        for (let k = j; k < l; k++) {
+                                                assignments[k][i] += Math.floor(required[k] + 1);
+                                        }
+                                        res = this.update_res(totres, assignments);
+                                        scores = assignments.map((a, k) => this.score(coef[k], wishcap, a, start[k], goal[k]));
                                 }
-                                if (scores[l - 1] === wishcap * (goal[j] - start[j])) {
-                                        break;
-                                }
-                                const ref_score = j === 0 || scores[j - 1] === 0
-                                        ? wishcap * (goal[j] - start[j])
-                                        : scores[j - 1]
-                                if (scores[j] === ref_score) {
-                                        continue;
-                                }
-                                const ratio = scores[l - 1] / ref_score;
-                                let factor = ratio ** (1 / exponent);
-                                let s = 0;
-                                for (let k = j; k < l; k++) {
-                                        s += assignments[k][i];
-                                }
-                                factor = Math.min(factor, res[i] / s + 1)
-                                let required = assignments.map(a => a[i] * factor);
-                                /* eslint-disable-next-line no-loop-func */
-                                required = assignments.map((a, k) => Math.min(required[k] - a[i], res[i]));
-                                for (let k = j; k < l; k++) {
-                                        assignments[k][i] += Math.floor(required[k] + 1);
-                                }
-                                res = this.update_res(totres, assignments)
-                                scores = assignments.map((a, k) => this.score(coef[k], wishcap, a, start[k], goal[k]));
                         }
                 });
+                res = this.update_res(totres, assignments);
+                scores = assignments.map((a, k) => this.score(coef[k], wishcap, a, start[k], goal[k]));
                 return [assignments, res, scores];
         }
 
@@ -131,7 +147,7 @@ export class Wish {
                         [w1, w2].forEach(w => {
                                 if (res[spend] > 0 && assignments[w][save] > 1) {
                                         const tmp = [...assignments[w]];
-                                        assignments[w][spend] = tmp[spend] + res[spend];
+                                        assignments[w][spend] = Math.ceil(tmp[spend] + res[spend]);
                                         if (tmp[spend] / assignments[w][spend] >= 1) {
                                                 console.log('error in wish assignment')
                                         }
@@ -174,7 +190,7 @@ export class Wish {
                         console.log('Wish warning: too many resources requested.')
                         return [assignments, res, scores];
                 }
-                Math.ceil(assignments[w1][spend] = x * M1);
+                assignments[w1][spend] = Math.ceil(x * M1);
                 assignments[w2][spend] = Math.ceil(M2 + M1 - assignments[w1][spend]);
                 assignments[w1][save] = Math.ceil(M1 * R1 / assignments[w1][spend]);
                 assignments[w2][save] = Math.ceil(M2 * R2 / assignments[w2][spend]);
@@ -317,8 +333,8 @@ export class Wish {
                 console.log(res);
                 scores = assignments.map((a, k) => this.score_raw(coef[k], wishcap, a, start[k], goal[k]));
                 console.log(scores.map(x => Math.floor(x)));
-                console.log(scores.map(x => Math.floor(x)))
-                */
+                /**/
+
                 scores = assignments.map((a, k) => this.score(coef[k], wishcap, a, start[k], goal[k]));
 
                 //unsort the assigned values
