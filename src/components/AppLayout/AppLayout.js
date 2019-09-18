@@ -8,6 +8,7 @@ import './AppLayout.css';
 
 import Optimizer from '../Content/Optimizer';
 import Augment from '../Content/Augment';
+import HackComponent from '../Content/Hacks';
 import WishComponent from '../Content/Wishes';
 import About from '../About/About';
 
@@ -104,6 +105,9 @@ const AppLayout = props => (<div className='app_container'>
                                                 <NavLink to='/augment' exact={true} className='nav-link' activeClassName='active'>Augments</NavLink>
                                         </li>
                                         <li className='nav-bar-item'>
+                                                <NavLink to='/hacks' exact={true} className='nav-link' activeClassName='active'>Hacks</NavLink>
+                                        </li>
+                                        <li className='nav-bar-item'>
                                                 <NavLink to='/wishes' exact={true} className='nav-link' activeClassName='active'>Wishes</NavLink>
                                         </li>
                                         <li className='nav-bar-item'>
@@ -120,6 +124,7 @@ const AppLayout = props => (<div className='app_container'>
                         <Route exact={true} path='/' render={(routeProps) => (<Optimizer {...routeProps} {...props} className='app_body'/>)}/>
                         <Route exact={true} path='/howto/' component={HowTo}/>
                         <Route exact={true} path='/augment/' render={(routeProps) => (<Augment {...routeProps} {...props} className='app_body'/>)}/>
+                        <Route exact={true} path='/hacks/' render={(routeProps) => (<HackComponent {...routeProps} {...props} className='app_body'/>)}/>
                         <Route exact={true} path='/wishes/' render={(routeProps) => (<WishComponent {...routeProps} {...props} className='app_body'/>)}/>
                         <Route exact={true} path='/about/' component={About}/>
                 </div>

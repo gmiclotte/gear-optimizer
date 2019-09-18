@@ -7,10 +7,12 @@ import {
         EmptySlot,
         update_level,
         SetName,
-        Factors
+        Factors,
+        Hacks
 } from '../assets/ItemAux'
 
 import {AUGMENT, AUGMENT_SETTINGS} from '../actions/Augment';
+import {HACK, HACK_SETTINGS} from '../actions/Hack';
 import {WISH, WISH_SETTINGS} from '../actions/Wish';
 import {CREMENT} from '../actions/Crement'
 import {DISABLE_ITEM} from '../actions/DisableItem';
@@ -140,6 +142,17 @@ const INITIAL_STATE = {
                 ],
                 rp_idx: 0
         },
+        hackstats: {
+                rbeta: 0,
+                rdelta: 0,
+                rpow: 1,
+                rcap: 1,
+                hackspeed: 1,
+                hacktime: 24 * 60,
+                hacks: Hacks.map(hack => {
+                        return {level: 0, reducer: 0, goal: 1};
+                })
+        },
         version: '1.2.0'
 };
 
@@ -177,6 +190,28 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 ...state.augment,
                                                 lsc: lsc,
                                                 time: time
+                                        }
+                                };
+                        }
+
+                case HACK:
+                        {
+                                if (!state.running) {
+                                        return state;
+                                }
+                                console.log('worker finished')
+                                return {
+                                        ...state,
+                                        running: false
+                                };
+                        }
+
+                case HACK_SETTINGS:
+                        {
+                                return {
+                                        ...state,
+                                        hackstats: {
+                                                ...action.payload.hackstats
                                         }
                                 };
                         }
@@ -676,6 +711,28 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 return wish;
                                         });
                                         console.log('Wish data:', localStorageState.wishstats);
+                                }
+                                if (localStorageState.version === '1.2.0') {
+                                        console.log('Updating local storage for hacks, some hack data might be erased.');
+                                        Object.getOwnPropertyNames(state.hackstats).forEach(name => {
+                                                if (localStorageState.hackstats[name] === undefined) {
+                                                        localStorageState.hackstats[name] = state.hackstats[name];
+                                                        console.log('Keeping default hackstats ' + name + ': ' + state.hackstats[name]);
+                                                }
+                                        });
+                                        Object.getOwnPropertyNames(localStorageState.hackstats).forEach(name => {
+                                                if (state.hackstats[name] === undefined) {
+                                                        console.log('Removing saved hackstats ' + name + ': ' + localStorageState.hackstats[name]);
+                                                        delete localStorageState.hackstats[name];
+                                                }
+                                        });
+                                        localStorageState.hackstats.hacks = localStorageState.hackstats.hacks.map(hack => {
+                                                if (hack.start === undefined) {
+                                                        hack.start = 0;
+                                                }
+                                                return hack;
+                                        });
+                                        console.log('Hack data:', localStorageState.hackstats);
                                 }
                                 const tmp_factors = Object.getOwnPropertyNames(Factors);
                                 localStorageState.factors = localStorageState.factors.map(name => {

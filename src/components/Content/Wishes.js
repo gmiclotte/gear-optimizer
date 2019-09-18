@@ -19,18 +19,18 @@ class WishComponent extends Component {
 
         handleChange(event, name, idx = -1) {
                 let val = event.target.value;
-                let state = {
+                let wishstats = {
                         ...this.props.wishstats
                 };
                 if (idx < 0) {
-                        state = {
-                                ...state,
+                        wishstats = {
+                                ...wishstats,
                                 [name]: val
                         };
-                        this.props.handleWishSettings(state);
+                        this.props.handleWishSettings(wishstats);
                         return;
                 }
-                let wishes = [...state.wishes];
+                let wishes = [...wishstats.wishes];
                 let wish = {
                         ...wishes[idx],
                         [name]: val
@@ -38,11 +38,11 @@ class WishComponent extends Component {
                 wish.goal = this.goallevel(wish);
                 wish.start = this.startlevel(wish);
                 wishes[idx] = wish;
-                state = {
-                        ...state,
+                wishstats = {
+                        ...wishstats,
                         wishes: wishes
                 };
-                this.props.handleWishSettings(state);
+                this.props.handleWishSettings(wishstats);
                 return;
         }
 
