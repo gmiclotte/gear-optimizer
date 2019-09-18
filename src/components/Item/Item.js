@@ -49,6 +49,7 @@ export default class Item extends Component {
                 classNames += item.disable
                         ? ' disable-item'
                         : '';
+                classNames += ' ' + item.slot[0]
                 let imgname = item.name;
                 imgname = imgname.replace(/</g, '');
                 imgname = imgname.replace(/!/g, '');

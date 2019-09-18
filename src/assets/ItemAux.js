@@ -506,7 +506,28 @@ export const SetName = {
         EXILE3: [
                 'The Exile', 32, 3
         ],
-        EXILE4: ['The Exile', 32, 4]
+        EXILE4: [
+                'The Exile', 32, 4
+        ],
+        RADLANDS: [
+                'The Rad Lands', 33
+        ],
+        BACKTOSCHOOL: [
+                'Back To School', 34
+        ],
+        WESTWORLD: [
+                'The West World', 35
+        ],
+        ITHUNGERS: [
+                'It Hungers', 36, 1
+        ],
+        ITHUNGERS2: [
+                'It Hungers', 36, 2
+        ],
+        ITHUNGERS3: [
+                'It Hungers', 36, 3
+        ],
+        ITHUNGERS4: ['It Hungers', 36, 4]
 }
 
 export const Wishes = [
