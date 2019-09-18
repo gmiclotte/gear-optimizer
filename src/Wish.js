@@ -106,13 +106,15 @@ export class Wish {
                                         let required = assignments.map(a => a[i] * factor);
                                         /* eslint-disable-next-line no-loop-func */
                                         required = assignments.map((a, k) => Math.min(required[k] - a[i], res[i]));
-                                        if (required.reduce((res, a) => a + res, 0) / totres[i] < 0.0001) {
+                                        // assign additional resources and update remainder and score
+                                        let changed = 0;
+                                        for (let k = j; k < l; k++) {
+                                                changed += Math.floor(required[k] + 1) / assignments[k][i];
+                                                assignments[k][i] += Math.floor(required[k] + 1);
+                                        }
+                                        if (changed < 0.0001) {
                                                 // nothing much is changing anymore
                                                 break;
-                                        }
-                                        // assign additional resources and update remainder and score
-                                        for (let k = j; k < l; k++) {
-                                                assignments[k][i] += Math.floor(required[k] + 1);
                                         }
                                         res = this.update_res(totres, assignments);
                                         scores = assignments.map((a, k) => this.score(coef[k], wishcap, a, start[k], goal[k]));
