@@ -259,6 +259,11 @@ class HackComponent extends Component {
                                 </table>
                         </form>
                         <br/>
+                        <div className='center half'>
+                                {'Please note that the ingame hack speed breakdown is broken in version 0.427-2 and older.'}
+                                {' Multiply the \'Total Hack Speed\' with the \'Equipment Modifier\', and use the resulting value in this hack calculator.'}
+                                {' Example: \'Equipment Modifier\' = 194.6%, \'Total Hack Speed\' = 92,360%, then enter 194.6% * 92,360% = 1797.3256.'}
+                        </div>
                 </div>);
         };
 }
