@@ -4,7 +4,7 @@ import ReactTooltip from 'react-tooltip'
 import Item from '../Item/Item'
 import {Factors, EmptySlot, Slot} from '../../assets/ItemAux'
 import './ItemTable.css';
-import {score_equip} from '../../util'
+import {score_equip, shorten} from '../../util'
 
 import {default as SaveButtons} from './SaveButtons'
 
@@ -29,29 +29,6 @@ function group(a, b, g) {
                 return false;
         }
         return a[g][1] !== b[g][1];
-}
-
-const shorten = (val) => {
-        if (val < 10000) {
-                return val.toLocaleString(undefined, {maximumFractionDigits: 2});
-        }
-        let units = [
-                'k',
-                'M',
-                'B',
-                'T',
-                'Qa',
-                'Qi',
-                'Sx',
-                'Sp',
-                'Oc',
-                'No',
-                'Dc'
-        ];
-        let order = Math.floor(Math.log(val / 10) / Math.log(1000));
-        let unitname = units[(order - 1)];
-        let num = val / 1000 ** order;
-        return num.toLocaleString(undefined, {maximumFractionDigits: 2}) + unitname;
 }
 
 const formatted = (val, stat, d) => {

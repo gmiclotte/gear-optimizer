@@ -149,11 +149,12 @@ const INITIAL_STATE = {
                 rcap: 1,
                 hackspeed: 1,
                 hacktime: 24 * 60,
-                hacks: Hacks.map(hack => {
-                        return {level: 0, reducer: 0, goal: 1};
+                hackoption: '0',
+                hacks: Hacks.map((hack, hackidx) => {
+                        return {level: 0, reducer: 0, goal: 1, hackidx: hackidx};
                 })
         },
-        version: '1.2.0'
+        version: '1.3.0'
 };
 
 const ItemsReducer = (state = INITIAL_STATE, action) => {
@@ -712,27 +713,15 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         });
                                         console.log('Wish data:', localStorageState.wishstats);
                                 }
-                                if (localStorageState.version === '1.2.0') {
-                                        console.log('Updating local storage for hacks, some hack data might be erased.');
-                                        Object.getOwnPropertyNames(state.hackstats).forEach(name => {
-                                                if (localStorageState.hackstats[name] === undefined) {
-                                                        localStorageState.hackstats[name] = state.hackstats[name];
-                                                        console.log('Keeping default hackstats ' + name + ': ' + state.hackstats[name]);
+                                while (localStorageState.hackstats.hacks.length < Hacks.length) {
+                                        localStorageState.hackstats.hacks = [
+                                                ...localStorageState.hackstats.hacks, {
+                                                        level: 0,
+                                                        reducer: 0,
+                                                        goal: 1,
+                                                        hackidx: localStorageState.hackstats.hacks.length
                                                 }
-                                        });
-                                        Object.getOwnPropertyNames(localStorageState.hackstats).forEach(name => {
-                                                if (state.hackstats[name] === undefined) {
-                                                        console.log('Removing saved hackstats ' + name + ': ' + localStorageState.hackstats[name]);
-                                                        delete localStorageState.hackstats[name];
-                                                }
-                                        });
-                                        localStorageState.hackstats.hacks = localStorageState.hackstats.hacks.map(hack => {
-                                                if (hack.start === undefined) {
-                                                        hack.start = 0;
-                                                }
-                                                return hack;
-                                        });
-                                        console.log('Hack data:', localStorageState.hackstats);
+                                        ];
                                 }
                                 const tmp_factors = Object.getOwnPropertyNames(Factors);
                                 localStorageState.factors = localStorageState.factors.map(name => {
@@ -758,6 +747,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         pendant: localStorageState.pendant,
                                         hidden: localStorageState.hidden,
                                         augment: localStorageState.augment,
+                                        hackstats: localStorageState.hackstats,
                                         wishstats: localStorageState.wishstats
                                 };
                         }

@@ -1,5 +1,5 @@
 import {Wishes, resource_priorities} from './assets/ItemAux';
-
+import {shortenExponential, to_time} from './util';
 // [min, max[
 function getRandomInt(min, max) {
         min = Math.ceil(min);
@@ -7,33 +7,9 @@ function getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min)) + min;
 }
 
-const shortenExponential = (val) => {
-        if (val < 10000) {
-                return val;
-        }
-        return (val - 10 ** Math.floor(Math.log10(val) - 3)).toExponential(3);
-}
-
 export class Wish {
         constructor(wishstats) {
                 this.wishstats = wishstats;
-        }
-
-        to_time(ticks) {
-                let result = '';
-                let mins = Math.floor(ticks / 50 / 60);
-                let days = Math.floor(mins / 60 / 24);
-                mins -= days * 24 * 60;
-                let hours = Math.floor(mins / 60);
-                mins -= hours * 60;
-                if (days > 0) {
-                        result += days + 'd ';
-                }
-                if (days > 0 || hours > 0) {
-                        result += hours + 'h ';
-                }
-                result += mins + 'm';
-                return result;
         }
 
         base(res) {
@@ -241,7 +217,7 @@ export class Wish {
                 if (powproduct === 1 && capproduct === 1) {
                         // quit early
                         return [
-                                this.to_time(Math.max(...scores)),
+                                to_time(Math.max(...scores)),
                                 assignments.map(a => shortenExponential(a[0]) + ' E; ' + shortenExponential(a[1]) + ' M; ' + shortenExponential(a[2]) + ' R3'),
                                 shortenExponential(res[0]) + ' E; ' + shortenExponential(res[1]) + ' M; ' + shortenExponential(res[2]) + ' R3'
                         ];
@@ -347,7 +323,7 @@ export class Wish {
                 }
                 res = res.map(x => Math.max(0, x));
                 return [
-                        this.to_time(Math.max(...scores)),
+                        to_time(Math.max(...scores)),
                         tmp.map(a => shortenExponential(a[0]) + ' E; ' + shortenExponential(a[1]) + ' M; ' + shortenExponential(a[2]) + ' R3'),
                         shortenExponential(res[0]) + ' E; ' + shortenExponential(res[1]) + ' M; ' + shortenExponential(res[2]) + ' R3'
                 ];

@@ -181,3 +181,57 @@ export function score_product(equip, factors) {
         }
         return score_vals(vals, factors);
 }
+
+export const shorten = (val, mfd = 2) => {
+        if (val < 10000) {
+                return val.toLocaleString(undefined, {maximumFractionDigits: mfd});
+        }
+        let units = [
+                'k',
+                'M',
+                'B',
+                'T',
+                'Qa',
+                'Qi',
+                'Sx',
+                'Sp',
+                'Oc',
+                'No',
+                'Dc'
+        ];
+        let order = Math.floor(Math.log(val / 10) / Math.log(1000));
+        let unitname = units[(order - 1)];
+        let num = val / 1000 ** order;
+        return num.toLocaleString(undefined, {maximumFractionDigits: mfd}) + unitname;
+}
+
+export const shortenExponential = (val, mfd = 3) => {
+        if (val < 10000) {
+                return val.toLocaleString(undefined, {maximumFractionDigits: mfd});
+        }
+        return (val - 10 ** Math.floor(Math.log10(val) - mfd)).toExponential(mfd);
+}
+
+export const to_time = (ticks) => {
+        let result = '';
+        let days = Math.floor(ticks / 50 / 60 / 60 / 24);
+        ticks -= days * 24 * 60 * 60 * 50;
+        let hours = Math.floor(ticks / 50 / 60 / 60);
+        ticks -= hours * 60 * 60 * 50;
+        let mins = Math.floor(ticks / 50 / 60);
+        ticks -= mins * 60 * 50
+        if (days >= 100) {
+                return shorten(days, 0) + ' days';
+        }
+        if (days > 0) {
+                result += days + 'd ';
+        }
+        if (days > 0 || hours > 0) {
+                result += hours + 'h ';
+        }
+        if (days > 0 || hours > 0 || mins > 0) {
+                result += mins + 'm ';
+        }
+        result += shortenExponential(ticks / 50, 1) + 's'
+        return result;
+}

@@ -1,6 +1,13 @@
 .center {
         margin: auto;
         text-align: center;
+}
+
+.half {
         width: 50%;
         padding: 5vh 1vw;
+}
+
+.hide {
+        display: none;
 }

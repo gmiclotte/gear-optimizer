@@ -539,7 +539,7 @@ export const SetName = {
 
 export const Hacks = [
         [
-                'Attack/Defense Hack',
+                'Stats',
                 1.00E+08,
                 2.5000,
                 1.0250,
@@ -547,7 +547,7 @@ export const Hacks = [
                 7720
         ],
         [
-                'Adventure Stats Hac',
+                'Adventure',
                 2.00E+08,
                 0.1000,
                 1.0200,
@@ -555,7 +555,7 @@ export const Hacks = [
                 7632
         ],
         [
-                'Time Machine Speed Hack',
+                'TM',
                 4.00E+08,
                 0.2000,
                 1.0200,
@@ -563,7 +563,7 @@ export const Hacks = [
                 7544
         ],
         [
-                'Drop Chance Hack',
+                'Drop',
                 4.00E+08,
                 0.2500,
                 1.0300,
@@ -571,7 +571,7 @@ export const Hacks = [
                 7544
         ],
         [
-                'Augment Speed Hack',
+                'Augment',
                 8.00E+08,
                 0.2000,
                 1.0100,
@@ -579,7 +579,7 @@ export const Hacks = [
                 7456
         ],
         [
-                'Energy NGU Speed Hack',
+                'ENGU',
                 2.00E+09,
                 0.1000,
                 1.0150,
@@ -587,7 +587,7 @@ export const Hacks = [
                 7340
         ],
         [
-                'Magic NGU Speed Hack',
+                'MNGU',
                 2.00E+09,
                 0.1000,
                 1.0150,
@@ -595,7 +595,7 @@ export const Hacks = [
                 7340
         ],
         [
-                'Blood Gain Hack',
+                'Blood',
                 4.00E+09,
                 0.1000,
                 1.0200,
@@ -603,7 +603,7 @@ export const Hacks = [
                 7252
         ],
         [
-                'QP Gain Hack',
+                'QP',
                 8.00E+09,
                 0.0500,
                 1.0080,
@@ -611,7 +611,7 @@ export const Hacks = [
                 7164
         ],
         [
-                'Daycare Hack',
+                'Daycare',
                 2.00E+10,
                 0.0200,
                 1.0050,
@@ -619,7 +619,7 @@ export const Hacks = [
                 7048
         ],
         [
-                'EXP Hack',
+                'EXP',
                 4.00E+10,
                 0.0250,
                 1.0100,
@@ -627,7 +627,7 @@ export const Hacks = [
                 6960
         ],
         [
-                'Number Hack',
+                'Number',
                 8.00E+10,
                 5.0000,
                 1.0200,
@@ -635,7 +635,7 @@ export const Hacks = [
                 6873
         ],
         [
-                'PP Hack',
+                'PP',
                 2.00E+11,
                 0.0500,
                 1.0050,
@@ -643,12 +643,20 @@ export const Hacks = [
                 6757
         ],
         [
-                'Hack Hack',
+                'Hack',
                 2.00E+11,
                 0.0500,
                 1.1000,
                 100,
                 6757
+        ],
+        [
+                'Wish Hack',
+                1.00E+13,
+                0.0100,
+                1.0050,
+                50,
+                6262
         ]
 ];
 
