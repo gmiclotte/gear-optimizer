@@ -208,12 +208,10 @@ export const multiple_factors = {
         NGUS: [
                 'NGUs',
                 [
-                        Stat.ENERGY_CAP,
-                        Stat.ENERGY_POWER,
-                        Stat.NGU_SPEED,
-                        Stat.MAGIC_CAP,
-                        Stat.MAGIC_POWER,
-                        Stat.NGU_SPEED
+                        Stat.ENERGY_CAP, Stat.ENERGY_POWER, Stat.MAGIC_CAP, Stat.MAGIC_POWER, Stat.NGU_SPEED
+                ],
+                [
+                        0.5, 0.5, 0.5, 0.5, 1
                 ]
         ],
         HACK: [
@@ -248,13 +246,22 @@ export const multiple_factors = {
                 [
                         Stat.ENERGY_CAP,
                         Stat.ENERGY_POWER,
-                        Stat.NGU_SPEED,
                         Stat.MAGIC_CAP,
                         Stat.MAGIC_POWER,
                         Stat.NGU_SPEED,
                         Stat.RES3_CAP,
                         Stat.RES3_POWER,
                         Stat.HACK_SPEED
+                ],
+                [
+                        1 / 3,
+                        1 / 3,
+                        1 / 3,
+                        1 / 3,
+                        2 / 3,
+                        1 / 3,
+                        1 / 3,
+                        1 / 3
                 ]
         ],
         TIMEMACHINE: [
