@@ -99,6 +99,7 @@ class HackComponent extends Component {
                 const classMS = option === '2'
                         ? ''
                         : 'hide';
+                let sumtime = 0;
                 //HACK: this sets the dropdown to the correct value after loading
                 if (this.state.hackoption !== this.props.hackstats.hackoption) {
                         /* eslint-disable-next-line react/no-direct-mutation-state */
@@ -198,6 +199,7 @@ class HackComponent extends Component {
                                                                 if (option === '0') {
                                                                         bonus = hackOptimizer.bonus(target, pos);
                                                                         time = hackOptimizer.time(level, target, pos);
+                                                                        sumtime += time;
                                                                 } else {
                                                                         reachableLevel = hackOptimizer.reachable(level, hacktime, pos);
                                                                         time = hackOptimizer.time(level, reachableLevel, pos);
@@ -245,6 +247,14 @@ class HackComponent extends Component {
                                                                 </tr>;
                                                         })
                                                 }
+                                                <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <th className={classTarget}>{'Total: ' + to_time(sumtime)}</th>
+                                                </tr>
                                         </tbody>
                                 </table>
                         </form>
@@ -252,4 +262,5 @@ class HackComponent extends Component {
                 </div>);
         };
 }
+
 export default HackComponent;
