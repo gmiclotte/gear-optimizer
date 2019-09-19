@@ -100,6 +100,8 @@ class HackComponent extends Component {
                         ? ''
                         : 'hide';
                 let sumtime = 0;
+                let hackhacktime = 0;
+                let hackhackchange = 1;
                 //HACK: this sets the dropdown to the correct value after loading
                 if (this.state.hackoption !== this.props.hackstats.hackoption) {
                         /* eslint-disable-next-line react/no-direct-mutation-state */
@@ -212,6 +214,10 @@ class HackComponent extends Component {
                                                                         }
                                                                 }
                                                                 const change = bonus / currBonus;
+                                                                if (pos === 13) {
+                                                                        hackhacktime = time;
+                                                                        hackhackchange = change;
+                                                                }
                                                                 return <tr key={pos}>
                                                                         <td>{hack[0]}</td>
                                                                         <td>
@@ -253,16 +259,29 @@ class HackComponent extends Component {
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
-                                                        <th className={classTarget}>{'Total: ' + to_time(sumtime)}</th>
+                                                        <th className={classTarget}>{'Min total: ' + to_time((sumtime - hackhacktime) / hackhackchange + hackhacktime)}</th>
+                                                </tr>
+                                                <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <th className={classTarget}>{'Max total: ' + to_time(sumtime)}</th>
                                                 </tr>
                                         </tbody>
                                 </table>
                         </form>
                         <br/>
                         <div className='center half'>
-                                {'Please note that the ingame hack speed breakdown is broken in version 0.427-2 and older.'}
-                                {' Multiply the \'Total Hack Speed\' with the \'Equipment Modifier\', and use the resulting value in this hack calculator.'}
-                                {' Example: \'Equipment Modifier\' = 194.6%, \'Total Hack Speed\' = 92,360%, then enter 194.6% * 92,360% = 1797.3256.'}
+                                {'Min total time assumes you run Hack Hack first.'}
+                                {' Max total time assumes you run Hack Hack last,'}
+                                {' this is a sum of the times in the \'Time\' column, which are based on current hack speed.'}
+                                <br/> {'Please note that the ingame hack speed breakdown is broken in version 0.427-2 and older.'}
+                                {' Multiply the \'Total Hack Speed\' with the \'Equipment Modifier\','}
+                                {' and use the resulting value in this hack calculator.'}
+                                {' Example: \'Equipment Modifier\' = 194.6%, \'Total Hack Speed\' = 92,360%,'}
+                                {' then enter 194.6% * 92,360% = 1797.3256.'}
                         </div>
                 </div>);
         };
