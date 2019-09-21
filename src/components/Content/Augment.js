@@ -25,6 +25,10 @@ class Augment extends Component {
                 this.handleSubmit = this.handleSubmit.bind(this);
         }
 
+        handleFocus(event) {
+                event.target.select();
+        }
+
         handleSubmit(event) {
                 event.preventDefault();
         }
@@ -77,7 +81,7 @@ class Augment extends Component {
                                         <input style={{
                                                         width: '30px',
                                                         margin: '5px'
-                                                }} type="text" value={this.props.augment.lsc} onChange={(e) => this.handleChange(e, 'lsc')}/>
+                                        }} type="text" value={this.props.augment.lsc} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'lsc')}/>
                                 </label>
                                 <br/>
                                 <label>
@@ -85,7 +89,7 @@ class Augment extends Component {
                                         <input style={{
                                                         width: '40px',
                                                         margin: '5px'
-                                                }} type="text" value={this.props.augment.time} onChange={(e) => this.handleChange(e, 'time')} autoFocus={true} onFocus={this.handleFocus}/>
+                                        }} type="text" value={this.props.augment.time} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'time')} autoFocus={true}/>
                                 </label>
                         </form>
                         <Button {...this.props} state={this.props.augment} abort={this.props.handleTerminate}/>

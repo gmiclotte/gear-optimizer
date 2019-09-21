@@ -13,6 +13,10 @@ class WishComponent extends Component {
                 this.handleSubmit = this.handleSubmit.bind(this);
         }
 
+        handleFocus(event) {
+                event.target.select();
+        }
+
         handleSubmit(event) {
                 event.preventDefault();
         }
@@ -92,14 +96,14 @@ class WishComponent extends Component {
                                                                 <input style={{
                                                                                 width: '100px',
                                                                                 margin: '5px'
-                                                                        }} type="number" value={this.props.wishstats[x[0] + 'pow']} onChange={(e) => this.handleChange(e, x[0] + 'pow')}/>
+                                                                        }} type="number" value={this.props.wishstats[x[0] + 'pow']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, x[0] + 'pow')}/>
                                                         </label>
                                                         <label >
                                                                 {' cap'}
                                                                 <input style={{
                                                                                 width: '100px',
                                                                                 margin: '5px'
-                                                                        }} type="number" value={this.props.wishstats[x[0] + 'cap']} onChange={(e) => this.handleChange(e, x[0] + 'cap')}/>
+                                                                        }} type="number" value={this.props.wishstats[x[0] + 'cap']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, x[0] + 'cap')}/>
                                                         </label>
                                                 </div>)
                                         }
@@ -109,7 +113,7 @@ class WishComponent extends Component {
                                         <input style={{
                                                         width: '60px',
                                                         margin: '5px'
-                                                }} type="number" value={this.props.wishstats.wishspeed} onChange={(e) => this.handleChange(e, 'wishspeed')} onFocus={this.handleFocus}/>
+                                                }} type="number" value={this.props.wishstats.wishspeed} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'wishspeed')}/>
                                 </label>
                                 <br/>
                                 <label>
@@ -117,7 +121,7 @@ class WishComponent extends Component {
                                         <input style={{
                                                         width: '60px',
                                                         margin: '5px'
-                                                }} type="number" value={this.props.wishstats.wishcap} onChange={(e) => this.handleChange(e, 'wishcap')} onFocus={this.handleFocus}/> {' minutes'}
+                                                }} type="number" value={this.props.wishstats.wishcap} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'wishcap')}/> {' minutes'}
                                 </label>
                                 <br/> {'Resource spending order:'}
                                 {<ResourcePriorityForm {...this.props} handleChange={this.handleChange}/>}
@@ -133,13 +137,13 @@ class WishComponent extends Component {
                                                         {' Start level:'}<input style={{
                                                         width: '30px',
                                                         margin: '5px'
-                                                }} type="number" value={this.props.wishstats.wishes[pos].start} onChange={(e) => this.handleChange(e, 'start', pos)} onFocus={this.handleFocus}/>
+                                                }} type="number" value={this.props.wishstats.wishes[pos].start} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'start', pos)}/>
                                                 </label>
                                                 <label>
                                                         {' Target level:'}<input style={{
                                                         width: '30px',
                                                         margin: '5px'
-                                                }} type="number" value={this.props.wishstats.wishes[pos].goal} onChange={(e) => this.handleChange(e, 'goal', pos)} onFocus={this.handleFocus}/>
+                                                }} type="number" value={this.props.wishstats.wishes[pos].goal} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'goal', pos)}/>
                                                 </label>
                                         </div>)
                                 }

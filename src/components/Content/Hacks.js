@@ -14,6 +14,10 @@ class HackComponent extends Component {
                 this.handleSubmit = this.handleSubmit.bind(this);
         }
 
+        handleFocus(event) {
+                event.target.select();
+        }
+
         handleSubmit(event) {
                 event.preventDefault();
         }
@@ -32,10 +36,29 @@ class HackComponent extends Component {
                         return;
                 }
                 let hacks = [...hackstats.hacks];
-                let hack = {
-                        ...hacks[idx],
-                        [name]: val
-                };
+                let hack;
+                if (name === 'msup' || name === 'msdown') {
+                        let goal = hacks[idx].goal;
+                        const reducer = hacks[idx].reducer;
+                        const msgap = Hacks[idx][4] - reducer;
+                        goal = goal / msgap
+                        goal += name === 'msup'
+                                ? 1
+                                : -1;
+                        goal = name === 'msup'
+                                ? Math.floor(goal)
+                                : Math.ceil(goal);
+                        goal *= msgap;
+                        hack = {
+                                ...hacks[idx],
+                                goal: goal
+                        };
+                } else {
+                        hack = {
+                                ...hacks[idx],
+                                [name]: val
+                        };
+                }
                 hack.goal = this.level(hack.goal, idx);
                 hack.level = this.level(hack.level, idx);
                 hack.reducer = this.reducer(hack);
@@ -118,7 +141,7 @@ class HackComponent extends Component {
                                                                         <input style={{
                                                                                         width: '100px',
                                                                                         margin: '5px'
-                                                                                }} type="number" value={this.props.hackstats['rpow']} onChange={(e) => this.handleChange(e, 'rpow')}/>
+                                                                                }} type="number" value={this.props.hackstats['rpow']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'rpow')}/>
                                                                 </label>
                                                         </td>
                                                 </tr>
@@ -129,7 +152,7 @@ class HackComponent extends Component {
                                                                         <input style={{
                                                                                         width: '100px',
                                                                                         margin: '5px'
-                                                                                }} type="number" value={this.props.hackstats['rcap']} onChange={(e) => this.handleChange(e, 'rcap')}/>
+                                                                                }} type="number" value={this.props.hackstats['rcap']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'rcap')}/>
                                                                 </label>
                                                         </td>
                                                 </tr>
@@ -140,7 +163,7 @@ class HackComponent extends Component {
                                                                         <input style={{
                                                                                         width: '100px',
                                                                                         margin: '5px'
-                                                                                }} type="number" value={this.props.hackstats.hackspeed} onChange={(e) => this.handleChange(e, 'hackspeed')} onFocus={this.handleFocus}/>
+                                                                                }} type="number" value={this.props.hackstats.hackspeed} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'hackspeed')}/>
                                                                 </label>
                                                         </td>
                                                 </tr>
@@ -151,7 +174,7 @@ class HackComponent extends Component {
                                                                         <input style={{
                                                                                         width: '100px',
                                                                                         margin: '5px'
-                                                                                }} type="number" value={hacktime} onChange={(e) => this.handleChange(e, 'hacktime')} onFocus={this.handleFocus}/>
+                                                                                }} type="number" value={hacktime} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'hacktime')}/>
                                                                 </label>
                                                         </td>
                                                 </tr>
@@ -178,41 +201,47 @@ class HackComponent extends Component {
                                         <tbody>
                                                 <tr>
                                                         <th>Hack</th>
-                                                        <th>MS Reducer</th>
+                                                        <th>Milestone<br/>Reducers</th>
                                                         <th>Level</th>
                                                         <th>Bonus</th>
                                                         <th className={classTarget}>Target</th>
                                                         <th className={classLevel}>Max Level<br/>in {hacktime}min</th>
                                                         <th className={classMS}>Max MS<br/>in {hacktime}min</th>
+                                                        <th>MS</th>
                                                         <th>Time</th>
                                                         <th>Bonus</th>
                                                         <th>Change</th>
+                                                        <th>Next Level</th>
+                                                        <th className={classTarget}>Next Level<br/>After Target</th>
+                                                        <th className={classLevel}>Next Level<br/>After Max Level</th>
+                                                        <th className={classMS}>Next Level<br/>After Max MS</th>
                                                 </tr>
                                                 {
                                                         Hacks.map((hack, pos) => {
                                                                 const reducer = this.props.hackstats.hacks[pos].reducer;
                                                                 const level = this.props.hackstats.hacks[pos].level;
-                                                                const target = this.props.hackstats.hacks[pos].goal;
                                                                 const currBonus = hackOptimizer.bonus(level, pos);
-                                                                let bonus,
-                                                                        time,
-                                                                        reachableLevel,
-                                                                        reachableMS;
+                                                                let target = 0;
                                                                 if (option === '0') {
-                                                                        bonus = hackOptimizer.bonus(target, pos);
-                                                                        time = hackOptimizer.time(level, target, pos);
-                                                                        sumtime += time;
+                                                                        target = this.props.hackstats.hacks[pos].goal;
+
                                                                 } else {
-                                                                        reachableLevel = hackOptimizer.reachable(level, hacktime, pos);
-                                                                        time = hackOptimizer.time(level, reachableLevel, pos);
-                                                                        if (option === '1') {
-                                                                                bonus = hackOptimizer.bonus(reachableLevel, pos);
-                                                                        } else {
-                                                                                reachableMS = hackOptimizer.milestoneLevel(reachableLevel, pos);
-                                                                                time = hackOptimizer.time(level, reachableMS, pos);
-                                                                                bonus = hackOptimizer.bonus(reachableMS, pos);
+                                                                        target = hackOptimizer.reachable(level, hacktime, pos);
+                                                                        if (option === '2') {
+                                                                                target = hackOptimizer.milestoneLevel(target, pos);
                                                                         }
                                                                 }
+                                                                let bonus = target > level
+                                                                        ? hackOptimizer.bonus(target, pos)
+                                                                        : currBonus;
+                                                                let time = hackOptimizer.time(level, target, pos);
+                                                                let timePastLevel = hackOptimizer.time(level, level + 1, pos);
+                                                                let timePastTarget = hackOptimizer.time(level, target + 1, pos) - hackOptimizer.time(level, target, pos);
+                                                                let mschange = target > level
+                                                                        ? hackOptimizer.milestones(target, pos) - hackOptimizer.milestones(level, pos)
+                                                                        : 0;
+                                                                mschange = '+' + mschange;
+                                                                sumtime += time;
                                                                 const change = bonus / currBonus;
                                                                 if (pos === 13) {
                                                                         hackhacktime = time;
@@ -227,7 +256,7 @@ class HackComponent extends Component {
                                                                                         <input style={{
                                                                                                         width: '40px',
                                                                                                         margin: '5px'
-                                                                                                }} type="number" value={reducer} onChange={(e) => this.handleChange(e, 'reducer', pos)} onFocus={this.handleFocus}/>
+                                                                                                }} type="number" value={reducer} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'reducer', pos)}/>
                                                                                 </label>
                                                                         </td>
                                                                         <td>
@@ -235,7 +264,7 @@ class HackComponent extends Component {
                                                                                         <input style={{
                                                                                                         width: '60px',
                                                                                                         margin: '5px'
-                                                                                                }} type="number" value={level} onChange={(e) => this.handleChange(e, 'level', pos)} onFocus={this.handleFocus}/>
+                                                                                                }} type="number" value={level} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'level', pos)}/>
                                                                                 </label>
                                                                         </td>
                                                                         <td>{shorten(currBonus, 2)}%</td>
@@ -244,14 +273,23 @@ class HackComponent extends Component {
                                                                                         <input style={{
                                                                                                         width: '60px',
                                                                                                         margin: '5px'
-                                                                                                }} type="number" value={target} onChange={(e) => this.handleChange(e, 'goal', pos)} onFocus={this.handleFocus}/>
+                                                                                                }} type="number" value={target} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'goal', pos)}/>
                                                                                 </label>
+                                                                                <button type="button" onClick={(e) => this.handleChange(e, 'msdown', pos)}>
+                                                                                        -
+                                                                                </button>
+                                                                                <button type="button" onClick={(e) => this.handleChange(e, 'msup', pos)}>
+                                                                                        +
+                                                                                </button>
                                                                         </td>
-                                                                        <td className={classLevel}>{reachableLevel}</td>
-                                                                        <td className={classMS}>{reachableMS}</td>
+                                                                        <td className={classLevel}>{target}</td>
+                                                                        <td className={classMS}>{target}</td>
+                                                                        <td>{mschange}</td>
                                                                         <td>{to_time(time)}</td>
                                                                         <td>{shorten(bonus, 2)}%</td>
                                                                         <td>×{shorten(change, 3)}</td>
+                                                                        <td>{to_time(timePastLevel)}</td>
+                                                                        <td>{to_time(timePastTarget)}</td>
                                                                 </tr>;
                                                         })
                                                 }
@@ -261,7 +299,8 @@ class HackComponent extends Component {
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
-                                                        <th className={classTarget}>{'Min total: ' + to_time((sumtime - hackhacktime) / hackhackchange + hackhacktime)}</th>
+                                                        <td></td>
+                                                        <th className={classTarget}>{'Min total:'}<br/>{'' + to_time((sumtime - hackhacktime) / hackhackchange + hackhacktime)}</th>
                                                 </tr>
                                                 <tr>
                                                         <td></td>
@@ -269,7 +308,8 @@ class HackComponent extends Component {
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
-                                                        <th className={classTarget}>{'Max total: ' + to_time(sumtime)}</th>
+                                                        <td></td>
+                                                        <th className={classTarget}>{'Max total:'}<br/>{'' + to_time(sumtime)}</th>
                                                 </tr>
                                         </tbody>
                                 </table>
