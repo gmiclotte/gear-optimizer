@@ -216,7 +216,9 @@ class HackComponent extends Component {
                                                                 const change = bonus / currBonus;
                                                                 if (pos === 13) {
                                                                         hackhacktime = time;
-                                                                        hackhackchange = change;
+                                                                        hackhackchange = change < 1
+                                                                                ? 1
+                                                                                : change;
                                                                 }
                                                                 return <tr key={pos}>
                                                                         <td>{hack[0]}</td>
