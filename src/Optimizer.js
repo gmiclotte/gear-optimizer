@@ -303,6 +303,10 @@ export class Optimizer {
                                                 }
                                                 const atrisk = candidate.accessory[riskidx];
                                                 let winner = undefined;
+                                                filter_accs = [
+                                                        ...filter_accs,
+                                                        EMPTY_ACCESSORY
+                                                ];
                                                 for (let kdx in filter_accs) {
                                                         const acc = filter_accs[kdx];
                                                         const tmp = this.swap_vals([...vals], atrisk, acc);
@@ -409,12 +413,23 @@ export class Optimizer {
                 for (let i = 0; i < l; i++) {
                         let stat = this.factors[1][i];
                         let idx = major.statnames.indexOf(stat);
+                        const exponent = this.factors.length > 2
+                                ? this.factors[2][i]
+                                : 1;
                         if (idx >= 0) {
-                                major_stats[i] = major[stat];
+                                major_stats[i] = major[stat] ** exponent;
+                        } else {
+                                minor_stats[i] = exponent > 0 || minor.empty
+                                        ? 0
+                                        : 1;
                         }
                         idx = minor.statnames.indexOf(stat);
                         if (idx >= 0) {
-                                minor_stats[i] = minor[stat];
+                                minor_stats[i] = minor[stat] ** exponent;
+                        } else {
+                                minor_stats[i] = exponent > 0 || major.empty
+                                        ? 0
+                                        : 1;
                         }
                         if (minor_stats[i] > major_stats[i]) {
                                 return false;
