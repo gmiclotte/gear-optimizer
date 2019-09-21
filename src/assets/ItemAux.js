@@ -182,7 +182,9 @@ let remaining_factors = {};
 
 Object.keys(Stat).forEach(key => {
         if (key.includes('SPEED')) {
-                return;
+                if (!key.includes('ENERGY_') && !key.includes('MAGIC_')) {
+                        return;
+                }
         }
         if (single_factors[key] === undefined) {
                 remaining_factors[key] = [
