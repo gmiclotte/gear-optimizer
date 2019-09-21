@@ -213,7 +213,11 @@ export const multiple_factors = {
                         Stat.ENERGY_CAP, Stat.ENERGY_POWER, Stat.MAGIC_CAP, Stat.MAGIC_POWER, Stat.NGU_SPEED
                 ],
                 [
-                        0.5, 0.5, 0.5, 0.5, 1
+                        1 / 2,
+                        1 / 2,
+                        1 / 2,
+                        1 / 2,
+                        1
                 ]
         ],
         HACK: [
@@ -266,10 +270,28 @@ export const multiple_factors = {
                         1 / 3
                 ]
         ],
+        ETIMEMACHINE: [
+                'Energy Time Machine',
+                [
+                        Stat.ENERGY_CAP, Stat.ENERGY_POWER
+                ]
+        ],
+        MTIMEMACHINE: [
+                'Magic Time Machine',
+                [
+                        Stat.MAGIC_CAP, Stat.MAGIC_POWER
+                ]
+        ],
         TIMEMACHINE: [
                 'Time Machine',
                 [
                         Stat.ENERGY_CAP, Stat.ENERGY_POWER, Stat.MAGIC_CAP, Stat.MAGIC_POWER
+                ],
+                [
+                        1 / 2,
+                        1 / 2,
+                        1 / 2,
+                        1 / 2
                 ]
         ],
         BLOOD: [
@@ -294,6 +316,12 @@ export const multiple_factors = {
                 'Wandoos',
                 [
                         Stat.ENERGY_CAP, Stat.WANDOOS_SPEED, Stat.MAGIC_CAP, Stat.WANDOOS_SPEED
+                ],
+                [
+                        1 / 2,
+                        1 / 2,
+                        1 / 2,
+                        1 / 2
                 ]
         ],
         AUGMENTATION: [
@@ -308,7 +336,9 @@ export const multiple_factors = {
                         Stat.ENERGY_POWER, Stat.ENERGY_CAP, Stat.AT_SPEED
                 ],
                 [
-                        .5, 1, 1
+                        1 / 2,
+                        1,
+                        1
                 ]
         ],
         EBEARD: [
@@ -317,7 +347,9 @@ export const multiple_factors = {
                         Stat.ENERGY_POWER, Stat.ENERGY_BARS, Stat.BEARD_SPEED
                 ],
                 [
-                        .5, 1, 1
+                        1 / 2,
+                        1,
+                        1
                 ]
         ],
         MBEARD: [
@@ -326,7 +358,22 @@ export const multiple_factors = {
                         Stat.MAGIC_POWER, Stat.MAGIC_BARS, Stat.BEARD_SPEED
                 ],
                 [
-                        .5, 1, 1
+                        1 / 2,
+                        1,
+                        1
+                ]
+        ],
+        BEARD: [
+                'Beards',
+                [
+                        Stat.ENERGY_POWER, Stat.ENERGY_BARS, Stat.MAGIC_POWER, Stat.MAGIC_BARS, Stat.BEARD_SPEED
+                ],
+                [
+                        1 / 4,
+                        1 / 2,
+                        1 / 4,
+                        1 / 2,
+                        1
                 ]
         ],
         ECAPSPEED: [
@@ -423,7 +470,7 @@ export const SetName = {
                 'Jake from Accounting', 13
         ],
         GAUDY: [
-                'Ary Strange Place', 14
+                'A Very Strange Place', 14
         ],
         MEGA: [
                 'Mega Lands', 15
