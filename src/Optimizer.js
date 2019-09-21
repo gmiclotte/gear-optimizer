@@ -116,7 +116,8 @@ export class Optimizer {
         sort_accs(equip) {
                 let optimal_size = equip.items.length;
                 let scores = [];
-                for (let jdx = equip.item_count; jdx < optimal_size; jdx++) {
+                for (let jdx = Math.max(0, equip.item_count); jdx < optimal_size; jdx++) {
+                        console.log(equip.item_count, optimal_size)
                         let item = equip.items[jdx];
                         let score = this.score_equip_wrapper(this.remove_equip(clone(equip), item));
                         scores.push([score, item])
