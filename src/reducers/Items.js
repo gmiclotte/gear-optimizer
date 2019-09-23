@@ -14,7 +14,7 @@ import {
 import {AUGMENT, AUGMENT_SETTINGS} from '../actions/Augment';
 import {HACK} from '../actions/Hack';
 import {WISH} from '../actions/Wish';
-import {SETTINGS} from '../actions/Settings';
+import {SETTINGS, TITAN} from '../actions/Settings';
 import {CREMENT} from '../actions/Crement'
 import {DISABLE_ITEM} from '../actions/DisableItem';
 import {TOGGLE_EDIT} from '../actions/ToggleEdit';
@@ -482,6 +482,45 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 [action.payload.idx]: !state.hidden[action.payload.idx]
                                         }
                                 }
+                        }
+
+                case TITAN:
+                        {
+                                let zone = [
+                                        2, // offset
+                                        8, //GRB
+                                        10, //GCT
+                                        13, //Jake
+                                        16, //UUG
+                                        18, //Walderp
+                                        21, //Beast
+                                        25, //Nerd
+                                        28, //Godmother
+                                        32, //Exile
+                                        36 //It Hungers
+                                ][action.payload.titan];
+                                let zoneDict = {};
+                                Object.getOwnPropertyNames(SetName).forEach(x => {
+                                        zoneDict[SetName[x][1]] = 0 < SetName[x][1] && SetName[x][1] < zone;
+                                });
+                                let accslots = state.equip.accessory;
+                                while (accslots.length < action.payload.accslots) {
+                                        accslots = accslots.concat([new EmptySlot(Slot.ACCESSORY).name]);
+                                }
+                                while (accslots.length > action.payload.accslots) {
+                                        accslots = accslots.slice(0, -1);
+                                }
+                                return cleanState({
+                                        ...state,
+                                        zone: zone,
+                                        looty: action.payload.looty,
+                                        pendant: action.payload.pendant,
+                                        equip: {
+                                                ...state.equip,
+                                                accessory: accslots
+                                        },
+                                        hidden: zoneDict
+                                });
                         }
 
                 case UNDO:

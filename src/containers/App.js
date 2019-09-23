@@ -7,7 +7,7 @@ import {default as AppLayout} from '../components/AppLayout/AppLayout';
 import {AugmentSettings, AugmentAsync} from '../actions/Augment'
 import {HackAsync} from '../actions/Hack'
 import {WishAsync} from '../actions/Wish'
-import {Settings} from '../actions/Settings'
+import {Settings, Go2Titan} from '../actions/Settings'
 import {Crement} from '../actions/Crement'
 import {DisableItem} from '../actions/DisableItem';
 import {ToggleEdit} from '../actions/ToggleEdit';
@@ -91,6 +91,7 @@ const mapDispatchToProps = {
         handleHackAsync: HackAsync,
         handleWishAsync: WishAsync,
         handleSettings: Settings,
+        handleGo2Titan: Go2Titan,
         handleSaveStateLocalStorage: SaveStateLocalStorage,
         handleLoadStateLocalStorage: LoadStateLocalStorage
 };

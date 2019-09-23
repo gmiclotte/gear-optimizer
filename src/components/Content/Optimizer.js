@@ -90,6 +90,9 @@ class Optimizer extends Component {
                 return (<div className={this.props.className}>
                         <div className="content__container">
                                 <div className='button-section' key='slots'>
+                                        <button type="button" onClick={() => this.props.handleGo2Titan(8, 3, 5, 12)}>
+                                                {'Titan 8 Preset'}
+                                        </button>
                                         <div><Crement header='Highest zone' value={zone[0]} name='zone' handleClick={this.props.handleCrement} min={2} max={maxzone}/></div>
                                         {
                                                 this.props.zone > 20
