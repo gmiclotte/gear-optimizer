@@ -37,6 +37,13 @@ function HowTo() {
                                 <li>Equiped items can be locked by rightclicking it in the equipped item list on the left.</li>
                         </ul>
                         <br/>
+                        <li>Configure base Power / Toughness, Infinity Cube, and hard cap information.</li>
+                        <ul>
+                                <li>Base and cube PT are straightforward. Cube tier is automatically calculated if you change the cube PT, but can be adjusted manually.</li>
+                                <li>If you are nearing the hard cap for a specific value (e.g. EM cap), then the gear optimizer can take this into account. Enter your current gear bonus and current total in the appropriate fields.</li>
+                                <li>Example: with +50,000% Energy Cap you have 7E+18 total Energy Cap. Then enter 500 in the "Energy Cap Gear" field, and 7E+18 in the "Total Energy Cap" field. Note that the gear bonus is taken from the inventory, the stat breakdown would say 50,100% in this case.</li>
+                        </ul>
+                        <br/>
                         <li>Select your priorities.</li>
                         <ul>
                                 <li>Priorities are handled from top (Priority 1) to bottom.</li>
