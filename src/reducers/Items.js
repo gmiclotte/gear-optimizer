@@ -164,6 +164,14 @@ const INITIAL_STATE = {
                 power: 0,
                 toughness: 0
         },
+        capstats: {
+                'Energy Cap Cap': 9e18,
+                'Energy Cap Gear': 0,
+                'Energy Cap Total': 1,
+                'Magic Cap Cap': 9e18,
+                'Magic Cap Gear': 0,
+                'Magic Cap Total': 1
+        },
         version: '1.4.0'
 };
 
@@ -742,6 +750,10 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         }
                                         return name;
                                 });
+                                localStorageState.capstats = {
+                                        ...state.capstats,
+                                        ...localStorageState.capstats
+                                }
                                 return {
                                         ...state,
                                         offhand: localStorageState.offhand,
@@ -760,6 +772,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         hidden: localStorageState.hidden,
                                         augment: localStorageState.augment,
                                         basestats: localStorageState.basestats,
+                                        capstats: localStorageState.capstats,
                                         cubestats: localStorageState.cubestats,
                                         hackstats: localStorageState.hackstats,
                                         wishstats: localStorageState.wishstats

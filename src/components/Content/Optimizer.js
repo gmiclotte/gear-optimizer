@@ -171,6 +171,54 @@ class Optimizer extends Component {
                                                                         </label>
                                                                 </td>
                                                         </tr>
+                                                        <tr>
+                                                                <td>E Cap Gear
+                                                                </td>
+                                                                <td>
+                                                                        <label>
+                                                                                <input style={{
+                                                                                                width: '100px',
+                                                                                                margin: '5px'
+                                                                                        }} type="number" value={this.props.capstats['Energy Cap Gear']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['cap', 'Energy Cap Gear'])}/>
+                                                                        </label>
+                                                                </td>
+                                                        </tr>
+                                                        <tr>
+                                                                <td>Total E Cap
+                                                                </td>
+                                                                <td>
+                                                                        <label>
+                                                                                <input style={{
+                                                                                                width: '100px',
+                                                                                                margin: '5px'
+                                                                                        }} type="number" value={this.props.capstats['Energy Cap Total']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['cap', 'Energy Cap Total'])}/>
+                                                                        </label>
+                                                                </td>
+                                                        </tr>
+                                                        <tr>
+                                                                <td>M Cap Gear
+                                                                </td>
+                                                                <td>
+                                                                        <label>
+                                                                                <input style={{
+                                                                                                width: '100px',
+                                                                                                margin: '5px'
+                                                                                        }} type="number" value={this.props.capstats['Magic Cap Gear']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['cap', 'Magic Cap Gear'])}/>
+                                                                        </label>
+                                                                </td>
+                                                        </tr>
+                                                        <tr>
+                                                                <td>Total M Cap
+                                                                </td>
+                                                                <td>
+                                                                        <label>
+                                                                                <input style={{
+                                                                                                width: '100px',
+                                                                                                margin: '5px'
+                                                                                        }} type="number" value={this.props.capstats['Magic Cap Total']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['cap', 'Magic Cap Total'])}/>
+                                                                        </label>
+                                                                </td>
+                                                        </tr>
                                                 </tbody>
                                         </table>
                                 </div>

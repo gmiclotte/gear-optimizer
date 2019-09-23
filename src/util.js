@@ -129,7 +129,7 @@ export function score_vals(vals, factors) {
         return vals.reduce((res, val) => res * val, 1);
 }
 
-export function get_vals(data, equip, factors, offhand) {
+export function get_raw_vals(data, equip, factors, offhand) {
         const stats = factors[1];
         const sorted = Object.getOwnPropertyNames(Slot).reduce((res, slot) => {
                 if (equip[Slot[slot][0]] !== undefined) {
@@ -165,21 +165,30 @@ export function get_vals(data, equip, factors, offhand) {
         return vals;
 }
 
-export function score_equip(data, equip, factors, offhand) {
-        return score_vals(get_vals(data, equip, factors, offhand), factors);
+export const hardcap = (vals, factors, capstats) => {
+        //handle hardcap
+        return vals.map((val, idx) => {
+                const hardcap = capstats[factors[1][idx] + ' Cap'];
+                if (hardcap === undefined) {
+                        return val;
+                }
+                const gear = 100 * capstats[factors[1][idx] + ' Gear'] + 100;
+                const total = Math.max(1, capstats[factors[1][idx] + ' Total']);
+                const maxVal = Math.max(100, hardcap / total * gear);
+                return Math.min(val, maxVal);
+        });
 }
 
-export function score_product(equip, factors) {
-        const stats = factors[1];
-        let vals = [];
-        for (let idx = 0; idx < stats.length; idx++) {
-                const val = equip[stats[idx]];
-                vals.push(
-                        val === undefined
-                        ? 100
-                        : val);
-        }
-        return score_vals(vals, factors);
+export function get_vals(data, equip, factors, offhand, capstats) {
+        return hardcap(get_raw_vals(data, equip, factors, offhand), factors, capstats);
+}
+
+export function score_raw_equip(data, equip, factors, offhand) {
+        return score_vals(get_raw_vals(data, equip, factors, offhand), factors);
+}
+
+export function score_equip(data, equip, factors, offhand, capstats) {
+        return score_vals(get_vals(data, equip, factors, offhand, capstats), factors);
 }
 
 export const shorten = (val, mfd = 2) => {

@@ -9,12 +9,15 @@ import {
 import {
         allowed_zone,
         score_equip,
+        score_raw_equip,
         score_vals,
         get_vals,
+        get_raw_vals,
         clone,
         get_limits,
         old2newequip,
-        cubeBaseItemData
+        cubeBaseItemData,
+        hardcap
 } from './util.js'
 
 const EMPTY_ACCESSORY = new EmptySlot(Slot['ACCESSORY']).name;
@@ -28,6 +31,7 @@ export class Optimizer {
                 this.accslots = state.equip.accessory.length;
                 this.offhand = state.offhand * 5;
                 this.limits = get_limits(state);
+                this.capstats = state.capstats;
         }
 
         construct_base(locked, equip) {
@@ -94,16 +98,29 @@ export class Optimizer {
         }
 
         score_equip(equip) {
-                return score_equip(this.itemdata, equip, this.factors, this.offhand);
+                return score_equip(this.itemdata, equip, this.factors, this.offhand, this.capstats);
+        }
+
+        score_raw_equip(equip) {
+                return score_raw_equip(this.itemdata, equip, this.factors, this.offhand);
         }
 
         get_vals(equip) {
-                return get_vals(this.itemdata, equip, this.factors, this.offhand);
+                return get_vals(this.itemdata, equip, this.factors, this.offhand, this.capstats);
+        }
+
+        get_raw_vals(equip) {
+                return get_raw_vals(this.itemdata, equip, this.factors, this.offhand);
         }
 
         score_equip_wrapper(base_layout) {
                 let equip = this.old2newequip(base_layout)
                 return this.score_equip(equip);
+        }
+
+        score_raw_equip_wrapper(base_layout) {
+                let equip = this.old2newequip(base_layout)
+                return this.score_raw_equip(equip);
         }
 
         get_vals_wrapper(base_layout) {
@@ -121,7 +138,7 @@ export class Optimizer {
         }
 
         top_scorers(optimal) {
-                const scores = optimal.map(x => score_equip(this.itemdata, x, this.factors, this.offhand));
+                const scores = optimal.map(x => this.score_equip(x));
                 const max = Math.max(...scores)
                 return optimal.filter((x, idx) => scores[idx] === max);
         }
@@ -130,9 +147,8 @@ export class Optimizer {
                 let optimal_size = equip.items.length;
                 let scores = [];
                 for (let jdx = Math.max(0, equip.item_count); jdx < optimal_size; jdx++) {
-                        console.log(equip.item_count, optimal_size)
                         let item = equip.items[jdx];
-                        let score = this.score_equip_wrapper(this.remove_equip(clone(equip), item));
+                        let score = this.score_raw_equip_wrapper(this.remove_equip(clone(equip), item));
                         scores.push([score, item])
                 }
                 for (let jdx = equip.item_count; jdx < optimal_size; jdx++) {
@@ -287,7 +303,7 @@ export class Optimizer {
                 for (let layout = 0; layout < base_layouts.length; layout++) {
                         // find and sort possible accessories
                         const accs = this.get_accs(this.new2oldequip(base_layouts[layout]), empty_accslots);
-                        const accslots = Math.min(empty_accslots, accs.length);
+                        let accslots = Math.min(empty_accslots, accs.length);
                         const acc_candidate = accs.slice(0, accslots);
                         let s = [];
                         const layouts = this.optimize_layouts(this.new2oldequip(base_layouts[layout]), accslots, s).map(x => this.old2newequip(x));
@@ -301,17 +317,21 @@ export class Optimizer {
                                         }
                                         let filter_accs = this.filter_accs(candidate, accslots, accs);
                                         let filter_idx = undefined;
-                                        while (true) {
+                                        while (accslots > 0) {
                                                 let riskidx = undefined;
                                                 let score = this.score_equip(candidate);
+                                                let rawscore = this.score_raw_equip(candidate);
                                                 let riskscore = -1;
-                                                let vals = this.get_vals(candidate);
+                                                let rawriskscore = -1;
+                                                let vals = this.get_raw_vals(candidate);
                                                 for (let kdx = locked_accs; kdx < locked_accs + accslots; kdx++) {
                                                         const tmp = this.swap_vals([...vals], candidate.accessory[kdx], EMPTY_ACCESSORY)
-                                                        const tmpscore = score_vals(tmp, this.factors);
-                                                        if (tmpscore > riskscore) {
+                                                        const tmpscore = score_vals(hardcap(tmp, this.factors, this.capstats), this.factors);
+                                                        const rawtmpscore = score_vals(tmp, this.factors);
+                                                        if (tmpscore > riskscore || (tmpscore === riskscore && rawtmpscore > rawriskscore)) {
                                                                 riskidx = kdx;
                                                                 riskscore = tmpscore;
+                                                                rawriskscore = rawtmpscore;
                                                         }
                                                 }
                                                 const atrisk = candidate.accessory[riskidx];
@@ -323,9 +343,11 @@ export class Optimizer {
                                                 for (let kdx in filter_accs) {
                                                         const acc = filter_accs[kdx];
                                                         const tmp = this.swap_vals([...vals], atrisk, acc);
-                                                        const tmpscore = score_vals(tmp, this.factors);
-                                                        if (tmpscore > score) {
+                                                        const tmpscore = score_vals(hardcap(tmp, this.factors, this.capstats), this.factors);
+                                                        const rawtmpscore = score_vals(tmp, this.factors);
+                                                        if (tmpscore > score || (tmpscore === score && rawtmpscore > rawscore) || (tmpscore === score && this.itemdata[acc].empty)) {
                                                                 score = tmpscore;
+                                                                rawscore = rawtmpscore;
                                                                 winner = acc;
                                                                 filter_idx = kdx;
                                                         }
@@ -334,8 +356,12 @@ export class Optimizer {
                                                         candidate.accessory[riskidx] = atrisk;
                                                         break;
                                                 } else {
-                                                        candidate.accessory[riskidx] = winner;
+                                                        candidate.accessory[riskidx] = candidate.accessory[locked_accs + accslots - 1];
+                                                        candidate.accessory[locked_accs + accslots - 1] = winner
                                                         filter_accs[filter_idx] = atrisk;
+                                                        if (this.itemdata[winner].empty) {
+                                                                accslots--;
+                                                        }
                                                 }
                                         }
                                 }
@@ -358,6 +384,7 @@ export class Optimizer {
                 // construct alternative candidates
                 let alternatives = [...candidates];
                 let score = this.score_equip(candidates[0]);
+                let rawscore = this.score_raw_equip(candidates[0]);
                 candidates.forEach(candidate => {
                         const remainder = candidate.accs.filter(x => !candidate.accessory.includes(x));
                         for (let idx = 0; idx < candidate.accslots; idx++) {
@@ -365,8 +392,10 @@ export class Optimizer {
                                 for (let jdx in remainder) {
                                         candidate.accessory[locked_accs + idx] = remainder[jdx];
                                         const tmp_score = this.score_equip(candidate);
-                                        if (tmp_score === score) {
+                                        const rawtmp_score = this.score_raw_equip(candidate);
+                                        if (tmp_score === score && rawtmp_score === rawscore) {
                                                 alternatives.push(clone(candidate));
+                                                console.log('alternative found')
                                         }
                                         if (tmp_score > score) {
                                                 console.log('an error occured');
