@@ -1,4 +1,11 @@
-import {ItemNameContainer, Slot, SetName} from './assets/ItemAux'
+import {
+        Item,
+        Stat,
+        CUBES,
+        ItemNameContainer,
+        Slot,
+        SetName
+} from './assets/ItemAux'
 import {LOOTIES, PENDANTS} from './assets/Items'
 
 export function getSlot(name, data) {
@@ -234,4 +241,36 @@ export const to_time = (ticks) => {
         }
         result += shortenExponential(ticks / 50, 1) + 's'
         return result;
+}
+
+export const cubeBaseItemData = (itemdata, cubestats, basestats) => {
+        // make cube stats item
+        let cube = new Item('Infinity Cube', Slot.OTHER, undefined, 100, [
+                ...CUBES[cubestats.tier],
+                [
+                        Stat.POWER,
+                        Number(cubestats.power)
+                ],
+                [
+                        Stat.TOUGHNESS,
+                        Number(cubestats.toughness)
+                ]
+        ]);
+        // make base stats item
+        let base = new Item('Base Stats', Slot.OTHER, undefined, 100, [
+                [
+                        Stat.POWER,
+                        Number(basestats.power)
+                ],
+                [
+                        Stat.TOUGHNESS,
+                        Number(basestats.toughness)
+                ]
+        ]);
+        return {
+                ...itemdata,
+                'Infinity Cube': cube,
+                'Base Stats': base
+
+        };
 }

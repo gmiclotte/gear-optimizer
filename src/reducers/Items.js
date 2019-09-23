@@ -12,8 +12,9 @@ import {
 } from '../assets/ItemAux'
 
 import {AUGMENT, AUGMENT_SETTINGS} from '../actions/Augment';
-import {HACK, HACK_SETTINGS} from '../actions/Hack';
-import {WISH, WISH_SETTINGS} from '../actions/Wish';
+import {HACK} from '../actions/Hack';
+import {WISH} from '../actions/Wish';
+import {SETTINGS} from '../actions/Settings';
 import {CREMENT} from '../actions/Crement'
 import {DISABLE_ITEM} from '../actions/DisableItem';
 import {TOGGLE_EDIT} from '../actions/ToggleEdit';
@@ -38,9 +39,9 @@ let ITEMS = new ItemContainer(ITEMLIST.map((item, idx) => {
         return [item.name, item];
 }));
 
-const accslots = 12;
+const accslots = 2;
 const offhand = 0;
-const maxZone = 28;
+const maxZone = 2;
 const zoneDict = {};
 Object.getOwnPropertyNames(SetName).forEach(x => {
         zoneDict[SetName[x][1]] = 0 < SetName[x][1] && SetName[x][1] < maxZone;
@@ -99,8 +100,8 @@ const INITIAL_STATE = {
         ],
         running: false,
         zone: maxZone,
-        looty: 4,
-        pendant: 6,
+        looty: 0,
+        pendant: 0,
         titanversion: 1,
         hidden: zoneDict,
         augment: {
@@ -154,7 +155,16 @@ const INITIAL_STATE = {
                         return {level: 0, reducer: 0, goal: 1, hackidx: hackidx};
                 })
         },
-        version: '1.3.0'
+        cubestats: {
+                tier: 0,
+                power: 0,
+                toughness: 0
+        },
+        basestats: {
+                power: 0,
+                toughness: 0
+        },
+        version: '1.4.0'
 };
 
 const ItemsReducer = (state = INITIAL_STATE, action) => {
@@ -207,16 +217,6 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                 };
                         }
 
-                case HACK_SETTINGS:
-                        {
-                                return {
-                                        ...state,
-                                        hackstats: {
-                                                ...action.payload.hackstats
-                                        }
-                                };
-                        }
-
                 case WISH:
                         {
                                 if (!state.running) {
@@ -229,12 +229,12 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                 };
                         }
 
-                case WISH_SETTINGS:
+                case SETTINGS:
                         {
                                 return {
                                         ...state,
-                                        wishstats: {
-                                                ...action.payload.wishstats
+                                        [action.payload.statname]: {
+                                                ...action.payload.stats
                                         }
                                 };
                         }
@@ -713,6 +713,18 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         });
                                         console.log('Wish data:', localStorageState.wishstats);
                                 }
+                                if (localStorageState.version === '1.3.0') {
+                                        localStorageState.equip = {
+                                                ...localStorageState.equip,
+                                                other: ['Infinity Cube', 'Base Stats']
+                                        };
+                                        localStorageState.savedequip = localStorageState.savedequip.map(x => {
+                                                return {
+                                                        ...x,
+                                                        other: ['Infinity Cube', 'Base Stats']
+                                                }
+                                        });
+                                }
                                 while (localStorageState.hackstats.hacks.length < Hacks.length) {
                                         localStorageState.hackstats.hacks = [
                                                 ...localStorageState.hackstats.hacks, {
@@ -747,6 +759,8 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         pendant: localStorageState.pendant,
                                         hidden: localStorageState.hidden,
                                         augment: localStorageState.augment,
+                                        basestats: localStorageState.basestats,
+                                        cubestats: localStorageState.cubestats,
                                         hackstats: localStorageState.hackstats,
                                         wishstats: localStorageState.wishstats
                                 };

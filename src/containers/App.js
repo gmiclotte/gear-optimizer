@@ -5,8 +5,9 @@ import ReactGA from 'react-ga';
 import {default as AppLayout} from '../components/AppLayout/AppLayout';
 
 import {AugmentSettings, AugmentAsync} from '../actions/Augment'
-import {HackSettings, HackAsync} from '../actions/Hack'
-import {WishSettings, WishAsync} from '../actions/Wish'
+import {HackAsync} from '../actions/Hack'
+import {WishAsync} from '../actions/Wish'
+import {Settings} from '../actions/Settings'
 import {Crement} from '../actions/Crement'
 import {DisableItem} from '../actions/DisableItem';
 import {ToggleEdit} from '../actions/ToggleEdit';
@@ -60,6 +61,8 @@ const mapStateToProps = state => ({
         pendant: state.optimizer.pendant,
         hidden: state.optimizer.hidden,
         augment: state.optimizer.augment,
+        basestats: state.optimizer.basestats,
+        cubestats: state.optimizer.cubestats,
         hackstats: state.optimizer.hackstats,
         wishstats: state.optimizer.wishstats,
         version: state.optimizer.version
@@ -84,10 +87,9 @@ const mapDispatchToProps = {
         handleToggleSaved: ToggleSaved,
         handleAugmentSettings: AugmentSettings,
         handleAugmentAsync: AugmentAsync,
-        handleHackSettings: HackSettings,
         handleHackAsync: HackAsync,
-        handleWishSettings: WishSettings,
         handleWishAsync: WishAsync,
+        handleSettings: Settings,
         handleSaveStateLocalStorage: SaveStateLocalStorage,
         handleLoadStateLocalStorage: LoadStateLocalStorage
 };

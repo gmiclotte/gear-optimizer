@@ -6,8 +6,8 @@
 }
 
 .button-section {
-        width: 48vw;
-        height: 16vh;
+        width: 30vw;
+        height: 20vh;
         display: block;
         overflow-y: auto;
         overflow-x: hidden;
@@ -37,4 +37,12 @@
         right: 0px;
         bottom: 0px;
         background-color: rgba(0, 0, 0, 0.75);
+}
+
+.cubetable {
+        border-spacing: 0px 0px;
+}
+
+.cubetable td {
+        padding: 0px;
 }

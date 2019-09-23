@@ -57,7 +57,7 @@ def spec2stat(val):
     return [val, val, 1]
 
 def f2i(val):
-    return 2 * int(float(val[:-1]))
+    return int(float(val[:-1]))
 
 SLOTS = ['MISC', 'WEAPON', 'HEAD', 'CHEST', 'PANTS', 'BOOTS', 'ACCESSORY']
 def part2slot(val):
@@ -440,6 +440,7 @@ def prefix():
     print('    new EmptySlot(Slot.PANTS),')
     print('    new EmptySlot(Slot.BOOTS),')
     print('    new EmptySlot(Slot.ACCESSORY),')
+    print('    new EmptySlot(Slot.OTHER),')
 
 def suffix():
     print('];')

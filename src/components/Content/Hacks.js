@@ -32,7 +32,7 @@ class HackComponent extends Component {
                                 ...hackstats,
                                 [name]: val
                         };
-                        this.props.handleHackSettings(hackstats);
+                        this.props.handleSettings('hackstats', hackstats);
                         return;
                 }
                 let hacks = [...hackstats.hacks];
@@ -67,7 +67,7 @@ class HackComponent extends Component {
                         ...hackstats,
                         hacks: hacks
                 };
-                this.props.handleHackSettings(hackstats);
+                this.props.handleSettings('hackstats', hackstats);
                 return;
         }
 

@@ -33,6 +33,7 @@ function optimize(e) {
         base_layout = base_layout[Math.floor(Math.random() * base_layout.length)];
         let equip = optimizer.sort_locks(state.locked, state.equip, base_layout);
         this.postMessage({equip: equip});
+        console.log(equip.other)
         console.log(Math.floor((Date.now() - start_time) / 10) / 100 + ' seconds');
         this.close();
 }

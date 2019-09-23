@@ -10,7 +10,7 @@ export class Item {
                 for (let i = 0; i < props.length; i++) {
                         this.statnames.push(props[i][0]);
                         this[props[i][0]] = props[i][1];
-                        this.base[props[i][0]] = props[i][1] / 2;
+                        this.base[props[i][0]] = props[i][1];
                 }
         }
 }
@@ -25,9 +25,9 @@ export function update_level(item, level) {
 export class EmptySlot extends Item {
         constructor(slot) {
                 if (slot === undefined) {
-                        super('Empty Slot', slot, undefined, undefined, []);
+                        super('Empty Slot', slot, SetName.SAFE, undefined, []);
                 } else {
-                        super('Empty ' + slot[0][0].toUpperCase() + slot[0].substring(1) + ' Slot', slot, undefined, undefined, []);
+                        super('Empty ' + slot[0][0].toUpperCase() + slot[0].substring(1) + ' Slot', slot, SetName.SAFE, undefined, []);
                 }
                 this.empty = true;
         }
@@ -75,6 +75,9 @@ export const ItemNameContainer = (accslots, offhand) => {
                         for (let jdx = 0; jdx < accslots; jdx++) {
                                 list.push(new EmptySlot(Slot[slot]).name);
                         }
+                } else if (slot === 'OTHER') {
+                        list.push('Infinity Cube');
+                        list.push('Base Stats');
                 } else {
                         list.push(new EmptySlot(Slot[slot]).name);
                 }
@@ -102,7 +105,10 @@ export const Slot = {
         BOOTS: [
                 'boots', 4
         ],
-        ACCESSORY: ['accessory', 5]
+        ACCESSORY: [
+                'accessory', 5
+        ],
+        OTHER: ['other', 6]
 }
 
 export const Stat = {
@@ -1066,3 +1072,66 @@ export const resource_priorities = [
                 0, 2, 1
         ]
 ];
+
+export const CUBES = [
+        // tier 0
+        [],
+        // tier 1
+        [
+                [Stat.DROP_CHANCE, 50]
+        ],
+        // tier 2
+        [
+                [
+                        Stat.DROP_CHANCE, 70
+                ],
+                [
+                        Stat.GOLD_DROP, 50
+                ]
+        ],
+        // tier 3
+        [
+                [
+                        Stat.DROP_CHANCE, 90
+                ],
+                [
+                        Stat.GOLD_DROP, 123.11
+                ]
+        ],
+        // tier 4
+        [
+                [
+                        Stat.DROP_CHANCE, 110
+                ],
+                [
+                        Stat.GOLD_DROP, 208.56
+                ]
+        ],
+        // tier 5
+        [
+                [
+                        Stat.DROP_CHANCE, 130
+                ],
+                [
+                        Stat.GOLD_DROP, 303.14
+                ]
+        ],
+        // tier 6
+        [
+                [
+                        Stat.DROP_CHANCE, 150
+                ],
+                [
+                        Stat.GOLD_DROP, 405.16
+                ]
+        ],
+        // tier 7
+        [
+                [
+                        Stat.DROP_CHANCE, 170
+                ],
+                [
+                        Stat.GOLD_DROP, 513.53
+                ]
+        ]
+]

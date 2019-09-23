@@ -31,7 +31,7 @@ class WishComponent extends Component {
                                 ...wishstats,
                                 [name]: val
                         };
-                        this.props.handleWishSettings(wishstats);
+                        this.props.handleSettings('wishstats', wishstats);
                         return;
                 }
                 let wishes = [...wishstats.wishes];
@@ -46,7 +46,7 @@ class WishComponent extends Component {
                         ...wishstats,
                         wishes: wishes
                 };
-                this.props.handleWishSettings(wishstats);
+                this.props.handleSettings('wishstats', wishstats);
                 return;
         }
 

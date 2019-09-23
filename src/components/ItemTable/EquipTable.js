@@ -4,7 +4,7 @@ import ReactTooltip from 'react-tooltip'
 import Item from '../Item/Item'
 import {Factors, EmptySlot, Slot} from '../../assets/ItemAux'
 import './ItemTable.css';
-import {score_equip, shorten} from '../../util'
+import {score_equip, shorten, cubeBaseItemData} from '../../util'
 
 import {default as SaveButtons} from './SaveButtons'
 
@@ -32,6 +32,9 @@ function group(a, b, g) {
 }
 
 const formatted = (val, stat, d) => {
+        if (val === Infinity) {
+                return '(+∞%)';
+        }
         let num = shorten(Math.abs(val));
         let pf = d
                 ? (
@@ -43,11 +46,7 @@ const formatted = (val, stat, d) => {
         let sf = d
                 ? '%)'
                 : ''
-        if (stat === 'Power' || stat === 'Toughness') {
-                sf = d
-                        ? ')'
-                        : '';
-        } else if (stat === 'Respawn') {
+        if (stat === 'Respawn') {
                 sf = d
                         ? 'pp)'
                         : '% reduction';
@@ -78,6 +77,8 @@ class BonusLine extends React.Component {
                 if (stat === 'Power' || stat === 'Toughness' || stat === 'Respawn') {
                         val *= 100;
                         old *= 100;
+                }
+                if (stat === 'Respawn') {
                         diff_val = val - old;
                 } else {
                         diff_val = 100 * (val / old - 1);
@@ -103,18 +104,26 @@ class BonusLine extends React.Component {
 }
 
 export default class EquipTable extends React.Component {
+        constructor(props) {
+                super(props);
+                this.itemdata = cubeBaseItemData(props.itemdata, props.cubestats, props.basestats);
+        }
         componentDidUpdate() {
                 ReactTooltip.rebuild();
         }
 
         render_equip(equip, prefix, compare, buffer, handleClickItem, lockable) {
+                this.itemdata = cubeBaseItemData(this.props.itemdata, this.props.cubestats, this.props.basestats);
                 let sorted = Object.getOwnPropertyNames(Slot).sort((a, b) => Slot[a][1] - Slot[b][1]).reduce((res, slot) => res.concat(equip[Slot[slot][0]]), []);
                 let localbuffer = [];
                 let last = new EmptySlot();
                 let typeIdx = 0;
                 for (let idx = 0; idx < sorted.length; idx++) {
                         const name = sorted[idx];
-                        const item = this.props.itemdata[name];
+                        const item = this.itemdata[name];
+                        if (item.slot === Slot.OTHER) {
+                                continue;
+                        }
                         const next = group(last, item, this.props.group);
                         if (next) {
                                 typeIdx = idx;
@@ -134,11 +143,11 @@ export default class EquipTable extends React.Component {
         }
 
         render_conditional(condition, title, buffer) {
-                let sorted = this.props.items.filter((name) => (condition(name) && this.props.itemdata[name].level !== undefined));
+                let sorted = this.props.items.filter((name) => (condition(name) && this.itemdata[name].level !== undefined));
                 let localbuffer = [];
                 for (let idx = 0; idx < sorted.length; idx++) {
                         let name = sorted[idx];
-                        const item = this.props.itemdata[name];
+                        const item = this.itemdata[name];
                         localbuffer.push(<Item item={item} handleClickItem={this.props.handleEquipItem} handleRightClickItem={this.props.handleRightClickItem} key={name}/>);
                 }
                 if (localbuffer.length > 0) {
@@ -152,7 +161,7 @@ export default class EquipTable extends React.Component {
                 //TODO: sorting on every change is very inefficient
                 let buffer = [];
                 this.class_idx = 0;
-                const compare = compare_factory(this.props.group)(this.props.itemdata);
+                const compare = compare_factory(this.props.group)(this.itemdata);
                 const equip = this.props.equip;
                 const savedequip = this.props.savedequip[this.props.savedidx];
                 this.render_equip(equip, '', compare, buffer, this.props.handleClickItem, true);
@@ -162,13 +171,13 @@ export default class EquipTable extends React.Component {
                 }
                 buffer.push(<div className='item-section' key='stats'>{'Gear stats (change w.r.t. save slot)'}<br/><br/> {
                                 Object.getOwnPropertyNames(Factors).map((factor) => (
-                                        factor === 'NONE'
+                                        (factor === 'NONE' || factor === 'DELETE' || factor === 'INSERT')
                                         ? <div key={factor}/>
-                                        : <BonusLine itemdata={this.props.itemdata} equip={equip} savedequip={savedequip} factor={Factors[factor]} factors={this.props.factors} offhand={this.props.offhand * 5} key={factor}/>))
+                                        : <BonusLine itemdata={this.itemdata} equip={equip} savedequip={savedequip} factor={Factors[factor]} factors={this.props.factors} offhand={this.props.offhand * 5} key={factor}/>))
                         }
                 </div>);
-                this.render_conditional(name => this.props.itemdata[name].level !== 100, 'Not maxed', buffer);
-                this.render_conditional(name => this.props.itemdata[name].disable, 'Disabled', buffer);
+                this.render_conditional(name => this.itemdata[name].level !== 100, 'Not maxed', buffer);
+                this.render_conditional(name => this.itemdata[name].disable, 'Disabled', buffer);
                 return (<div className='item-table'>
                         {buffer}
                 </div>);

@@ -1,4 +1,12 @@
-import {Slot, EmptySlot, Equip, Factors} from './assets/ItemAux'
+import {
+        Item,
+        Stat,
+        Slot,
+        EmptySlot,
+        Equip,
+        Factors,
+        CUBES
+} from './assets/ItemAux'
 import {
         allowed_zone,
         score_equip,
@@ -6,15 +14,16 @@ import {
         get_vals,
         clone,
         get_limits,
-        old2newequip
+        old2newequip,
+        cubeBaseItemData
 } from './util.js'
 
 const EMPTY_ACCESSORY = new EmptySlot(Slot['ACCESSORY']).name;
 
 export class Optimizer {
-        constructor(state, factors, maxslots) {
+        constructor(state) {
                 this.itemnames = state.items;
-                this.itemdata = state.itemdata;
+                this.itemdata = cubeBaseItemData(state.itemdata, state.cubestats, state.basestats);
                 this.factorslist = state.factors;
                 this.maxslotslist = state.maxslots;
                 this.accslots = state.equip.accessory.length;
@@ -31,8 +40,9 @@ export class Optimizer {
                                 this.add_equip(base, item);
                         }
                 });
+                base = this.old2newequip(base);
                 // wrap base in an array
-                return [this.old2newequip(base)];
+                return [base];
         }
 
         sort_locks(locked, equip, result) {
@@ -65,7 +75,11 @@ export class Optimizer {
         }
 
         old2newequip(equip) {
-                return old2newequip(this.accslots, this.offhand, equip);
+                // create new equip
+                return {
+                        ...old2newequip(this.accslots, this.offhand, equip),
+                        other: ['Infinity Cube', 'Base Stats']
+                };
         }
 
         new2oldequip(equip) {
@@ -167,7 +181,7 @@ export class Optimizer {
                                 return false;
                         }
                         let slot = Slot[x[0]][0]
-                        if (slot === 'accessory') {
+                        if (slot === 'accessory' || slot === 'other') {
                                 return false;
                         }
                         if (slot === 'weapon' && x[2] === 'mainhand') {

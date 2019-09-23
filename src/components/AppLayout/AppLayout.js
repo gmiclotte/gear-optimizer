@@ -114,7 +114,8 @@ const AppLayout = props => (<div className='app_container'>
                                                 <NavLink to='/howto' exact={true} className='nav-link' activeClassName='active'>How to</NavLink>
                                         </li>
                                         <li className='nav-bar-item' style={{
-                                                        float: 'right'
+                                                        float: 'right',
+                                                        paddingRight: 10
                                                 }}>
                                                 <NavLink to='/about/' exact={true} className='nav-link' activeClassName='active'>About</NavLink>
                                         </li>
