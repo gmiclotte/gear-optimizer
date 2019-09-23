@@ -4,8 +4,7 @@ import {
         Slot,
         EmptySlot,
         Equip,
-        Factors,
-        CUBES
+        Factors
 } from './assets/ItemAux'
 import {
         allowed_zone,

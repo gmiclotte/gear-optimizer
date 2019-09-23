@@ -4,7 +4,6 @@ import ReactGA from 'react-ga';
 
 import {get_zone, get_max_zone, get_max_titan} from '../../util';
 import {LOOTIES, PENDANTS} from '../../assets/Items'
-import {CUBES} from '../../assets/ItemAux'
 
 import {default as Crement} from '../Crement/Crement';
 import {default as ItemTable} from '../ItemTable/ItemTable';
@@ -68,8 +67,6 @@ class Optimizer extends Component {
                         tier = Math.floor(Math.log10(power + toughness) - 1);
                 }
                 tier = Math.max(0, tier);
-                tier = Math.min(CUBES.length - 1, tier);
-                console.log(cubestats)
                 return {
                         ...cubestats,
                         tier: tier

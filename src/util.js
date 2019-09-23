@@ -1,11 +1,4 @@
-import {
-        Item,
-        Stat,
-        CUBES,
-        ItemNameContainer,
-        Slot,
-        SetName
-} from './assets/ItemAux'
+import {Item, Stat, ItemNameContainer, Slot, SetName} from './assets/ItemAux'
 import {LOOTIES, PENDANTS} from './assets/Items'
 
 export function getSlot(name, data) {
@@ -245,8 +238,9 @@ export const to_time = (ticks) => {
 
 export const cubeBaseItemData = (itemdata, cubestats, basestats) => {
         // make cube stats item
+        let tier = Number(cubestats.tier);
         let cube = new Item('Infinity Cube', Slot.OTHER, undefined, 100, [
-                ...CUBES[cubestats.tier],
+
                 [
                         Stat.POWER,
                         Number(cubestats.power)
@@ -254,6 +248,34 @@ export const cubeBaseItemData = (itemdata, cubestats, basestats) => {
                 [
                         Stat.TOUGHNESS,
                         Number(cubestats.toughness)
+                ],
+                [
+                        Stat.DROP_CHANCE, tier <= 0
+                                ? 0
+                                : tier === 1
+                                        ? 50
+                                        : 50 + (tier - 1) * 20
+                ],
+                [
+                        Stat.GOLD_DROP, tier <= 1
+                                ? 0
+                                : tier === 2
+                                        ? 50
+                                        : Math.pow(tier - 1, 1.3) * 50
+                ],
+                [
+                        Stat.HACK_SPEED, tier <= 7
+                                ? 0
+                                : tier < 10
+                                        ? (tier - 8) * 5 + 10
+                                        : 20
+                ],
+                [
+                        Stat.WISH_SPEED, tier <= 8
+                                ? 0
+                                : tier === 9
+                                        ? 10
+                                        : 20
                 ]
         ]);
         // make base stats item

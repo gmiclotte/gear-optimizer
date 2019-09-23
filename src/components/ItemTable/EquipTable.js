@@ -81,7 +81,9 @@ class BonusLine extends React.Component {
                 if (stat === 'Respawn') {
                         diff_val = val - old;
                 } else {
-                        diff_val = 100 * (val / old - 1);
+                        diff_val = val === old
+                                ? 0
+                                : 100 * (val / old - 1);
                 }
                 let classNameDiff = this.diffclass(old, val);
                 let diff = (<span className={classNameDiff}>
