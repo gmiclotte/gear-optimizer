@@ -9,7 +9,7 @@ export class Item {
                 this.disable = false;
                 for (let i = 0; i < props.length; i++) {
                         this.statnames.push(props[i][0]);
-                        this[props[i][0]] = props[i][1];
+                        this[props[i][0]] = props[i][1] * 2;
                         this.base[props[i][0]] = props[i][1];
                 }
         }
