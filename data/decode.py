@@ -1,12 +1,16 @@
 import binascii
 import struct
+import sys
+
 import numpy as np
 
 verbose = 1
 
+
 def printv(*args):
     if verbose:
         print(*args)
+
 
 def getString(h, idx, hack=False):
     string = b''
@@ -29,7 +33,6 @@ def getString(h, idx, hack=False):
 
 
 def getWishProperties(h, idx):
-    printv(idx)
     # long maxLevel;
     maxLevel = h[idx]
     maxLevel = binascii.hexlify(maxLevel)
@@ -40,17 +43,17 @@ def getWishProperties(h, idx):
     idx += 12
     preidx = idx
     h, idx, wishName = getString(h, idx)
-    #if h[idx + 4] != b'\x00':
-        #wishName = wishName[:-1]
-        #idx -= 1
+    # if h[idx + 4] != b'\x00':
+    #wishName = wishName[:-1]
+    #idx -= 1
     wishName = wishName.decode('ascii')
-    if  wishName[-2] in 'I' and not wishName[-1] in 'IV':
+    if wishName[-2] in 'I' and not wishName[-1] in 'IV':
         wishName = wishName[:-1]
         idx -= 1
     if wishName[-1] in 'c' and wishName[-2] in 'V':
         wishName = wishName[:-1]
         idx -= 1
-    if  wishName[-1] in '@Z?B':
+    if wishName[-1] in '@Z?B':
         wishName = wishName[:-1]
         idx -= 1
     if wishName[-2] in '?!':
@@ -123,7 +126,7 @@ def getHackProperties(h, idx):
     printv(hackDesc)
     while (idx - preidx) % 4 != 0:
         idx += 1
-    
+
     # float baseEffectPerLevel;
     baseEffectPerLevel = b''.join(h[idx:idx + 4])
     baseEffectPerLevel = struct.unpack('<f', baseEffectPerLevel)[0]
@@ -141,7 +144,7 @@ def getHackProperties(h, idx):
     milestoneThreshold = struct.unpack('<q', milestoneThreshold)[0]
     printv(f'{milestoneThreshold:d}')
     idx += 8
-    
+
     # max level
     upperbound = np.log(1e38 / baseDivider) / np.log(1.0078)
     maxLevel = int(np.log(1e38 / baseDivider / upperbound) / np.log(1.0078))
@@ -156,7 +159,7 @@ byte_data = file.read()
 h = [byte_data[idx:idx + 1] for idx in range(len(byte_data))]
 
 # get wishes
-idx = 3004960 - 12
+idx = int(sys.argv[2]) - 12
 l = 0
 count = 110
 wishes = []
@@ -171,7 +174,7 @@ printv(f'Total number of wish levels: {l}.')
 printv()
 
 # get hacks
-idx = 4134104 - 8
+idx = int(sys.argv[1]) - 8
 count = 15
 hacks = []
 for _ in range(count):
@@ -187,6 +190,3 @@ print()
 for hack in hacks:
     hackName, baseDivider, baseEffectPerLevel, milestoneEffect, milestoneThreshold, maxLevel = hack
     print(f'[\'{hackName}\', {baseDivider:.2E}, {100 * baseEffectPerLevel:.4f}, {milestoneEffect:.4f}, {milestoneThreshold:d}, {maxLevel:d}],')
-    
-    
-    
