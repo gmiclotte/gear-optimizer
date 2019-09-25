@@ -123,6 +123,10 @@ export default class EquipTable extends React.Component {
                 for (let idx = 0; idx < sorted.length; idx++) {
                         const name = sorted[idx];
                         const item = this.itemdata[name];
+                        if (item === undefined) {
+                                // fixes some bugs when loading new gear optimizer version
+                                continue
+                        }
                         if (item.slot === Slot.OTHER) {
                                 continue;
                         }
