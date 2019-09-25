@@ -81,7 +81,6 @@ def getWishProperties(h, idx):
         wishDesc = wishDesc[:-1]
         idx -= 1
     printv(wishDesc)
-    print(preidx, idx)
     while (idx - preidx) % 4 != 0:
         idx += 1
 
