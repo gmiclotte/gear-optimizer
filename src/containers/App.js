@@ -64,6 +64,7 @@ const mapStateToProps = state => ({
         basestats: state.optimizer.basestats,
         capstats: state.optimizer.capstats,
         cubestats: state.optimizer.cubestats,
+        ngustats: state.optimizer.ngustats,
         hackstats: state.optimizer.hackstats,
         wishstats: state.optimizer.wishstats,
         version: state.optimizer.version

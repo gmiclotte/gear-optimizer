@@ -8,7 +8,8 @@ import {
         update_level,
         SetName,
         Factors,
-        Hacks
+        Hacks,
+        NGUs
 } from '../assets/ItemAux'
 
 import {AUGMENT, AUGMENT_SETTINGS} from '../actions/Augment';
@@ -171,6 +172,28 @@ const INITIAL_STATE = {
                 'Magic Cap Cap': 9e18,
                 'Magic Cap Gear': 0,
                 'Magic Cap Total': 1
+        },
+        ngustats: {
+                nguoption: 0,
+                energy: {
+                        ngus: NGUs.energy.map(x => {
+                                return {normal: 0, evil: 0, sadistic: 0};
+                        }),
+                        cap: 1,
+                        nguspeed: 1
+                },
+                magic: {
+                        ngus: NGUs.magic.map(x => {
+                                return {normal: 0, evil: 0, sadistic: 0};
+                        }),
+                        cap: 1,
+                        nguspeed: 1
+                },
+                ngutime: 1440,
+                quirk: {
+                        e2n: false,
+                        s2e: false
+                }
         },
         version: '1.4.0'
 };
@@ -838,6 +861,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         basestats: localStorageState.basestats,
                                         capstats: localStorageState.capstats,
                                         cubestats: localStorageState.cubestats,
+                                        ngustats: localStorageState.ngustats,
                                         hackstats: localStorageState.hackstats,
                                         wishstats: localStorageState.wishstats
                                 };
