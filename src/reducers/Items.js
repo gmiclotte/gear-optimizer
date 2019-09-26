@@ -29,7 +29,7 @@ import {TERMINATE} from '../actions/Terminate'
 import {UNDO} from '../actions/Undo'
 import {UNEQUIP_ITEM} from '../actions/UnequipItem';
 import {DELETE_SLOT} from '../actions/DeleteSlot'
-import {LOAD_SLOT} from '../actions/LoadSlot'
+import {LOAD_SLOT, LOAD_FACTORS} from '../actions/LoadSlot'
 import {SAVE_SLOT} from '../actions/SaveSlot'
 import {TOGGLE_SAVED} from '../actions/ToggleSaved'
 import {LOAD_STATE_LOCALSTORAGE} from '../actions/LoadStateLocalStorage';
@@ -605,11 +605,19 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 savedequip: state.savedequip.map((tmp, idx) => {
                                                         if (idx === state.savedidx) {
                                                                 return {
-                                                                        ...state.equip
+                                                                        ...state.equip,
+                                                                        factors: state.factors,
+                                                                        maxslots: state.maxslots
                                                                 };
                                                         }
                                                         return tmp;
-                                                }).concat([ItemNameContainer(state.equip.accessory.length, state.offhand)]),
+                                                }).concat([
+                                                        {
+                                                                ...ItemNameContainer(state.equip.accessory.length, state.offhand),
+                                                                factors: undefined,
+                                                                maxslots: undefined
+                                                        }
+                                                ]),
                                                 maxsavedidx: state.maxsavedidx + 1
                                         }
                                 }
@@ -618,7 +626,9 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         savedequip: state.savedequip.map((tmp, idx) => {
                                                 if (idx === state.savedidx) {
                                                         return {
-                                                                ...state.equip
+                                                                ...state.equip,
+                                                                factors: state.factors,
+                                                                maxslots: state.maxslots
                                                         };
                                                 }
                                                 return tmp;
@@ -634,6 +644,21 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         equip: {
                                                 ...save
                                         }
+                                });
+                        }
+
+                case LOAD_FACTORS:
+                        {
+                                const save = state.savedequip[state.savedidx];
+                                const hasNoFactors = save.factors === undefined && save.maxslots === undefined;
+                                return cleanState({
+                                        ...state,
+                                        factors: hasNoFactors
+                                                ? state.factors
+                                                : save.factors,
+                                        maxslots: hasNoFactors
+                                                ? state.maxslots
+                                                : save.maxslots
                                 });
                         }
 

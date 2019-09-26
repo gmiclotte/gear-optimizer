@@ -22,6 +22,9 @@ class SaveButtons extends Component {
                                                 : 'Show'
                                 }
                         </button>
+                        <button onClick={this.props.handleLoadFactors}>
+                                {'Load Priorities'}
+                        </button>
                 </div>);
 
         };
