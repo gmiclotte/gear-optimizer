@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/gear-optimizer/static/css/main.9a1f7378.chunk.css",
-    "main.js": "/gear-optimizer/static/js/main.5047d3a2.chunk.js",
-    "main.js.map": "/gear-optimizer/static/js/main.5047d3a2.chunk.js.map",
+    "main.js": "/gear-optimizer/static/js/main.073e808c.chunk.js",
+    "main.js.map": "/gear-optimizer/static/js/main.073e808c.chunk.js.map",
     "runtime~main.js": "/gear-optimizer/static/js/runtime~main.5e32c41c.js",
     "runtime~main.js.map": "/gear-optimizer/static/js/runtime~main.5e32c41c.js.map",
     "static/js/2.4f6fbf53.chunk.js": "/gear-optimizer/static/js/2.4f6fbf53.chunk.js",
@@ -10,7 +10,7 @@
     "e0507183ecd86629a2c9.worker.js": "/gear-optimizer/e0507183ecd86629a2c9.worker.js",
     "e0507183ecd86629a2c9.worker.js.map": "/gear-optimizer/e0507183ecd86629a2c9.worker.js.map",
     "index.html": "/gear-optimizer/index.html",
-    "precache-manifest.bdbd342f6d42f29f0d8e13e3fcaf9488.js": "/gear-optimizer/precache-manifest.bdbd342f6d42f29f0d8e13e3fcaf9488.js",
+    "precache-manifest.f6c63a139c7284fa7b09fb50bbdb0f5c.js": "/gear-optimizer/precache-manifest.f6c63a139c7284fa7b09fb50bbdb0f5c.js",
     "service-worker.js": "/gear-optimizer/service-worker.js",
     "static/css/main.9a1f7378.chunk.css.map": "/gear-optimizer/static/css/main.9a1f7378.chunk.css.map",
     "static/media/A Bald Egg.png": "/gear-optimizer/static/media/A Bald Egg.4bd16a15.png",
