@@ -124,8 +124,6 @@ export class NGU {
                                         ticks -= i * (Math.floor(i * bbtill) - level);
                                         level = Math.floor(i * bbtill);
                                 } else {
-                                        console.log(bbtill)
-                                        console.log(i * bbtill)
                                         break;
                                 }
                         }
