@@ -120,9 +120,13 @@ export class NGU {
                         for (let i = 1; i < 501; i++) {
                                 if (i * bbtill >= level + Math.floor(ticks / i)) {
                                         return Math.min(1e9, level + Math.floor(ticks / i));
-                                } else {
+                                } else if (Math.floor(i * bbtill) > level) {
                                         ticks -= i * (Math.floor(i * bbtill) - level);
                                         level = Math.floor(i * bbtill);
+                                } else {
+                                        console.log(bbtill)
+                                        console.log(i * bbtill)
+                                        break;
                                 }
                         }
                 }
