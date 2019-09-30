@@ -105,10 +105,31 @@ const INITIAL_STATE = {
         pendant: 0,
         titanversion: 1,
         hidden: zoneDict,
-        augment: {
+        augstats: {
                 lsc: 20,
                 time: 1440,
-                vals: []
+                augspeed: 1,
+                ecap: 1,
+                gps: 0,
+                gold: 0,
+                augs: [
+                        {
+                                ratio: 1 / 2
+                        }, {
+                                ratio: 1.1 / 2
+                        }, {
+                                ratio: 1.2 / 2
+                        }, {
+                                ratio: 1.3 / 2
+                        }, {
+                                ratio: 1.4 / 2
+                        }, {
+                                ratio: 1.5 / 2
+                        }, {
+                                ratio: 1.6 / 2
+                        }
+                ],
+                version: 0
         },
         wishstats: {
                 epow: 1,
@@ -857,7 +878,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         looty: localStorageState.looty,
                                         pendant: localStorageState.pendant,
                                         hidden: localStorageState.hidden,
-                                        augment: localStorageState.augment,
+                                        augstats: localStorageState.augstats,
                                         basestats: localStorageState.basestats,
                                         capstats: localStorageState.capstats,
                                         cubestats: localStorageState.cubestats,

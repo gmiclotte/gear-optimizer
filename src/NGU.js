@@ -123,8 +123,6 @@ export class NGU {
                                 } else if (Math.floor(i * bbtill) > level) {
                                         ticks -= i * (Math.floor(i * bbtill) - level);
                                         level = Math.floor(i * bbtill);
-                                } else {
-                                        break;
                                 }
                         }
                 }
@@ -137,6 +135,6 @@ export class NGU {
                 if (ticks < 0) {
                         level--;
                 }
-                return level;
+                return Math.min(1e9, level);
         }
 }

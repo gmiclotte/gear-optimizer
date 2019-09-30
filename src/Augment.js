@@ -1,270 +1,120 @@
 export class Augment {
-        constructor(lsc, time) {
-                this.lsc = lsc;
-                this.time = time;
-                this.T = time * 60 * 50;
-                this.BA = [
-                        400, 400 * 17,
-                        400 * 17 ** 2,
-                        400 * 17 ** 3,
-                        400 * 17 ** 4,
-                        (400 * 17 ** 4) * 1400,
-                        (400 * 17 ** 4) * (1400 ** 2)
-                ];
-                this.BU = [
-                        400, 400 * 12,
-                        400 * 12 ** 2,
-                        400 * 12 ** 3,
-                        400 * 12 ** 4,
-                        (400 * 12 ** 4) * 800,
-                        (400 * 12 ** 4) * (800 ** 2)
-                ];
-                this.eu = 2;
-                this.difference = 0.1;
-                if (this.lsc > 0) {
-                        this.difference += 0.05;
-                }
-                if (this.lsc >= 20) {
-                        this.difference += 0.05;
-                }
-                this.difference += this.lsc * 0.01;
+        constructor(augstats, augs) {
+                this.augstats = augstats;
+                this.augs = augs;
         }
 
-        ea(idx) {
-                return 1 + idx * this.difference;
-        }
-
-        tbb(a, b) {
-                const x = Math.floor(a / b);
-                const y = a - x * b;
-                return (a + y) * (x + 1) / 2;
-        }
-
-        tm(a, m) {
-                return m * a * (a + 1) / 2;
-        }
-
-        bm(a) {
-                if (a === 0) {
-                        return [1, 1];
+        exponent(idx) {
+                let lsc = Number(this.augstats.lsc);
+                let difference = 0.1;
+                if (lsc > 0) {
+                        difference += 0.05;
                 }
-                if (a >= this.T) {
-                        return [this.T, 1];
+                if (lsc >= 20) {
+                        difference += 0.05;
+                        lsc = 20;
                 }
-                let b = 1;
-                let m = 1;
-                let inf = 1;
-                let sup = 1;
-                let last = -1;
-                let t = a * (a + 1) / 2;
-                if (this.T > t) {
-                        while (this.T > t) {
-                                sup *= 10;
-                                t = this.tm(a, sup);
+                difference += lsc * 0.01;
+                return 1 + difference * idx;
+        }
+
+        cost(idx, version, isUpgrade, isGold) {
+                if (idx > 4 && !isUpgrade && isGold) {
+                        return idx === 5
+                                ? 1.8e16
+                                : 2.3e19;
+                }
+                const base = isGold
+                        ? isUpgrade
+                                ? 1e7
+                                : 1e4
+                        : [2e7, 5e19, 5e34][version];
+                const a = isUpgrade
+                        ? isGold
+                                ? 20
+                                : 12
+                        : isGold
+                                ? 50
+                                : 17;
+                const b = isUpgrade
+                        ? isGold
+                                ? 1e3
+                                : 8e2
+                        : isGold
+                                ? 1e3 //never used
+                                : 1.4e3;
+                return base * Math.pow(a, Math.min(4, idx)) * Math.pow(b, Math.max(0, idx - 4));
+        }
+
+        reachable(idx, isUpgrade) {
+                const version = Number(this.augstats.version);
+                let level = 0
+                let ticks = Number(this.augstats.time) * 60 * 50;
+                if (ticks > 365 * 4.32e6) {
+                        ticks = 365 * 4.32e6;
+                }
+                const speed = Number(this.augstats.augspeed);
+                let ratio = Number(this.augstats.augs[idx].ratio);
+                ratio = isUpgrade
+                        ? 1 / (ratio + 1)
+                        : ratio / (ratio + 1);
+                const cap = Number(this.augstats.ecap) * ratio;
+                const base = this.cost(idx, version, isUpgrade, false);
+                const basegold = this.cost(idx, version, isUpgrade, true);
+                const gpt = Number(this.augstats.gps) / 50;
+                let gold = Number(this.augstats.gold) + gpt; //add 1 tick worth of gold
+                const bbtill = cap * speed / base;
+                const totalgold = gold + gpt * ticks;
+                if (totalgold > Math.pow(ticks, 2) * basegold && 500 * bbtill > level) {
+                        // handle bar fills up to 0.1s
+                        for (let i = 1; i < 501; i++) {
+                                if (i * bbtill >= level + Math.floor(ticks / i)) {
+                                        return [
+                                                Math.min(1e9, level + Math.floor(ticks / i)),
+                                                false
+                                        ];
+                                } else if (Math.floor(i * bbtill) > level) {
+                                        ticks -= i * (Math.floor(i * bbtill) - level);
+                                        level = Math.floor(i * bbtill);
+                                }
                         }
-                        inf = sup / 10;
-                        while (true) {
-                                m = (sup + inf) / 2;
-                                if (Math.abs(m - last) < 0.0001) {
+                }
+                //handle slow bar fills
+                let goldlimited = false;
+                while (ticks > 0 && level < 1e9) {
+                        const cost = basegold * (level + 1);
+                        if (gold < cost) {
+                                goldlimited = true;
+                                if (gpt <= 0) {
                                         break;
                                 }
-                                t = this.tm(a, m);
-                                if (this.T > t) {
-                                        inf = m;
-                                } else {
-                                        sup = m;
+                                const reqticks = Math.ceil((cost - gold) / gpt);
+                                ticks -= reqticks;
+                                if (ticks < 0) {
+                                        ticks = 0;
                                 }
-                                last = m;
-                        }
-                } else if (this.T < t) {
-                        while (this.T < t && a > sup) {
-                                sup *= 10;
-                                if (sup > a) {
-                                        sup = a;
-                                        break;
-                                }
-                                t = this.tbb(a, sup);
-                        }
-                        inf = sup / 10;
-                        while (true) {
-                                b = Math.floor((sup + inf) / 2);
-                                if (b === last) {
-                                        if (this.T < t) {
-                                                b += 1;
-                                        }
-                                        break;
-                                }
-                                t = this.tbb(a, b);
-                                if (this.T < t) {
-                                        inf = b;
-                                } else {
-                                        sup = b;
-                                }
-                                last = b;
-                        }
-                }
-                return [b, m];
-        }
-
-        get_cost_ba(idx, a) {
-                const ba = this.BA[idx]
-                const tmp = this.bm(a)
-                const b = tmp[0];
-                const m = tmp[1];
-                return b === 1
-                        ? this.T * ba / m
-                        : this.T * ba * b;
-        }
-
-        get_cost_bu(idx, u) {
-                const bu = this.BU[idx];
-                const tmp = this.bm(u)
-                const b = tmp[0];
-                const m = tmp[1];
-                return b === 1
-                        ? this.T * bu / m
-                        : this.T * bu * b;
-        }
-
-        get_cost_bb(idx, a) {
-                const y = this.eu / this.ea(idx);
-                const ca = this.get_cost_ba(idx, a);
-                const cu = ca * y;
-                return ca + cu;
-        }
-
-        get_level(idx, c, upgrade = false) {
-                const ba = upgrade
-                        ? this.BU[idx]
-                        : this.BA[idx];
-                const y = this.eu / this.ea(idx);
-                let ca = c / (1 + y);
-                ca *= upgrade
-                        ? y
-                        : 1;
-                const b = Math.floor(ca / this.T / ba);
-                if (b <= 1) {
-                        const Da = 1 + 8 * ca / ba;
-                        return (Da ** 0.5 - 1) / 2;
-                }
-                let d = b ** 2 + 8 * b * this.T;
-                let a = Math.floor((-b + d ** 0.5) / 2 / b) * b;
-                let mult = 1;
-                let adds = [];
-                while (mult * 2 < b) {
-                        mult *= 2;
-                        adds.push(Math.floor(b / mult));
-                }
-                adds.push(1);
-                const limit = a + b;
-                for (let i in adds) {
-                        const add = adds[i];
-                        if (upgrade) {
-                                while (a + add <= this.T && this.get_cost_bu(idx, a + add) < ca) {
-                                        a += add;
-                                }
+                                gold += reqticks * gpt;
                         } else {
-                                while (a + add <= this.T && this.get_cost_ba(idx, a + add) < ca) {
-                                        a += add;
-                                }
+                                const reqticks = Math.ceil(base * (level + 1) / (cap * speed));
+                                ticks -= reqticks;
+                                gold += reqticks * gpt - cost;
+                                level++;
                         }
                 }
-                return a;
+                //correct overfill
+                if (ticks < 0) {
+                        level--;
+                }
+                return [
+                        Math.min(1e9, level),
+                        goldlimited
+                ];
         }
 
-        get_ratio(idx, c) {
-                let ka = 25 ** idx
-                for (let tmp = 5; idx >= tmp; tmp++) {
-                        ka *= 100;
-                }
-                const ku = 1
-                const y = this.eu / this.ea(idx)
-                let a = Math.floor(this.get_level(idx, c, false))
-                if (a > this.T) {
-                        a = this.T
-                }
-                const ca = this.get_cost_ba(idx, a)
-                let u = Math.floor(this.get_level(idx, c, true))
-                if (u > this.T) {
-                        u = this.T;
-                }
-                const cu = this.get_cost_bu(idx, u)
-                const c_ = ca + cu
-                const fa = Math.floor(a) ** this.ea(idx) * ka;
-                const fu = Math.floor(1 + u) ** this.eu * ku;
-                const f = fa * fu;
-                return [a, u, f];
-        }
-
-        optimize() {
-                let vals = [];
-                for (let idx = 1; idx < 7; idx++) {
-                        let a = 1;
-                        while (true) {
-                                const c = this.get_cost_bb(idx, a);
-                                const flow = this.get_ratio(idx - 1, c)[2];
-                                const fhigh = this.get_ratio(idx, c)[2];
-                                if (fhigh > flow) {
-                                        break;
-                                }
-                                a *= 10;
-                                if (a > this.T) {
-                                        a = this.T;
-                                        break;
-                                }
-                        }
-                        let sup = a;
-                        while (true) {
-                                const c = this.get_cost_bb(idx, a);
-                                const flow = this.get_ratio(idx - 1, c)[2]
-                                const fhigh = this.get_ratio(idx, c)[2]
-                                if (fhigh < flow) {
-                                        break;
-                                }
-                                a /= 2;
-                        }
-                        let inf = a;
-                        let last = -1;
-                        while (true) {
-                                if (inf === sup) {
-                                        a = sup;
-                                        break;
-                                }
-                                a = Math.floor((sup + inf) / 2);
-                                if (a === last) {
-                                        inf += 1;
-                                        a += 1;
-                                }
-                                const c = this.get_cost_bb(idx, a);
-                                const flow = this.get_ratio(idx - 1, c)[2];
-                                const fhigh = this.get_ratio(idx, c)[2];
-                                if (fhigh === flow) {
-                                        break
-                                } else if (fhigh < flow) {
-                                        inf = a
-                                } else {
-                                        sup = a
-                                }
-                                last = a;
-                        }
-                        const c = this.get_cost_bb(idx, a);
-                        let tmp = this.get_ratio(idx - 1, c);
-                        let alow = tmp[0];
-                        let ulow = tmp[1];
-                        let flow = tmp[2];
-                        tmp = this.get_ratio(idx, c);
-                        let ahigh = tmp[0];
-                        let uhigh = tmp[1];
-                        let fhigh = tmp[2];
-                        vals.push([
-                                alow,
-                                ulow,
-                                flow,
-                                ahigh,
-                                uhigh,
-                                fhigh
-                        ]);
-                }
-                return vals;
+        boost(idx, auglevel, upglevel) {
+                const factor = [1, 1, 1e12][Number(this.augstats.version)];
+                const augbonus = this.augs[idx].boost * Math.pow(auglevel, this.exponent(idx));
+                const upgbonus = Math.pow(1 + upglevel, 2);
+                return Math.max(1, Math.floor(augbonus * upgbonus / factor));
         }
 }

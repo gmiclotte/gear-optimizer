@@ -69,12 +69,24 @@ function HowTo() {
                         {'How to use the augments calculator:'}
                 </ol>
                 <ol>
-                        <li>This assumes you are limited by energy, not by gold.</li>
-                        <li>This assumes you are spending energy on augments and upgrades in a ratio equal to the exponents of both. Augment exponent depends on laser sword challenge completions, while upgrade exponent is always 2. Of course, if you're BBing, then you can adjust this ratio to save some energy.</li>
-                        <li>Enter the number of laser sword challenge completions.</li>
-                        <li>Enter the amount of time spent on augments, in minutes.</li>
-                        <li>The point of equality between consecutive augments and upgrades is shown, if you get the number of augments and upgrades on the left or on the right, a similar boost to attack and defense is obtained with the same energy investment.</li>
-                        <li>In practice, this means that you should swap to the augment on the right, if you can reach the amount on the left, except when BBing, then you'll have to actually check if you can reach the amount on the right.</li>
+                        <li>Fill in the things and then check which augment gives the best boost.</li>
+                        <li>Augment speed is whatever you find in the breakdown, but divide by 100 to remove the "%"-sign.</li>
+                        <li>Time is in minutes.</li>
+                        <li>Ratio is the energy in augment : energy in upgrade, where the latter is always 1. If you want for example 3.4:2, then enter 1.7.</li>
+                </ol>
+                <br/>
+                <ol>
+                        {'How to use the NGUs calculator:'}
+                </ol>
+                <ol>
+                        <li>...</li>
+                </ol>
+                <br/>
+                <ol>
+                        {'How to use the hacks calculator:'}
+                </ol>
+                <ol>
+                        <li>...</li>
                 </ol>
                 <br/>
                 <ol>

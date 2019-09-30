@@ -1,24 +1,35 @@
 import React, {Component} from 'react';
 import ReactGA from 'react-ga';
+import {Augment} from '../../Augment';
+import {shortenExponential} from '../../util';
+import VersionForm from '../VersionForm/VersionForm'
 
-class Button extends Component {
-        render() {
-                if (this.props.running) {
-                        return (<button onClick={() => this.props.abort()}>
-                                Abort
-                        </button>);
-                } else {
-                        return (<button onClick={() => {
-                                        this.props.handleAugmentSettings(this.props.state.lsc, this.props.state.time);
-                                        this.props.handleAugmentAsync();
-                                }}>
-                                {'Compute augments.'}
-                        </button>);
-                }
+const AUGS = [
+        {
+                name: 'scissors',
+                boost: Math.pow(25, 0)
+        }, {
+                name: 'milk',
+                boost: Math.pow(25, 1)
+        }, {
+                name: 'cannon',
+                boost: Math.pow(25, 2)
+        }, {
+                name: 'mounted',
+                boost: Math.pow(25, 3)
+        }, {
+                name: 'buster',
+                boost: Math.pow(25, 4)
+        }, {
+                name: 'exo',
+                boost: Math.pow(25, 5) * 1e2
+        }, {
+                name: 'laser sword',
+                boost: Math.pow(25, 6) * 1e4
         }
-}
+]
 
-class Augment extends Component {
+class AugmentComponent extends Component {
         constructor(props) {
                 super(props);
                 this.handleChange = this.handleChange.bind(this);
@@ -33,74 +44,166 @@ class Augment extends Component {
                 event.preventDefault();
         }
 
-        handleChange(event, name) {
+        handleChange(event, name, idx = -1) {
                 let val = event.target.value;
-                let state = {
-                        lsc: this.props.augment.lsc,
-                        time: this.props.augment.time
+                let augstats = {
+                        ...this.props.augstats
                 };
-                state = {
-                        ...state,
-                        [name]: val
-                };
-                this.props.handleAugmentSettings(state.lsc, state.time);
-                if (val.length === 0) {
+                if (idx < 0) {
+                        augstats = {
+                                ...augstats,
+                                [name]: val
+                        };
+                        this.props.handleSettings('augstats', augstats);
                         return;
                 }
-                if (!this.props.running && state.lsc >= 0 && state.time > 0.003) {
-                        this.props.handleAugmentAsync();
+                let augs = [...augstats.augs];
+                let aug = {
+                        ...augs[idx],
+                        [name]: val
+                };
+                augs[idx] = aug;
+                augstats = {
+                        ...augstats,
+                        augs: augs
+                };
+                this.props.handleSettings('augstats', augstats);
+                return;
+
+        }
+
+        configureRatios(key) {
+                const augstats = this.props.augstats;
+                let augs;
+                let augmentOptimizer = new Augment(augstats, AUGS);
+                const version = augstats.version;
+                if (key === 'exponent') {
+                        augs = augstats.augs.map((aug, idx) => {
+                                const ratio = augmentOptimizer.exponent(idx) / 2;
+                                return {
+                                        ...aug,
+                                        ratio: ratio
+                                };
+                        });
                 }
+                if (key === 'cost') {
+                        augs = augstats.augs.map((aug, idx) => {
+                                const ratio = augmentOptimizer.cost(idx, version, false, false) / augmentOptimizer.cost(idx, version, true, false);
+                                return {
+                                        ...aug,
+                                        ratio: ratio
+                                };
+                        });
+                }
+                if (key === 'equal') {
+                        augs = augstats.augs.map((aug, idx) => {
+                                return {
+                                        ...aug,
+                                        ratio: 1
+                                };
+                        });
+                }
+                this.props.handleSettings('augstats', {
+                        ...augstats,
+                        augs: augs
+                });
+                return;
         }
 
-        names = [
-                'scissors',
-                'milk',
-                'cannon',
-                'mounted',
-                'buster',
-                'exo',
-                'laser sword'
-        ];
-
-        aug(idx, val, s) {
-                return val[s] + ' / ' + val[s + 1] + ' ' + this.names[idx];
+        input(val, args, width = 100) {
+                return <label >
+                        <input style={{
+                                        width: width + 'px',
+                                        margin: '5px'
+                                }} type="number" value={val} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ...args)}/>
+                </label>;
         }
 
-        line(val, idx) {
-                return <div key={idx}>{this.aug(idx, val, 0) + '\t==\t' + this.aug(idx + 1, val, 3) + '\n'}</div>;
+        namedInput(name, val, args, width = 100) {
+                return <tr>
+                        <td>{name}</td>
+                        <td>
+                                {this.input(val, args, width)}
+                        </td>
+                </tr>;
+        }
+
+        augment(augstats, aug, pos) {
+                let augmentOptimizer = new Augment(augstats, AUGS);
+                const augresult = augmentOptimizer.reachable(pos, false);
+                const auglevel = augresult[0];
+                const goldlimited = augresult[1];
+                const upglevel = goldlimited
+                        ? 0
+                        : augmentOptimizer.reachable(pos, true)[0];
+                const boost = augmentOptimizer.boost(pos, auglevel, upglevel);
+                return <tr key={pos}>
+                        <td>{aug.name}</td>
+                        <td>{
+                                        this.input(augstats.augs[pos].ratio, [
+                                                'ratio', pos
+                                        ], 50)
+                                }</td>
+                        <td>{shortenExponential(auglevel)}</td>
+                        <td>{shortenExponential(upglevel)}</td>
+                        <td>{shortenExponential(boost)}</td>
+                </tr>
         }
 
         render() {
                 ReactGA.pageview('/augment/');
-                const vals = this.props.augment.vals;
-                let text = 'Augments / upgrades for equal energy cost and bonus:';
+                const augstats = this.props.augstats;
                 return (<div className='center'>
                         <form onSubmit={this.handleSubmit}>
-                                <label>
-                                        {'LSC completions:'}
-                                        <input style={{
-                                                        width: '30px',
-                                                        margin: '5px'
-                                        }} type="text" value={this.props.augment.lsc} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'lsc')}/>
-                                </label>
-                                <br/>
-                                <label>
-                                        {'Augment time:'}
-                                        <input style={{
-                                                        width: '40px',
-                                                        margin: '5px'
-                                        }} type="text" value={this.props.augment.time} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'time')} autoFocus={true}/>
-                                </label>
+                                <table className='center'>
+                                        <tbody>
+                                                {this.namedInput('Energy cap', augstats.ecap, ['ecap'])}
+                                                {this.namedInput('Augment speed', augstats.augspeed, ['augspeed'])}
+                                                {this.namedInput('Gold', augstats.gold, ['gold'])}
+                                                {this.namedInput('Net GPS', augstats.gps, ['gps'])}
+                                                {this.namedInput('LSC completions', augstats.lsc, ['lsc'])}
+                                                {this.namedInput('time', augstats.time, ['time'])}
+                                                <tr>
+                                                        <td>
+                                                                {<VersionForm {...this.props} handleChange={this.handleChange}/>}
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>{'Ratio:'}</td>
+                                                        <td>
+                                                                <button onClick={() => this.configureRatios('exponent')}>
+                                                                        {'Exponent'}
+                                                                </button>
+                                                                <button onClick={() => this.configureRatios('cost')}>
+                                                                        {'Cost'}
+                                                                </button>
+                                                                <button onClick={() => this.configureRatios('equal')}>
+                                                                        {'Equal'}
+                                                                </button>
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                </table>
+                                <table className='center'>
+                                        <tbody>
+                                                <tr>
+                                                        <th>Augment</th>
+                                                        <th>Ratio</th>
+                                                        <th>Augment</th>
+                                                        <th>Upgrade</th>
+                                                        <th>Boost</th>
+                                                </tr>
+                                                {
+                                                        AUGS.map((aug, pos) => {
+                                                                return this.augment(augstats, aug, pos);
+                                                        })
+                                                }
+                                        </tbody>
+                                </table>
                         </form>
-                        <Button {...this.props} state={this.props.augment} abort={this.props.handleTerminate}/>
-                        <br/>
-                        <br/>
-                        <div>{text}</div>
-                        <br/>
-                        <div>{vals.map((val, idx) => (this.line(val, idx)))}</div>
                 </div>);
 
         };
 }
 
-export default Augment;
+export default AugmentComponent;

@@ -232,7 +232,7 @@ export class Wish {
                 // optimize
                 [assignments, res, scores] = this.spread_res(assignments, res, scores, resource_priority, wishcap, exponent, l, totres, coef, start, goal, minimal);
                 if (goal.filter(x => x > 0).length - minimal > 1) {
-                        const runs = 100;
+                        const runs = 1000;
                         for (let i = 0; i < runs; i++) {
                                 let save = res[1] <= 0
                                         ? getRandomInt(1, 3)
