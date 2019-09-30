@@ -114,7 +114,8 @@ export class Augment {
         boost(idx, auglevel, upglevel) {
                 const factor = [1, 1, 1e12][Number(this.augstats.version)];
                 const augbonus = this.augs[idx].boost * Math.pow(auglevel, this.exponent(idx));
-                const upgbonus = Math.pow(1 + upglevel, 2);
+                const upgbonus = 1 + Math.pow(upglevel, 2);
+                console.log(idx, augbonus, upgbonus)
                 return Math.max(1, Math.floor(augbonus * upgbonus / factor));
         }
 }
