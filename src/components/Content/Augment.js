@@ -164,7 +164,8 @@ class AugmentComponent extends Component {
                                                 {this.namedInput('Augment speed', augstats.augspeed, ['augspeed'])}
                                                 {this.namedInput('Gold', augstats.gold, ['gold'])}
                                                 {this.namedInput('Net GPS', augstats.gps, ['gps'])}
-                                                {this.namedInput('LSC completions', augstats.lsc, ['lsc'])}
+                                                {this.namedInput('Normal NAC:', augstats.nac, ['nac'])}
+                                                {this.namedInput('Normal LSC:', augstats.lsc, ['lsc'])}
                                                 {this.namedInput('time', augstats.time, ['time'])}
                                                 <tr>
                                                         <td>

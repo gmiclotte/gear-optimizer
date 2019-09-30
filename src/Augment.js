@@ -24,11 +24,16 @@ export class Augment {
                                 ? 1.8e16
                                 : 2.3e19;
                 }
+                const nacfactor = this.augstats.nac >= 25
+                        ? 0.5
+                        : 1;
                 const base = isGold
                         ? isUpgrade
-                                ? 1e7
-                                : 1e4
-                        : [2e7, 5e19, 5e34][version];
+                                ? 1e7 * nacfactor
+                                : 1e4 * nacfactor
+                        : [
+                                2e7, 5e19, 5e34 / 1.2 //HACK: why do we need to divide by 1.2 here ??
+                        ][version];
                 const a = isUpgrade
                         ? isGold
                                 ? 20
@@ -119,10 +124,9 @@ export class Augment {
         }
 
         boost(idx, auglevel, upglevel) {
-                const factor = [1, 1, 1e12][Number(this.augstats.version)];
+                const factor = 1; //[1, 1, 1e12][Number(this.augstats.version)];
                 const augbonus = this.augs[idx].boost * Math.pow(auglevel, this.exponent(idx));
                 const upgbonus = 1 + Math.pow(upglevel, 2);
-                console.log(idx, augbonus, upgbonus)
                 return Math.max(1, Math.floor(augbonus * upgbonus / factor));
         }
 }

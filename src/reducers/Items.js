@@ -107,6 +107,7 @@ const INITIAL_STATE = {
         hidden: zoneDict,
         augstats: {
                 lsc: 20,
+                nac: 25,
                 time: 1440,
                 augspeed: 1,
                 ecap: 1,
@@ -850,6 +851,9 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                         hackidx: localStorageState.hackstats.hacks.length
                                                 }
                                         ];
+                                }
+                                if (localStorageState.augstats !== undefined && localStorageState.augstats.nac === undefined) {
+                                        localStorageState.augstats.nac = 25;
                                 }
                                 const tmp_factors = Object.getOwnPropertyNames(Factors);
                                 localStorageState.factors = localStorageState.factors.map(name => {
