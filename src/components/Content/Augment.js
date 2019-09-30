@@ -137,6 +137,7 @@ class AugmentComponent extends Component {
                         ? 0
                         : augmentOptimizer.reachable(pos, true)[0];
                 const boost = augmentOptimizer.boost(pos, auglevel, upglevel);
+                const energy = augmentOptimizer.energy(pos);
                 return <tr key={pos}>
                         <td>{aug.name}</td>
                         <td>{
@@ -144,6 +145,8 @@ class AugmentComponent extends Component {
                                                 'ratio', pos
                                         ], 50)
                                 }</td>
+                        <td>{shortenExponential(energy[0])}</td>
+                        <td>{shortenExponential(energy[1])}</td>
                         <td>{shortenExponential(auglevel)}</td>
                         <td>{shortenExponential(upglevel)}</td>
                         <td>{shortenExponential(boost)}</td>
@@ -192,8 +195,10 @@ class AugmentComponent extends Component {
                                                 <tr>
                                                         <th>Augment</th>
                                                         <th>Ratio</th>
-                                                        <th>Augment</th>
-                                                        <th>Upgrade</th>
+                                                        <th>Augment<br/>Energy</th>
+                                                        <th>Upgrade<br/>Energy</th>
+                                                        <th>Augment<br/>Level</th>
+                                                        <th>Upgrade<br/>Level</th>
                                                         <th>Boost</th>
                                                 </tr>
                                                 {

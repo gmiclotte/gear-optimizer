@@ -46,6 +46,15 @@ export class Augment {
                 return base * Math.pow(a, Math.min(4, idx)) * Math.pow(b, Math.max(0, idx - 4));
         }
 
+        energy(idx) {
+                const ratio = Number(this.augstats.augs[idx].ratio);
+                const cap = Number(this.augstats.ecap);
+                return [
+                        cap * ratio / (ratio + 1),
+                        cap / (ratio + 1)
+                ];
+        }
+
         reachable(idx, isUpgrade) {
                 const version = Number(this.augstats.version);
                 let level = 0
@@ -54,11 +63,9 @@ export class Augment {
                         ticks = 365 * 4.32e6;
                 }
                 const speed = Number(this.augstats.augspeed);
-                let ratio = Number(this.augstats.augs[idx].ratio);
-                ratio = isUpgrade
-                        ? 1 / (ratio + 1)
-                        : ratio / (ratio + 1);
-                const cap = Number(this.augstats.ecap) * ratio;
+                const cap = isUpgrade
+                        ? this.energy(idx)[1]
+                        : this.energy(idx)[0];
                 const base = this.cost(idx, version, isUpgrade, false);
                 const basegold = this.cost(idx, version, isUpgrade, true);
                 const gpt = Number(this.augstats.gps) / 50;
