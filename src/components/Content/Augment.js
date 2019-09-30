@@ -165,6 +165,9 @@ class AugmentComponent extends Component {
                                                 {this.namedInput('time', augstats.time, ['time'])}
                                                 <tr>
                                                         <td>
+                                                                {'Game mode:'}
+                                                        </td>
+                                                        <td>
                                                                 {<VersionForm {...this.props} handleChange={this.handleChange}/>}
                                                         </td>
                                                 </tr>
