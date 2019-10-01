@@ -77,7 +77,10 @@ export class Augment {
                 let gold = Number(this.augstats.gold) + gpt; //add 1 tick worth of gold
                 const bbtill = cap * speed / base;
                 const totalgold = gold + gpt * ticks;
-                if (totalgold > Math.pow(ticks, 2) * basegold && 500 * bbtill > level) {
+                if (totalgold > Math.pow(
+                        ticks, isUpgrade
+                        ? 3
+                        : 2) / 2 * basegold && 500 * bbtill > level) {
                         // handle bar fills up to 0.1s
                         for (let i = 1; i < 501; i++) {
                                 if (i * bbtill >= level + Math.floor(ticks / i)) {
@@ -94,7 +97,9 @@ export class Augment {
                 //handle slow bar fills
                 let goldlimited = false;
                 while (ticks > 0 && level < 1e9) {
-                        const cost = basegold * (level + 1);
+                        const cost = isUpgrade
+                                ? basegold * Math.pow(level + 1, 2)
+                                : basegold * (level + 1);
                         if (gold < cost) {
                                 goldlimited = true;
                                 if (gpt <= 0) {
