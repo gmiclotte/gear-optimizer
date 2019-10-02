@@ -166,7 +166,11 @@ class NGUComponent extends Component {
                                                         <th>Reachable<br/>Sadistic Level<br/>(Bonus Change)</th>
                                                 </tr>
                                                 {
-                                                        ['energy', 'magic'].map((resource, isMagic) => {
+                                                        ['energy', '', 'magic'].map((resource, resourceIdx) => {
+                                                                if (resourceIdx === 1) {
+                                                                        return <br/>;
+                                                                }
+                                                                const isMagic = resourceIdx === 2
                                                                 let stats = this.props.ngustats[resource].ngus;
                                                                 return NGUs[resource].map((ngu, pos) => {
                                                                         const bonus = nguOptimizer.bonus(ngu, stats[pos]);
