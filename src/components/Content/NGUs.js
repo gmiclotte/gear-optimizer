@@ -171,6 +171,8 @@ class NGUComponent extends Component {
                                                                         return <br/>;
                                                                 }
                                                                 const isMagic = resourceIdx === 2
+                                                                        ? 1
+                                                                        : 0;
                                                                 let stats = this.props.ngustats[resource].ngus;
                                                                 return NGUs[resource].map((ngu, pos) => {
                                                                         const bonus = nguOptimizer.bonus(ngu, stats[pos]);
