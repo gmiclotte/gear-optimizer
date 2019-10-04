@@ -69,7 +69,7 @@ function HowTo() {
                         {'How to use the augments calculator:'}
                 </ol>
                 <ol>
-                        <li>Fill in the things and then check which augment gives the best boost.</li>
+                        <li>Fill in the fields and then check which augment gives the best boost.</li>
                         <li>Augment speed is whatever you find in the breakdown, but divide by 100 to remove the "%"-sign.</li>
                         <li>Time is in minutes.</li>
                         <li>Ratio is the energy in augment : energy in upgrade, where the latter is always 1. If you want for example 3.4:2, then enter 1.7.</li>
@@ -79,14 +79,21 @@ function HowTo() {
                         {'How to use the NGUs calculator:'}
                 </ol>
                 <ol>
-                        <li>...</li>
+                        <li>Fill in the fields and then check which NGU gives the best boost.</li>
+                        <li>NGU speed is whatever you find in the breakdown, but divide by 100 to remove the "%"-sign.</li>
+                        <li>Time is in minutes.</li>
+                        <li>Keep in mind that the calculator assumes you assign all your E or M to a single NGU.</li>
                 </ol>
                 <br/>
                 <ol>
                         {'How to use the hacks calculator:'}
                 </ol>
                 <ol>
-                        <li>...</li>
+                        <li>Fill in the fields and then choose one of the three options (target, max level, max MS).</li>
+                        <li>MS means milestone. MS reducers is how much you have lowered the number of levels between milestones. E.g. if the default levels per milestone is 10, but it's 8 for you, then you fill in 2.</li>
+                        <li>Hack speed is whatever you find in the breakdown, but divide by 100 to remove the "%"-sign.</li>
+                        <li>Time is in minutes.</li>
+                        <li>Min total time assumes you run Hack Hack first. Max total time assumes you run Hack Hack last, this is a sum of the times in the 'Time' column, which are based on current hack speed.</li>
                 </ol>
                 <br/>
                 <ol>
