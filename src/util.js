@@ -248,7 +248,7 @@ export const to_time = (ticks) => {
 export const cubeBaseItemData = (itemdata, cubestats, basestats) => {
         // make cube stats item
         let tier = Number(cubestats.tier);
-        let cube = new Item('Infinity Cube', Slot.OTHER, undefined, 100, [
+        let cube = new Item('Infinity Cube', Slot.OTHER, undefined, 0, [
 
                 [
                         Stat.POWER,
@@ -288,7 +288,7 @@ export const cubeBaseItemData = (itemdata, cubestats, basestats) => {
                 ]
         ]);
         // make base stats item
-        let base = new Item('Base Stats', Slot.OTHER, undefined, 100, [
+        let base = new Item('Base Stats', Slot.OTHER, undefined, 0, [
                 [
                         Stat.POWER,
                         Number(basestats.power)
