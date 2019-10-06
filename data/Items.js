@@ -1833,7 +1833,7 @@ export const ITEMLIST = [
         [Stat.POWER, 220000000],
         [Stat.TOUGHNESS, 220000000],
         [Stat.WISH_SPEED, 21],
-        [Stat.NGU_SPEED, 300],
+        [Stat.NGU_SPEED, 500],
         [Stat.DROP_CHANCE, 1200],
     ]),
     new Item('A Pink Bandana', Slot.ACCESSORY, SetName.WESTWORLD, 100, [
@@ -1847,7 +1847,7 @@ export const ITEMLIST = [
         [Stat.POWER, 1400000000],
         [Stat.TOUGHNESS, 70000000],
         [Stat.RES3_CAP, 21],
-        [Stat.NGU_SPEED, 400],
+        [Stat.NGU_SPEED, 700],
         [Stat.AUGMENT_SPEED, 750],
     ]),
     new Item('Space Helmet', Slot.HEAD, SetName.ITHUNGERS, 100, [
@@ -1930,7 +1930,7 @@ export const ITEMLIST = [
         [Stat.TOUGHNESS, 290000000],
         [Stat.RES3_POWER, 302],
         [Stat.RES3_CAP, 30.4],
-        [Stat.AUGMENT_SPEED, 750],
+        [Stat.AUGMENT_SPEED, 800],
     ]),
     new Item('An Inanimate Carbon Rod', Slot.ACCESSORY, SetName.ITHUNGERS3, 100, [
         [Stat.POWER, 400000000],
@@ -1958,7 +1958,7 @@ export const ITEMLIST = [
         [Stat.POWER, 456000000],
         [Stat.TOUGHNESS, 456000000],
         [Stat.AUGMENT_SPEED, 750],
-        [Stat.NGU_SPEED, 600],
+        [Stat.NGU_SPEED, 1000],
         [Stat.ENERGY_POWER, 437000],
         [Stat.MAGIC_POWER, 437000],
     ]),
