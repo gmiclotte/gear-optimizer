@@ -116,6 +116,7 @@ export const Stat = {
         AP: 'AP',
         AUGMENT_SPEED: 'Augment Speed',
         BEARD_SPEED: 'Beard Speed',
+        COOKING: 'Cooking',
         DAYCARE_SPEED: 'Daycare Speed',
         DROP_CHANCE: 'Drop Chance',
         ENERGY_BARS: 'Energy Bars',
