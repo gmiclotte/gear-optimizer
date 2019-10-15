@@ -52,7 +52,7 @@ export class Augment {
         }
 
         energy(idx) {
-                const ratio = Number(this.augstats.augs[idx].ratio);
+                const ratio = Math.max(0, Number(this.augstats.augs[idx].ratio));
                 const cap = Number(this.augstats.ecap);
                 return [
                         cap * ratio / (ratio + 1),
