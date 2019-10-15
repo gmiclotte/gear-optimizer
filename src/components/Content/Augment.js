@@ -115,7 +115,7 @@ class AugmentComponent extends Component {
                         <input style={{
                                         width: width + 'px',
                                         margin: '5px'
-                                }} type="number" value={val} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ...args)}/>
+                        }} type="number" step="any" value={val} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ...args)}/>
                 </label>;
         }
 

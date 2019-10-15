@@ -141,7 +141,7 @@ class HackComponent extends Component {
                                                                         <input style={{
                                                                                         width: '100px',
                                                                                         margin: '5px'
-                                                                                }} type="number" value={this.props.hackstats['rpow']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'rpow')}/>
+                                                                        }} type="number" step="any" value={this.props.hackstats['rpow']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'rpow')}/>
                                                                 </label>
                                                         </td>
                                                 </tr>
@@ -152,7 +152,7 @@ class HackComponent extends Component {
                                                                         <input style={{
                                                                                         width: '100px',
                                                                                         margin: '5px'
-                                                                                }} type="number" value={this.props.hackstats['rcap']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'rcap')}/>
+                                                                                }} type="number" step="any" value={this.props.hackstats['rcap']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'rcap')}/>
                                                                 </label>
                                                         </td>
                                                 </tr>
@@ -163,7 +163,7 @@ class HackComponent extends Component {
                                                                         <input style={{
                                                                                         width: '100px',
                                                                                         margin: '5px'
-                                                                                }} type="number" value={this.props.hackstats.hackspeed} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'hackspeed')}/>
+                                                                                }} type="number" step="any" value={this.props.hackstats.hackspeed} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'hackspeed')}/>
                                                                 </label>
                                                         </td>
                                                 </tr>
@@ -174,7 +174,7 @@ class HackComponent extends Component {
                                                                         <input style={{
                                                                                         width: '100px',
                                                                                         margin: '5px'
-                                                                                }} type="number" value={hacktime} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'hacktime')}/>
+                                                                                }} type="number" step="any" value={hacktime} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'hacktime')}/>
                                                                 </label>
                                                         </td>
                                                 </tr>
@@ -256,7 +256,7 @@ class HackComponent extends Component {
                                                                                         <input style={{
                                                                                                         width: '40px',
                                                                                                         margin: '5px'
-                                                                                                }} type="number" value={reducer} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'reducer', pos)}/>
+                                                                                                }} type="number" step="any" value={reducer} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'reducer', pos)}/>
                                                                                 </label>
                                                                         </td>
                                                                         <td>
@@ -264,7 +264,7 @@ class HackComponent extends Component {
                                                                                         <input style={{
                                                                                                         width: '60px',
                                                                                                         margin: '5px'
-                                                                                                }} type="number" value={level} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'level', pos)}/>
+                                                                                                }} type="number" step="any" value={level} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'level', pos)}/>
                                                                                 </label>
                                                                         </td>
                                                                         <td>{shorten(currBonus, 2)}%</td>
@@ -273,7 +273,7 @@ class HackComponent extends Component {
                                                                                         <input style={{
                                                                                                         width: '60px',
                                                                                                         margin: '5px'
-                                                                                                }} type="number" value={target} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'goal', pos)}/>
+                                                                                                }} type="number" step="any" value={target} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'goal', pos)}/>
                                                                                 </label>
                                                                                 <button type="button" onClick={(e) => this.handleChange(e, 'msdown', pos)}>
                                                                                         -

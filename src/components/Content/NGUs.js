@@ -93,7 +93,7 @@ class NGUComponent extends Component {
                                                                         <input style={{
                                                                                         width: '100px',
                                                                                         margin: '5px'
-                                                                                }} type="number" value={energy.cap} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'cap', -1, 0)}/>
+                                                                                }} type="number" step="any" value={energy.cap} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'cap', -1, 0)}/>
                                                                 </label>
                                                         </td>
                                                         <td>{'Energy NGU speed'}</td>
@@ -102,7 +102,7 @@ class NGUComponent extends Component {
                                                                         <input style={{
                                                                                         width: '100px',
                                                                                         margin: '5px'
-                                                                                }} type="number" value={energy.nguspeed} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'nguspeed', -1, 0)}/>
+                                                                                }} type="number" step="any" value={energy.nguspeed} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'nguspeed', -1, 0)}/>
                                                                 </label>
                                                         </td>
                                                 </tr>
@@ -113,7 +113,7 @@ class NGUComponent extends Component {
                                                                         <input style={{
                                                                                         width: '100px',
                                                                                         margin: '5px'
-                                                                                }} type="number" value={magic.cap} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'cap', -1, 1)}/>
+                                                                                }} type="number" step="any" value={magic.cap} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'cap', -1, 1)}/>
                                                                 </label>
                                                         </td>
                                                         <td>{'Magic NGU speed'}</td>
@@ -122,7 +122,7 @@ class NGUComponent extends Component {
                                                                         <input style={{
                                                                                         width: '100px',
                                                                                         margin: '5px'
-                                                                                }} type="number" value={magic.nguspeed} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'nguspeed', -1, 1)}/>
+                                                                                }} type="number" step="any" value={magic.nguspeed} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'nguspeed', -1, 1)}/>
                                                                 </label>
                                                         </td>
                                                 </tr>
@@ -133,7 +133,7 @@ class NGUComponent extends Component {
                                                                         <input style={{
                                                                                         width: '100px',
                                                                                         margin: '5px'
-                                                                                }} type="number" value={ngutime} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'ngutime')}/>
+                                                                                }} type="number" step="any" value={ngutime} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'ngutime')}/>
                                                                 </label>
                                                         </td>
                                                 </tr>
@@ -168,7 +168,9 @@ class NGUComponent extends Component {
                                                 {
                                                         ['energy', '', 'magic'].map((resource, resourceIdx) => {
                                                                 if (resourceIdx === 1) {
-                                                                        return <br/>;
+                                                                        return <tr key={'whitespace'}>
+                                                                                <th><br/></th>
+                                                                        </tr>;
                                                                 }
                                                                 const isMagic = resourceIdx === 2
                                                                         ? 1
@@ -184,7 +186,7 @@ class NGUComponent extends Component {
                                                                                                 <input style={{
                                                                                                                 width: '100px',
                                                                                                                 margin: '5px'
-                                                                                                        }} type="number" value={stats[pos].normal} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'normal', pos, isMagic)}/>
+                                                                                                        }} type="number" step="any" value={stats[pos].normal} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'normal', pos, isMagic)}/>
                                                                                         </label>
                                                                                 </td>
                                                                                 <td>
@@ -192,7 +194,7 @@ class NGUComponent extends Component {
                                                                                                 <input style={{
                                                                                                                 width: '100px',
                                                                                                                 margin: '5px'
-                                                                                                        }} type="number" value={stats[pos].evil} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'evil', pos, isMagic)}/>
+                                                                                                        }} type="number" step="any" value={stats[pos].evil} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'evil', pos, isMagic)}/>
                                                                                         </label>
                                                                                 </td>
                                                                                 <td>
@@ -200,7 +202,7 @@ class NGUComponent extends Component {
                                                                                                 <input style={{
                                                                                                                 width: '100px',
                                                                                                                 margin: '5px'
-                                                                                                        }} type="number" value={stats[pos].sadistic} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'sadistic', pos, isMagic)}/>
+                                                                                                        }} type="number" step="any" value={stats[pos].sadistic} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'sadistic', pos, isMagic)}/>
                                                                                         </label>
                                                                                 </td>
                                                                                 <td>{'×' + shorten(bonus * 100) + '%'}</td>

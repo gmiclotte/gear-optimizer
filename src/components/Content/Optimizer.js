@@ -122,7 +122,7 @@ class Optimizer extends Component {
                                                                                 <input style={{
                                                                                                 width: '100px',
                                                                                                 margin: '5px'
-                                                                                        }} type="number" value={this.props.basestats['power']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['base', 'power'])}/>
+                                                                                }} type="number" step="any" value={this.props.basestats['power']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['base', 'power'])}/>
                                                                         </label>
                                                                 </td>
                                                         </tr>
@@ -134,7 +134,7 @@ class Optimizer extends Component {
                                                                                 <input style={{
                                                                                                 width: '100px',
                                                                                                 margin: '5px'
-                                                                                        }} type="number" value={this.props.basestats['toughness']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['base', 'toughness'])}/>
+                                                                                        }} type="number" step="any" value={this.props.basestats['toughness']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['base', 'toughness'])}/>
                                                                         </label>
                                                                 </td>
                                                         </tr>
@@ -146,7 +146,7 @@ class Optimizer extends Component {
                                                                                 <input style={{
                                                                                                 width: '100px',
                                                                                                 margin: '5px'
-                                                                                        }} type="number" value={this.props.cubestats['power']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['cube', 'power'])}/>
+                                                                                        }} type="number" step="any" value={this.props.cubestats['power']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['cube', 'power'])}/>
                                                                         </label>
                                                                 </td>
                                                         </tr>
@@ -158,7 +158,7 @@ class Optimizer extends Component {
                                                                                 <input style={{
                                                                                                 width: '100px',
                                                                                                 margin: '5px'
-                                                                                        }} type="number" value={this.props.cubestats['toughness']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['cube', 'toughness'])}/>
+                                                                                        }} type="number" step="any" value={this.props.cubestats['toughness']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['cube', 'toughness'])}/>
                                                                         </label>
                                                                 </td>
                                                         </tr>
@@ -170,7 +170,7 @@ class Optimizer extends Component {
                                                                                 <input style={{
                                                                                                 width: '100px',
                                                                                                 margin: '5px'
-                                                                                        }} type="number" value={this.props.cubestats['tier']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['cube', 'tier'])}/>
+                                                                                        }} type="number" step="any" value={this.props.cubestats['tier']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['cube', 'tier'])}/>
                                                                         </label>
                                                                 </td>
                                                         </tr>
@@ -182,7 +182,7 @@ class Optimizer extends Component {
                                                                                 <input style={{
                                                                                                 width: '100px',
                                                                                                 margin: '5px'
-                                                                                        }} type="number" value={this.props.capstats['Energy Cap Gear']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['cap', 'Energy Cap Gear'])}/>
+                                                                                        }} type="number" step="any" value={this.props.capstats['Energy Cap Gear']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['cap', 'Energy Cap Gear'])}/>
                                                                         </label>
                                                                 </td>
                                                         </tr>
@@ -194,7 +194,7 @@ class Optimizer extends Component {
                                                                                 <input style={{
                                                                                                 width: '100px',
                                                                                                 margin: '5px'
-                                                                                        }} type="number" value={this.props.capstats['Energy Cap Total']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['cap', 'Energy Cap Total'])}/>
+                                                                                        }} type="number" step="any" value={this.props.capstats['Energy Cap Total']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['cap', 'Energy Cap Total'])}/>
                                                                         </label>
                                                                 </td>
                                                         </tr>
@@ -206,7 +206,7 @@ class Optimizer extends Component {
                                                                                 <input style={{
                                                                                                 width: '100px',
                                                                                                 margin: '5px'
-                                                                                        }} type="number" value={this.props.capstats['Magic Cap Gear']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['cap', 'Magic Cap Gear'])}/>
+                                                                                        }} type="number" step="any" value={this.props.capstats['Magic Cap Gear']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['cap', 'Magic Cap Gear'])}/>
                                                                         </label>
                                                                 </td>
                                                         </tr>
@@ -218,7 +218,7 @@ class Optimizer extends Component {
                                                                                 <input style={{
                                                                                                 width: '100px',
                                                                                                 margin: '5px'
-                                                                                        }} type="number" value={this.props.capstats['Magic Cap Total']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['cap', 'Magic Cap Total'])}/>
+                                                                                        }} type="number" step="any" value={this.props.capstats['Magic Cap Total']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['cap', 'Magic Cap Total'])}/>
                                                                         </label>
                                                                 </td>
                                                         </tr>
