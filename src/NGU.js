@@ -80,14 +80,17 @@ export class NGU {
                                 evil: this.bonus(NGUs[resource][idx], {
                                         ...levels,
                                         normal: quirk.e2n
-                                                ? Number(levels.normal) + reachable.evil - Number(levels.evil)
+                                                ? Math.min(1e9, Number(levels.normal) + reachable.evil - Number(levels.evil))
                                                 : levels.normal,
                                         evil: reachable.evil
                                 }),
                                 sadistic: this.bonus(NGUs[resource][idx], {
                                         ...levels,
+                                        normal: quirk.s2e && quirk.e2n
+                                                ? Math.min(1e9, Number(levels.normal) + reachable.sadistic - Number(levels.sadistic))
+                                                : levels.normal,
                                         evil: quirk.s2e
-                                                ? Number(levels.evil) + reachable.sadistic - Number(levels.sadistic)
+                                                ? Math.min(1e9, Number(levels.evil) + reachable.sadistic - Number(levels.sadistic))
                                                 : levels.evil,
                                         sadistic: reachable.sadistic
                                 })
