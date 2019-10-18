@@ -31,7 +31,7 @@ import {UNDO} from '../actions/Undo'
 import {UNEQUIP_ITEM} from '../actions/UnequipItem';
 import {DELETE_SLOT} from '../actions/DeleteSlot'
 import {LOAD_SLOT, LOAD_FACTORS} from '../actions/LoadSlot'
-import {SAVE_SLOT} from '../actions/SaveSlot'
+import {SAVE_SLOT, SAVE_NAME} from '../actions/SaveSlot'
 import {TOGGLE_SAVED} from '../actions/ToggleSaved'
 import {LOAD_STATE_LOCALSTORAGE} from '../actions/LoadStateLocalStorage';
 import {SAVE_STATE_LOCALSTORAGE} from '../actions/SaveStateLocalStorage';
@@ -642,8 +642,28 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                 }
                         }
 
+                case SAVE_NAME:
+                        {
+                                return {
+                                        ...state,
+                                        savedequip: state.savedequip.map((tmp, idx) => {
+                                                if (idx === state.savedidx) {
+                                                        return {
+                                                                ...tmp,
+                                                                name: action.payload.name
+                                                        };
+                                                }
+                                                return tmp;
+                                        })
+                                }
+                        }
+
                 case SAVE_SLOT:
                         {
+                                let locked = {};
+                                Object.getOwnPropertyNames(state.locked).forEach(slot => {
+                                        locked[slot] = state.locked[slot].map(idx => state.equip[slot][idx]);
+                                });
                                 if (state.savedidx === state.maxsavedidx) {
                                         return {
                                                 ...state,
@@ -651,16 +671,20 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                         if (idx === state.savedidx) {
                                                                 return {
                                                                         ...state.equip,
+                                                                        locked: locked,
                                                                         factors: state.factors,
-                                                                        maxslots: state.maxslots
+                                                                        maxslots: state.maxslots,
+                                                                        name: tmp.name
                                                                 };
                                                         }
                                                         return tmp;
                                                 }).concat([
                                                         {
                                                                 ...ItemNameContainer(state.equip.accessory.length, state.offhand),
+                                                                locked: undefined,
                                                                 factors: undefined,
-                                                                maxslots: undefined
+                                                                maxslots: undefined,
+                                                                name: undefined
                                                         }
                                                 ]),
                                                 maxsavedidx: state.maxsavedidx + 1
@@ -672,8 +696,10 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 if (idx === state.savedidx) {
                                                         return {
                                                                 ...state.equip,
+                                                                locked: locked,
                                                                 factors: state.factors,
-                                                                maxslots: state.maxslots
+                                                                maxslots: state.maxslots,
+                                                                name: tmp.name
                                                         };
                                                 }
                                                 return tmp;
@@ -696,8 +722,21 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                         {
                                 const save = state.savedequip[state.savedidx];
                                 const hasNoFactors = save.factors === undefined && save.maxslots === undefined;
+                                let equip = {
+                                        ...ItemNameContainer(state.equip.accessory.length, state.offhand)
+                                };
+                                let locked = {};
+                                if (save.locked === undefined) {
+                                        save.locked = {};
+                                }
+                                Object.getOwnPropertyNames(save.locked).forEach(slot => {
+                                        equip[slot] = save.locked[slot].concat(equip[slot].slice(save.locked[slot].length));
+                                        locked[slot] = save.locked[slot].map((_, idx) => idx);
+                                });
                                 return cleanState({
                                         ...state,
+                                        equip: equip,
+                                        locked: locked,
                                         factors: hasNoFactors
                                                 ? state.factors
                                                 : save.factors,

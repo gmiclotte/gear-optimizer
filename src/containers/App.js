@@ -22,7 +22,7 @@ import {Undo} from '../actions/Undo'
 import {UnequipItem} from '../actions/UnequipItem';
 import {DeleteSlot} from '../actions/DeleteSlot'
 import {LoadSlot, LoadFactors} from '../actions/LoadSlot'
-import {SaveSlot} from '../actions/SaveSlot'
+import {SaveSlot, SaveName} from '../actions/SaveSlot'
 import {ToggleSaved} from '../actions/ToggleSaved'
 import {LoadStateLocalStorage} from '../actions/LoadStateLocalStorage';
 import {SaveStateLocalStorage} from '../actions/SaveStateLocalStorage';
@@ -86,6 +86,7 @@ const mapDispatchToProps = {
         handleDeleteSlot: DeleteSlot,
         handleLoadFactors: LoadFactors,
         handleLoadSlot: LoadSlot,
+        handleSaveName: SaveName,
         handleSaveSlot: SaveSlot,
         handleToggleSaved: ToggleSaved,
         handleAugmentSettings: AugmentSettings,
