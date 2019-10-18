@@ -25,6 +25,7 @@ import {EQUIP_ITEM} from '../actions/EquipItem';
 import {HIDE_ZONE} from '../actions/HideZone';
 import {LOCK_ITEM} from '../actions/LockItem'
 import {OPTIMIZE_GEAR} from '../actions/OptimizeGear';
+import {OPTIMIZE_SAVES} from '../actions/OptimizeSaves';
 import {OPTIMIZING_GEAR} from '../actions/OptimizingGear';
 import {TERMINATE} from '../actions/Terminate'
 import {UNDO} from '../actions/Undo'
@@ -48,7 +49,7 @@ Object.getOwnPropertyNames(SetName).forEach(x => {
         zoneDict[SetName[x][1]] = 0 < SetName[x][1] && SetName[x][1] < maxZone;
 });
 
-function cleanState(state) {
+export function cleanState(state) {
         // clean locks
         Object.getOwnPropertyNames(state.locked).forEach(slot => {
                 state.locked[slot] = state.locked[slot].filter(idx => {
@@ -60,8 +61,11 @@ function cleanState(state) {
         });
         // clean maxslots
         state.maxslots = state.maxslots.map((val, idx) => {
-                if (val >= state.equip.accessory.length) {
+                if (val > state.equip.accessory.length && val !== Infinity) {
                         return state.equip.accessory.length;
+                }
+                if (val === null) {
+                        return Infinity;
                 }
                 return val;
         })
@@ -335,20 +339,20 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         });
                                 }
                                 if (action.payload.name[0] === 'maxslots') {
-                                        let name = action.payload.name[0];
-                                        let changed = action.payload.name[1];
-                                        let change = action.payload.val;
-                                        if (change < 0 && action.payload.min === state[name][changed]) {
-                                                return state;
-                                        }
-                                        if (change > 0 && action.payload.max === state[name][changed]) {
-                                                return state;
-                                        }
                                         return {
                                                 ...state,
-                                                [name]: state.maxslots.map((val, idx) => {
-                                                        if (idx === changed) {
-                                                                return val + change;
+                                                maxslots: state.maxslots.map((val, idx) => {
+                                                        if (idx === action.payload.name[1]) {
+                                                                if (action.payload.val < 0 && val === Infinity) {
+                                                                        return action.payload.max;
+                                                                }
+                                                                val += action.payload.val;
+                                                                if (val < action.payload.min) {
+                                                                        return action.payload.min;
+                                                                }
+                                                                if (val > action.payload.max) {
+                                                                        return Infinity;
+                                                                }
                                                         }
                                                         return val;
                                                 })
@@ -617,6 +621,22 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         ...state,
                                         equip: equip,
                                         lastequip: state.equip,
+                                        running: false
+                                });
+                        }
+
+                case OPTIMIZE_SAVES:
+                        {
+                                if (!state.running) {
+                                        return state;
+                                }
+                                console.log('worker finished')
+                                const savedequip = action.payload.savedequip;
+                                const savedidx = action.payload.savedidx;
+                                return cleanState({
+                                        ...state,
+                                        savedequip: savedequip,
+                                        savedidx: savedidx,
                                         running: false
                                 });
                         }
@@ -905,7 +925,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         ...state.capstats,
                                         ...localStorageState.capstats
                                 }
-                                return {
+                                return cleanState({
                                         ...state,
                                         offhand: localStorageState.offhand,
                                         equip: localStorageState.equip,
@@ -928,7 +948,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         ngustats: localStorageState.ngustats,
                                         hackstats: localStorageState.hackstats,
                                         wishstats: localStorageState.wishstats
-                                };
+                                });
                         }
 
                 default:

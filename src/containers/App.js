@@ -17,6 +17,7 @@ import {EquipItem} from '../actions/EquipItem';
 import {HideZone} from '../actions/HideZone'
 import {LockItem} from '../actions/LockItem'
 import {OptimizeGearAsync} from '../actions/OptimizeGear';
+import {OptimizeSavesAsync} from '../actions/OptimizeSaves';
 import {Terminate} from '../actions/Terminate'
 import {Undo} from '../actions/Undo'
 import {UnequipItem} from '../actions/UnequipItem';
@@ -80,6 +81,7 @@ const mapDispatchToProps = {
         handleEquipItem: EquipItem,
         handleHideZone: HideZone,
         handleOptimizeGear: OptimizeGearAsync,
+        handleOptimizeSaves: OptimizeSavesAsync,
         handleTerminate: Terminate,
         handleUndo: Undo,
         handleUnequipItem: UnequipItem,

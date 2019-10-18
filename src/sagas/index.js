@@ -2,6 +2,7 @@ import {put, select, takeEvery, all} from 'redux-saga/effects'
 
 import {AUGMENT_ASYNC, AUGMENT} from '../actions/Augment'
 import {OPTIMIZE_GEAR_ASYNC, OPTIMIZE_GEAR} from '../actions/OptimizeGear'
+import {OPTIMIZE_SAVES_ASYNC, OPTIMIZE_SAVES} from '../actions/OptimizeSaves'
 import {OPTIMIZING_GEAR} from '../actions/OptimizingGear'
 import {TERMINATE_ASYNC, TERMINATE} from '../actions/Terminate'
 
@@ -9,14 +10,14 @@ import {TERMINATE_ASYNC, TERMINATE} from '../actions/Terminate'
 import Worker from './optimize.worker'
 let worker;
 
-const doOptimize = (state, worker) => new Promise(async function(resolve, reject) {
+const doOptimize = (command, result, state, worker) => new Promise(async function(resolve, reject) {
         let output = await new Promise(function(resolve, reject) {
                 worker.onmessage = function(e) {
                         resolve(e.data);
                 };
-                worker.postMessage({command: 'optimize', state: state});
+                worker.postMessage({command: command, state: state});
         });
-        await resolve(output.equip);
+        await resolve(output[result]);
 })
 
 export function* optimizeAsync(action) {
@@ -29,7 +30,7 @@ export function* optimizeAsync(action) {
         });
         const store = yield select();
         const state = store.optimizer;
-        let equip = yield doOptimize(state, worker);
+        let equip = yield doOptimize('optimize', 'equip', state, worker);
         yield put({
                 type: OPTIMIZE_GEAR,
                 payload: {
@@ -38,19 +39,25 @@ export function* optimizeAsync(action) {
         });
 }
 
-export function* watchOptimizeAsync() {
-        yield takeEvery(OPTIMIZE_GEAR_ASYNC, optimizeAsync)
-}
-
-const doAugment = (state, worker) => new Promise(async function(resolve, reject) {
-        let output = await new Promise(function(resolve, reject) {
-                worker.onmessage = function(e) {
-                        resolve(e.data);
-                };
-                worker.postMessage({command: 'augment', state: state});
+export function* optimizeSavesAsync(action) {
+        worker = new Worker();
+        yield put({
+                type: OPTIMIZING_GEAR,
+                payload: {
+                        worker: worker
+                }
         });
-        await resolve(output.vals);
-})
+        const store = yield select();
+        const state = store.optimizer;
+        let savedequip = yield doOptimize('optimizeSaves', 'savedequip', state, worker);
+        yield put({
+                type: OPTIMIZE_SAVES,
+                payload: {
+                        savedequip: savedequip,
+                        savedidx: state.savedidx
+                }
+        });
+}
 
 export function* augmentAsync(action) {
         worker = new Worker();
@@ -62,7 +69,7 @@ export function* augmentAsync(action) {
         });
         const store = yield select();
         const state = store.optimizer;
-        let vals = yield doAugment(state, worker);
+        let vals = yield doOptimize('augment', 'vals', state, worker);
         yield put({
                 type: AUGMENT,
                 payload: {
@@ -71,13 +78,21 @@ export function* augmentAsync(action) {
         });
 }
 
-export function* watchAugmentAsync() {
-        yield takeEvery(AUGMENT_ASYNC, augmentAsync)
-}
-
 export function* terminate() {
         worker.terminate();
         yield put({type: TERMINATE});
+}
+
+export function* watchOptimizeAsync() {
+        yield takeEvery(OPTIMIZE_GEAR_ASYNC, optimizeAsync)
+}
+
+export function* watchOptimizeSavesAsync() {
+        yield takeEvery(OPTIMIZE_SAVES_ASYNC, optimizeSavesAsync)
+}
+
+export function* watchAugmentAsync() {
+        yield takeEvery(AUGMENT_ASYNC, augmentAsync)
 }
 
 export function* watchTerminate() {
@@ -85,5 +100,5 @@ export function* watchTerminate() {
 }
 
 export default function* rootSaga() {
-        yield all([watchOptimizeAsync(), watchAugmentAsync(), watchTerminate()]);
+        yield all([watchOptimizeAsync(), watchOptimizeSavesAsync(), watchAugmentAsync(), watchTerminate()]);
 }

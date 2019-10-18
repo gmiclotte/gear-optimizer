@@ -15,7 +15,7 @@ export default class OptimizeButton extends Component {
                         </button>);
                 } else {
                         return (<button onClick={() => this.props.optimize()}>
-                                {'Optimize Gear'}
+                                {'Optimize ' + this.props.text}
                         </button>);
                 }
         }

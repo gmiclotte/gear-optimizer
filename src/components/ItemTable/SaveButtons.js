@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
 import {default as Crement} from '../Crement/Crement';
+import {default as OptimizeButton} from '../OptimizeButton/OptimizeButton';
 
 class SaveButtons extends Component {
         handleFocus(event) {
@@ -12,6 +13,10 @@ class SaveButtons extends Component {
                         ? 'Slot with no name'
                         : this.props.savedequip[this.props.savedidx].name;
                 return (<div className='item-section'>
+                        <div style={{
+                                        margin: '5px'
+                                }}><OptimizeButton text={'All Saves'} running={this.props.running} abort={this.props.handleTerminate} optimize={this.props.handleOptimizeSaves}/>{' '}
+                        </div>
                         <input style={{
                                         width: '150px',
                                         margin: '5px'
@@ -37,7 +42,11 @@ class SaveButtons extends Component {
                                         }
                                 </button>
                                 <button onClick={this.props.handleLoadFactors}>
-                                        {'Load Priorities'}
+                                        {
+                                                this.props.savedequip[this.props.savedidx].factors === undefined
+                                                        ? 'No Priorities Saved...'
+                                                        : 'Load Priorities'
+                                        }
                                 </button>
                         </div>
                 </div>);
