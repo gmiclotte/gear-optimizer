@@ -24,7 +24,7 @@ import {UnequipItem} from '../actions/UnequipItem';
 import {DeleteSlot} from '../actions/DeleteSlot'
 import {LoadSlot, LoadFactors} from '../actions/LoadSlot'
 import {SaveSlot, SaveName} from '../actions/SaveSlot'
-import {ToggleSaved} from '../actions/ToggleSaved'
+import {ToggleSaved, ToggleUnused} from '../actions/ToggleSaved'
 import {LoadStateLocalStorage} from '../actions/LoadStateLocalStorage';
 import {SaveStateLocalStorage} from '../actions/SaveStateLocalStorage';
 
@@ -52,6 +52,7 @@ const mapStateToProps = state => ({
         savedidx: state.optimizer.savedidx,
         maxsavedidx: state.optimizer.maxsavedidx,
         showsaved: state.optimizer.showsaved,
+        showunused: state.optimizer.showunused,
         editItem: state.optimizer.editItem,
         factors: state.optimizer.factors,
         maxslots: state.optimizer.maxslots,
@@ -91,6 +92,7 @@ const mapDispatchToProps = {
         handleSaveName: SaveName,
         handleSaveSlot: SaveSlot,
         handleToggleSaved: ToggleSaved,
+        handleToggleUnused: ToggleUnused,
         handleAugmentSettings: AugmentSettings,
         handleAugmentAsync: AugmentAsync,
         handleHackAsync: HackAsync,

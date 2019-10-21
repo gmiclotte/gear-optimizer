@@ -83,8 +83,25 @@ export default class ItemTable extends React.Component {
                                 if (next) {
                                         class_idx = this.create_section(buffer, last, class_idx)
                                 }
+                                let className = '';
+                                if (!item.disable && this.props.showunused) {
+                                        className = ' unused-item';
+                                        this.props.savedequip.forEach(save => {
+                                                if (className === '') {
+                                                        return;
+                                                }
+                                                if (save[item.slot[0]] === undefined) {
+                                                        return;
+                                                }
+                                                save[item.slot[0]].forEach(i => {
+                                                        if (i === name) {
+                                                                className = '';
+                                                        }
+                                                });
+                                        });
+                                }
                                 if (allowed_zone(this.props.itemdata, limits, name)) {
-                                        this.localbuffer.push(<Item item={item} handleClickItem={this.props.handleClickItem} handleRightClickItem={this.props.handleRightClickItem} key={name}/>);
+                                        this.localbuffer.push(<Item className={className} item={item} handleClickItem={this.props.handleClickItem} handleRightClickItem={this.props.handleRightClickItem} key={name}/>);
                                 }
                                 last = item;
                         }

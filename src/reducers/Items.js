@@ -33,7 +33,7 @@ import {UNEQUIP_ITEM} from '../actions/UnequipItem';
 import {DELETE_SLOT} from '../actions/DeleteSlot'
 import {LOAD_SLOT, LOAD_FACTORS} from '../actions/LoadSlot'
 import {SAVE_SLOT, SAVE_NAME} from '../actions/SaveSlot'
-import {TOGGLE_SAVED} from '../actions/ToggleSaved'
+import {TOGGLE_SAVED, TOGGLE_UNUSED} from '../actions/ToggleSaved'
 import {LOAD_STATE_LOCALSTORAGE} from '../actions/LoadStateLocalStorage';
 import {SAVE_STATE_LOCALSTORAGE} from '../actions/SaveStateLocalStorage';
 
@@ -94,6 +94,7 @@ const INITIAL_STATE = {
         savedidx: 0,
         maxsavedidx: 0,
         showsaved: false,
+        showunused: false,
         factors: [
                 'RESPAWN', 'DAYCARE_SPEED', 'HACK', 'NGUS', 'NONE'
         ],
@@ -796,6 +797,14 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                 return {
                                         ...state,
                                         showsaved: !state.showsaved
+                                };
+                        }
+
+                case TOGGLE_UNUSED:
+                        {
+                                return {
+                                        ...state,
+                                        showunused: !state.showunused
                                 };
                         }
 

@@ -23,7 +23,7 @@ export default class Item extends Component {
 
         render() {
                 let item = this.props.item;
-                let classNames = 'item';
+                let classNames = 'item' + this.props.className;
                 const locked = this.props.lockable && getLock(this.props.item.slot[0], this.props.idx, this.props.locked);
                 if (locked) {
                         classNames += ' lock-item'

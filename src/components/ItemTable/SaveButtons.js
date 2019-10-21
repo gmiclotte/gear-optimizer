@@ -16,6 +16,12 @@ class SaveButtons extends Component {
                         <div style={{
                                         margin: '5px'
                                 }}><OptimizeButton text={'All Saves'} running={this.props.running} abort={this.props.handleTerminate} optimize={this.props.handleOptimizeSaves}/>{' '}
+                                <button onClick={this.props.handleToggleUnused}>
+                                        {
+                                                this.props.showunused
+                                                        ? 'Unmark unused items'
+                                                        : 'Mark unused items'
+                                        }</button>
                         </div>
                         <input style={{
                                         width: '150px',
