@@ -1668,6 +1668,7 @@ export const ITEMLIST = [
         [Stat.POWER, 3000000],
         [Stat.TOUGHNESS, 3000000],
         [Stat.WISH_SPEED, 10],
+        [Stat.DAYCARE_SPEED, 10],
     ]),
     new Item('Cool Shades', Slot.HEAD, SetName.RADLANDS, 100, [
         [Stat.POWER, 3300000],
