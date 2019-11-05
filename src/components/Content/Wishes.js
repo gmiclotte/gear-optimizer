@@ -5,6 +5,7 @@ import {Wishes} from '../../assets/ItemAux';
 import ResourcePriorityForm from '../ResourcePriorityForm/ResourcePriorityForm';
 import WishForm from '../WishForm/WishForm';
 import {default as Crement} from '../Crement/Crement';
+import {shortenExponential, to_time} from '../../util';
 
 class WishComponent extends Component {
         constructor(props) {
@@ -79,11 +80,21 @@ class WishComponent extends Component {
                 return data.wishtime;
         }
 
+        copyToClipboard(e) {
+                e.target.select();
+                document.execCommand('copy');
+        };
+
         render() {
                 ReactGA.pageview('/wishes/');
                 let wish = new Wish(this.props.wishstats);
                 const results = wish.optimize();
-                const score = results[0];
+                /*
+                to_time(Math.max(...scores)),
+                tmp.map(a => shortenExponential(a[0]) + ' E; ' + shortenExponential(a[1]) + ' M; ' + shortenExponential(a[2]) + ' R3'),
+                shortenExponential(res[0]) + ' E; ' + shortenExponential(res[1]) + ' M; ' + shortenExponential(res[2]) + ' R3'
+                */
+                const score = to_time(Math.max(...results[0]));
                 const assignments = results[1];
                 const remaining = results[2];
                 return (<div className='center'>
@@ -96,7 +107,7 @@ class WishComponent extends Component {
                                                                 <input style={{
                                                                                 width: '100px',
                                                                                 margin: '5px'
-                                                                }} type="number" step="any" value={this.props.wishstats[x[0] + 'pow']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, x[0] + 'pow')}/>
+                                                                        }} type="number" step="any" value={this.props.wishstats[x[0] + 'pow']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, x[0] + 'pow')}/>
                                                         </label>
                                                         <label >
                                                                 {' cap'}
@@ -149,11 +160,33 @@ class WishComponent extends Component {
                                 }
                                 <br/> {
                                         assignments.map((a, idx) => <div key={idx}>
-                                                {'Wish ' + this.props.wishstats.wishes[idx].wishidx + ' requires: ' + a}
+                                                {'Wish ' + this.props.wishstats.wishes[idx].wishidx + ' requires: '}
+                                                {
+                                                        a.map((val, jdx) => <div key={jdx} style={{
+                                                                        display: 'inline-block'
+                                                                }}>
+                                                                <textarea onFocus={this.copyToClipboard} readOnly={true} rows={1} cols={9} key={jdx + 'text'} value={shortenExponential(val)}/>
+                                                                <div key={jdx + 'div'} style={{
+                                                                                paddingRight: '5px',
+                                                                                display: 'inline-block'
+                                                                        }}>{'EMR'[jdx]}</div>
+                                                        </div>)
+                                                }
                                         </div>)
                                 }<br/> {'After ' + score + ' all targets will be reached.'}
                                 <br/>
-                                <br/> {'Spare resources: ' + remaining}
+                                <br/> {'Spare resources: '}
+                                {
+                                        remaining.map((val, jdx) => <div key={jdx} style={{
+                                                        display: 'inline-block'
+                                                }}>
+                                                <textarea onFocus={this.copyToClipboard} readOnly={true} rows={1} cols={9} key={jdx + 'text'} value={shortenExponential(val)}/>
+                                                <div key={jdx + 'div'} style={{
+                                                                paddingRight: '5px',
+                                                                display: 'inline-block'
+                                                        }}>{'EMR'[jdx]}</div>
+                                        </div>)
+                                }
                         </form>
                 </div >);
         };

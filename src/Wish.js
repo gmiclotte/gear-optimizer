@@ -1,5 +1,4 @@
 import {Wishes, resource_priorities} from './assets/ItemAux';
-import {shortenExponential, to_time} from './util';
 // [min, max[
 function getRandomInt(min, max) {
         min = Math.ceil(min);
@@ -222,11 +221,7 @@ export class Wish {
                 res = res.map(x => Math.max(0, x));
                 if (powproduct === 1 && capproduct === 1) {
                         // quit early
-                        return [
-                                to_time(Math.max(...scores)),
-                                assignments.map(a => shortenExponential(a[0]) + ' E; ' + shortenExponential(a[1]) + ' M; ' + shortenExponential(a[2]) + ' R3'),
-                                shortenExponential(res[0]) + ' E; ' + shortenExponential(res[1]) + ' M; ' + shortenExponential(res[2]) + ' R3'
-                        ];
+                        return [scores, assignments, res];
                 };
 
                 // optimize
@@ -325,10 +320,6 @@ export class Wish {
                 }
                 res = res.map(x => Math.max(0, x));
                 console.log(Date.now() - global_start_time + ' ms');
-                return [
-                        to_time(Math.max(...scores)),
-                        tmp.map(a => shortenExponential(a[0]) + ' E; ' + shortenExponential(a[1]) + ' M; ' + shortenExponential(a[2]) + ' R3'),
-                        shortenExponential(res[0]) + ' E; ' + shortenExponential(res[1]) + ' M; ' + shortenExponential(res[2]) + ' R3'
-                ];
+                return [scores, tmp, res];
         }
 }
