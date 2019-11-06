@@ -89,11 +89,6 @@ class WishComponent extends Component {
                 ReactGA.pageview('/wishes/');
                 let wish = new Wish(this.props.wishstats);
                 const results = wish.optimize();
-                /*
-                to_time(Math.max(...scores)),
-                tmp.map(a => shortenExponential(a[0]) + ' E; ' + shortenExponential(a[1]) + ' M; ' + shortenExponential(a[2]) + ' R3'),
-                shortenExponential(res[0]) + ' E; ' + shortenExponential(res[1]) + ' M; ' + shortenExponential(res[2]) + ' R3'
-                */
                 const score = to_time(Math.max(...results[0]));
                 const assignments = results[1];
                 const remaining = results[2];
@@ -165,7 +160,9 @@ class WishComponent extends Component {
                                                         a.map((val, jdx) => <div key={jdx} style={{
                                                                         display: 'inline-block'
                                                                 }}>
-                                                                <textarea onFocus={this.copyToClipboard} readOnly={true} rows={1} cols={9} key={jdx + 'text'} value={shortenExponential(val)}/>
+                                                                <textarea style={{
+                                                                                resize: 'none'
+                                                                        }} onFocus={this.copyToClipboard} readOnly={true} rows={1} cols={8} key={jdx + 'text'} value={shortenExponential(val)}/>
                                                                 <div key={jdx + 'div'} style={{
                                                                                 paddingRight: '5px',
                                                                                 display: 'inline-block'
@@ -180,7 +177,9 @@ class WishComponent extends Component {
                                         remaining.map((val, jdx) => <div key={jdx} style={{
                                                         display: 'inline-block'
                                                 }}>
-                                                <textarea onFocus={this.copyToClipboard} readOnly={true} rows={1} cols={9} key={jdx + 'text'} value={shortenExponential(val)}/>
+                                                <textarea style={{
+                                                                resize: 'none'
+                                                        }} onFocus={this.copyToClipboard} readOnly={true} rows={1} cols={8} key={jdx + 'text'} value={shortenExponential(val)}/>
                                                 <div key={jdx + 'div'} style={{
                                                                 paddingRight: '5px',
                                                                 display: 'inline-block'

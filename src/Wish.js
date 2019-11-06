@@ -300,15 +300,6 @@ export class Wish {
                         }
                 }
 
-                /*
-                console.log(coef)
-                console.log(start)
-                console.log(goal)
-                console.log(res);
-                scores = assignments.map((a, k) => this.score_raw(coef[k], wishcap, a, start[k], goal[k]));
-                console.log(scores.map(x => Math.floor(x)));
-                /**/
-
                 scores = assignments.map((a, k) => this.score(coef[k], wishcap, a, start[k], goal[k]));
                 //console.log(scores.map(x => Math.floor(x)));
 
