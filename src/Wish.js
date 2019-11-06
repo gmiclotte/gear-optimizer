@@ -49,7 +49,7 @@ export class Wish {
         }
 
         score_true(cost, wishcap, res, start, goal, x = -0.17) {
-                if (!this.wishstats.truetime) {
+                if (!this.wishstats.trueTime) {
                         return 0;
                 }
                 let result = cost;
