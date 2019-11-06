@@ -169,7 +169,8 @@ const INITIAL_STATE = {
                                 goal: 1
                         }
                 ],
-                rp_idx: 0
+                rp_idx: 0,
+                trueTime: false
         },
         hackstats: {
                 rbeta: 0,
@@ -923,9 +924,12 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                 if (localStorageState.augstats !== undefined && localStorageState.augstats.nac === undefined) {
                                         localStorageState.augstats.nac = 25;
                                 }
-                                const tmp_factors = Object.getOwnPropertyNames(Factors);
+                                if (localStorageState.wishstats.trueTime === undefined) {
+                                        localStorageState.wishstats.trueTime = false;
+                                }
+                                const tmpFactors = Object.getOwnPropertyNames(Factors);
                                 localStorageState.factors = localStorageState.factors.map(name => {
-                                        if (!tmp_factors.includes(name)) {
+                                        if (!tmpFactors.includes(name)) {
                                                 return 'NONE';
                                         }
                                         return name;

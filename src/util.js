@@ -221,7 +221,10 @@ export const shortenExponential = (val, mfd = 3) => {
         return (val - 10 ** Math.floor(Math.log10(val) - mfd)).toExponential(mfd);
 }
 
-export const to_time = (ticks) => {
+export const toTime = (ticks) => {
+        if (ticks === Infinity) {
+                return Infinity;
+        }
         let result = '';
         let days = Math.floor(ticks / 50 / 60 / 60 / 24);
         ticks -= days * 24 * 60 * 60 * 50;

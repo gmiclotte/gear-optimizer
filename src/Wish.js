@@ -48,6 +48,21 @@ export class Wish {
                 return Math.ceil(total);
         }
 
+        score_true(cost, wishcap, res, start, goal, x = -0.17) {
+                if (!this.wishstats.truetime) {
+                        return 0;
+                }
+                let result = cost;
+                for (let i = 0; i < res.length; i++) {
+                        result *= res[i] ** x;
+                }
+                let total = 0;
+                for (let i = start + 1; i <= goal; i++) {
+                        total += this.actualtime(Math.max(wishcap, result / goal * i));
+                }
+                return Math.ceil(total);
+        }
+
         spread_res(assignments, res, scores, resource_priority, wishcap, exponent, l, totres, coef, start, goal, minimal = 0) {
                 const mincap = Math.max(...coef.map((_, i) => goal[i] - start[i])) * wishcap;
                 resource_priority.forEach((i) => {
@@ -221,7 +236,7 @@ export class Wish {
                 res = res.map(x => Math.max(0, x));
                 if (powproduct === 1 && capproduct === 1) {
                         // quit early
-                        return [scores, assignments, res];
+                        return [scores, assignments, res, scores];
                 };
 
                 // optimize
@@ -301,16 +316,44 @@ export class Wish {
                 }
 
                 scores = assignments.map((a, k) => this.score(coef[k], wishcap, a, start[k], goal[k]));
-                //console.log(scores.map(x => Math.floor(x)));
+                let true_scores = assignments.map((a, k) => this.score_true(coef[k], wishcap, a, start[k], goal[k]));
 
                 //unsort the assigned values
                 const idxs = coef.map((_, i) => i).sort((a, b) => costs[a] - costs[b]);
-                let tmp = Array(l);
+                let tmp_assignments = Array(l);
+                let tmp_scores = Array(l);
+                let tmp_true_scores = Array(l);
                 for (let i = 0; i < l; i++) {
-                        tmp[idxs[i]] = assignments[i];
+                        tmp_assignments[idxs[i]] = assignments[i];
+                        tmp_scores[idxs[i]] = scores[i];
+                        tmp_true_scores[idxs[i]] = true_scores[i];
                 }
+                assignments = tmp_assignments;
+                scores = tmp_scores;
+                true_scores = tmp_true_scores;
+
                 res = res.map(x => Math.max(0, x));
                 console.log(Date.now() - global_start_time + ' ms');
-                return [scores, tmp, res];
+                return [scores, assignments, res, true_scores];
+        }
+
+        actualtime(time) {
+                if (time > 10 ** 8) {
+                        return Infinity;
+                }
+                let progress = Math.fround(0);
+                let ticks = 0;
+                const ppt = Math.fround(Math.fround(1) / Math.fround(time));
+                const target = Math.fround(1);
+                while (progress < target) {
+                        const next = Math.fround(progress + ppt);
+                        if (next === progress) {
+                                console.log('early exit at ', progress * 100, '%');
+                                return Infinity;
+                        }
+                        progress = next;
+                        ticks += 1;
+                }
+                return ticks;
         }
 }

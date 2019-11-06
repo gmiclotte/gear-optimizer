@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import ReactGA from 'react-ga';
 import {Hack} from '../../Hack';
 import {Hacks} from '../../assets/ItemAux';
-import {shorten, to_time} from '../../util';
+import {shorten, toTime} from '../../util';
 
 class HackComponent extends Component {
         constructor(props) {
@@ -141,7 +141,7 @@ class HackComponent extends Component {
                                                                         <input style={{
                                                                                         width: '100px',
                                                                                         margin: '5px'
-                                                                        }} type="number" step="any" value={this.props.hackstats['rpow']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'rpow')}/>
+                                                                                }} type="number" step="any" value={this.props.hackstats['rpow']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'rpow')}/>
                                                                 </label>
                                                         </td>
                                                 </tr>
@@ -186,8 +186,8 @@ class HackComponent extends Component {
                                                                                 {
                                                                                         options.map((option, idx) => (<option value={idx} key={idx}>{
                                                                                                         [
-                                                                                                                'level target.', 'max level in ' + to_time(hacktime * 60 * 50),
-                                                                                                                'max MS in ' + to_time(hacktime * 60 * 50)
+                                                                                                                'level target.', 'max level in ' + toTime(hacktime * 60 * 50),
+                                                                                                                'max MS in ' + toTime(hacktime * 60 * 50)
                                                                                                         ][idx]
                                                                                                 }</option>))
                                                                                 }
@@ -285,11 +285,11 @@ class HackComponent extends Component {
                                                                         <td className={classLevel}>{target}</td>
                                                                         <td className={classMS}>{target}</td>
                                                                         <td>{mschange}</td>
-                                                                        <td>{to_time(time)}</td>
+                                                                        <td>{toTime(time)}</td>
                                                                         <td>{shorten(bonus, 2)}%</td>
                                                                         <td>×{shorten(change, 3)}</td>
-                                                                        <td>{to_time(timePastLevel)}</td>
-                                                                        <td>{to_time(timePastTarget)}</td>
+                                                                        <td>{toTime(timePastLevel)}</td>
+                                                                        <td>{toTime(timePastTarget)}</td>
                                                                 </tr>;
                                                         })
                                                 }
@@ -300,7 +300,7 @@ class HackComponent extends Component {
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
-                                                        <th className={classTarget}>{'Min total:'}<br/>{'' + to_time((sumtime - hackhacktime) / hackhackchange + hackhacktime)}</th>
+                                                        <th className={classTarget}>{'Min total:'}<br/>{'' + toTime((sumtime - hackhacktime) / hackhackchange + hackhacktime)}</th>
                                                 </tr>
                                                 <tr>
                                                         <td></td>
@@ -309,7 +309,7 @@ class HackComponent extends Component {
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
-                                                        <th className={classTarget}>{'Max total:'}<br/>{'' + to_time(sumtime)}</th>
+                                                        <th className={classTarget}>{'Max total:'}<br/>{'' + toTime(sumtime)}</th>
                                                 </tr>
                                         </tbody>
                                 </table>
