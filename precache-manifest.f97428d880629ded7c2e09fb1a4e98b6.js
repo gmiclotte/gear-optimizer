@@ -4,11 +4,11 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/gear-optimizer/9a6d8263a3993cde8582.worker.js"
   },
   {
-    "revision": "e497a22d45c093e9db84b072c08d0824",
+    "revision": "f521b724d2154a42942d0f84ada2773a",
     "url": "/gear-optimizer/index.html"
   },
   {
-    "revision": "25d60b45d84ea2fb8789",
+    "revision": "83009592311293c6d58d",
     "url": "/gear-optimizer/static/css/main.8e7c6030.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/gear-optimizer/static/js/2.7bbb6658.chunk.js"
   },
   {
-    "revision": "25d60b45d84ea2fb8789",
-    "url": "/gear-optimizer/static/js/main.d28f20b1.chunk.js"
+    "revision": "83009592311293c6d58d",
+    "url": "/gear-optimizer/static/js/main.48dcb492.chunk.js"
   },
   {
     "revision": "e70c69565185911edd94",
