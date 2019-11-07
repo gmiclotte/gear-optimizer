@@ -96,10 +96,10 @@ const INITIAL_STATE = {
         showsaved: false,
         showunused: false,
         factors: [
-                'RESPAWN', 'DAYCARE_SPEED', 'HACK', 'NGUS', 'NONE'
+                'NGUS', 'NONE'
         ],
         maxslots: [
-                3, 1, 6, accslots, accslots
+                Infinity, Infinity
         ],
         editItem: [
                 false, undefined, undefined, undefined
