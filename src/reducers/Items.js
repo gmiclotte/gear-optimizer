@@ -96,7 +96,7 @@ const INITIAL_STATE = {
         showsaved: false,
         showunused: false,
         factors: [
-                'NGUS', 'NONE'
+                'POWER', 'NONE'
         ],
         maxslots: [
                 Infinity, Infinity
