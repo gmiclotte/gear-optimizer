@@ -214,7 +214,7 @@ class WishComponent extends Component {
                                                                 </tr>
                                                                 {
                                                                         this.props.wishstats.wishes.map((wish, pos) => <tr key={pos}>
-                                                                                <td>{wish.wishidx + ' (' + wish.start + ' -> ' + wish.goal + ')'}</td>
+                                                                                <td>{wish.wishidx + ' (' + wish.start + ' → ' + wish.goal + ')'}</td>
                                                                                 <td>{toTime(scores[pos])}</td>
                                                                                 <td>{toTime(trueScores[pos])}</td>
                                                                         </tr>)
