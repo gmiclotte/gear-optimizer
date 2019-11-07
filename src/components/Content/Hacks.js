@@ -207,6 +207,7 @@ class HackComponent extends Component {
                                                         <th className={classTarget}>Target</th>
                                                         <th className={classLevel}>Max Level<br/>in {hacktime}min</th>
                                                         <th className={classMS}>Max MS<br/>in {hacktime}min</th>
+                                                        <th/>
                                                         <th>MS</th>
                                                         <th>Time</th>
                                                         <th>Bonus</th>
@@ -284,6 +285,45 @@ class HackComponent extends Component {
                                                                         </td>
                                                                         <td className={classLevel}>{target}</td>
                                                                         <td className={classMS}>{target}</td>
+                                                                        <td className={classTarget}>
+                                                                                {
+                                                                                        level === this.props.hackstats.hacks[pos].goal
+                                                                                                ? ''
+                                                                                                : <button type="button" onClick={(e) => this.handleChange({
+                                                                                                                        target: {
+                                                                                                                                value: target
+                                                                                                                        }
+                                                                                                                }, 'level', pos)}>
+                                                                                                                {'Complete'}
+                                                                                                        </button>
+                                                                                }
+                                                                        </td>
+                                                                        <td className={classLevel}>
+                                                                                {
+                                                                                        target === this.props.hackstats.hacks[pos].goal
+                                                                                                ? ''
+                                                                                                : <button type="button" onClick={(e) => this.handleChange({
+                                                                                                                        target: {
+                                                                                                                                value: target
+                                                                                                                        }
+                                                                                                                }, 'goal', pos)}>
+                                                                                                                {'Set Target'}
+                                                                                                        </button>
+                                                                                }
+                                                                        </td>
+                                                                        <td className={classMS}>
+                                                                                {
+                                                                                        target === this.props.hackstats.hacks[pos].goal
+                                                                                                ? ''
+                                                                                                : <button type="button" onClick={(e) => this.handleChange({
+                                                                                                                        target: {
+                                                                                                                                value: target
+                                                                                                                        }
+                                                                                                                }, 'goal', pos)}>
+                                                                                                                {'Set Target'}
+                                                                                                        </button>
+                                                                                }
+                                                                        </td>
                                                                         <td>{mschange}</td>
                                                                         <td>{toTime(time)}</td>
                                                                         <td>{shorten(bonus, 2)}%</td>
@@ -294,21 +334,39 @@ class HackComponent extends Component {
                                                         })
                                                 }
                                                 <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
+                                                        <td/>
+                                                        <td/>
+                                                        <td/>
+                                                        <td/>
+                                                        <td/>
+                                                        <td className={classTarget}>
+                                                                <button type="button" onClick={(e) => {
+                                                                                let hacks = [...this.props.hackstats.hacks];
+                                                                                Hacks.forEach((hack, pos) => {
+                                                                                        hacks[pos].level = hacks[pos].goal;
+                                                                                });
+                                                                                this.handleChange({
+                                                                                        target: {
+                                                                                                value: hacks
+                                                                                        }
+                                                                                }, 'hacks');
+                                                                        }}>
+                                                                        {'Complete All'}
+                                                                </button>
+                                                        </td>
+                                                        <td className={classLevel}/>
+                                                        <td className={classMS}/>
+                                                        <td/>
                                                         <th className={classTarget}>{'Min total:'}<br/>{'' + toTime((sumtime - hackhacktime) / hackhackchange + hackhacktime)}</th>
                                                 </tr>
                                                 <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
+                                                        <td/>
+                                                        <td/>
+                                                        <td/>
+                                                        <td/>
+                                                        <td/>
+                                                        <td/>
+                                                        <td/>
                                                         <th className={classTarget}>{'Max total:'}<br/>{'' + toTime(sumtime)}</th>
                                                 </tr>
                                         </tbody>
