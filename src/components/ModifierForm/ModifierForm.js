@@ -7,7 +7,7 @@ export default class ModifierForm extends React.Component {
                 return (<table className='center'>
                         <tbody>
                                 <tr>
-                                        <td>{'Beta: Advanced modifiers'}</td>
+                                        <td>{'Advanced modifiers'}</td>
                                         <td>
                                                 <input type="checkbox" checked={this.props[name].modifiers} onChange={(e) => this.props.handleSettings(name, {
                                                                 ...this.props[name],
