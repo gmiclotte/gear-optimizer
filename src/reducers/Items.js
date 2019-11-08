@@ -104,6 +104,12 @@ export function cleanState(state) {
                 }
                 return name;
         });
+        // clean no existing loadouts
+        for (let idx = 0; idx < 3; idx++) {
+                let name = ['ngu', 'hack', 'wish'][idx] + 'stats';
+                state[name].currentLoadout = Math.min(state.savedequip.length - 1, state[name].currentLoadout);
+                state[name].dedicatedLoadout = Math.min(state.savedequip.length - 1, state[name].dedicatedLoadout);
+        }
         // return cleaned state
         return state;
 }
@@ -828,7 +834,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         // do not delete the last slot
                                         return state;
                                 }
-                                return {
+                                return cleanState({
                                         ...state,
                                         savedequip: state.savedequip.map((equip, idx) => {
                                                 if (idx === state.maxsavedidx) {
@@ -844,7 +850,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 ? 1
                                                 : 0),
                                         maxsavedidx: state.maxsavedidx - 1
-                                }
+                                })
                         }
 
                 case TOGGLE_SAVED:
