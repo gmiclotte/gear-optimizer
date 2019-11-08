@@ -1,6 +1,37 @@
 import React from 'react';
 import SaveForm from '../SaveForm/SaveForm';
 
+class PotionInput extends React.Component {
+        render() {
+                const name = this.props.name;
+                const type = this.props.piType;
+                return (<label>
+                        <input type="checkbox" checked={this.props[name][this.props.plShort + type + 'Pot']} onChange={(e) => this.props.handleSettings(name, {
+                                        ...this.props[name],
+                                        [this.props.plShort + type + 'Pot']: !this.props[name][this.props.plShort + type + 'Pot']
+                                })}/>{type}
+                </label>);
+        }
+}
+
+class PotionLine extends React.Component {
+        render() {
+                return (<tr className={this.props.plHide
+                                ? ''
+                                : 'hide'}>
+                        <td>{this.props.plName}</td>
+                        <td>
+                                <PotionInput {...this.props} plShort={this.props.plShort + 'c'} piType={'Beta'}/>
+                                <PotionInput {...this.props} plShort={this.props.plShort + 'c'} piType={'Delta'}/>
+                        </td>
+                        <td>
+                                <PotionInput {...this.props} piType={'Beta'}/>
+                                <PotionInput {...this.props} piType={'Delta'}/>
+                        </td>
+                </tr>);
+        }
+}
+
 export default class ModifierForm extends React.Component {
         render() {
                 const name = this.props.name;
@@ -29,77 +60,21 @@ export default class ModifierForm extends React.Component {
                                 <tr className={this.props.e || this.props.m || this.props.r
                                                 ? ''
                                                 : 'hide'}>
-                                        <td>{'Blue Heart'}</td>
                                         <td>
                                                 <label>
                                                         <input type="checkbox" checked={this.props[name].blueHeart} onChange={(e) => this.props.handleSettings(name, {
                                                                         ...this.props[name],
                                                                         blueHeart: !this.props[name].blueHeart
-                                                                })}/>Maxxed
+                                                                })}/>
+                                                        Blue Heart Maxxed
                                                 </label>
                                         </td>
+                                        <td>{'Current'}</td>
+                                        <td>{'Dedicated'}</td>
                                 </tr>
-                                <tr className={this.props.e
-                                                ? ''
-                                                : 'hide'}>
-                                        <td>{'Energy Potion'}</td>
-                                        <td>
-                                                <label>
-                                                        <input type="checkbox" checked={this.props[name].eBetaPot} onChange={(e) => this.props.handleSettings(name, {
-                                                                        ...this.props[name],
-                                                                        eBetaPot: !this.props[name].eBetaPot
-                                                                })}/>Beta
-                                                </label>
-                                                <label>
-                                                        <input type="checkbox" checked={this.props[name].eDeltaPot} onChange={(e) => this.props.handleSettings(name, {
-                                                                        ...this.props[name],
-                                                                        eDeltaPot: !this.props[name].eDeltaPot
-                                                                })}/>Delta
-                                                </label>
-                                        </td>
-                                </tr>
-                                <tr className={this.props.m
-                                                ? ''
-                                                : 'hide'}>
-                                        <td>{'Magic Potion'}</td>
-                                        <td>
-                                                <label>
-                                                        <input type="checkbox" checked={this.props[name].mBetaPot} onChange={(e) => this.props.handleSettings(name, {
-                                                                        ...this.props[name],
-                                                                        mBetaPot: !this.props[name].mBetaPot
-                                                                })}/>
-                                                        Beta
-                                                </label>
-                                                <label>
-                                                        <input type="checkbox" checked={this.props[name].mDeltaPot} onChange={(e) => this.props.handleSettings(name, {
-                                                                        ...this.props[name],
-                                                                        mDeltaPot: !this.props[name].mDeltaPot
-                                                                })}/>
-                                                        Delta
-                                                </label>
-                                        </td>
-                                </tr>
-                                <tr className={this.props.r
-                                                ? ''
-                                                : 'hide'}>
-                                        <td>{'R3 Potion'}</td>
-                                        <td>
-                                                <label>
-                                                        <input type="checkbox" checked={this.props[name].rBetaPot} onChange={(e) => this.props.handleSettings(name, {
-                                                                        ...this.props[name],
-                                                                        rBetaPot: !this.props[name].rBetaPot
-                                                                })}/>
-                                                        Beta
-                                                </label>
-                                                <label>
-                                                        <input type="checkbox" checked={this.props[name].rDeltaPot} onChange={(e) => this.props.handleSettings(name, {
-                                                                        ...this.props[name],
-                                                                        rDeltaPot: !this.props[name].rDeltaPot
-                                                                })}/>
-                                                        Delta
-                                                </label>
-                                        </td>
-                                </tr>
+                                <PotionLine {...this.props} plName={'Energy Potion'} plShort={'e'} plHide={this.props.e}/>
+                                <PotionLine {...this.props} plName={'Magic Potion'} plShort={'m'} plHide={this.props.m}/>
+                                <PotionLine {...this.props} plName={'R3 Potion'} plShort={'r'} plHide={this.props.r}/>
                         </tbody>
                 </table>);
         }

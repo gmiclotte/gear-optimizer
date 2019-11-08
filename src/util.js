@@ -328,9 +328,12 @@ export const speedmodifier = (stats, state, factors, effect, exponent = 1) => {
         let speed = dedicatedBonus / currentBonus;
         for (let i = 0; i < 3; i++) {
                 for (let j = 0; j < 2; j++) {
-                        const name = 'emr'[i] + ['Beta', 'Delta'][j] + 'Pot';
-                        if (stats[name] === true && effect[name] !== undefined) {
-                                speed *= (effect[name] * blueHeart) ** exponent;
+                        for (let k = 0; k < 2; k++) {
+                                const rawName = ['e', 'm', 'r'][i] + ['Beta', 'Delta'][j] + 'Pot';
+                                const name = ['e', 'm', 'r'][i] + ['', 'c'][k] + ['Beta', 'Delta'][j] + 'Pot';
+                                if (stats[name] === true && effect[rawName] !== undefined) {
+                                        speed *= (effect[rawName] * blueHeart) ** (exponent * [1, -1][k]);
+                                }
                         }
                 }
         }

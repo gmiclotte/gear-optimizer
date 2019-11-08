@@ -209,8 +209,15 @@ const INITIAL_STATE = {
                 eBetaPot: false,
                 eDeltaPot: false,
                 mBetaPot: false,
+                mDeltaPot: false,
                 rBetaPot: false,
-                rDeltaPot: false
+                rDeltaPot: false,
+                ecBetaPot: false,
+                ecDeltaPot: false,
+                mcBetaPot: false,
+                mcDeltaPot: false,
+                rcBetaPot: false,
+                rcDeltaPot: false
         },
         hackstats: {
                 rbeta: 0,
@@ -228,7 +235,9 @@ const INITIAL_STATE = {
                 dedicatedLoadout: 0,
                 blueHeart: true,
                 rBetaPot: false,
-                rDeltaPot: false
+                rDeltaPot: false,
+                rcBetaPot: false,
+                rcDeltaPot: false
         },
         cubestats: {
                 tier: 0,
@@ -275,7 +284,11 @@ const INITIAL_STATE = {
                 eBetaPot: false,
                 eDeltaPot: false,
                 mBetaPot: false,
-                mDeltaPot: false
+                mDeltaPot: false,
+                ecBetaPot: false,
+                ecDeltaPot: false,
+                mcBetaPot: false,
+                mcDeltaPot: false
         },
         version: '1.4.0'
 };
