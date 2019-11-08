@@ -1,4 +1,6 @@
-import {Wishes, resource_priorities} from './assets/ItemAux';
+import {Wishes, resource_priorities, Factors} from './assets/ItemAux';
+import {speedmodifier} from './util';
+
 // [min, max[
 function getRandomInt(min, max) {
         min = Math.ceil(min);
@@ -7,8 +9,22 @@ function getRandomInt(min, max) {
 }
 
 export class Wish {
-        constructor(wishstats) {
-                this.wishstats = wishstats;
+        constructor(state) {
+                this.wishstats = state.wishstats;
+                this.state = state;
+        }
+
+        speed(exponent) {
+                let speed = this.wishstats.wishspeed;
+                speed *= speedmodifier(this.wishstats, this.state, Factors.WISHES, {
+                        eBetaPot: 2,
+                        eDeltaPot: 2,
+                        mBetaPot: 2,
+                        mDeltaPot: 2,
+                        rBetaPot: 2,
+                        rDeltaPot: 3
+                }, exponent);
+                return speed;
         }
 
         base(res) {
@@ -208,8 +224,9 @@ export class Wish {
                 const mintottime = Math.max(...this.wishstats.wishes.map(wish => wish.goal - wish.start)) * wishcap;
                 const powproduct = (this.wishstats.epow * this.wishstats.mpow * this.wishstats.rpow) ** .17;
                 const capproduct = (this.wishstats.ecap * this.wishstats.mcap * this.wishstats.rcap) ** .17;
+                const exponent = 0.17;
                 const capreqs = costs.map((cost, k) => [
-                        cost / this.wishstats.wishspeed / powproduct,
+                        cost / this.speed(exponent) / powproduct,
                         this.wishstats.wishes[k].start,
                         this.wishstats.wishes[k].goal
                 ]).sort((a, b) => a[0] - b[0]);
@@ -222,7 +239,6 @@ export class Wish {
                 const coef = capreqs.map(c => c[0]);
                 const start = capreqs.map(c => c[1]);
                 const goal = capreqs.map(c => c[2]);
-                const exponent = 0.17;
 
                 let assignments = coef.map((_, i) => this.base(res));
                 this.BASE = this.base(res);

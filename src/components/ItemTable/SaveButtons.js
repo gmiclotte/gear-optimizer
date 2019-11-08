@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
-import {default as Crement} from '../Crement/Crement';
 import {default as OptimizeButton} from '../OptimizeButton/OptimizeButton';
+import SaveForm from '../SaveForm/SaveForm';
 
 class SaveButtons extends Component {
         handleFocus(event) {
@@ -23,14 +23,11 @@ class SaveButtons extends Component {
                                                         : 'Mark unused items'
                                         }</button>
                         </div>
-                        <input style={{
-                                        width: '150px',
-                                        margin: '5px'
-                                }} value={name} onFocus={this.handleFocus} onChange={(e) => this.props.handleSaveName(e.target.value)}/>
+                        <SaveForm {...this.props} loc={['savedidx']} saveIdx={this.props.savedidx}/>
                         <div style={{
                                         margin: '5px'
                                 }}>
-                                <Crement header={'Save slot'} value={this.props.savedidx} name='savedidx' handleClick={this.props.handleCrement} min={0} max={this.props.maxsavedidx}/>
+                                {/* <Crement header={'Save slot'} value={this.props.savedidx} name='savedidx' handleClick={this.props.handleCrement} min={0} max={this.props.maxsavedidx}/> */}
                                 <button onClick={this.props.handleSaveSlot}>
                                         {'Save'}
                                 </button>
@@ -55,6 +52,10 @@ class SaveButtons extends Component {
                                         }
                                 </button>
                         </div>
+                        <input style={{
+                                        width: '150px',
+                                        margin: '5px'
+                                }} value={name} onFocus={this.handleFocus} onChange={(e) => this.props.handleSaveName(e.target.value)}/>
                 </div>);
 
         };

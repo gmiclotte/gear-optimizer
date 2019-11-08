@@ -1,8 +1,26 @@
-import {NGUs} from './assets/ItemAux';
+import {NGUs, Factors} from './assets/ItemAux';
+import {speedmodifier} from './util';
 
 export class NGU {
-        constructor(ngustats) {
-                this.ngustats = ngustats;
+        constructor(state) {
+                this.ngustats = state.ngustats;
+                this.state = state;
+        }
+
+        speed(resource) {
+                let speed = this.ngustats[resource].nguspeed;
+                if (resource === 'energy') {
+                        speed *= speedmodifier(this.ngustats, this.state, Factors.ENGU, {
+                                eBetaPot: 2,
+                                eDeltaPot: 2
+                        });
+                } else if (resource === 'magic') {
+                        speed *= speedmodifier(this.ngustats, this.state, Factors.MNGU, {
+                                mBetaPot: 2,
+                                mDeltaPot: 2
+                        });
+                }
+                return speed;
         }
 
         bonus(ngu, levels) {
@@ -115,7 +133,7 @@ export class NGU {
 
         vreachable(level, mins, factor, base, resource) {
                 const cap = this.ngustats[resource].cap;
-                const speed = this.ngustats[resource].nguspeed;
+                const speed = this.speed(resource);
                 let ticks = mins * 60 * 50;
                 const bbtill = cap * speed / factor / base;
                 if (500 * bbtill > level) {

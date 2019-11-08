@@ -49,6 +49,23 @@ Object.getOwnPropertyNames(SetName).forEach(x => {
         zoneDict[SetName[x][1]] = 0 < SetName[x][1] && SetName[x][1] < maxZone;
 });
 
+export function fillState(defaultState, storedState) {
+        Object.getOwnPropertyNames(defaultState).forEach(name => {
+                if (name === 'version') {
+                        return;
+                }
+                const val = defaultState[name];
+                if (storedState[name] === undefined) {
+                        storedState[name] = val;
+                        console.log('Keeping default ' + name + ': ' + val);
+                }
+                if (typeof val === 'object' && val !== null) {
+                        storedState[name] = fillState(val, storedState[name]);
+                }
+        });
+        return storedState;
+}
+
 export function cleanState(state) {
         // clean locks
         Object.getOwnPropertyNames(state.locked).forEach(slot => {
@@ -79,6 +96,14 @@ export function cleanState(state) {
                         new EmptySlot(Slot['WEAPON']).name
                 ];
         }
+        // remove non-existing factors
+        const tmpFactors = Object.getOwnPropertyNames(Factors);
+        state.factors = state.factors.map(name => {
+                if (!tmpFactors.includes(name)) {
+                        return 'NONE';
+                }
+                return name;
+        });
         // return cleaned state
         return state;
 }
@@ -170,7 +195,16 @@ const INITIAL_STATE = {
                         }
                 ],
                 rp_idx: 0,
-                trueTime: false
+                trueTime: false,
+                modifiers: false,
+                currentLoadout: 0,
+                dedicatedLoadout: 0,
+                blueHeart: true,
+                eBetaPot: false,
+                eDeltaPot: false,
+                mBetaPot: false,
+                rBetaPot: false,
+                rDeltaPot: false
         },
         hackstats: {
                 rbeta: 0,
@@ -182,7 +216,13 @@ const INITIAL_STATE = {
                 hackoption: '0',
                 hacks: Hacks.map((hack, hackidx) => {
                         return {level: 0, reducer: 0, goal: 1, hackidx: hackidx};
-                })
+                }),
+                modifiers: false,
+                currentLoadout: 0,
+                dedicatedLoadout: 0,
+                blueHeart: true,
+                rBetaPot: false,
+                rDeltaPot: false
         },
         cubestats: {
                 tier: 0,
@@ -221,7 +261,15 @@ const INITIAL_STATE = {
                 quirk: {
                         e2n: false,
                         s2e: false
-                }
+                },
+                modifiers: false,
+                currentLoadout: 0,
+                dedicatedLoadout: 0,
+                blueHeart: false,
+                eBetaPot: false,
+                eDeltaPot: false,
+                mBetaPot: false,
+                mDeltaPot: false
         },
         version: '1.4.0'
 };
@@ -290,11 +338,17 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
 
                 case SETTINGS:
                         {
+                                if (typeof action.payload.stats === 'object') {
+                                        return {
+                                                ...state,
+                                                [action.payload.statname]: {
+                                                        ...action.payload.stats
+                                                }
+                                        };
+                                }
                                 return {
                                         ...state,
-                                        [action.payload.statname]: {
-                                                ...action.payload.stats
-                                        }
+                                        [action.payload.statname]: action.payload.stats
                                 };
                         }
 
@@ -821,6 +875,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                         {
                                 const lc = window.localStorage.getItem(LOCALSTORAGE_NAME);
                                 let localStorageState = JSON.parse(lc);
+                                // exit early
                                 if (!Boolean(localStorageState)) {
                                         console.log('No local storage found. Loading fresh v' + state.version + ' state.');
                                         return state;
@@ -829,11 +884,11 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         console.log('No valid version information found. Loading fresh v' + state.version + ' state.');
                                         return state;
                                 }
-                                // TODO: Validate local storage state.
                                 if (localStorageState.version === '1.0.0') {
                                         console.log('Saved local storage is v' + localStorageState.version + ', incompatible with current version. Loading fresh v' + state.version + ' state.');
                                         return state;
                                 }
+                                // the local storage state can be used
                                 console.log('Loading saved v' + state.version + ' state.');
                                 // update item store with changed levels and disabled items
                                 for (let idx = 0; idx < localStorageState.items.length; idx++) {
@@ -867,50 +922,20 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         item.disable = saveditem.disable;
                                         update_level(item, saveditem.level);
                                 }
-                                Object.getOwnPropertyNames(state).forEach(name => {
-                                        if (name === 'version') {
-                                                return;
-                                        }
-                                        if (localStorageState[name] === undefined) {
-                                                localStorageState[name] = state[name];
-                                                console.log('Keeping default ' + name + ': ' + state[name]);
+                                // fill gaps in the stored state to accomodate new state values
+                                localStorageState = fillState(state, localStorageState);
+                                // add cube and base to all equipments
+                                localStorageState.equip = {
+                                        ...localStorageState.equip,
+                                        other: ['Infinity Cube', 'Base Stats']
+                                };
+                                localStorageState.savedequip = localStorageState.savedequip.map(x => {
+                                        return {
+                                                ...x,
+                                                other: ['Infinity Cube', 'Base Stats']
                                         }
                                 });
-                                if (localStorageState.version === '1.1.0') {
-                                        // update to 1.2.0
-                                        console.log('Updating local storage for wishes, some wish data might be erased.');
-                                        Object.getOwnPropertyNames(state.wishstats).forEach(name => {
-                                                if (localStorageState.wishstats[name] === undefined) {
-                                                        localStorageState.wishstats[name] = state.wishstats[name];
-                                                        console.log('Keeping default wishstats ' + name + ': ' + state.wishstats[name]);
-                                                }
-                                        });
-                                        Object.getOwnPropertyNames(localStorageState.wishstats).forEach(name => {
-                                                if (state.wishstats[name] === undefined) {
-                                                        console.log('Removing saved wishstats ' + name + ': ' + localStorageState.wishstats[name]);
-                                                        delete localStorageState.wishstats[name];
-                                                }
-                                        });
-                                        localStorageState.wishstats.wishes = localStorageState.wishstats.wishes.map(wish => {
-                                                if (wish.start === undefined) {
-                                                        wish.start = 0;
-                                                }
-                                                return wish;
-                                        });
-                                        console.log('Wish data:', localStorageState.wishstats);
-                                }
-                                if (localStorageState.version === '1.3.0') {
-                                        localStorageState.equip = {
-                                                ...localStorageState.equip,
-                                                other: ['Infinity Cube', 'Base Stats']
-                                        };
-                                        localStorageState.savedequip = localStorageState.savedequip.map(x => {
-                                                return {
-                                                        ...x,
-                                                        other: ['Infinity Cube', 'Base Stats']
-                                                }
-                                        });
-                                }
+                                // handle new hacks
                                 while (localStorageState.hackstats.hacks.length < Hacks.length) {
                                         localStorageState.hackstats.hacks = [
                                                 ...localStorageState.hackstats.hacks, {
@@ -921,47 +946,8 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 }
                                         ];
                                 }
-                                if (localStorageState.augstats !== undefined && localStorageState.augstats.nac === undefined) {
-                                        localStorageState.augstats.nac = 25;
-                                }
-                                if (localStorageState.wishstats.trueTime === undefined) {
-                                        localStorageState.wishstats.trueTime = false;
-                                }
-                                const tmpFactors = Object.getOwnPropertyNames(Factors);
-                                localStorageState.factors = localStorageState.factors.map(name => {
-                                        if (!tmpFactors.includes(name)) {
-                                                return 'NONE';
-                                        }
-                                        return name;
-                                });
-                                localStorageState.capstats = {
-                                        ...state.capstats,
-                                        ...localStorageState.capstats
-                                }
-                                return cleanState({
-                                        ...state,
-                                        offhand: localStorageState.offhand,
-                                        equip: localStorageState.equip,
-                                        locked: localStorageState.locked,
-                                        savedequip: localStorageState.savedequip,
-                                        savedidx: localStorageState.savedidx,
-                                        maxsavedidx: localStorageState.maxsavedidx,
-                                        showsaved: localStorageState.showsaved,
-                                        factors: localStorageState.factors,
-                                        maxslots: localStorageState.maxslots,
-                                        zone: localStorageState.zone,
-                                        titanversion: localStorageState.titanversion,
-                                        looty: localStorageState.looty,
-                                        pendant: localStorageState.pendant,
-                                        hidden: localStorageState.hidden,
-                                        augstats: localStorageState.augstats,
-                                        basestats: localStorageState.basestats,
-                                        capstats: localStorageState.capstats,
-                                        cubestats: localStorageState.cubestats,
-                                        ngustats: localStorageState.ngustats,
-                                        hackstats: localStorageState.hackstats,
-                                        wishstats: localStorageState.wishstats
-                                });
+                                // clean and return the local storage state
+                                return cleanState(localStorageState);
                         }
 
                 default:

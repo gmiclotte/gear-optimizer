@@ -3,6 +3,7 @@ import ReactGA from 'react-ga';
 import {Hack} from '../../Hack';
 import {Hacks} from '../../assets/ItemAux';
 import {shorten, toTime} from '../../util';
+import ModifierForm from '../ModifierForm/ModifierForm';
 
 class HackComponent extends Component {
         constructor(props) {
@@ -109,7 +110,7 @@ class HackComponent extends Component {
 
         render() {
                 ReactGA.pageview('/hacks/');
-                let hackOptimizer = new Hack(this.props.hackstats);
+                let hackOptimizer = new Hack(this.props);
                 const hacktime = this.props.hackstats.hacktime;
                 const options = [0, 1, 2];
                 const option = this.props.hackstats.hackoption;
@@ -197,6 +198,7 @@ class HackComponent extends Component {
                                                 </tr>
                                         </tbody>
                                 </table>
+                                <ModifierForm {...this.props} name={'hackstats'} e={false} m={false} r={true}/>
                                 <table className='center'>
                                         <tbody>
                                                 <tr>

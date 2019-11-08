@@ -6,6 +6,7 @@ import ResourcePriorityForm from '../ResourcePriorityForm/ResourcePriorityForm';
 import WishForm from '../WishForm/WishForm';
 import {default as Crement} from '../Crement/Crement';
 import {shortenExponential, toTime} from '../../util';
+import ModifierForm from '../ModifierForm/ModifierForm';
 
 class WishComponent extends Component {
         constructor(props) {
@@ -87,7 +88,7 @@ class WishComponent extends Component {
 
         render() {
                 ReactGA.pageview('/wishes/');
-                let wish = new Wish(this.props.wishstats);
+                let wish = new Wish(this.props);
                 const results = wish.optimize();
                 const score = toTime(Math.max(...results[0]));
                 const scores = results[0];
@@ -124,6 +125,7 @@ class WishComponent extends Component {
                                                 }} type="number" step="any" value={this.props.wishstats.wishspeed} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'wishspeed')}/>
                                 </label>
                                 <br/>
+                                <ModifierForm {...this.props} name={'wishstats'} e={true} m={true} r={true}/>
                                 <label>
                                         {'Minimal wish time:'}
                                         <input style={{

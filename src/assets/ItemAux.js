@@ -25,9 +25,9 @@ export function update_level(item, level) {
 export class EmptySlot extends Item {
         constructor(slot) {
                 if (slot === undefined) {
-                        super('Empty Slot', slot, SetName.SAFE, undefined, []);
+                        super('Empty Slot', slot, SetName.SAFE, 100, []);
                 } else {
-                        super('Empty ' + slot[0][0].toUpperCase() + slot[0].substring(1) + ' Slot', slot, SetName.SAFE, undefined, []);
+                        super('Empty ' + slot[0][0].toUpperCase() + slot[0].substring(1) + ' Slot', slot, SetName.SAFE, 100, []);
                 }
                 this.empty = true;
         }

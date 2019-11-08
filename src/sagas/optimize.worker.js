@@ -106,7 +106,7 @@ function wish(e) {
         const base = [1]
         const start_time = Date.now();
         const state = e.data.state;
-        const wish = new Wish(state.wishstats);
+        const wish = new Wish(state);
         let vals = wish.optimize();
         this.postMessage({vals: vals});
         console.log(Math.floor((Date.now() - start_time) / 10) / 100 + ' seconds');

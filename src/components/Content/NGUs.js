@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import ReactGA from 'react-ga';
-import {NGU} from '../../NGU';
+import {NGU} from '../../NGU'
 import {NGUs} from '../../assets/ItemAux';
 import {shorten} from '../../util';
+import ModifierForm from '../ModifierForm/ModifierForm';
 
 class NGUComponent extends Component {
         constructor(props) {
@@ -78,7 +79,7 @@ class NGUComponent extends Component {
 
         render() {
                 ReactGA.pageview('/ngus/');
-                let nguOptimizer = new NGU(this.props.ngustats);
+                let nguOptimizer = new NGU(this.props);
                 const energy = this.props.ngustats.energy;
                 const magic = this.props.ngustats.magic;
                 const ngutime = this.props.ngustats.ngutime;
@@ -153,6 +154,7 @@ class NGUComponent extends Component {
                                                 </tr>
                                         </tbody>
                                 </table>
+                                <ModifierForm {...this.props} name={'ngustats'} e={true} m={true} r={false}/>
                                 <table className='center'>
                                         <tbody>
                                                 <tr>

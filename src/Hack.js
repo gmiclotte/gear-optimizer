@@ -1,8 +1,19 @@
-import {Hacks} from './assets/ItemAux';
+import {Hacks, Factors} from './assets/ItemAux';
+import {speedmodifier} from './util';
 
 export class Hack {
-        constructor(hackstats) {
-                this.hackstats = hackstats;
+        constructor(state) {
+                this.hackstats = state.hackstats;
+                this.state = state;
+        }
+
+        speed() {
+                let speed = this.hackstats.hackspeed;
+                speed *= speedmodifier(this.hackstats, this.state, Factors.HACK, {
+                        rBetaPot: 2,
+                        rDeltaPot: 3
+                });
+                return speed;
         }
 
         bonus(level, idx) {
@@ -25,7 +36,7 @@ export class Hack {
         reachable(level, mins, idx) {
                 const cap = this.hackstats.rcap;
                 const pow = this.hackstats.rpow;
-                let speed = this.hackstats.hackspeed;
+                let speed = this.speed();
                 let ticks = mins * 60 * 50;
                 const base = Hacks[idx][1];
                 let sf = 1;
@@ -50,7 +61,7 @@ export class Hack {
         time(level, target, idx) {
                 const cap = this.hackstats.rcap;
                 const pow = this.hackstats.rpow;
-                let speed = this.hackstats.hackspeed;
+                let speed = this.speed();
                 let ticks = 0;
                 const base = Hacks[idx][1];
                 let sf = 1;

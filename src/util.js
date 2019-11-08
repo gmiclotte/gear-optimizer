@@ -308,3 +308,31 @@ export const cubeBaseItemData = (itemdata, cubestats, basestats) => {
 
         };
 }
+
+export const speedmodifier = (stats, state, factors, effect, exponent = 1) => {
+        if (!stats.modifiers) {
+                return 1;
+        }
+        stats.currentLoadout = stats.currentLoadout < 0
+                ? 0
+                : stats.currentLoadout;
+        stats.dedicatedLoadout = stats.dedicatedLoadout < 0
+                ? 0
+                : stats.dedicatedLoadout;
+        let itemdata = cubeBaseItemData(state.itemdata, state.cubestats, state.basestats);
+        let currentBonus = score_equip(itemdata, state.savedequip[stats.currentLoadout], factors, state.offhand, state.capstats);
+        let dedicatedBonus = score_equip(itemdata, state.savedequip[stats.dedicatedLoadout], factors, state.offhand, state.capstats);
+        let blueHeart = stats.blueHeart
+                ? 1.1
+                : 1;
+        let speed = dedicatedBonus / currentBonus;
+        for (let i = 0; i < 3; i++) {
+                for (let j = 0; j < 2; j++) {
+                        const name = 'emr'[i] + ['Beta', 'Delta'][j] + 'Pot';
+                        if (stats[name] === true && effect[name] !== undefined) {
+                                speed *= (effect[name] * blueHeart) ** exponent;
+                        }
+                }
+        }
+        return speed;
+}
