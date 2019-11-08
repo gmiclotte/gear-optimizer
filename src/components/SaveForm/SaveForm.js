@@ -23,7 +23,6 @@ export default class SaveForm extends React.Component {
                 } else {
                         console.log('not implemented SaveForm loc: ', this.props.loc);
                 }
-                console.log(this.props.loc, stats)
                 this.props.handleSettings(this.props.loc[0], stats);
         }
 
