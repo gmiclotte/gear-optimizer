@@ -3,6 +3,7 @@ import {
         Stat,
         Slot,
         EmptySlot,
+        EmptySlotName,
         Equip,
         Factors
 } from './assets/ItemAux'
@@ -20,7 +21,7 @@ import {
         hardcap
 } from './util.js'
 
-const EMPTY_ACCESSORY = new EmptySlot(Slot['ACCESSORY']).name;
+const EMPTY_ACCESSORY = EmptySlotName(Slot['ACCESSORY'][0]);
 
 export class Optimizer {
         constructor(state) {
@@ -69,7 +70,7 @@ export class Optimizer {
                                         sorted.push(item);
                                         item_idx++;
                                 } else {
-                                        sorted.push(new EmptySlot(slot).name);
+                                        sorted.push(EmptySlotName(slotname));
                                 }
                         }
                         result[slot] = sorted;
@@ -403,6 +404,38 @@ export class Optimizer {
                                 }
                                 candidate.accessory[locked_accs + idx] = tmp;
                         }
+                });
+                // remove gear that doesn't contribute due to hard caps
+                alternatives.map(candidate => {
+                        Object.getOwnPropertyNames(Slot).forEach(slot => {
+                                if (slot === 'ACCESSORY' || slot === 'OTHER') {
+                                        return;
+                                }
+                                const slotname = Slot[slot][0];
+                                const initial = Math.max(base_layouts.map(layout => {
+                                        let count = 0;
+                                        layout[slotname].forEach(item => {
+                                                count += this.itemdata[item].empty
+                                                        ? 0
+                                                        : 1;
+                                        })
+                                        return count;
+                                }));
+                                const current = candidate[slotname].length;
+                                for (let idx = initial; idx < current; idx++) {
+                                        const tmp = candidate[slotname][idx];
+                                        if (this.itemdata[tmp].empty) {
+                                                continue;
+                                        }
+                                        candidate[slotname][idx] = EmptySlotName(slotname);
+                                        const tmp_score = this.score_equip(candidate);
+                                        if (tmp_score === score) {
+                                                console.log('Dropped ' + tmp + ' from optimal loadout.');
+                                        } else {
+                                                candidate[slotname][idx] = tmp;
+                                        }
+                                }
+                        });
                 });
                 return alternatives;
         }
