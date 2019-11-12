@@ -47,13 +47,9 @@ function optimizeSaves(e) {
                         console.log('quit early')
                         return save;
                 }
-                let state = {
-                        ...e.data.state
-                };
+                let state = e.data.state;
                 const hasNoFactors = save.factors === undefined && save.maxslots === undefined;
-                let equip = {
-                        ...ItemNameContainer(state.equip.accessory.length, state.offhand)
-                };
+                let equip = ItemNameContainer(state.equip.accessory.length, state.offhand);
                 let locked = {};
                 if (save.locked === undefined) {
                         save.locked = {};
@@ -82,10 +78,17 @@ function optimizeSaves(e) {
                 }
                 // select random remaining layout
                 base_layout = base_layout[Math.floor(Math.random() * base_layout.length)];
+                // merge and return base_layout with save
+                Object.getOwnPropertyNames(base_layout).forEach(property => {
+                        save[property] = base_layout[property];
+                });
+                return save;
+                /*
                 return {
                         ...save,
                         ...base_layout
                 };
+                */
         });
         this.postMessage({savedequip: savedequip});
         console.log(Math.floor((Date.now() - start_time) / 10) / 100 + ' seconds');
