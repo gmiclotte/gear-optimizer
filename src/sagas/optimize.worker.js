@@ -79,16 +79,10 @@ function optimizeSaves(e) {
                 // select random remaining layout
                 base_layout = base_layout[Math.floor(Math.random() * base_layout.length)];
                 // merge and return base_layout with save
-                Object.getOwnPropertyNames(base_layout).forEach(property => {
-                        save[property] = base_layout[property];
-                });
-                return save;
-                /*
                 return {
                         ...save,
                         ...base_layout
                 };
-                */
         });
         this.postMessage({savedequip: savedequip});
         console.log(Math.floor((Date.now() - start_time) / 10) / 100 + ' seconds');
