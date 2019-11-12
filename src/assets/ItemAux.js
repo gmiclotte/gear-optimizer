@@ -707,7 +707,7 @@ export const Hacks = [
                 6757
         ],
         [
-                'Wish Hack',
+                'Wish',
                 1.00E+13,
                 0.0100,
                 1.0050,
