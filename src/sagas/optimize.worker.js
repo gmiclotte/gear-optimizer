@@ -58,8 +58,8 @@ function optimizeSaves(e) {
                         equip[slot] = save.locked[slot].concat(equip[slot].slice(save.locked[slot].length));
                         locked[slot] = save.locked[slot].map((_, idx) => idx);
                 });
-                state = cleanState({
-                        ...state,
+                // overwrite state
+                const tmp = {
                         equip: equip,
                         locked: locked,
                         factors: hasNoFactors
@@ -68,7 +68,11 @@ function optimizeSaves(e) {
                         maxslots: hasNoFactors
                                 ? state.maxslots
                                 : save.maxslots
+                };
+                Object.getOwnPropertyNames(tmp).forEach(property => {
+                        state[property] = tmp[property];
                 });
+                state = cleanState(state);
                 let optimizer = new Optimizer(state);
                 // construct base layout from locks
                 let base_layout = optimizer.construct_base(state.locked, state.equip);
@@ -83,12 +87,6 @@ function optimizeSaves(e) {
                         save[property] = base_layout[property];
                 });
                 return save;
-                /*
-                return {
-                        ...save,
-                        ...base_layout
-                };
-                */
         });
         this.postMessage({savedequip: savedequip});
         console.log(Math.floor((Date.now() - start_time) / 10) / 100 + ' seconds');
