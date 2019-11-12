@@ -966,7 +966,10 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         ];
                                 }
                                 // clean and return the local storage state
-                                return cleanState(localStorageState);
+                                return cleanState({
+                                        ...localStorageState,
+                                        running: false
+                                });
                         }
 
                 default:
