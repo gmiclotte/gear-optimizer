@@ -59,7 +59,7 @@ export function fillState(defaultState, storedState) {
                         storedState[name] = val;
                         console.log('Keeping default ' + name + ': ' + val);
                 }
-                if (typeof val === 'object' && val !== null) {
+                if (typeof val === 'object' && val !== null && !Array.isArray(val)) {
                         storedState[name] = fillState(val, storedState[name]);
                 }
         });
@@ -184,18 +184,6 @@ const INITIAL_STATE = {
                 wishes: [
                         {
                                 wishidx: 0,
-                                start: 0,
-                                goal: 1
-                        }, {
-                                wishidx: 1,
-                                start: 0,
-                                goal: 1
-                        }, {
-                                wishidx: 2,
-                                start: 0,
-                                goal: 1
-                        }, {
-                                wishidx: 3,
                                 start: 0,
                                 goal: 1
                         }
@@ -967,8 +955,16 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                 }
                                 // clean and return the local storage state
                                 return cleanState({
+                                        // load all saved data
                                         ...localStorageState,
-                                        running: false
+                                        // set itemdata as configured above
+                                        itemdata: state.itemdata,
+                                        items: state.items,
+                                        // keep some settings at default values
+                                        running: state.running,
+                                        showunused: state.showunused,
+                                        editItem: state.editItem,
+                                        version: state.version
                                 });
                         }
 
