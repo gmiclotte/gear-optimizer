@@ -289,13 +289,19 @@ class HackComponent extends Component {
                                                                         <td className={classMS}>{target}</td>
                                                                         <td className={classTarget}>
                                                                                 {
-                                                                                        level === this.props.hackstats.hacks[pos].goal
+                                                                                        target === level
                                                                                                 ? ''
-                                                                                                : <button type="button" onClick={(e) => this.handleChange({
+                                                                                                : <button type="button" onClick={(e) => this.handleChange(
+                                                                                                                        {
                                                                                                                         target: {
-                                                                                                                                value: target
+                                                                                                                                value: target > level
+                                                                                                                                        ? target
+                                                                                                                                        : level
                                                                                                                         }
-                                                                                                                }, 'level', pos)}>
+                                                                                                                }, target > level
+                                                                                                                        ? 'level'
+                                                                                                                        : 'goal',
+                                                                                                                pos)}>
                                                                                                                 {'Complete'}
                                                                                                         </button>
                                                                                 }
@@ -345,7 +351,9 @@ class HackComponent extends Component {
                                                                 <button type="button" onClick={(e) => {
                                                                                 let hacks = [...this.props.hackstats.hacks];
                                                                                 Hacks.forEach((hack, pos) => {
-                                                                                        hacks[pos].level = hacks[pos].goal;
+                                                                                        const tmp = Math.max(hacks[pos].level, hacks[pos].goal);
+                                                                                        hacks[pos].level = tmp;
+                                                                                        hacks[pos].goal = tmp;
                                                                                 });
                                                                                 this.handleChange({
                                                                                         target: {
