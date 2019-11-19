@@ -1054,6 +1054,21 @@ export const Wishes = [
         ],
         [
                 'Accessory Slot', 5.00E+24, 1
+        ],
+        [
+                'Cube Boosting I', 4.00E+19, 20
+        ],
+        [
+                'ENGU speed I', 7.00E+20, 10
+        ],
+        [
+                'ENGU speed II', 2.00E+22, 10
+        ],
+        [
+                'MNGU speed I', 7.00E+20, 10
+        ],
+        [
+                'MNGU speed II', 2.00E+22, 10
         ]
 ];
 

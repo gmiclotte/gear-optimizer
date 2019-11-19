@@ -1,4 +1,4 @@
-2510404
+2575252
 ['I wish that wishes kicked ass', 1.00E+15, 1],
 ['I Wish that wishes weren't so slow :c', 1.00E+15, 10],
 ['I wish MacGuffin drops mattered', 2.00E+15, 5],
@@ -78,7 +78,7 @@
 ['I wish the QP Hack had more milestones I', 2.00E+17, 5],
 ['I wish the Number Hack had more milestones I', 1.00E+19, 5],
 ['I wish the HACK HACK had more milestones I', 6.00E+20, 10],
-['I wish I the ITOPOD had more Base PP awarded', 2.00E+21, 10],
+['I wish the ITOPOD awarded more Base PP', 2.00E+21, 10],
 ['I wish higher level quest drops counted for even more Quest progress I', 5.00E+17, 2],
 ['I wish higher level quest drops counted for even more Quest progress II', 1.00E+22, 2],
 ['I wish I had more Energy Power V', 5.00E+21, 10],
@@ -87,7 +87,7 @@
 ['I wish I had more Magic Power V', 5.00E+21, 10],
 ['I wish I had more Magic Bars V', 5.00E+21, 10],
 ['I wish I had more Magic Cap V', 5.00E+21, 10],
-['I wish I had more Resource 3 Power V', 5.00E+21, 10],
+['I wish I had more Resource 3 Power VC', 5.00E+21, 10],
 ['I wish I had more Resource 3 Barfs V', 5.00E+21, 10],
 ['I wish I had more Resource 3 Cap V', 5.00E+21, 10],
 ['I wish I had more Energy Power VI', 1.00E+23, 10],
@@ -109,6 +109,11 @@
 ['I wish the Sadistic Boss Multiplier didn't suck so bad I', 2.00E+22, 10],
 ['I wish the Sadistic Boss Multiplier didn't suck so bad II', 5.00E+23, 10],
 ['I wish I had yet another Accessory Slot!', 5.00E+24, 1],
+['I wish Infinity Cube Boosting wasn't so awful I', 4.00E+19, 20],
+['I wish Energy NGU's were Faster I', 7.00E+20, 10],
+['I wish Energy NGU's were Faster II', 2.00E+22, 10],
+['I wish Magic NGU's were Faster I', 7.00E+20, 10],
+['I wish Magic NGU's were Faster II', 2.00E+22, 10],
 
 ['Attack/Defense Hack', 1.00E+08, 2.5000, 1.0250, 10, 7720],
 ['Adventure Stats Hac', 2.00E+08, 0.1000, 1.0200, 50, 7632],
