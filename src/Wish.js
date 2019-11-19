@@ -132,19 +132,19 @@ export class Wish {
                 return [assignments, res, scores];
         }
 
-        topoff(score, assignment, res, wishcap, start, goal, exponent, resource_priority) {
-                const mintime = wishcap * (goal - start);
-                const ratio = score / mintime;
-                let factor = ratio ** (1 / exponent);
+        topoff(coef, assignment, res, wishcap, start, goal, exponent, resource_priority) {
+                const score = this.score(coef, wishcap, assignment, goal - 1, goal);
+                let factor = (score / wishcap) ** (1 / exponent);
                 resource_priority.forEach((i) => {
                         if (res[i] === 0) {
                                 return;
                         }
-                        let tmp = Math.min(factor * assignment[i], assignment[i] + res[i]);
-                        if (tmp < assignment[i]) {
+                        let previous = assignment[i];
+                        let tmp = Math.min(factor * previous, previous + res[i]);
+                        if (tmp < previous) {
                                 return;
                         }
-                        factor = factor / assignment[i] * tmp;
+                        factor = factor * (previous / tmp);
                         assignment[i] = tmp;
                 });
                 return assignment;
@@ -233,6 +233,7 @@ export class Wish {
                 scores = assignments.map((a, k) => this.score(coef[k], wishcap, a, start[k], goal[k]));
                 return [assignments, res, scores];
         }
+
         optimize() {
                 let global_start_time = Date.now();
                 const resource_priority = resource_priorities[this.wishstats.rp_idx];
@@ -357,7 +358,7 @@ export class Wish {
                                         ? coef.map((_, i) => i).sort((a, b) => costs[a] - costs[b])
                                         : [];
                         idxs.forEach(k => {
-                                let tmp = this.topoff(scores[k], assignments[k], res, wishcap, start[k], goal[k], exponent, resource_priority);
+                                let tmp = this.topoff(coef[k], assignments[k], res, wishcap, start[k], goal[k], exponent, resource_priority);
                                 assignments[k] = tmp;
                                 res = this.update_res(totres, assignments);
                         });
