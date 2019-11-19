@@ -132,6 +132,24 @@ export class Wish {
                 return [assignments, res, scores];
         }
 
+        topoff(score, assignment, res, wishcap, start, goal, exponent, resource_priority) {
+                const mintime = wishcap * (goal - start);
+                const ratio = score / mintime;
+                let factor = ratio ** (1 / exponent);
+                resource_priority.forEach((i) => {
+                        if (res[i] === 0) {
+                                return;
+                        }
+                        let tmp = Math.min(factor * assignment[i], assignment[i] + res[i]);
+                        if (tmp < assignment[i]) {
+                                return;
+                        }
+                        factor = factor / assignment[i] * tmp;
+                        assignment[i] = tmp;
+                });
+                return assignment;
+        }
+
         save_res(assignments, res, scores, resource_priority, wishcap, exponent, l, totres, coef, start, goal, saveidx, spendidx, minimal) {
                 const save = resource_priority[saveidx];
                 const spend = spendidx > -1
@@ -215,7 +233,6 @@ export class Wish {
                 scores = assignments.map((a, k) => this.score(coef[k], wishcap, a, start[k], goal[k]));
                 return [assignments, res, scores];
         }
-
         optimize() {
                 let global_start_time = Date.now();
                 const resource_priority = resource_priorities[this.wishstats.rp_idx];
@@ -329,6 +346,21 @@ export class Wish {
                                         [assignments, res, scores] = this.spread_res(assignments, res, scores, resource_priority, wishcap, exponent, l, totres, coef, start, goal, minimal);
                                 }
                         }
+                }
+
+                // spend left overs
+                const policy = Number(this.wishstats.spare_policy);
+                if (policy > 0) {
+                        const idxs = policy === 1
+                                ? coef.map((_, i) => i)
+                                : policy === 2
+                                        ? coef.map((_, i) => i).sort((a, b) => costs[a] - costs[b])
+                                        : [];
+                        idxs.forEach(k => {
+                                let tmp = this.topoff(scores[k], assignments[k], res, wishcap, start[k], goal[k], exponent, resource_priority);
+                                assignments[k] = tmp;
+                                res = this.update_res(totres, assignments);
+                        });
                 }
 
                 scores = assignments.map((a, k) => this.score(coef[k], wishcap, a, start[k], goal[k]));

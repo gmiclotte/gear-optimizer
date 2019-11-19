@@ -189,6 +189,7 @@ const INITIAL_STATE = {
                         }
                 ],
                 rp_idx: 0,
+                spare_policy: 0,
                 trueTime: false,
                 modifiers: false,
                 currentLoadout: 0,

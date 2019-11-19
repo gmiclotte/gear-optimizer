@@ -133,8 +133,7 @@ class WishComponent extends Component {
                                                         margin: '1ch'
                                                 }} type="number" step="any" value={this.props.wishstats.wishcap} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'wishcap')}/> {' minutes'}
                                 </label>
-                                <br/> {'Resource spending order:'}
-                                {<ResourcePriorityForm {...this.props} handleChange={this.handleChange}/>}
+                                <br/> {<ResourcePriorityForm {...this.props} handleChange={this.handleChange}/>}
                                 <div><Crement header='Wish slots' value={this.props.wishstats.wishes.length} name='wishslots' handleClick={this.props.handleCrement} min={1} max={100}/></div>
                                 <br/> {
                                         this.props.wishstats.wishes.map((wish, pos) => <div key={pos}>
@@ -158,25 +157,31 @@ class WishComponent extends Component {
                                                 </label>
                                         </div>)
                                 }</form>
-                        <br/> {
-                                assignments.map((a, idx) => <div key={idx}>
-                                        {'Wish ' + this.props.wishstats.wishes[idx].wishidx + ' requires: '}
-                                        {
-                                                a.map((val, jdx) => <div key={jdx} style={{
-                                                                display: 'inline-block'
-                                                        }}>
-                                                        <input style={{
-                                                                        resize: 'none',
-                                                                        width: '9ch'
-                                                                }} onFocus={this.copyToClipboard} readOnly={true} key={jdx + 'text'} value={shortenExponential(val)}/>
-                                                        <div key={jdx + 'div'} style={{
-                                                                        paddingRight: '1ch',
-                                                                        display: 'inline-block'
-                                                                }}>{'EMR'[jdx]}</div>
-                                                </div>)
-                                        }
-                                </div>)
-                        }<br/> {'After ' + score + ' all targets will be reached.'}
+                        <br/>
+                        <table style={{
+                                        display: 'inline-block'
+                                }}>
+                                <tbody>{
+                                                assignments.map((a, idx) => <tr key={idx}>
+                                                        <td>{'Wish ' + this.props.wishstats.wishes[idx].wishidx + ' requires: '}</td>
+                                                        {
+                                                                a.map((val, jdx) => <td key={jdx} style={{
+                                                                                display: 'inline-block'
+                                                                        }}>
+                                                                        <input style={{
+                                                                                        resize: 'none',
+                                                                                        width: '9ch'
+                                                                                }} onFocus={this.copyToClipboard} readOnly={true} key={jdx + 'text'} value={shortenExponential(val)}/>
+                                                                        <div key={jdx + 'div'} style={{
+                                                                                        paddingRight: '1ch',
+                                                                                        display: 'inline-block'
+                                                                                }}>{['E', 'M', 'R'][jdx]}</div>
+                                                                </td>)
+                                                        }
+                                                        <td>{toTime(scores[idx])}</td>
+                                                </tr>)
+                                        }</tbody>
+                        </table><br/> {'After ' + score + ' all targets will be reached.'}
                         <br/>
                         <br/> {'Spare resources: '}
                         {
@@ -190,7 +195,7 @@ class WishComponent extends Component {
                                         <div key={jdx + 'div'} style={{
                                                         paddingRight: '1ch',
                                                         display: 'inline-block'
-                                                }}>{'EMR'[jdx]}</div>
+                                                }}>{['E', 'M', 'R'][jdx]}</div>
                                 </div>)
                         }
                         <br/>
