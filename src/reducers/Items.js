@@ -235,15 +235,15 @@ const INITIAL_STATE = {
         },
         basestats: {
                 power: 0,
-                toughness: 0
+                toughness: 0,
+                modifiers: false
         },
         capstats: {
                 'Energy Cap Cap': 9e18,
-                'Energy Cap Gear': 0,
-                'Energy Cap Total': 1,
+                'Nude Energy Cap': 500,
                 'Magic Cap Cap': 9e18,
-                'Magic Cap Gear': 0,
-                'Magic Cap Total': 1
+                'Nude Magic Cap': 1e4,
+                modifiers: false
         },
         ngustats: {
                 nguoption: 0,
@@ -279,7 +279,7 @@ const INITIAL_STATE = {
                 mcBetaPot: false,
                 mcDeltaPot: false
         },
-        version: '1.4.0'
+        version: '1.5.0'
 };
 
 const ItemsReducer = (state = INITIAL_STATE, action) => {
@@ -886,18 +886,23 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                 // exit early
                                 if (!Boolean(localStorageState)) {
                                         console.log('No local storage found. Loading fresh v' + state.version + ' state.');
-                                        return state;
+                                        return cleanState(state);
                                 }
                                 if (!Boolean(localStorageState.version)) {
                                         console.log('No valid version information found. Loading fresh v' + state.version + ' state.');
-                                        return state;
+                                        return cleanState(state);
                                 }
                                 if (localStorageState.version === '1.0.0') {
                                         console.log('Saved local storage is v' + localStorageState.version + ', incompatible with current version. Loading fresh v' + state.version + ' state.');
-                                        return state;
+                                        return cleanState(state);
                                 }
                                 // the local storage state can be used
-                                console.log('Loading saved v' + state.version + ' state.');
+                                console.log('Loading saved v' + localStorageState.version + ' state.');
+                                // update basestats and capstats
+                                if (localStorageState.version === '1.4.0') {
+                                        localStorageState.basestats = state.basestats;
+                                        localStorageState.capstats = state.capstats;
+                                }
                                 // update item store with changed levels and disabled items
                                 for (let idx = 0; idx < localStorageState.items.length; idx++) {
                                         const name = localStorageState.items[idx];

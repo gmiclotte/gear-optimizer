@@ -172,9 +172,10 @@ export const hardcap = (vals, factors, capstats) => {
                 if (hardcap === undefined) {
                         return val;
                 }
-                const gear = 100 * capstats[factors[1][idx] + ' Gear'] + 100;
-                const total = Math.max(1, capstats[factors[1][idx] + ' Total']);
-                const maxVal = Math.max(100, hardcap / total * gear);
+                const total = Math.max(1, capstats['Nude ' + factors[1][idx]]);
+                // multiplier is at least 100%
+                const maxVal = 100 * Math.max(1, hardcap / total);
+                // multiplier is at most `val` and at most `maxVal`
                 return Math.min(val, maxVal);
         });
 }

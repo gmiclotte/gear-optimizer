@@ -115,113 +115,75 @@ class Optimizer extends Component {
                                         <table className='center cubetable'>
                                                 <tbody>
                                                         <tr>
-                                                                <td>Base Power
-                                                                </td>
+                                                                <td>P/T input</td>
                                                                 <td>
-                                                                        <label>
-                                                                                <input style={{
-                                                                                                width: '100px',
-                                                                                                margin: '5px'
-                                                                                        }} type="number" step="any" value={this.props.basestats['power']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['base', 'power'])}/>
-                                                                        </label>
-                                                                </td>
+                                                                        <input type="checkbox" checked={this.props.basestats.modifiers} onChange={(e) => this.props.handleSettings('basestats', {
+                                                                                        ...this.props.basestats,
+                                                                                        modifiers: !this.props.basestats.modifiers
+                                                                                })}/></td>
                                                         </tr>
+                                                        {
+                                                                ['power', 'toughness'].map((statname, idx) => (<tr className={this.props.basestats.modifiers
+                                                                                ? ''
+                                                                                : 'hide'}>
+                                                                        <td>{'Base ' + statname.charAt(0).toUpperCase() + statname.slice(1)}
+                                                                        </td>
+                                                                        <td>
+                                                                                <label>
+                                                                                        <input style={{
+                                                                                                        width: '9ch',
+                                                                                                        margin: '1ch'
+                                                                                                }} type="number" step="any" value={this.props.basestats[statname]} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['base', statname])}/>
+                                                                                </label>
+                                                                        </td>
+                                                                </tr>))
+                                                        }
+                                                        {
+                                                                ['power', 'toughness', 'tier'].map((statname, idx) => (<tr className={this.props.basestats.modifiers || statname === 'tier'
+                                                                                ? ''
+                                                                                : 'hide'}>
+                                                                        <td>{'Cube ' + statname.charAt(0).toUpperCase() + statname.slice(1)}
+                                                                        </td>
+                                                                        <td>
+                                                                                <label>
+                                                                                        <input style={{
+                                                                                                        width: '9ch',
+                                                                                                        margin: '1ch'
+                                                                                                }} type="number" step="any" value={this.props.cubestats[statname]} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['cube', statname])}/>
+                                                                                </label>
+                                                                        </td>
+                                                                </tr>))
+                                                        }
                                                         <tr>
-                                                                <td>Base Toughness
-                                                                </td>
+                                                                <td>Hardcap input</td>
                                                                 <td>
-                                                                        <label>
-                                                                                <input style={{
-                                                                                                width: '100px',
-                                                                                                margin: '5px'
-                                                                                        }} type="number" step="any" value={this.props.basestats['toughness']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['base', 'toughness'])}/>
-                                                                        </label>
+                                                                        <input type="checkbox" checked={this.props.capstats.modifiers} onChange={(e) => this.props.handleSettings('capstats', {
+                                                                                        ...this.props.capstats,
+                                                                                        modifiers: !this.props.capstats.modifiers
+                                                                                })}/>
                                                                 </td>
                                                         </tr>
-                                                        <tr>
-                                                                <td>Cube Power
-                                                                </td>
-                                                                <td>
-                                                                        <label>
-                                                                                <input style={{
-                                                                                                width: '100px',
-                                                                                                margin: '5px'
-                                                                                        }} type="number" step="any" value={this.props.cubestats['power']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['cube', 'power'])}/>
-                                                                        </label>
-                                                                </td>
-                                                        </tr>
-                                                        <tr>
-                                                                <td>Cube Toughness
-                                                                </td>
-                                                                <td>
-                                                                        <label>
-                                                                                <input style={{
-                                                                                                width: '100px',
-                                                                                                margin: '5px'
-                                                                                        }} type="number" step="any" value={this.props.cubestats['toughness']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['cube', 'toughness'])}/>
-                                                                        </label>
-                                                                </td>
-                                                        </tr>
-                                                        <tr>
-                                                                <td>Cube Tier
-                                                                </td>
-                                                                <td>
-                                                                        <label>
-                                                                                <input style={{
-                                                                                                width: '100px',
-                                                                                                margin: '5px'
-                                                                                        }} type="number" step="any" value={this.props.cubestats['tier']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['cube', 'tier'])}/>
-                                                                        </label>
-                                                                </td>
-                                                        </tr>
-                                                        <tr>
-                                                                <td>E Cap Gear
-                                                                </td>
-                                                                <td>
-                                                                        <label>
-                                                                                <input style={{
-                                                                                                width: '100px',
-                                                                                                margin: '5px'
-                                                                                        }} type="number" step="any" value={this.props.capstats['Energy Cap Gear']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['cap', 'Energy Cap Gear'])}/>
-                                                                        </label>
-                                                                </td>
-                                                        </tr>
-                                                        <tr>
-                                                                <td>Total E Cap
-                                                                </td>
-                                                                <td>
-                                                                        <label>
-                                                                                <input style={{
-                                                                                                width: '100px',
-                                                                                                margin: '5px'
-                                                                                        }} type="number" step="any" value={this.props.capstats['Energy Cap Total']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['cap', 'Energy Cap Total'])}/>
-                                                                        </label>
-                                                                </td>
-                                                        </tr>
-                                                        <tr>
-                                                                <td>M Cap Gear
-                                                                </td>
-                                                                <td>
-                                                                        <label>
-                                                                                <input style={{
-                                                                                                width: '100px',
-                                                                                                margin: '5px'
-                                                                                        }} type="number" step="any" value={this.props.capstats['Magic Cap Gear']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['cap', 'Magic Cap Gear'])}/>
-                                                                        </label>
-                                                                </td>
-                                                        </tr>
-                                                        <tr>
-                                                                <td>Total M Cap
-                                                                </td>
-                                                                <td>
-                                                                        <label>
-                                                                                <input style={{
-                                                                                                width: '100px',
-                                                                                                margin: '5px'
-                                                                                        }} type="number" step="any" value={this.props.capstats['Magic Cap Total']} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['cap', 'Magic Cap Total'])}/>
-                                                                        </label>
-                                                                </td>
-                                                        </tr>
+                                                        {
+                                                                Object.getOwnPropertyNames(this.props.capstats).map((statname, idx) => {
+                                                                        if (statname.slice(0, 4) !== 'Nude') {
+                                                                                return null;
+                                                                        }
+                                                                        return (<tr className={this.props.capstats.modifiers
+                                                                                        ? ''
+                                                                                        : 'hide'}>
+                                                                                <td>{statname}
+                                                                                </td>
+                                                                                <td>
+                                                                                        <label>
+                                                                                                <input style={{
+                                                                                                                width: '9ch',
+                                                                                                                margin: '1ch'
+                                                                                                        }} type="number" step="any" value={this.props.capstats[statname]} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, ['cap', statname])}/>
+                                                                                        </label>
+                                                                                </td>
+                                                                        </tr>);
+                                                                })
+                                                        }
                                                 </tbody>
                                         </table>
                                 </div>
