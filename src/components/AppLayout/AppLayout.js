@@ -41,8 +41,7 @@ function HowTo() {
                         <li>Configure base Power / Toughness, Infinity Cube, and hard cap information.</li>
                         <ul>
                                 <li>Base and cube PT are straightforward. Cube tier is automatically calculated if you change the cube PT, but can be adjusted manually.</li>
-                                <li>If you are nearing the hard cap for a specific value (e.g. EM cap), then the gear optimizer can take this into account. Enter your current gear bonus and current total in the appropriate fields.</li>
-                                <li>Example: with +50,000% Energy Cap you have 7E+18 total Energy Cap. Then enter 500 in the "Energy Cap Gear" field, and 7E+18 in the "Total Energy Cap" field. Note that the gear bonus is taken from the inventory, the stat breakdown would say 50,100% in this case.</li>
+                                <li>If you are nearing the hard cap for a specific value (e.g. EM cap), then the gear optimizer can take this into account. Enter your nude total, i.e. total without any gear equipped, in the appropriate field. To find this value, you can either unequip all your gear or do the math.</li>
                         </ul>
                         <br/>
                         <li>Select your priorities.</li>
@@ -108,6 +107,28 @@ function HowTo() {
                         <li>Select some wishes, start levels, and target levels.</li>
                         <li>Decide the order in which resources should be spent.</li>
                         <li>A possible allocation of EMR cap will be suggested to reach the target level in each of these wishes in (close to) the shortest possible time. This procedure is stochastic, so reruns might result in (slightly) different values.</li>
+                </ol>
+                <br/>
+                <ol>
+                        {'How to use the advanced modifiers:'}
+                </ol>
+                <ol>
+                        <li>You don't have to use these modifiers, but they can make your life a little easier.</li>
+                        <li>You can for example save, equip your dedicated gear, drink your potions, and then copy power/cap/speed/... values into their respective fields to get an accurate calculation, then reload so you didn't waste your potions or resource assignments.</li>
+                        <li>With advanced modfiers, you enter all these values based on what you are currently wearing, and based on your current active potions.</li>
+                        <li>The advanced modifier fields are then used to calculate your ngu/hack/wish/... speed based on the values you entered, and changes in gear and pots between your current run and the run you are planning.</li>
+                        <br/>
+                        <li>Current [something]: refers to the [something] you were using while you filled the power/cap/speed/... fields.</li>
+                        <li>Dedicated [something]: refers to the [something] you will be using in your ngu/hack/wish/... run.</li>
+                </ol>
+                <br/>
+                <ol>
+                        {'Multiplicative modifiers:'}
+                </ol>
+                <ol>
+                        <li>In the stat breakdown in the game these are given as percentages.</li>
+                        <li>The various optimizers instead expect raw decimal numbers.</li>
+                        <li>For example, a 1.2e34% multiplier should be entered as 1.2e32.</li>
                 </ol>
         </div>;
 }
