@@ -27,6 +27,13 @@ export class Wish {
                 return speed;
         }
 
+        cap_modifiers() {
+                const ecap = speedmodifier(this.wishstats, this.state, Factors.ENERGY_CAP, {});
+                const mcap = speedmodifier(this.wishstats, this.state, Factors.MAGIC_CAP, {});
+                const rcap = speedmodifier(this.wishstats, this.state, Factors.RES3_CAP, {});
+                return [ecap, mcap, rcap];
+        }
+
         base(res) {
                 let assignment = res.map(x => Math.max(1e3, Math.floor(x / 1e5)));
                 return assignment;
@@ -381,7 +388,9 @@ export class Wish {
                 scores = tmp_scores;
                 true_scores = tmp_true_scores;
 
-                res = res.map(x => Math.max(0, x));
+                const cap_modifiers = this.cap_modifiers();
+                res = res.map((x, idx) => Math.max(0, x * cap_modifiers[idx]));
+                assignments = assignments.map(assignment => assignment.map((x, idx) => Math.max(0, x * cap_modifiers[idx])));
                 console.log(Date.now() - global_start_time + ' ms');
                 return [scores, assignments, res, true_scores];
         }
