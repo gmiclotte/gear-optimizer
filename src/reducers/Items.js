@@ -243,6 +243,24 @@ const INITIAL_STATE = {
                 'Nude Energy Cap': 500,
                 'Magic Cap Cap': 9e18,
                 'Nude Magic Cap': 1e4,
+
+                'Energy Power Cap': 1e18,
+                'Nude Energy Power': 1,
+                'Magic Power Cap': 1e18,
+                'Nude Magic Power': 1,
+
+                'Energy Bars Cap': 1e18,
+                'Nude Energy Bars': 1,
+                'Magic Bars Cap': 1e18,
+                'Nude Magic Bars': 1,
+
+                'Resource 3 Power Cap': 1e18,
+                'Nude Resource 3 Power': 1,
+                'Resource 3 Cap Cap': 9e18,
+                'Nude Resource 3 Cap': 1e4,
+                'Resource 3 Bars Cap': 1e18,
+                'Nude Resource 3 Bars': 1,
+
                 modifiers: false
         },
         ngustats: {
