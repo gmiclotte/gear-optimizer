@@ -18,7 +18,7 @@ import {WISH} from '../actions/Wish';
 import {SETTINGS, TITAN} from '../actions/Settings';
 import {CREMENT} from '../actions/Crement'
 import {DISABLE_ITEM} from '../actions/DisableItem';
-import {TOGGLE_EDIT} from '../actions/ToggleEdit';
+import {TOGGLE_MODAL} from '../actions/ToggleModal';
 import {EDIT_ITEM} from '../actions/EditItem';
 import {EDIT_FACTOR} from '../actions/EditFactor';
 import {EQUIP_ITEM} from '../actions/EquipItem';
@@ -110,7 +110,10 @@ export function cleanState(state) {
                 state[name].currentLoadout = Math.min(state.savedequip.length - 1, state[name].currentLoadout);
                 state[name].dedicatedLoadout = Math.min(state.savedequip.length - 1, state[name].dedicatedLoadout);
         }
-        // return cleaned state
+        // save and return cleaned state
+        if (document.cookie.includes('accepts-cookies=true')) {
+                window.localStorage.setItem(LOCALSTORAGE_NAME, JSON.stringify(state));
+        }
         return state;
 }
 
@@ -463,19 +466,23 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                 };
                         }
 
-                case TOGGLE_EDIT:
+                case TOGGLE_MODAL:
                         {
                                 const name = action.payload.name;
-                                const item = state.itemdata[name];
-                                return {
-                                        ...state,
-                                        editItem: [
-                                                action.payload.on, name, item === undefined
-                                                        ? undefined
-                                                        : item.level,
-                                                action.payload.lockable
-                                        ]
-                                };
+                                const data = action.payload.data;
+                                if (name === 'edit item') {
+                                        const item = state.itemdata[data.itemName];
+                                        return {
+                                                ...state,
+                                                editItem: [
+                                                        data.on, data.itemName, item === undefined
+                                                                ? undefined
+                                                                : item.level,
+                                                        data.lockable
+                                                ]
+                                        };
+                                }
+                                return state;
                         }
 
                 case EDIT_ITEM:
@@ -892,28 +899,35 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
 
                 case SAVE_STATE_LOCALSTORAGE:
                         {
-                                if (document.cookie.includes('accepts-cookies=true')) {
-                                        window.localStorage.setItem(LOCALSTORAGE_NAME, JSON.stringify(action.payload.state));
-                                }
-                                return state;
+                                return cleanState(state);
                         }
 
                 case LOAD_STATE_LOCALSTORAGE:
                         {
                                 const lc = window.localStorage.getItem(LOCALSTORAGE_NAME);
-                                let localStorageState = JSON.parse(lc);
+                                let localStorageState;
+                                try {
+                                        localStorageState = JSON.parse(lc);
+                                } catch (e) {
+                                        console.log('Error: invalid local storage imported.');
+                                        return cleanState(state);
+                                }
+                                if (typeof localStorageState !== 'object') {
+                                        console.log('Error: invalid local storage imported.');
+                                        return cleanState(state);
+                                }
                                 // exit early
                                 if (!Boolean(localStorageState)) {
                                         console.log('No local storage found. Loading fresh v' + state.version + ' state.');
-                                        return cleanState(state);
+                                        return cleanState(INITIAL_STATE);
                                 }
                                 if (!Boolean(localStorageState.version)) {
                                         console.log('No valid version information found. Loading fresh v' + state.version + ' state.');
-                                        return cleanState(state);
+                                        return cleanState(INITIAL_STATE);
                                 }
                                 if (localStorageState.version === '1.0.0') {
                                         console.log('Saved local storage is v' + localStorageState.version + ', incompatible with current version. Loading fresh v' + state.version + ' state.');
-                                        return cleanState(state);
+                                        return cleanState(INITIAL_STATE);
                                 }
                                 // the local storage state can be used
                                 console.log('Loading saved v' + localStorageState.version + ' state.');
@@ -978,7 +992,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                                 }
                                         ];
                                 }
-                                // clean and return the local storage state
+                                // clean, save and return the local storage state
                                 return cleanState({
                                         // load all saved data
                                         ...localStorageState,

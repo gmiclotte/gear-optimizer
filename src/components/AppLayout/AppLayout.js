@@ -11,7 +11,7 @@ import Augment from '../Content/Augment';
 import NGUComponent from '../Content/NGUs';
 import HackComponent from '../Content/Hacks';
 import WishComponent from '../Content/Wishes';
-import About from '../About/About';
+import AboutComponent from '../About/About';
 
 function HowTo() {
         ReactGA.pageview('/howto');
@@ -179,7 +179,7 @@ const AppLayout = props => (<div className='app_container'>
                         <Route exact={true} path='/ngus/' render={(routeProps) => (<NGUComponent {...routeProps} {...props} className='app_body'/>)}/>
                         <Route exact={true} path='/hacks/' render={(routeProps) => (<HackComponent {...routeProps} {...props} className='app_body'/>)}/>
                         <Route exact={true} path='/wishes/' render={(routeProps) => (<WishComponent {...routeProps} {...props} className='app_body'/>)}/>
-                        <Route exact={true} path='/about/' component={About}/>
+                        <Route exact={true} path='/about/' render={(routeProps) => (<AboutComponent {...routeProps} {...props} className='app_body'/>)}/>
                 </div>
         </Router>
         <ReactTooltip multiline={true}/>

@@ -54,10 +54,10 @@ export default class Item extends Component {
                 imgname = imgname.replace(/</g, '');
                 imgname = imgname.replace(/!/g, '');
                 return (<img className={classNames} onClick={() => this.props.handleClickItem(item.name)} onContextMenu={(e) => {
-                                if (!item.empty) {
-                                        this.props.handleRightClickItem(item.name, this.props.lockable);
-                                }
-                                e.preventDefault();
+                        if (!item.empty) {
+                                this.props.handleRightClickItem(item.name);
+                        }
+                        e.preventDefault();
                         }} data-tip={tt} src={images[imgname]} alt={item.name} key='item'/>);
         }
 }

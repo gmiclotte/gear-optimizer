@@ -3,14 +3,14 @@ import Modal from 'react-modal';
 import ReactGA from 'react-ga';
 
 import {get_zone, get_max_zone, get_max_titan} from '../../util';
-import {LOOTIES, PENDANTS} from '../../assets/Items'
+import {LOOTIES, PENDANTS} from '../../assets/Items';
 
 import {default as Crement} from '../Crement/Crement';
 import {default as ItemTable} from '../ItemTable/ItemTable';
 import {default as EquipTable} from '../ItemTable/EquipTable';
 import {default as OptimizeButton} from '../OptimizeButton/OptimizeButton';
-import {default as FactorForm} from '../FactorForm/FactorForm'
-import {default as ItemForm} from '../ItemForm/ItemForm'
+import {default as FactorForm} from '../FactorForm/FactorForm';
+import {default as ItemForm} from '../ItemForm/ItemForm';
 
 import './Optimizer.css';
 
@@ -73,7 +73,11 @@ class Optimizer extends Component {
                 };
         }
 
-        closeEditModal = () => (this.props.handleToggleEdit(undefined, false, false));
+        closeEditModal = () => (this.props.handleToggleModal('edit item', {
+                itemName: undefined,
+                lockable: false,
+                on: false
+        }));
 
         render() {
                 ReactGA.pageview('/gear-optimizer/');
@@ -125,7 +129,7 @@ class Optimizer extends Component {
                                                         {
                                                                 ['power', 'toughness'].map((statname, idx) => (<tr className={this.props.basestats.modifiers
                                                                                 ? ''
-                                                                                : 'hide'}>
+                                                                                : 'hide'} key={statname}>
                                                                         <td>{'Base ' + statname.charAt(0).toUpperCase() + statname.slice(1)}
                                                                         </td>
                                                                         <td>
@@ -141,7 +145,7 @@ class Optimizer extends Component {
                                                         {
                                                                 ['power', 'toughness', 'tier'].map((statname, idx) => (<tr className={this.props.basestats.modifiers || statname === 'tier'
                                                                                 ? ''
-                                                                                : 'hide'}>
+                                                                                : 'hide'} key={statname}>
                                                                         <td>{'Cube ' + statname.charAt(0).toUpperCase() + statname.slice(1)}
                                                                         </td>
                                                                         <td>
@@ -170,7 +174,7 @@ class Optimizer extends Component {
                                                                         }
                                                                         return (<tr className={this.props.capstats.modifiers
                                                                                         ? ''
-                                                                                        : 'hide'}>
+                                                                                        : 'hide'} key={statname}>
                                                                                 <td>{statname}
                                                                                 </td>
                                                                                 <td>
@@ -189,10 +193,18 @@ class Optimizer extends Component {
                                 </div>
                         </div>
                         <div className="content__container">
-                                <EquipTable {...this.props} group={'slot'} type='equip' handleClickItem={this.props.handleUnequipItem} handleRightClickItem={this.props.handleToggleEdit}/>
-                                <ItemTable {...this.props} maxtitan={maxtitan} group={'zone'} type='items' handleClickItem={this.props.handleEquipItem} handleRightClickItem={this.props.handleToggleEdit}/>
+                                <EquipTable {...this.props} group={'slot'} type='equip' handleClickItem={this.props.handleUnequipItem} handleRightClickItem={(itemName) => this.props.handleToggleModal('edit item', {
+                                                itemName: itemName,
+                                                lockable: true,
+                                                on: true
+                                        })}/>
+                                <ItemTable {...this.props} maxtitan={maxtitan} group={'zone'} type='items' handleClickItem={this.props.handleEquipItem} handleRightClickItem={(itemName) => this.props.handleToggleModal('edit item', {
+                                                itemName: itemName,
+                                                lockable: false,
+                                                on: true
+                                        })}/>
                         </div>
-                        <Modal className='edit-item-modal' overlayClassName='edit-item-overlay' isOpen={this.props.editItem[0]} onAfterOpen={this.afterOpenModal} onRequestClose={this.closeEditModal} style={customStyles} contentLabel='Item Edit Modal' autoFocus={false}>
+                        <Modal className='edit-item-modal' overlayClassName='edit-item-overlay' isOpen={this.props.editItem[0]} onAfterOpen={undefined} onRequestClose={this.closeEditModal} style={customStyles} contentLabel='Item Edit Modal' autoFocus={false}>
                                 <ItemForm {...this.props} closeEditModal={this.closeEditModal}/>
                         </Modal>
                 </div>);

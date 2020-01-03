@@ -10,7 +10,7 @@ import {WishAsync} from '../actions/Wish'
 import {Settings, Go2Titan} from '../actions/Settings'
 import {Crement} from '../actions/Crement'
 import {DisableItem} from '../actions/DisableItem';
-import {ToggleEdit} from '../actions/ToggleEdit';
+import {ToggleModal} from '../actions/ToggleModal';
 import {EditItem} from '../actions/EditItem';
 import {EditFactor} from '../actions/EditFactor';
 import {EquipItem} from '../actions/EquipItem';
@@ -75,7 +75,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
         handleCrement: Crement,
         handleDisableItem: DisableItem,
-        handleToggleEdit: ToggleEdit,
+        handleToggleModal: ToggleModal,
         handleEditItem: EditItem,
         handleLockItem: LockItem,
         handleEditFactor: EditFactor,
