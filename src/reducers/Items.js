@@ -111,7 +111,7 @@ export function cleanState(state) {
                 state[name].dedicatedLoadout = Math.min(state.savedequip.length - 1, state[name].dedicatedLoadout);
         }
         // save and return cleaned state
-        if (document.cookie.includes('accepts-cookies=true')) {
+        if (document !== undefined && document.cookie.includes('accepts-cookies=true')) {
                 window.localStorage.setItem(LOCALSTORAGE_NAME, JSON.stringify({
                         ...state,
                         loaded: false
