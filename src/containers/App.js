@@ -13,7 +13,7 @@ import {DisableItem} from '../actions/DisableItem';
 import {ToggleModal} from '../actions/ToggleModal';
 import {EditItem} from '../actions/EditItem';
 import {EditFactor} from '../actions/EditFactor';
-import {EquipItem} from '../actions/EquipItem';
+import {EquipItem, EquipItems} from '../actions/EquipItem';
 import {HideZone} from '../actions/HideZone'
 import {LockItem} from '../actions/LockItem'
 import {OptimizeGearAsync} from '../actions/OptimizeGear';
@@ -80,6 +80,7 @@ const mapDispatchToProps = {
         handleLockItem: LockItem,
         handleEditFactor: EditFactor,
         handleEquipItem: EquipItem,
+        handleEquipItems: EquipItems,
         handleHideZone: HideZone,
         handleOptimizeGear: OptimizeGearAsync,
         handleOptimizeSaves: OptimizeSavesAsync,

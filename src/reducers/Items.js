@@ -21,7 +21,7 @@ import {DISABLE_ITEM} from '../actions/DisableItem';
 import {TOGGLE_MODAL} from '../actions/ToggleModal';
 import {EDIT_ITEM} from '../actions/EditItem';
 import {EDIT_FACTOR} from '../actions/EditFactor';
-import {EQUIP_ITEM} from '../actions/EquipItem';
+import {EQUIP_ITEM, EQUIP_ITEMS} from '../actions/EquipItem';
 import {HIDE_ZONE} from '../actions/HideZone';
 import {LOCK_ITEM} from '../actions/LockItem'
 import {OPTIMIZE_GEAR} from '../actions/OptimizeGear';
@@ -610,6 +610,37 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         },
                                         lastequip: state.equip
                                 };
+                        }
+
+                case EQUIP_ITEMS:
+                        {
+                                const names = action.payload.names;
+                                let equip = {
+                                        ...ItemNameContainer(state.equip.accessory.length, state.offhand)
+                                };
+                                names.forEach(name => {
+                                        const slot = state.itemdata[name].slot[0];
+                                        const count = state.equip[slot].length;
+                                        let succes = false;
+                                        for (let idx = 0; idx < count; idx++) {
+                                                if (state.itemdata[equip[slot][idx]].empty) {
+                                                        equip[slot][idx] = name;
+                                                }
+                                                if (equip[slot][idx] === name) {
+                                                        succes = true;
+                                                        break;
+                                                }
+                                        }
+                                        if (!succes) {
+                                                equip[slot].push(name);
+                                        }
+                                });
+                                console.log('Imported loadout: ', equip)
+                                return cleanState({
+                                        ...state,
+                                        equip: equip,
+                                        lastequip: state.equip
+                                });
                         }
 
                 case HIDE_ZONE:

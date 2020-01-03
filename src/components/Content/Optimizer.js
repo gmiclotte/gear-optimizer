@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Modal from 'react-modal';
 import ReactGA from 'react-ga';
+import {Redirect} from 'react-router-dom'
 
 import {get_zone, get_max_zone, get_max_titan} from '../../util';
 import {LOOTIES, PENDANTS} from '../../assets/Items';
@@ -31,6 +32,7 @@ class Optimizer extends Component {
 
         constructor(props) {
                 super(props);
+                this.fresh = true;
                 this.handleChange = this.handleChange.bind(this);
                 this.handleSubmit = this.handleSubmit.bind(this);
         }
@@ -80,7 +82,19 @@ class Optimizer extends Component {
         }));
 
         render() {
-                ReactGA.pageview('/gear-optimizer/');
+                //HACK: no idea how to do this properly
+                if (this.props.loadLoadout === undefined) {
+                        ReactGA.pageview('/gear-optimizer/');
+                } else {
+                        if (this.fresh) {
+                                const loadout = this.props.loadLoadout;
+                                this.props.handleEquipItems(loadout);
+                                this.fresh = false;
+                        } else {
+                                return <Redirect to='/'/>
+                        }
+                }
+                // render the actual optimizer tab
                 const zone = get_zone(this.props.zone);
                 const maxzone = get_max_zone(this.props.zone);
                 const maxtitan = get_max_titan(this.props.zone);

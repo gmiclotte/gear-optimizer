@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactTooltip from 'react-tooltip'
 import CookieBanner from 'react-cookie-banner';
-import {HashRouter as Router, Route, NavLink} from 'react-router-dom';
+import {HashRouter as Router, Route, NavLink, useParams} from 'react-router-dom';
 import ReactGA from 'react-ga';
 
 import './AppLayout.css';
@@ -174,6 +174,9 @@ const AppLayout = props => (<div className='app_container'>
                         </nav>
 
                         <Route exact={true} path='/' render={(routeProps) => (<Optimizer {...routeProps} {...props} className='app_body'/>)}/>
+                        <Route exact={true} path='/loadout/:itemlist' children={<Loadout {
+                                        ...props
+                                } />}/>
                         <Route exact={true} path='/howto/' component={HowTo}/>
                         <Route exact={true} path='/augment/' render={(routeProps) => (<Augment {...routeProps} {...props} className='app_body'/>)}/>
                         <Route exact={true} path='/ngus/' render={(routeProps) => (<NGUComponent {...routeProps} {...props} className='app_body'/>)}/>
@@ -184,5 +187,11 @@ const AppLayout = props => (<div className='app_container'>
         </Router>
         <ReactTooltip multiline={true}/>
 </div>);
+
+const Loadout = (props) => {
+        let {itemlist} = useParams();
+        itemlist = itemlist.split('&');
+        return <Optimizer {...props} loadLoadout={itemlist} className='app_body'/>;
+}
 
 export default AppLayout;
