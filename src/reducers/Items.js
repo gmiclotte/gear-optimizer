@@ -112,9 +112,117 @@ export function cleanState(state) {
         }
         // save and return cleaned state
         if (document.cookie.includes('accepts-cookies=true')) {
-                window.localStorage.setItem(LOCALSTORAGE_NAME, JSON.stringify(state));
+                window.localStorage.setItem(LOCALSTORAGE_NAME, JSON.stringify({
+                        ...state,
+                        loaded: false
+                }));
         }
         return state;
+}
+
+function loadState(state) {
+        const lc = window.localStorage.getItem(LOCALSTORAGE_NAME);
+        let localStorageState;
+        try {
+                localStorageState = JSON.parse(lc);
+        } catch (e) {
+                console.log('Error: invalid local storage imported.');
+                return cleanState(state);
+        }
+        if (typeof localStorageState !== 'object') {
+                console.log('Error: invalid local storage imported.');
+                return cleanState(state);
+        }
+        // exit early
+        if (!Boolean(localStorageState)) {
+                console.log('No local storage found. Loading fresh v' + state.version + ' state.');
+                return cleanState(INITIAL_STATE);
+        }
+        if (!Boolean(localStorageState.version)) {
+                console.log('No valid version information found. Loading fresh v' + state.version + ' state.');
+                return cleanState(INITIAL_STATE);
+        }
+        if (localStorageState.version === '1.0.0') {
+                console.log('Saved local storage is v' + localStorageState.version + ', incompatible with current version. Loading fresh v' + state.version + ' state.');
+                return cleanState(INITIAL_STATE);
+        }
+        // the local storage state can be used
+        console.log('Loading saved v' + localStorageState.version + ' state.');
+        // update basestats and capstats
+        if (localStorageState.version === '1.4.0') {
+                localStorageState.basestats = state.basestats;
+                localStorageState.capstats = state.capstats;
+        }
+        // update item store with changed levels and disabled items
+        for (let idx = 0; idx < localStorageState.items.length; idx++) {
+                const name = localStorageState.items[idx];
+                const saveditem = localStorageState.itemdata[name];
+                let item = state.itemdata[name];
+                if (item === undefined) {
+                        // item was renamed or removed
+                        console.log('Item ' + name + ' was renamed or removed, this may result in changes in saved or equipped loadouts.')
+                        const slot = saveditem.slot[0];
+                        localStorageState.equip[slot] = localStorageState.equip[slot].map(tmp => {
+                                if (tmp === name) {
+                                        return new EmptySlot(saveditem.slot).name;
+                                }
+                                return tmp;
+                        });
+                        localStorageState.savedequip = localStorageState.savedequip.map(save => {
+                                save[slot] = save[slot].map(tmp => {
+                                        if (tmp === name) {
+                                                return new EmptySlot(saveditem.slot).name;
+                                        }
+                                        return tmp;
+                                });
+                                return save;
+                        })
+                        continue;
+                }
+                if (saveditem.empty) {
+                        continue;
+                }
+                item.disable = saveditem.disable;
+                update_level(item, saveditem.level);
+        }
+        // fill gaps in the stored state to accomodate new state values
+        localStorageState = fillState(state, localStorageState);
+        // add cube and base to all equipments
+        localStorageState.equip = {
+                ...localStorageState.equip,
+                other: ['Infinity Cube', 'Base Stats']
+        };
+        localStorageState.savedequip = localStorageState.savedequip.map(x => {
+                return {
+                        ...x,
+                        other: ['Infinity Cube', 'Base Stats']
+                }
+        });
+        // handle new hacks
+        while (localStorageState.hackstats.hacks.length < Hacks.length) {
+                localStorageState.hackstats.hacks = [
+                        ...localStorageState.hackstats.hacks, {
+                                level: 0,
+                                reducer: 0,
+                                goal: 1,
+                                hackidx: localStorageState.hackstats.hacks.length
+                        }
+                ];
+        }
+        // clean, save and return the local storage state
+        return cleanState({
+                // load all saved data
+                ...localStorageState,
+                // set itemdata as configured above
+                itemdata: state.itemdata,
+                items: state.items,
+                // keep some settings at default values
+                running: state.running,
+                showunused: state.showunused,
+                editItem: state.editItem,
+                version: state.version,
+                loaded: true
+        });
 }
 
 const INITIAL_STATE = {
@@ -615,15 +723,16 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                 case EQUIP_ITEMS:
                         {
                                 const names = action.payload.names;
+                                const tmpState = loadState(state);
                                 let equip = {
-                                        ...ItemNameContainer(state.equip.accessory.length, state.offhand)
+                                        ...ItemNameContainer(tmpState.equip.accessory.length, tmpState.offhand)
                                 };
                                 names.forEach(name => {
-                                        const slot = state.itemdata[name].slot[0];
-                                        const count = state.equip[slot].length;
+                                        const slot = tmpState.itemdata[name].slot[0];
+                                        const count = tmpState.equip[slot].length;
                                         let succes = false;
                                         for (let idx = 0; idx < count; idx++) {
-                                                if (state.itemdata[equip[slot][idx]].empty) {
+                                                if (tmpState.itemdata[equip[slot][idx]].empty) {
                                                         equip[slot][idx] = name;
                                                 }
                                                 if (equip[slot][idx] === name) {
@@ -636,10 +745,13 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         }
                                 });
                                 console.log('Imported loadout: ', equip)
+                                console.log({
+                                        ...tmpState.equip
+                                })
                                 return cleanState({
-                                        ...state,
+                                        ...tmpState,
                                         equip: equip,
-                                        lastequip: state.equip
+                                        lastequip: tmpState.equip
                                 });
                         }
 
@@ -935,107 +1047,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
 
                 case LOAD_STATE_LOCALSTORAGE:
                         {
-                                const lc = window.localStorage.getItem(LOCALSTORAGE_NAME);
-                                let localStorageState;
-                                try {
-                                        localStorageState = JSON.parse(lc);
-                                } catch (e) {
-                                        console.log('Error: invalid local storage imported.');
-                                        return cleanState(state);
-                                }
-                                if (typeof localStorageState !== 'object') {
-                                        console.log('Error: invalid local storage imported.');
-                                        return cleanState(state);
-                                }
-                                // exit early
-                                if (!Boolean(localStorageState)) {
-                                        console.log('No local storage found. Loading fresh v' + state.version + ' state.');
-                                        return cleanState(INITIAL_STATE);
-                                }
-                                if (!Boolean(localStorageState.version)) {
-                                        console.log('No valid version information found. Loading fresh v' + state.version + ' state.');
-                                        return cleanState(INITIAL_STATE);
-                                }
-                                if (localStorageState.version === '1.0.0') {
-                                        console.log('Saved local storage is v' + localStorageState.version + ', incompatible with current version. Loading fresh v' + state.version + ' state.');
-                                        return cleanState(INITIAL_STATE);
-                                }
-                                // the local storage state can be used
-                                console.log('Loading saved v' + localStorageState.version + ' state.');
-                                // update basestats and capstats
-                                if (localStorageState.version === '1.4.0') {
-                                        localStorageState.basestats = state.basestats;
-                                        localStorageState.capstats = state.capstats;
-                                }
-                                // update item store with changed levels and disabled items
-                                for (let idx = 0; idx < localStorageState.items.length; idx++) {
-                                        const name = localStorageState.items[idx];
-                                        const saveditem = localStorageState.itemdata[name];
-                                        let item = state.itemdata[name];
-                                        if (item === undefined) {
-                                                // item was renamed or removed
-                                                console.log('Item ' + name + ' was renamed or removed, this may result in changes in saved or equipped loadouts.')
-                                                const slot = saveditem.slot[0];
-                                                localStorageState.equip[slot] = localStorageState.equip[slot].map(tmp => {
-                                                        if (tmp === name) {
-                                                                return new EmptySlot(saveditem.slot).name;
-                                                        }
-                                                        return tmp;
-                                                });
-                                                localStorageState.savedequip = localStorageState.savedequip.map(save => {
-                                                        save[slot] = save[slot].map(tmp => {
-                                                                if (tmp === name) {
-                                                                        return new EmptySlot(saveditem.slot).name;
-                                                                }
-                                                                return tmp;
-                                                        });
-                                                        return save;
-                                                })
-                                                continue;
-                                        }
-                                        if (saveditem.empty) {
-                                                continue;
-                                        }
-                                        item.disable = saveditem.disable;
-                                        update_level(item, saveditem.level);
-                                }
-                                // fill gaps in the stored state to accomodate new state values
-                                localStorageState = fillState(state, localStorageState);
-                                // add cube and base to all equipments
-                                localStorageState.equip = {
-                                        ...localStorageState.equip,
-                                        other: ['Infinity Cube', 'Base Stats']
-                                };
-                                localStorageState.savedequip = localStorageState.savedequip.map(x => {
-                                        return {
-                                                ...x,
-                                                other: ['Infinity Cube', 'Base Stats']
-                                        }
-                                });
-                                // handle new hacks
-                                while (localStorageState.hackstats.hacks.length < Hacks.length) {
-                                        localStorageState.hackstats.hacks = [
-                                                ...localStorageState.hackstats.hacks, {
-                                                        level: 0,
-                                                        reducer: 0,
-                                                        goal: 1,
-                                                        hackidx: localStorageState.hackstats.hacks.length
-                                                }
-                                        ];
-                                }
-                                // clean, save and return the local storage state
-                                return cleanState({
-                                        // load all saved data
-                                        ...localStorageState,
-                                        // set itemdata as configured above
-                                        itemdata: state.itemdata,
-                                        items: state.items,
-                                        // keep some settings at default values
-                                        running: state.running,
-                                        showunused: state.showunused,
-                                        editItem: state.editItem,
-                                        version: state.version
-                                });
+                                return loadState(state);
                         }
 
                 default:

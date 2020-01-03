@@ -83,6 +83,9 @@ class Optimizer extends Component {
 
         render() {
                 //HACK: no idea how to do this properly
+                if (!this.props.loaded) {
+                        return <div/>;
+                }
                 if (this.props.loadLoadout === undefined) {
                         ReactGA.pageview('/gear-optimizer/');
                 } else {

@@ -69,7 +69,8 @@ const mapStateToProps = state => ({
         ngustats: state.optimizer.ngustats,
         hackstats: state.optimizer.hackstats,
         wishstats: state.optimizer.wishstats,
-        version: state.optimizer.version
+        version: state.optimizer.version,
+        loaded: state.optimizer.loaded
 });
 
 const mapDispatchToProps = {
