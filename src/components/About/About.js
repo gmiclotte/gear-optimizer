@@ -71,7 +71,7 @@ class AboutComponent extends Component {
                                 }
                                 <br/> {
                                         this.state.latest !== null && GOVersion.version !== this.state.latest
-                                                ? 'Update by closing and reopening the optimizer twice.'
+                                                ? 'Update by closing and reopening the optimizer once or twice.'
                                                 : ''
                                 }
                                 <br/> {'Git hash: ' + GitCommit.logMessage.slice(0, 8)}
