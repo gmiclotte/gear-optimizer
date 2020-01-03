@@ -66,8 +66,13 @@ class AboutComponent extends Component {
                                 <br/> {
                                         'Latest version: ' + (
                                                 this.state.latest === null
-                                                        ? 'loading...'
-                                                        : ('v' + this.state.latest))
+                                                ? 'loading...'
+                                                : ('v' + this.state.latest))
+                                }
+                                <br/> {
+                                        this.state.latest !== null && GOVersion.version !== this.state.latest
+                                                ? 'Update by closing and reopening the optimizer twice.'
+                                                : ''
                                 }
                                 <br/> {'Git hash: ' + GitCommit.logMessage.slice(0, 8)}
                                 <br/>
