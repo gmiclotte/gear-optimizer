@@ -72,7 +72,7 @@ function optimizeSaves(e) {
                 Object.getOwnPropertyNames(tmp).forEach(property => {
                         state[property] = tmp[property];
                 });
-                state = cleanState(state);
+                state = cleanState(state, true);
                 let optimizer = new Optimizer(state);
                 // construct base layout from locks
                 let base_layout = optimizer.construct_base(state.locked, state.equip);

@@ -66,7 +66,7 @@ export function fillState(defaultState, storedState) {
         return storedState;
 }
 
-export function cleanState(state) {
+export function cleanState(state, skipSaving = false) {
         // clean locks
         Object.getOwnPropertyNames(state.locked).forEach(slot => {
                 state.locked[slot] = state.locked[slot].filter(idx => {
@@ -111,7 +111,7 @@ export function cleanState(state) {
                 state[name].dedicatedLoadout = Math.min(state.savedequip.length - 1, state[name].dedicatedLoadout);
         }
         // save and return cleaned state
-        if (document !== undefined && document.cookie.includes('accepts-cookies=true')) {
+        if (!skipSaving && document.cookie.includes('accepts-cookies=true')) {
                 window.localStorage.setItem(LOCALSTORAGE_NAME, JSON.stringify({
                         ...state,
                         loaded: false
