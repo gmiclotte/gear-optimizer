@@ -28,46 +28,62 @@ class HackComponent extends Component {
                 let hackstats = {
                         ...this.props.hackstats
                 };
+                let hacks = [...hackstats.hacks];
+                const hhidx = 13;
+                const hackhacklevel = hacks[hhidx].level;
                 if (idx < 0) {
                         hackstats = {
                                 ...hackstats,
                                 [name]: val
                         };
-                        this.props.handleSettings('hackstats', hackstats);
-                        return;
-                }
-                let hacks = [...hackstats.hacks];
-                let hack;
-                if (name === 'msup' || name === 'msdown') {
-                        let goal = hacks[idx].goal;
-                        const reducer = hacks[idx].reducer;
-                        const msgap = Hacks[idx][4] - reducer;
-                        goal = goal / msgap
-                        goal += name === 'msup'
-                                ? 1
-                                : -1;
-                        goal = name === 'msup'
-                                ? Math.floor(goal)
-                                : Math.ceil(goal);
-                        goal *= msgap;
-                        hack = {
-                                ...hacks[idx],
-                                goal: goal
-                        };
                 } else {
-                        hack = {
-                                ...hacks[idx],
-                                [name]: val
+                        let hack;
+                        if (name === 'msup' || name === 'msdown') {
+                                let goal = hacks[idx].goal;
+                                const reducer = hacks[idx].reducer;
+                                const msgap = Hacks[idx][4] - reducer;
+                                goal = goal / msgap
+                                goal += name === 'msup'
+                                        ? 1
+                                        : -1;
+                                goal = name === 'msup'
+                                        ? Math.floor(goal)
+                                        : Math.ceil(goal);
+                                goal *= msgap;
+                                hack = {
+                                        ...hacks[idx],
+                                        goal: goal
+                                };
+                        } else {
+                                hack = {
+                                        ...hacks[idx],
+                                        [name]: val
+                                };
+                        }
+                        hack.goal = this.level(hack.goal, idx);
+                        hack.level = this.level(hack.level, idx);
+                        hack.reducer = this.reducer(hack);
+                        hacks[idx] = hack;
+                        hackstats = {
+                                ...hackstats,
+                                hacks: hacks
                         };
                 }
-                hack.goal = this.level(hack.goal, idx);
-                hack.level = this.level(hack.level, idx);
-                hack.reducer = this.reducer(hack);
-                hacks[idx] = hack;
-                hackstats = {
-                        ...hackstats,
-                        hacks: hacks
-                };
+                // update hack speed if not locked
+                if (!hackstats.lockSpeed) {
+                        let hackOptimizer = new Hack(this.props);
+                        const oldBonus = hackOptimizer.bonus(hackhacklevel, hhidx);
+                        hackOptimizer = new Hack({
+                                ...this.props,
+                                hackstats: hackstats
+                        });
+                        const newBonus = hackOptimizer.bonus(hackstats.hacks[hhidx].level, hhidx);
+                        hackstats = {
+                                ...hackstats,
+                                hackspeed: hackstats.hackspeed * newBonus / oldBonus
+                        };
+                }
+                // push new values to state
                 this.props.handleSettings('hackstats', hackstats);
                 return;
         }
@@ -166,6 +182,12 @@ class HackComponent extends Component {
                                                                                         margin: '5px'
                                                                                 }} type="number" step="any" value={this.props.hackstats.hackspeed} onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, 'hackspeed')}/>
                                                                 </label>
+                                                        </td>
+                                                        <td>
+                                                                <input type="checkbox" checked={this.props.hackstats.lockSpeed} onChange={(e) => this.props.handleSettings('hackstats', {
+                                                                                ...this.props.hackstats,
+                                                                                lockSpeed: !this.props.hackstats.lockSpeed
+                                                                        })}/>{'lock'}
                                                         </td>
                                                 </tr>
                                                 <tr>
@@ -349,11 +371,14 @@ class HackComponent extends Component {
                                                         <td/>
                                                         <td className={classTarget}>
                                                                 <button type="button" onClick={(e) => {
-                                                                                let hacks = [...this.props.hackstats.hacks];
-                                                                                Hacks.forEach((hack, pos) => {
-                                                                                        const tmp = Math.max(hacks[pos].level, hacks[pos].goal);
-                                                                                        hacks[pos].level = tmp;
-                                                                                        hacks[pos].goal = tmp;
+                                                                                const hacks = Hacks.map((_, pos) => {
+                                                                                        const hack = this.props.hackstats.hacks[pos]
+                                                                                        const tmp = Math.max(hack.level, hack.goal);
+                                                                                        return {
+                                                                                                ...hack,
+                                                                                                level: tmp,
+                                                                                                goal: tmp
+                                                                                        }
                                                                                 });
                                                                                 this.handleChange({
                                                                                         target: {

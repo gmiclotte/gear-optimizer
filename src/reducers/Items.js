@@ -226,7 +226,8 @@ const INITIAL_STATE = {
                 rBetaPot: false,
                 rDeltaPot: false,
                 rcBetaPot: false,
-                rcDeltaPot: false
+                rcDeltaPot: false,
+                lockSpeed: true
         },
         cubestats: {
                 tier: 0,
