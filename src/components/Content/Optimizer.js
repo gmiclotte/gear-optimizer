@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReactTooltip from 'react-tooltip'
 import Modal from 'react-modal';
 import ReactGA from 'react-ga';
 import {Redirect} from 'react-router-dom'
@@ -224,6 +225,7 @@ class Optimizer extends Component {
                         <Modal className='edit-item-modal' overlayClassName='edit-item-overlay' isOpen={this.props.editItem[0]} onAfterOpen={undefined} onRequestClose={this.closeEditModal} style={customStyles} contentLabel='Item Edit Modal' autoFocus={false}>
                                 <ItemForm {...this.props} closeEditModal={this.closeEditModal}/>
                         </Modal>
+                        <ReactTooltip multiline={true}/>
                 </div>);
 
         };

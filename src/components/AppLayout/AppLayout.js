@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactTooltip from 'react-tooltip'
 import CookieBanner from 'react-cookie-banner';
 import {HashRouter as Router, Route, NavLink, useParams} from 'react-router-dom';
 import ReactGA from 'react-ga';
@@ -185,7 +184,6 @@ const AppLayout = props => (<div className='app_container'>
                         <Route exact={true} path='/about/' render={(routeProps) => (<AboutComponent {...routeProps} {...props} className='app_body'/>)}/>
                 </div>
         </Router>
-        <ReactTooltip multiline={true}/>
 </div>);
 
 const Loadout = (props) => {
