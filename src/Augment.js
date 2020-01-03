@@ -24,7 +24,7 @@ export class Augment {
                                 ? 1.8e16
                                 : 2.3e19;
                 }
-                const nacfactor = this.augstats.nac >= 25
+                const nacfactor = this.augstats.nac >= 5
                         ? 0.5
                         : 1;
                 const base = isGold
