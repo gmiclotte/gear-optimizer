@@ -127,24 +127,39 @@ function loadState(state) {
                 localStorageState = JSON.parse(lc);
         } catch (e) {
                 console.log('Error: invalid local storage imported.');
-                return cleanState(state);
+                return cleanState({
+                        ...state,
+                        loaded: true
+                });
         }
         if (typeof localStorageState !== 'object') {
                 console.log('Error: invalid local storage imported.');
-                return cleanState(state);
+                return cleanState({
+                        ...state,
+                        loaded: true
+                });
         }
         // exit early
         if (!Boolean(localStorageState)) {
                 console.log('No local storage found. Loading fresh v' + state.version + ' state.');
-                return cleanState(INITIAL_STATE);
+                return cleanState({
+                        ...INITIAL_STATE,
+                        loaded: true
+                });
         }
         if (!Boolean(localStorageState.version)) {
                 console.log('No valid version information found. Loading fresh v' + state.version + ' state.');
-                return cleanState(INITIAL_STATE);
+                return cleanState({
+                        ...INITIAL_STATE,
+                        loaded: true
+                });
         }
         if (localStorageState.version === '1.0.0') {
                 console.log('Saved local storage is v' + localStorageState.version + ', incompatible with current version. Loading fresh v' + state.version + ' state.');
-                return cleanState(INITIAL_STATE);
+                return cleanState({
+                        ...INITIAL_STATE,
+                        loaded: true
+                });
         }
         // the local storage state can be used
         console.log('Loading saved v' + localStorageState.version + ' state.');
