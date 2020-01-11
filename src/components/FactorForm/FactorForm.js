@@ -3,7 +3,7 @@ import React from 'react';
 import {Factors} from '../../assets/ItemAux'
 import {default as Crement} from '../Crement/Crement';
 
-export default class ItemForm extends React.Component {
+export default class FactorForm extends React.Component {
         constructor(props) {
                 super(props);
                 this.state = {
