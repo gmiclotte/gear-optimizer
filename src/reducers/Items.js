@@ -656,7 +656,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                         state.factors.forEach((item, idx) => {
                                                 if (idx === action.payload.idx) {
                                                         factors.push('NONE');
-                                                        maxslots.push(state.equip.accessory.length);
+                                                        maxslots.push(Infinity);
                                                 }
                                                 factors.push(item);
                                                 maxslots.push(state.maxslots[idx]);
@@ -687,7 +687,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                                 }
                                 if (tmpFactors[tmpFactors.length - 1] !== 'NONE') {
                                         tmpFactors.push('NONE');
-                                        tmpMaxslots.push(state.equip.accessory.length);
+                                        tmpMaxslots.push(Infinity);
                                 }
                                 return {
                                         ...state,
