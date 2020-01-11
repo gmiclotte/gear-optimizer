@@ -211,9 +211,9 @@ class Optimizer extends Component {
                                 </div>
                         </div>
                         <div className="content__container">
-                                <EquipTable {...this.props} group={'slot'} type='equip' handleClickItem={this.props.handleUnequipItem} handleRightClickItem={(itemName) => this.props.handleToggleModal('edit item', {
+                                <EquipTable {...this.props} group={'slot'} type='equip' handleClickItem={this.props.handleUnequipItem} handleRightClickItem={(itemName, lockable) => this.props.handleToggleModal('edit item', {
                                                 itemName: itemName,
-                                                lockable: true,
+                                                lockable: lockable,
                                                 on: true
                                         })}/>
                                 <ItemTable {...this.props} maxtitan={maxtitan} group={'zone'} type='items' handleClickItem={this.props.handleEquipItem} handleRightClickItem={(itemName) => this.props.handleToggleModal('edit item', {

@@ -140,7 +140,7 @@ export default class EquipTable extends React.Component {
                                         localbuffer = [];
                                 }
                         }
-                        localbuffer.push(<Item item={item} idx={idx - typeIdx} lockable={lockable} locked={this.props.locked} handleClickItem={handleClickItem} handleRightClickItem={this.props.handleRightClickItem} key={name + idx}/>);
+                        localbuffer.push(<Item item={item} idx={idx - typeIdx} lockable={lockable} locked={this.props.locked} handleClickItem={handleClickItem} handleRightClickItem={(itemName) => this.props.handleRightClickItem(itemName, true)} key={name + idx}/>);
                         last = item;
                 }
                 buffer.push(<div className='item-section' key={this.class_idx++}>
@@ -154,7 +154,7 @@ export default class EquipTable extends React.Component {
                 for (let idx = 0; idx < sorted.length; idx++) {
                         let name = sorted[idx];
                         const item = this.itemdata[name];
-                        localbuffer.push(<Item item={item} handleClickItem={this.props.handleEquipItem} handleRightClickItem={this.props.handleRightClickItem} key={name}/>);
+                        localbuffer.push(<Item item={item} lockable={false} handleClickItem={this.props.handleEquipItem} handleRightClickItem={(itemName) => this.props.handleRightClickItem(itemName, false)} key={name}/>);
                 }
                 if (localbuffer.length > 0) {
                         buffer.push(<div className='item-section' key={this.class_idx++}>
