@@ -4,11 +4,21 @@ import {default as OptimizeButton} from '../OptimizeButton/OptimizeButton';
 import SaveForm from '../SaveForm/SaveForm';
 
 class SaveButtons extends Component {
+        constructor(props) {
+                super(props);
+                this.state = {
+                        value: this.props.savedequip[this.props.savedidx].ignore
+                };
+        }
+
         handleFocus = (event) => {
                 event.target.select();
         }
 
         handleIgnore = (event) => {
+                this.setState({
+                        value: !this.state.value
+                });
                 let savedequip = [...this.props.savedequip];
                 savedequip[this.props.savedidx] = {
                         ...savedequip[this.props.savedidx],
@@ -18,6 +28,11 @@ class SaveButtons extends Component {
         }
 
         render() {
+                //HACK: this sets the dropdown to the correct value after loading
+                if (this.state.value !== this.props.savedequip[this.props.savedidx].ignore) {
+                        /* eslint-disable-next-line react/no-direct-mutation-state */
+                        this.state.value = this.props.savedequip[this.props.savedidx].ignore;
+                }
                 const name = this.props.savedequip[this.props.savedidx].name === undefined
                         ? 'Slot with no name'
                         : this.props.savedequip[this.props.savedidx].name;
@@ -66,7 +81,7 @@ class SaveButtons extends Component {
                                                 width: '150px',
                                                 margin: '5px'
                                         }} value={name} onFocus={this.handleFocus} onChange={(e) => this.props.handleSaveName(e.target.value)}/> {'Ignore used: '}
-                                <input type="checkbox" checked={this.props.savedequip[this.props.savedidx].ignore} onChange={(e) => this.handleIgnore(e)}/>
+                                <input type="checkbox" checked={this.state.value} onChange={(e) => this.handleIgnore(e)}/>
                         </div>
                 </div>);
 
