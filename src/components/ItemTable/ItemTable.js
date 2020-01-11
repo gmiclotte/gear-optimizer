@@ -90,6 +90,9 @@ export default class ItemTable extends React.Component {
                                                 if (className === '') {
                                                         return;
                                                 }
+                                                if (save.ignore) {
+                                                        return;
+                                                }
                                                 if (save[item.slot[0]] === undefined) {
                                                         return;
                                                 }

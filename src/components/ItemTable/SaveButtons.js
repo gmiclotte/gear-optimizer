@@ -4,8 +4,17 @@ import {default as OptimizeButton} from '../OptimizeButton/OptimizeButton';
 import SaveForm from '../SaveForm/SaveForm';
 
 class SaveButtons extends Component {
-        handleFocus(event) {
+        handleFocus = (event) => {
                 event.target.select();
+        }
+
+        handleIgnore = (event) => {
+                let savedequip = [...this.props.savedequip];
+                savedequip[this.props.savedidx] = {
+                        ...savedequip[this.props.savedidx],
+                        ignore: !savedequip[this.props.savedidx].ignore
+                };
+                this.props.handleSettings('savedequip', savedequip);
         }
 
         render() {
@@ -52,10 +61,13 @@ class SaveButtons extends Component {
                                         }
                                 </button>
                         </div>
-                        <input style={{
-                                        width: '150px',
-                                        margin: '5px'
-                                }} value={name} onFocus={this.handleFocus} onChange={(e) => this.props.handleSaveName(e.target.value)}/>
+                        <div>
+                                <input style={{
+                                                width: '150px',
+                                                margin: '5px'
+                                        }} value={name} onFocus={this.handleFocus} onChange={(e) => this.props.handleSaveName(e.target.value)}/> {'Ignore used: '}
+                                <input type="checkbox" checked={this.props.savedequip[this.props.savedidx].ignore} onChange={(e) => this.handleIgnore(e)}/>
+                        </div>
                 </div>);
 
         };

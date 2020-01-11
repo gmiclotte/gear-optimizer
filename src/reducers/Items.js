@@ -491,14 +491,6 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
 
                 case SETTINGS:
                         {
-                                if (typeof action.payload.stats === 'object') {
-                                        return {
-                                                ...state,
-                                                [action.payload.statname]: {
-                                                        ...action.payload.stats
-                                                }
-                                        };
-                                }
                                 return {
                                         ...state,
                                         [action.payload.statname]: action.payload.stats
