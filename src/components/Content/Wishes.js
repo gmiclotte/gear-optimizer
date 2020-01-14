@@ -37,11 +37,12 @@ class WishComponent extends Component {
                         return;
                 }
                 let wishes = [...wishstats.wishes];
+                const increasedStart = name === 'start' && Number(val) > wishes[idx].start;
                 let wish = {
                         ...wishes[idx],
                         [name]: val
                 };
-                wish.goal = this.goallevel(wish);
+                wish.goal = this.goallevel(wish, increasedStart);
                 wish.start = this.startlevel(wish);
                 wishes[idx] = wish;
                 wishstats = {
@@ -52,8 +53,14 @@ class WishComponent extends Component {
                 return;
         }
 
-        goallevel(data) {
+        goallevel(data, increasedStart) {
                 data.goal = Number(data.goal)
+                if (increasedStart) {
+                        data.start = Number(data.start)
+                        if (data.start >= data.goal) {
+                                data.goal = data.start + 1;
+                        }
+                }
                 if (data.goal < 1) {
                         return 0;
                 }
@@ -200,7 +207,7 @@ class WishComponent extends Component {
                         }
                         <br/>
                         <br/>
-                        <div>{'Beta: wish time estimation'}
+                        <div>{'Wish time estimation'}
                                 <label>
                                         <input type="checkbox" checked={this.props.wishstats.trueTime} onChange={(e) => this.props.handleSettings('wishstats', {
                                                         ...this.props.wishstats,
