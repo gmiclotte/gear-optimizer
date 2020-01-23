@@ -1047,10 +1047,10 @@ export const Wishes = [
                 'Stats IV', 1.00E+21, 10
         ],
         [
-                'Sadistic Boss Multiplier I ', 2.00E+22, 10
+                'Sadistic Boss Multiplier I', 2.00E+22, 10
         ],
         [
-                'Sadistic Boss Multiplier II ', 5.00E+23, 10
+                'Sadistic Boss Multiplier II', 5.00E+23, 10
         ],
         [
                 'Accessory Slot', 5.00E+24, 1
@@ -1069,6 +1069,169 @@ export const Wishes = [
         ],
         [
                 'MNGU speed II', 2.00E+22, 10
+        ],
+
+        [
+                'Energy NGU Card I', 4.00E+19, 1
+        ],
+        [
+                'Drop Chance Card I', 4.00E+19, 1
+        ],
+        [
+                'Wandoos Card I', 2.00E+19, 1
+        ],
+        [
+                'Adventure Stats Card I', 8.00E+19, 1
+        ],
+        [
+                'Hacks Card I', 5.00E+19, 1
+        ],
+        [
+                'Augment Card I', 6.00E+19, 1
+        ],
+        [
+                'Gold Drop Card I', 8.00E+19, 1
+        ],
+        [
+                'PP Card I', 1.00E+20, 1
+        ],
+        [
+                'A / D Card I', 9.00E+19, 1
+        ],
+        [
+                'Magic NGU Card I', 1.90E+20, 1
+        ],
+        [
+                'TM Speed Card I', 1.70E+20, 1
+        ],
+        [
+                'QP Card I', 2.20E+20, 1
+        ],
+        [
+                'Daycare Card I', 2.50E+20, 1
+        ],
+        [
+                'Energy NGU Card II', 1.20E+21, 1
+        ],
+        [
+                'Drop Chance Card II', 1.20E+21, 1
+        ],
+        [
+                'Wandoos Card II', 1.00E+21, 1
+        ],
+        [
+                'Adventure Stats Card II', 1.50E+21, 1
+        ],
+        [
+                'Hacks Card II', 1.80E+21, 1
+        ],
+        [
+                'Augment Card II', 1.80E+21, 1
+        ],
+        [
+                'Gold Drop Card II', 2.00E+21, 1
+        ],
+        [
+                'PP Card II', 2.50E+21, 1
+        ],
+        [
+                'A / D Card II', 2.00E+21, 1
+        ],
+        [
+                'Magic NGU Card II', 3.00E+21, 1
+        ],
+        [
+                'TM Speed Card II', 2.50E+21, 1
+        ],
+        [
+                'QP Tier II', 4.00E+21, 1
+        ],
+        [
+                'Daycare Card II', 5.00E+21, 1
+        ],
+        [
+                'Energy NGU Card III', 2.00E+22, 1
+        ],
+        [
+                'Drop Chance Card III', 1.80E+22, 1
+        ],
+        [
+                'Wandoos Card III', 1.50E+22, 1
+        ],
+        [
+                'Adventure Stats Card III', 5.00E+22, 1
+        ],
+        [
+                'Hacks Card III', 4.00E+22, 1
+        ],
+        [
+                'Augment Card III', 6.00E+22, 1
+        ],
+        [
+                'Gold Drop Card III', 7.50E+22, 1
+        ],
+        [
+                'PP Card III', 1.00E+23, 1
+        ],
+        [
+                'A / D Card III', 8.00E+22, 1
+        ],
+        [
+                'Magic NGU Card III', 1.30E+23, 1
+        ],
+        [
+                'TM Speed Card III', 1.20E+23, 1
+        ],
+        [
+                'QP Card III', 1.50E+23, 1
+        ],
+        [
+                'Daycare Card III', 1.60E+23, 1
+        ],
+        [
+                'Faster Mayo I', 5.00E+20, 10
+        ],
+        [
+                'Faster Cards I', 5.00E+20, 10
+        ],
+        [
+                'Faster Mayo II', 1.00E+22, 10
+        ],
+        [
+                'Faster Cards II', 1.00E+22, 10
+        ],
+        [
+                'Faster Mayo III', 2.00E+23, 10
+        ],
+        [
+                'Faster Cards III', 2.00E+23, 10
+        ],
+        [
+                'Faster Mayo IV', 4.00E+24, 10
+        ],
+        [
+                'Faster Cards IV', 4.00E+24, 10
+        ],
+        [
+                'Maximal Card Cost I', 4.00E+24, 1
+        ],
+        [
+                'Minimal Card Cost I', 4.00E+24, 1
+        ],
+        [
+                'Bigger DeckI', 1.00E+20, 5
+        ],
+        [
+                'Bigger DeckII', 5.00E+21, 5
+        ],
+        [
+                'Bigger DeckIII', 2.50E+23, 5
+        ],
+        [
+                'Mayo Generator', 5.00E+21, 1
+        ],
+        [
+                'Bonus Tag', 3.00E+22, 1
         ]
 ];
 
