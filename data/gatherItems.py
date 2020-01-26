@@ -364,7 +364,8 @@ ZONES = [
     ['Giant Alien Bug Nest', 'SetName.ITHUNGERS4'],
     ['The Key', 'SetName.ITHUNGERS4'],
     ['Ascended x7 Pendant', 'SetName.FOREST_PENDANT'],
-    ['SUPREME INTELLIGENCE LOOTY', 'SetName.LOOTY']
+    ['SUPREME INTELLIGENCE LOOTY', 'SetName.LOOTY'],
+    ['My Rainbow Heart', 'SetName.HEART'],
 ]
 
 

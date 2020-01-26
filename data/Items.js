@@ -1978,6 +1978,13 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 500000],
         [Stat.MAGIC_POWER, 500000],
     ]),
+    new Item('My Rainbow Heart', Slot.ACCESSORY, SetName.HEART, 100, [
+        [Stat.POWER, 100],
+        [Stat.TOUGHNESS, 100],
+        [Stat.COOKING, 69000000],
+        [Stat.RES3_BARS, 100],
+        [Stat.SEED_DROP, 30],
+    ]),
 ];
 
 
