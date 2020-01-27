@@ -1,7 +1,20 @@
 import React, {Component} from 'react';
+import Modal from 'react-modal';
 
 import {default as OptimizeButton} from '../OptimizeButton/OptimizeButton';
 import SaveForm from '../SaveForm/SaveForm';
+import {default as ExportForm} from '../ExportForm/ExportForm'
+
+const customStyles = {
+        content: {
+                top: '50%',
+                left: '50%',
+                right: 'auto',
+                bottom: 'auto',
+                marginRight: '-50%',
+                transform: 'translate(-50%, -50%)'
+        }
+};
 
 class SaveButtons extends Component {
         constructor(props) {
@@ -39,13 +52,19 @@ class SaveButtons extends Component {
                 return (<div className='item-section'>
                         <div style={{
                                         margin: '5px'
-                                }}><OptimizeButton text={'All Saves'} running={this.props.running} abort={this.props.handleTerminate} optimize={this.props.handleOptimizeSaves}/>{' '}
+                                }}>
+
+                                <OptimizeButton text={'All Saves'} running={this.props.running} abort={this.props.handleTerminate} optimize={this.props.handleOptimizeSaves}/>{' '}
                                 <button onClick={this.props.handleToggleUnused}>
                                         {
                                                 this.props.showunused
                                                         ? 'Unmark unused items'
                                                         : 'Mark unused items'
-                                        }</button>
+                                        }</button>{' '}
+                                <button key={'export loadout button'} onClick={() => this.setState({open: true})}>{'Export loadout'}</button>
+                                <Modal key={'export loadout modal'} className='port-modal' overlayClassName='port-overlay' isOpen={this.state.open} onAfterOpen={undefined} onRequestClose={() => (this.setState({open: false}))} style={customStyles} contentLabel='Export loadout' autoFocus={false}>
+                                        <ExportForm {...this.props} loadoutURI={this.props.loadoutURI} saveURI={this.props.saveURI} closeExportModal={() => (this.setState({open: false}))}/>
+                                </Modal>{' '}
                         </div>
                         <SaveForm {...this.props} loc={['savedidx']} saveIdx={this.props.savedidx}/>
                         <div style={{

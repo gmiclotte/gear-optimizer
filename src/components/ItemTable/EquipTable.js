@@ -8,6 +8,29 @@ import {score_equip, shorten, cubeBaseItemData} from '../../util'
 
 import {default as SaveButtons} from './SaveButtons'
 
+function equip2url(equip, itemdata) {
+        const base = window.location.href
+        let url = base.substring(0, base.indexOf('#') + 1) + '/loadout/'
+        let first = true
+        Object.getOwnPropertyNames(Slot).forEach(slot => {
+                if (slot === 'OTHER') {
+                        return;
+                }
+                equip[Slot[slot][0]].forEach(item => {
+                        if (itemdata[item].empty) {
+                                return;
+                        }
+                        if (!first) {
+                                url += '&'
+                        } else {
+                                first = false;
+                        }
+                        url += item;
+                })
+        });
+        return encodeURI(url);
+}
+
 function compare_factory(key) {
         return function(prop) {
                 return function(a, b) {
@@ -108,8 +131,12 @@ class BonusLine extends React.Component {
 export default class EquipTable extends React.Component {
         constructor(props) {
                 super(props);
+                this.state = {
+                        open: false
+                };
                 this.itemdata = cubeBaseItemData(props.itemdata, props.cubestats, props.basestats);
         }
+
         componentDidUpdate() {
                 ReactTooltip.rebuild();
         }
@@ -171,7 +198,7 @@ export default class EquipTable extends React.Component {
                 const equip = this.props.equip;
                 const savedequip = this.props.savedequip[this.props.savedidx];
                 this.render_equip(equip, '', compare, buffer, this.props.handleClickItem, true);
-                buffer.push(<SaveButtons {...this.props} key='savebuttons'/>)
+                buffer.push(<SaveButtons {...this.props} loadoutURI={equip2url(equip, this.itemdata)} saveURI={equip2url(savedequip, this.itemdata)} key='savebuttons'/>)
                 if (this.props.showsaved) {
                         this.render_equip(savedequip, 'Saved ', compare, buffer, this.props.handleEquipItem, false);
                 }
