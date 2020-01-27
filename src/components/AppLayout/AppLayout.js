@@ -144,7 +144,9 @@ const AppLayout = props => (<div className='app_container'>
         <Router>
                 <div>
                         <nav>
-                                <ul className='nav-bar-list'>
+                                <ul className='nav-bar-list' style={{
+                                                width: '100%'
+                                        }}>
                                         <li className='nav-bar-item'>
                                                 <NavLink to='/' exact={true} className='nav-link' activeClassName='active'>Gear</NavLink>
                                         </li>
