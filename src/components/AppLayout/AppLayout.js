@@ -175,6 +175,7 @@ const AppLayout = props => (<div className='app_container'>
                         </nav>
 
                         <Route exact={true} path='/' render={(routeProps) => (<Optimizer {...routeProps} {...props} className='app_body'/>)}/>
+                        <Route exact={true} path='/loadout/' render={(routeProps) => (<Optimizer {...routeProps} {...props} className='app_body'/>)}/>
                         <Route exact={true} path='/loadout/:itemlist' children={<Loadout {
                                         ...props
                                 } />}/>

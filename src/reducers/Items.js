@@ -730,6 +730,9 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                 case EQUIP_ITEMS:
                         {
                                 const names = action.payload.names;
+                                if (names.length === 0) {
+                                        return cleanState(state);
+                                }
                                 const tmpState = loadState(state);
                                 let equip = {
                                         ...ItemNameContainer(tmpState.equip.accessory.length, tmpState.offhand)
