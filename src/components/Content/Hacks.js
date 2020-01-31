@@ -70,7 +70,7 @@ class HackComponent extends Component {
                         };
                 }
                 // update hack speed if not locked
-                if (!hackstats.lockSpeed) {
+                if (!hackstats.lockSpeed && name !== 'hackspeed') {
                         let hackOptimizer = new Hack(this.props);
                         const oldBonus = hackOptimizer.bonus(hackhacklevel, hhidx);
                         hackOptimizer = new Hack({
