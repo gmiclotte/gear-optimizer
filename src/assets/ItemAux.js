@@ -1219,19 +1219,34 @@ export const Wishes = [
                 'Minimal Card Cost I', 4.00E+24, 1
         ],
         [
-                'Bigger DeckI', 1.00E+20, 5
+                'Bigger Deck I', 1.00E+20, 5
         ],
         [
-                'Bigger DeckII', 5.00E+21, 5
+                'Bigger Deck II', 5.00E+21, 5
         ],
         [
-                'Bigger DeckIII', 2.50E+23, 5
+                'Bigger Deck III', 2.50E+23, 5
         ],
         [
                 'Mayo Generator', 5.00E+21, 1
         ],
         [
                 'Bonus Tag', 3.00E+22, 1
+        ],
+        [
+                'Better Tags I', 2.00E+19, 10
+        ],
+        [
+                'Better Tags II', 6.00E+20, 10
+        ],
+        [
+                'Better Tags III', 1.80E+22, 10
+        ],
+        [
+                'Better Tags IV', 5.00E+23, 10
+        ],
+        [
+                'Better Tags V', 1.50E+25, 10
         ]
 ];
 

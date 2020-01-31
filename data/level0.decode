@@ -1,4 +1,4 @@
-2760972
+2762348
 ['I wish that wishes kicked ass', 1.00E+15, 1],
 ['I Wish that wishes weren't so slow :c', 1.00E+15, 10],
 ['I wish MacGuffin drops mattered', 2.00E+15, 5],
@@ -168,6 +168,11 @@
 ['I wish I had a bigger Deck III', 2.50E+23, 5],
 ['I wish I had another Mayo Generator', 5.00E+21, 1],
 ['I wish I had another Bonus Tag', 3.00E+22, 1],
+['I wish Tags worked better I', 2.00E+19, 10],
+['I wish Tags worked better II', 6.00E+20, 10],
+['I wish Tags worked better III', 1.80E+22, 10],
+['I wish Tags worked better IVA', 5.00E+23, 10],
+['I wish Tags worked better V', 1.50E+25, 10],
 
 ['Attack/Defense Hack', 1.00E+08, 2.5000, 1.0250, 10, 7720],
 ['Adventure Stats Hac', 2.00E+08, 0.1000, 1.0200, 50, 7632],
