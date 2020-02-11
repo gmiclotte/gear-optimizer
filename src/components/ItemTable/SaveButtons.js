@@ -53,7 +53,6 @@ class SaveButtons extends Component {
                         <div style={{
                                         margin: '5px'
                                 }}>
-
                                 <OptimizeButton text={'All Saves'} running={this.props.running} abort={this.props.handleTerminate} optimize={this.props.handleOptimizeSaves}/>{' '}
                                 <button onClick={this.props.handleToggleUnused}>
                                         {
@@ -77,7 +76,11 @@ class SaveButtons extends Component {
                                 <button onClick={this.props.handleLoadSlot}>
                                         {'Load'}
                                 </button>
-                                <button onClick={this.props.handleDeleteSlot}>
+                                <button onClick={() => {
+                                                if (window.confirm('Are you sure you wish to delete this saved loadout?')) {
+                                                        this.props.handleDeleteSlot()
+                                                }
+                                        }}>
                                         {'Delete'}
                                 </button>
                                 <button onClick={this.props.handleToggleSaved}>
