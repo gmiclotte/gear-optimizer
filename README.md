@@ -32,6 +32,5 @@ git clone https://github.com/gmiclotte/gear-optimizer.git
 cd gear-optimizer  
 npm i  
 npm run start  
-npm run deploy  
 ```
 `npm run start` hosts a local copy, `npm run deploy` builds and deploys to `gh-pages` branch
