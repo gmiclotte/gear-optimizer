@@ -594,7 +594,28 @@ export const SetName = {
         ITHUNGERS3: [
                 'It Hungers', 36, 3
         ],
-        ITHUNGERS4: ['It Hungers', 36, 4]
+        ITHUNGERS4: [
+                'It Hungers', 36, 4
+        ],
+        BREADVERSE: [
+                'The Breadverse', 37
+        ],
+        SEVENTIES: [
+                'That 70\'s Zone', 38
+        ],
+        HALLOWEEN: [
+                'The Halloweenies', 39
+        ],
+        ROCKLOBSTER: [
+                'Rock Lobster', 40, 1
+        ],
+        ROCKLOBSTER2: [
+                'Rock Lobster', 40, 2
+        ],
+        ROCKLOBSTER3: [
+                'Rock Lobster', 40, 3
+        ],
+        ROCKLOBSTER4: ['Rock Lobster', 40, 4]
 }
 
 export const Hacks = [
