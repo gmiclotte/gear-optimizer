@@ -12,7 +12,6 @@ import {
         score_equip,
         score_raw_equip,
         score_vals,
-        get_vals,
         get_raw_vals,
         clone,
         get_limits,
@@ -106,10 +105,6 @@ export class Optimizer {
                 return score_raw_equip(this.itemdata, equip, this.factors, this.offhand);
         }
 
-        get_vals(equip) {
-                return get_vals(this.itemdata, equip, this.factors, this.offhand, this.capstats);
-        }
-
         get_raw_vals(equip) {
                 return get_raw_vals(this.itemdata, equip, this.factors, this.offhand);
         }
@@ -124,14 +119,9 @@ export class Optimizer {
                 return this.score_raw_equip(equip);
         }
 
-        get_vals_wrapper(base_layout) {
-                let equip = this.old2newequip(base_layout)
-                return this.get_vals(equip);
-        }
-
         swap_vals(vals, a, b) {
-                const valsa = this.get_vals({accessory: a});
-                const valsb = this.get_vals({accessory: b});
+                const valsa = this.get_raw_vals({accessory: a});
+                const valsb = this.get_raw_vals({accessory: b});
                 for (let idx in vals) {
                         vals[idx] += valsb[idx] - valsa[idx];
                 }
@@ -325,6 +315,7 @@ export class Optimizer {
                                                 let riskscore = -1;
                                                 let rawriskscore = -1;
                                                 let vals = this.get_raw_vals(candidate);
+                                                // detect acc that contributes the least
                                                 for (let kdx = locked_accs; kdx < locked_accs + accslots; kdx++) {
                                                         const tmp = this.swap_vals([...vals], candidate.accessory[kdx], EMPTY_ACCESSORY)
                                                         const tmpscore = score_vals(hardcap(tmp, this.factors, this.capstats), this.factors);
@@ -341,6 +332,7 @@ export class Optimizer {
                                                         ...filter_accs,
                                                         EMPTY_ACCESSORY
                                                 ];
+                                                // try every available acc as a replacement for least contributing current acc
                                                 for (let kdx in filter_accs) {
                                                         const acc = filter_accs[kdx];
                                                         const tmp = this.swap_vals([...vals], atrisk, acc);
@@ -353,6 +345,7 @@ export class Optimizer {
                                                                 filter_idx = kdx;
                                                         }
                                                 }
+                                                // if no winner is found, we're done, else replace the least contributing with the at risk
                                                 if (winner === undefined) {
                                                         candidate.accessory[riskidx] = atrisk;
                                                         break;
