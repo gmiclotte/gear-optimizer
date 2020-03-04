@@ -1,7 +1,7 @@
 {
   "homepage": "https://gmiclotte.github.io/gear-optimizer",
   "name": "gear-optimizer",
-  "version": "0.5.28",
+  "version": "0.5.29",
   "private": true,
   "dependencies": {
     "caniuse-lite": "^1.0.30001031",
