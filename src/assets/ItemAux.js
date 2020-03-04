@@ -684,6 +684,14 @@ export const Hacks = [
                 7252
         ],
         [
+                'Blood RC',
+                4.00E+09,
+                0.1000,
+                1.0400,
+                50,
+                7252
+        ],
+        [
                 'QP',
                 8.00E+09,
                 0.0500,
@@ -712,6 +720,14 @@ export const Hacks = [
                 8.00E+10,
                 5.0000,
                 1.0200,
+                40,
+                6873
+        ],
+        [
+                'Number RC',
+                8.00E+10,
+                5.0000,
+                1.0400,
                 40,
                 6873
         ],
@@ -1268,6 +1284,48 @@ export const Wishes = [
         ],
         [
                 'Better Tags V', 1.50E+25, 10
+        ],
+        [
+                'Energy NGU Card IV', 2.50E+23, 2
+        ],
+        [
+                'Drop Chance Card IV', 2.20E+23, 2
+        ],
+        [
+                'Wandoos Card IV', 2.00E+23, 2
+        ],
+        [
+                'Adventure Stats Card IV', 5.00E+23, 2
+        ],
+        [
+                'Hacks Card IV', 4.00E+23, 2
+        ],
+        [
+                'Augment Card IV', 6.00E+23, 2
+        ],
+        [
+                'Gold Drop Card IV', 7.50E+23, 2
+        ],
+        [
+                'PP Card IV[', 1.00E+24, 2
+        ],
+        [
+                'A / D Card IV', 8.00E+23, 2
+        ],
+        [
+                'Magic NGU Card IV', 1.30E+24, 2
+        ],
+        [
+                'TM Speed Card IV', 1.20E+24, 2
+        ],
+        [
+                'QP Card IV[', 1.50E+24, 2
+        ],
+        [
+                'Daycare Card IV', 1.60E+24, 2
+        ],
+        [
+                'Titan 11 QP', 2.00E+25, 1
         ]
 ];
 

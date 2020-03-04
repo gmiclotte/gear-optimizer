@@ -30,3 +30,5 @@ _version.js
 
 .tags*
 licenses.json
+
+.idea
