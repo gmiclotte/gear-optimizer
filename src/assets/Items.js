@@ -1993,7 +1993,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 40700],
         [Stat.MAGIC_CAP, 40700],
     ]),
-    new Item('Crepe Cape', Slot.CHEST, SetName.BREADVERSE, 100, [
+    new Item('Paper Thin Crepe Cape', Slot.CHEST, SetName.BREADVERSE, 100, [
         [Stat.POWER, 13000000],
         [Stat.TOUGHNESS, 382000000],
         [Stat.NGU_SPEED, 1100],

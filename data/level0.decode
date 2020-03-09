@@ -1,4 +1,4 @@
-2772372
+2772364
 ['I wish that wishes kicked ass', 1.00E+15, 1],
 ['I Wish that wishes weren't so slow :c', 1.00E+15, 10],
 ['I wish MacGuffin drops mattered', 2.00E+15, 5],
@@ -195,13 +195,11 @@
 ['Augment Speed Hack', 8.00E+08, 0.2000, 1.0100, 20, 7456],
 ['Energy NGU Speed Hack', 2.00E+09, 0.1000, 1.0150, 30, 7340],
 ['Magic NGU Speed Hack', 2.00E+09, 0.1000, 1.0150, 30, 7340],
-['Blood Gain Hack', 4.00E+09, 0.1000, 1.0200, 50, 7252],
-['Blood Gain Hack RC', 4.00E+09, 0.1000, 1.0400, 50, 7252],
+['Blood Gain Hack', 4.00E+09, 0.1000, 1.0400, 50, 7252],
 ['QP Gain Hack', 8.00E+09, 0.0500, 1.0080, 50, 7164],
 ['Daycare Hack', 2.00E+10, 0.0200, 1.0050, 45, 7048],
 ['EXP Hack', 4.00E+10, 0.0250, 1.0100, 75, 6960],
-['Number Hack', 8.00E+10, 5.0000, 1.0200, 40, 6873],
-['Number Hack RC', 8.00E+10, 5.0000, 1.0400, 40, 6873],
+['Number Hack', 8.00E+10, 5.0000, 1.0400, 40, 6873],
 ['PP Hack', 2.00E+11, 0.0500, 1.0050, 25, 6757],
 ['Hack Hack', 2.00E+11, 0.0500, 1.1000, 100, 6757],
 ['Wish Hack', 1.00E+13, 0.0100, 1.0050, 50, 6262],

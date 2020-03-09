@@ -367,7 +367,7 @@ ZONES = [
     ['SUPREME INTELLIGENCE LOOTY', 'SetName.LOOTY'],
     ['My Rainbow Heart', 'SetName.HEART'],
     ['Bread Bowl Helmet', 'SetName.BREADVERSE'],
-    ['Crepe Cape', 'SetName.BREADVERSE'],
+    ['Paper Thin Crepe Cape', 'SetName.BREADVERSE'],
     ['Flour Sack Pants', 'SetName.BREADVERSE'],
     ['Gingerbread Boots', 'SetName.BREADVERSE'],
     ['1 Day-Old Baguette', 'SetName.BREADVERSE'],
