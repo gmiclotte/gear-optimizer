@@ -353,16 +353,17 @@ export class Optimizer {
                                                                         filter_idx = kdx;
                                                                 }
                                                         }
-                                                        // if no winner is found, we're done, else replace the least contributing with the at risk
+                                                        // if no winner is found, the next best acc is at risk
                                                         if (winner === undefined && riskidxidx > 0) {
                                                                 continue;
                                                         }
+                                                        // if no winner is found, we're done,
                                                         if (winner === undefined && riskidxidx === 0) {
                                                                 done = true;
                                                                 break;
                                                         }
-                                                        candidate.accessory[riskidx] = candidate.accessory[locked_accs + accslots - 1];
-                                                        candidate.accessory[locked_accs + accslots - 1] = winner;
+                                                        // if a winner is found replace the least contributing with the winner
+                                                        candidate.accessory[riskidx] = winner;
                                                         filter_accs[filter_idx] = atrisk;
                                                         if (this.itemdata[winner].empty) {
                                                                 accslots--;
