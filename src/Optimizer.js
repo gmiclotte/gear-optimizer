@@ -130,7 +130,7 @@ export class Optimizer {
                 let scores = [];
                 for (let jdx = Math.max(0, equip.item_count); jdx < optimal_size; jdx++) {
                         let item = equip.items[jdx];
-                        let score = this.score_raw_equip_wrapper(this.remove_equip(clone(equip), item));
+                        let score = this.score_equip_wrapper(this.remove_equip(clone(equip), item));
                         scores.push([score, item])
                 }
                 for (let jdx = equip.item_count; jdx < optimal_size; jdx++) {
