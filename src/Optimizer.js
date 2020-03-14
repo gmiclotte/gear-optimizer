@@ -119,15 +119,6 @@ export class Optimizer {
                 return this.score_raw_equip(equip);
         }
 
-        swap_vals(vals, a, b) {
-                const valsa = this.get_raw_vals({accessory: a});
-                const valsb = this.get_raw_vals({accessory: b});
-                for (let idx in vals) {
-                        vals[idx] += valsb[idx] - valsa[idx];
-                }
-                return vals;
-        }
-
         top_scorers(optimal) {
                 const scores = optimal.map(x => this.score_equip(x));
                 const max = Math.max(...scores)
@@ -272,6 +263,15 @@ export class Optimizer {
                 return accs;
         }
 
+        replacement_score(layout, idx, alternative) {
+                const tmp = layout.accessory[idx]
+                layout.accessory[idx] = alternative;
+                const tmp_score = this.score_equip(layout);
+                const rawtmp_score = this.score_raw_equip(layout);
+                layout.accessory[idx] = tmp
+                return [tmp_score, rawtmp_score]
+        }
+
         compute_optimal(base_layouts, factoridx) {
                 this.factors = Factors[this.factorslist[factoridx]];
                 this.maxslots = this.maxslotslist[factoridx];
@@ -317,9 +317,9 @@ export class Optimizer {
                                                 let vals = this.get_raw_vals(candidate);
                                                 // detect acc that contributes the least
                                                 for (let kdx = locked_accs; kdx < locked_accs + accslots; kdx++) {
-                                                        const tmp = this.swap_vals([...vals], candidate.accessory[kdx], EMPTY_ACCESSORY)
-                                                        const tmpscore = score_vals(hardcap(tmp, this.factors, this.capstats), this.factors);
-                                                        const rawtmpscore = score_vals(tmp, this.factors);
+                                                        const tmpscores = this.replacement_score(candidate, kdx, EMPTY_ACCESSORY)
+                                                        const tmpscore = tmpscores[0];
+                                                        const rawtmpscore = tmpscores[1];
                                                         if (tmpscore > riskscore || (tmpscore === riskscore && rawtmpscore > rawriskscore)) {
                                                                 riskidx = kdx;
                                                                 riskscore = tmpscore;
@@ -335,9 +335,9 @@ export class Optimizer {
                                                 // try every available acc as a replacement for least contributing current acc
                                                 for (let kdx in filter_accs) {
                                                         const acc = filter_accs[kdx];
-                                                        const tmp = this.swap_vals([...vals], atrisk, acc);
-                                                        const tmpscore = score_vals(hardcap(tmp, this.factors, this.capstats), this.factors);
-                                                        const rawtmpscore = score_vals(tmp, this.factors);
+                                                        const tmpscores = this.replacement_score(candidate, riskidx, acc)
+                                                        const tmpscore = tmpscores[0];
+                                                        const rawtmpscore = tmpscores[1];
                                                         if (tmpscore > score || (tmpscore === score && rawtmpscore > rawscore) || (tmpscore === score && this.itemdata[acc].empty)) {
                                                                 score = tmpscore;
                                                                 rawscore = rawtmpscore;
@@ -347,7 +347,6 @@ export class Optimizer {
                                                 }
                                                 // if no winner is found, we're done, else replace the least contributing with the at risk
                                                 if (winner === undefined) {
-                                                        candidate.accessory[riskidx] = atrisk;
                                                         break;
                                                 } else {
                                                         candidate.accessory[riskidx] = candidate.accessory[locked_accs + accslots - 1];
