@@ -307,9 +307,9 @@ export class Optimizer {
                                                 candidate.accessory[locked_accs + kdx] = acc_candidate[kdx];
                                         }
                                         let filter_accs = this.filter_accs(candidate, accslots, accs);
-                                        let filter_idx = undefined;
-                                        while (accslots > 0) {
-                                                let riskidx = undefined;
+                                        while (accslots > 0 && filter_accs.length > 0) {
+                                                let riskidxes = [];
+                                                let other = [];
                                                 let score = this.score_equip(candidate);
                                                 let rawscore = this.score_raw_equip(candidate);
                                                 let riskscore = -1;
@@ -321,40 +321,64 @@ export class Optimizer {
                                                         const tmpscore = tmpscores[0];
                                                         const rawtmpscore = tmpscores[1];
                                                         if (tmpscore > riskscore || (tmpscore === riskscore && rawtmpscore > rawriskscore)) {
-                                                                riskidx = kdx;
+                                                                riskidxes = [
+                                                                        ...riskidxes,
+                                                                        kdx
+                                                                ];
                                                                 riskscore = tmpscore;
                                                                 rawriskscore = rawtmpscore;
+                                                        } else {
+                                                                other = [
+                                                                        ...other,
+                                                                        kdx
+                                                                ];
                                                         }
                                                 }
-                                                const atrisk = candidate.accessory[riskidx];
-                                                let winner = undefined;
-                                                filter_accs = [
-                                                        ...filter_accs,
-                                                        EMPTY_ACCESSORY
+                                                riskidxes = [
+                                                        ...riskidxes,
+                                                        ...other
                                                 ];
-                                                // try every available acc as a replacement for least contributing current acc
-                                                for (let kdx in filter_accs) {
-                                                        const acc = filter_accs[kdx];
-                                                        const tmpscores = this.replacement_score(candidate, riskidx, acc)
-                                                        const tmpscore = tmpscores[0];
-                                                        const rawtmpscore = tmpscores[1];
-                                                        if (tmpscore > score || (tmpscore === score && rawtmpscore > rawscore) || (tmpscore === score && this.itemdata[acc].empty)) {
-                                                                score = tmpscore;
-                                                                rawscore = rawtmpscore;
-                                                                winner = acc;
-                                                                filter_idx = kdx;
+                                                let winner = undefined;
+                                                let done = false;
+                                                for (let riskidxidx = riskidxes.length - 1; riskidxidx >= 0; riskidxidx--) {
+                                                        const riskidx = riskidxes[riskidxidx]
+                                                        const atrisk = candidate.accessory[riskidx];
+                                                        winner = undefined;
+                                                        filter_accs = [
+                                                                ...filter_accs,
+                                                                EMPTY_ACCESSORY
+                                                        ];
+                                                        // try every available acc as a replacement for least contributing current acc
+                                                        let filter_idx = undefined;
+                                                        for (let kdx in filter_accs) {
+                                                                const acc = filter_accs[kdx];
+                                                                const tmpscores = this.replacement_score(candidate, riskidx, acc)
+                                                                const tmpscore = tmpscores[0];
+                                                                const rawtmpscore = tmpscores[1];
+                                                                if (tmpscore > score || (tmpscore === score && rawtmpscore > rawscore) || (tmpscore === score && this.itemdata[acc].empty)) {
+                                                                        score = tmpscore;
+                                                                        rawscore = rawtmpscore;
+                                                                        winner = acc;
+                                                                        filter_idx = kdx;
+                                                                }
                                                         }
-                                                }
-                                                // if no winner is found, we're done, else replace the least contributing with the at risk
-                                                if (winner === undefined) {
-                                                        break;
-                                                } else {
+                                                        // if no winner is found, we're done, else replace the least contributing with the at risk
+                                                        if (winner === undefined && riskidxidx > 0) {
+                                                                continue;
+                                                        }
+                                                        if (winner === undefined && riskidxidx == 0) {
+                                                                done = true;
+                                                                break;
+                                                        }
                                                         candidate.accessory[riskidx] = candidate.accessory[locked_accs + accslots - 1];
                                                         candidate.accessory[locked_accs + accslots - 1] = winner
                                                         filter_accs[filter_idx] = atrisk;
                                                         if (this.itemdata[winner].empty) {
                                                                 accslots--;
                                                         }
+                                                }
+                                                if (done) {
+                                                        break;
                                                 }
                                         }
                                 }
@@ -383,18 +407,19 @@ export class Optimizer {
                         for (let idx = 0; idx < candidate.accslots; idx++) {
                                 const tmp = candidate.accessory[locked_accs + idx];
                                 for (let jdx in remainder) {
-                                        candidate.accessory[locked_accs + idx] = remainder[jdx];
-                                        const tmp_score = this.score_equip(candidate);
-                                        const rawtmp_score = this.score_raw_equip(candidate);
+                                        const tmpscores = this.replacement_score(candidate, locked_accs + idx, remainder[jdx])
+                                        const tmp_score = tmpscores[0];
+                                        const rawtmp_score = tmpscores[1];
                                         if (tmp_score === score && rawtmp_score === rawscore) {
-                                                alternatives.push(clone(candidate));
+                                                cc = clone(candidate);
+                                                cc.accessory[locked_accs + idx] = remainder[jdx];
+                                                alternatives.push(cc);
                                                 console.log('alternative found')
                                         }
                                         if (tmp_score > score) {
-                                                console.log('an error occured');
+                                                console.log('error: alternative ', remainder[jdx], 'scores better than ', tmp);
                                         }
                                 }
-                                candidate.accessory[locked_accs + idx] = tmp;
                         }
                 });
                 // remove gear that doesn't contribute due to hard caps
