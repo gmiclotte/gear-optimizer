@@ -65,13 +65,13 @@ export function get_limits(state) {
         }
 }
 
-export function allowed_zone(itemdata, limits, name) {
+export function allowed_zone(itemdata, limits, id) {
         const zone = limits.zone;
         const titan = limits.titan;
         const titanversion = limits.titanversion;
         const looty = limits.looty;
         const pendant = limits.pendant;
-        const item = itemdata[name];
+        const item = itemdata[id];
         if (item.empty) {
                 return false;
         }
@@ -83,10 +83,10 @@ export function allowed_zone(itemdata, limits, name) {
                 // titan version too high
                 return false;
         }
-        if (item.zone[0] === SetName.LOOTY[0] && LOOTIES.indexOf(name) > looty) {
+        if (item.zone[0] === SetName.LOOTY[0] && LOOTIES.indexOf(item.name) > looty) {
                 return false;
         }
-        if (item.zone[0] === SetName.FOREST_PENDANT[0] && PENDANTS.indexOf(name) > pendant) {
+        if (item.zone[0] === SetName.FOREST_PENDANT[0] && PENDANTS.indexOf(item.name) > pendant) {
                 return false;
         }
         return true;
