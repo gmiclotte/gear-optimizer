@@ -141,7 +141,7 @@ export default class EquipTable extends React.Component {
                 ReactTooltip.rebuild();
         }
 
-        render_equip(equip, prefix, compare, buffer, handleClickItem, lockable) {
+        render_equip(equip, prefix, compare, buffer, handleClickItem, handleCtrlClickItem, lockable) {
                 this.itemdata = cubeBaseItemData(this.props.itemdata, this.props.cubestats, this.props.basestats);
                 let sorted = Object.getOwnPropertyNames(Slot).sort((a, b) => Slot[a][1] - Slot[b][1]).reduce((res, slot) => res.concat(equip[Slot[slot][0]]), []);
                 let localbuffer = [];
@@ -167,7 +167,7 @@ export default class EquipTable extends React.Component {
                                         localbuffer = [];
                                 }
                         }
-                        localbuffer.push(<Item item={item} idx={idx - typeIdx} lockable={lockable} locked={this.props.locked} handleClickItem={handleClickItem} handleRightClickItem={(itemId) => this.props.handleRightClickItem(itemId, true)} key={id +'_' + idx}/>);
+                        localbuffer.push(<Item item={item} idx={idx - typeIdx} lockable={lockable} locked={this.props.locked} handleClickItem={handleClickItem} handleCtrlClickItem={handleCtrlClickItem} handleRightClickItem={(itemId) => this.props.handleRightClickItem(itemId, true)} key={id +'_' + idx}/>);
                         last = item;
                 }
                 buffer.push(<div className='item-section' key={this.class_idx++}>
@@ -197,10 +197,10 @@ export default class EquipTable extends React.Component {
                 const compare = compare_factory(this.props.group)(this.itemdata);
                 const equip = this.props.equip;
                 const savedequip = this.props.savedequip[this.props.savedidx];
-                this.render_equip(equip, '', compare, buffer, this.props.handleClickItem, true);
+                this.render_equip(equip, '', compare, buffer, this.props.handleClickItem, this.props.handleCtrlClickItem, true);
                 buffer.push(<SaveButtons {...this.props} loadoutURI={equip2url(equip, this.itemdata)} saveURI={equip2url(savedequip, this.itemdata)} key='savebuttons'/>)
                 if (this.props.showsaved) {
-                        this.render_equip(savedequip, 'Saved ', compare, buffer, this.props.handleEquipItem, false);
+                        this.render_equip(savedequip, 'Saved ', compare, buffer, this.props.handleEquipItem, this.props.handleCtrlClickItem, false);
                 }
                 buffer.push(<div className='item-section' key='stats'>{'Gear stats (change w.r.t. save slot)'}<br/><br/> {
                                 Object.getOwnPropertyNames(Factors).map((factor) => (
