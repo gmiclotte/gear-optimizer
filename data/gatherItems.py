@@ -420,6 +420,8 @@ def props2item(props):
     specs = []
     caps = []
     for id, val in props:
+        if id == 'id':
+            itemID = val
         if id == 'itemName':
             name = val
         if id == 'itemDesc':
@@ -465,7 +467,7 @@ def props2item(props):
                 if not m:
                     specs += [[None, 'MAGIC_' + t, None]]
                     caps += [caps[idx]]
-    print(f'    new Item(\'{name}\', Slot.{slot}, {tier}, 100, [')
+    print(f'    new Item({itemID}, \'{name}\', Slot.{slot}, {tier}, 100, [')
     for idx in range(len(specs)):
         stat = specs[idx][1]
         cap = caps[idx]
@@ -530,7 +532,11 @@ for idx in range(len(items)):
     for jdx in range(len(item)):
         entry = item[jdx]
         pos1 = entry.index('[')
-        pos2 = entry.index('=')
-        props += [[entry[0:pos1], entry[pos2 + 1:-1].replace('"', '').strip()]]
+        if jdx == 0:
+            pos2 = entry.index(']')
+            itemID = entry[pos1+1:pos2]
+            props += [['id', itemID]]
+        pos3 = entry.index('=')
+        props += [[entry[0:pos1], entry[pos3 + 1:-1].replace('"', '').strip()]]
     props2item(props)
 suffix()

@@ -7,618 +7,618 @@ export const ITEMLIST = [
     new EmptySlot(Slot.BOOTS),
     new EmptySlot(Slot.ACCESSORY),
     new EmptySlot(Slot.OTHER),
-    new Item('Crappy Helmet', Slot.HEAD, SetName.SEWERS, 100, [
+    new Item(40, 'Crappy Helmet', Slot.HEAD, SetName.SEWERS, 100, [
         [Stat.TOUGHNESS, 5],
         [Stat.ENERGY_SPEED, 3],
     ]),
-    new Item('Crappy Chestplate', Slot.CHEST, SetName.SEWERS, 100, [
+    new Item(41, 'Crappy Chestplate', Slot.CHEST, SetName.SEWERS, 100, [
         [Stat.TOUGHNESS, 5],
     ]),
-    new Item('Crappy Leggings', Slot.PANTS, SetName.SEWERS, 100, [
+    new Item(42, 'Crappy Leggings', Slot.PANTS, SetName.SEWERS, 100, [
         [Stat.TOUGHNESS, 5],
     ]),
-    new Item('Crappy Boots', Slot.BOOTS, SetName.SEWERS, 100, [
+    new Item(43, 'Crappy Boots', Slot.BOOTS, SetName.SEWERS, 100, [
         [Stat.TOUGHNESS, 5],
         [Stat.ENERGY_SPEED, 5],
     ]),
-    new Item('Rusty Sword', Slot.WEAPON, SetName.SEWERS, 100, [
+    new Item(44, 'Rusty Sword', Slot.WEAPON, SetName.SEWERS, 100, [
         [Stat.POWER, 20],
     ]),
-    new Item('Gross Ring', Slot.ACCESSORY, SetName.SEWERS, 100, [
+    new Item(45, 'Gross Ring', Slot.ACCESSORY, SetName.SEWERS, 100, [
         [Stat.POWER, 1],
         [Stat.TOUGHNESS, 1],
         [Stat.ENERGY_SPEED, 20],
     ]),
-    new Item('Cracked Amulet', Slot.ACCESSORY, SetName.SEWERS, 100, [
+    new Item(46, 'Cracked Amulet', Slot.ACCESSORY, SetName.SEWERS, 100, [
         [Stat.POWER, 5],
         [Stat.TOUGHNESS, 5],
     ]),
-    new Item('Forest Helmet', Slot.HEAD, SetName.FOREST, 100, [
+    new Item(47, 'Forest Helmet', Slot.HEAD, SetName.FOREST, 100, [
         [Stat.TOUGHNESS, 20],
         [Stat.ENERGY_SPEED, 12],
         [Stat.ENERGY_POWER, 10],
     ]),
-    new Item('Forest Chestplate', Slot.CHEST, SetName.FOREST, 100, [
+    new Item(48, 'Forest Chestplate', Slot.CHEST, SetName.FOREST, 100, [
         [Stat.TOUGHNESS, 20],
         [Stat.ENERGY_SPEED, 8],
         [Stat.ENERGY_POWER, 12],
     ]),
-    new Item('Forest Leggings', Slot.PANTS, SetName.FOREST, 100, [
+    new Item(49, 'Forest Leggings', Slot.PANTS, SetName.FOREST, 100, [
         [Stat.TOUGHNESS, 20],
         [Stat.ENERGY_SPEED, 8],
     ]),
-    new Item('Forest Boots', Slot.BOOTS, SetName.FOREST, 100, [
+    new Item(50, 'Forest Boots', Slot.BOOTS, SetName.FOREST, 100, [
         [Stat.TOUGHNESS, 20],
         [Stat.ENERGY_POWER, 5],
     ]),
-    new Item('Kokiri Blade', Slot.WEAPON, SetName.FOREST, 100, [
+    new Item(51, 'Kokiri Blade', Slot.WEAPON, SetName.FOREST, 100, [
         [Stat.POWER, 80],
         [Stat.ENERGY_POWER, 10],
     ]),
-    new Item('Mossy Ring', Slot.ACCESSORY, SetName.FOREST, 100, [
+    new Item(52, 'Mossy Ring', Slot.ACCESSORY, SetName.FOREST, 100, [
         [Stat.POWER, 8],
         [Stat.TOUGHNESS, 8],
         [Stat.ENERGY_SPEED, 20],
     ]),
-    new Item('Forest Pendant', Slot.ACCESSORY, SetName.FOREST_PENDANT, 100, [
+    new Item(53, 'Forest Pendant', Slot.ACCESSORY, SetName.FOREST_PENDANT, 100, [
     ]),
-    new Item('Blue Cheese Helmet', Slot.HEAD, SetName.CAVE, 100, [
+    new Item(54, 'Blue Cheese Helmet', Slot.HEAD, SetName.CAVE, 100, [
         [Stat.TOUGHNESS, 50],
         [Stat.MAGIC_POWER, 7],
     ]),
-    new Item('Gouda Chestplate', Slot.CHEST, SetName.CAVE, 100, [
+    new Item(55, 'Gouda Chestplate', Slot.CHEST, SetName.CAVE, 100, [
         [Stat.TOUGHNESS, 50],
         [Stat.MAGIC_POWER, 13],
     ]),
-    new Item('Swiss Leggings', Slot.PANTS, SetName.CAVE, 100, [
+    new Item(56, 'Swiss Leggings', Slot.PANTS, SetName.CAVE, 100, [
         [Stat.TOUGHNESS, 50],
         [Stat.MAGIC_SPEED, 10],
     ]),
-    new Item('Limburger Boots', Slot.BOOTS, SetName.CAVE, 100, [
+    new Item(57, 'Limburger Boots', Slot.BOOTS, SetName.CAVE, 100, [
         [Stat.TOUGHNESS, 50],
         [Stat.MAGIC_SPEED, 10],
         [Stat.MAGIC_POWER, 10],
     ]),
-    new Item('Mole Hammer', Slot.WEAPON, SetName.CAVE, 100, [
+    new Item(58, 'Mole Hammer', Slot.WEAPON, SetName.CAVE, 100, [
         [Stat.POWER, 200],
         [Stat.ENERGY_BARS, 15],
     ]),
-    new Item('Havarti Ring', Slot.ACCESSORY, SetName.CAVE, 100, [
+    new Item(59, 'Havarti Ring', Slot.ACCESSORY, SetName.CAVE, 100, [
         [Stat.POWER, 4],
         [Stat.TOUGHNESS, 4],
         [Stat.MAGIC_SPEED, 25],
         [Stat.MAGIC_POWER, 25],
     ]),
-    new Item('Cheddar Amulet', Slot.ACCESSORY, SetName.CAVE, 100, [
+    new Item(60, 'Cheddar Amulet', Slot.ACCESSORY, SetName.CAVE, 100, [
         [Stat.POWER, 1],
         [Stat.TOUGHNESS, 1],
         [Stat.ENERGY_POWER, 30],
         [Stat.ENERGY_SPEED, 60],
     ]),
-    new Item('Combat Cheese', Slot.ACCESSORY, SetName.CAVE, 100, [
+    new Item(61, 'Combat Cheese', Slot.ACCESSORY, SetName.CAVE, 100, [
         [Stat.POWER, 30],
         [Stat.TOUGHNESS, 30],
         [Stat.GOLD_DROP, 10],
     ]),
-    new Item('Cloth Hat', Slot.HEAD, SetName.TRAINING, 100, [
+    new Item(62, 'Cloth Hat', Slot.HEAD, SetName.TRAINING, 100, [
         [Stat.TOUGHNESS, 1],
     ]),
-    new Item('Cloth Shirt', Slot.CHEST, SetName.TRAINING, 100, [
+    new Item(63, 'Cloth Shirt', Slot.CHEST, SetName.TRAINING, 100, [
         [Stat.TOUGHNESS, 1],
     ]),
-    new Item('Cloth Leggings', Slot.PANTS, SetName.TRAINING, 100, [
+    new Item(64, 'Cloth Leggings', Slot.PANTS, SetName.TRAINING, 100, [
         [Stat.TOUGHNESS, 1],
     ]),
-    new Item('Cloth Boots', Slot.BOOTS, SetName.TRAINING, 100, [
+    new Item(65, 'Cloth Boots', Slot.BOOTS, SetName.TRAINING, 100, [
         [Stat.TOUGHNESS, 1],
     ]),
-    new Item('Looty McLootFace', Slot.ACCESSORY, SetName.LOOTY, 100, [
+    new Item(67, 'Looty McLootFace', Slot.ACCESSORY, SetName.LOOTY, 100, [
         [Stat.POWER, 2],
         [Stat.TOUGHNESS, 2],
         [Stat.DROP_CHANCE, 10],
     ]),
-    new Item('Magitech Helmet', Slot.HEAD, SetName.HSB, 100, [
+    new Item(68, 'Magitech Helmet', Slot.HEAD, SetName.HSB, 100, [
         [Stat.TOUGHNESS, 125],
         [Stat.ENERGY_BARS, 25],
         [Stat.MAGIC_BARS, 15],
     ]),
-    new Item('Magitech Chestplate', Slot.CHEST, SetName.HSB, 100, [
+    new Item(69, 'Magitech Chestplate', Slot.CHEST, SetName.HSB, 100, [
         [Stat.TOUGHNESS, 125],
         [Stat.ENERGY_BARS, 15],
         [Stat.MAGIC_SPEED, 20],
     ]),
-    new Item('Magitech Leggings', Slot.PANTS, SetName.HSB, 100, [
+    new Item(70, 'Magitech Leggings', Slot.PANTS, SetName.HSB, 100, [
         [Stat.TOUGHNESS, 125],
         [Stat.MAGIC_BARS, 20],
         [Stat.MAGIC_POWER, 10],
     ]),
-    new Item('Magitech Boots', Slot.BOOTS, SetName.HSB, 100, [
+    new Item(71, 'Magitech Boots', Slot.BOOTS, SetName.HSB, 100, [
         [Stat.TOUGHNESS, 125],
         [Stat.ENERGY_POWER, 25],
         [Stat.MAGIC_POWER, 15],
     ]),
-    new Item('Magitech Blade', Slot.WEAPON, SetName.HSB, 100, [
+    new Item(72, 'Magitech Blade', Slot.WEAPON, SetName.HSB, 100, [
         [Stat.POWER, 500],
         [Stat.GOLD_DROP, 20],
         [Stat.ENERGY_CAP, 6],
         [Stat.MAGIC_CAP, 4],
     ]),
-    new Item('Magitech Ring', Slot.ACCESSORY, SetName.HSB, 100, [
+    new Item(73, 'Magitech Ring', Slot.ACCESSORY, SetName.HSB, 100, [
         [Stat.POWER, 45],
         [Stat.TOUGHNESS, 45],
         [Stat.MAGIC_POWER, 40],
     ]),
-    new Item('Magitech Amulet', Slot.ACCESSORY, SetName.HSB, 100, [
+    new Item(74, 'Magitech Amulet', Slot.ACCESSORY, SetName.HSB, 100, [
         [Stat.ENERGY_POWER, 30],
         [Stat.ENERGY_CAP, 0.9],
         [Stat.GOLD_DROP, 20],
     ]),
-    new Item('A Stick', Slot.WEAPON, SetName.TRAINING, 100, [
+    new Item(75, 'A Stick', Slot.WEAPON, SetName.TRAINING, 100, [
         [Stat.POWER, 3],
     ]),
-    new Item('Ascended Forest Pendant', Slot.ACCESSORY, SetName.FOREST_PENDANT, 100, [
+    new Item(76, 'Ascended Forest Pendant', Slot.ACCESSORY, SetName.FOREST_PENDANT, 100, [
         [Stat.POWER, 100],
         [Stat.TOUGHNESS, 100],
         [Stat.DROP_CHANCE, 20],
         [Stat.GOLD_DROP, 200],
     ]),
-    new Item('4G\'s Merge and Boost Tutorial Cube', Slot.ACCESSORY, SetName.SEWERS, 100, [
+    new Item(77, '4G\'s Merge and Boost Tutorial Cube', Slot.ACCESSORY, SetName.SEWERS, 100, [
         [Stat.POWER, 7],
         [Stat.TOUGHNESS, 7],
         [Stat.ENERGY_SPEED, 15],
     ]),
-    new Item('Chef\'s Hat', Slot.HEAD, SetName.GRB, 100, [
+    new Item(78, 'Chef\'s Hat', Slot.HEAD, SetName.GRB, 100, [
         [Stat.POWER, 250],
         [Stat.TOUGHNESS, 250],
         [Stat.COOKING, 30],
         [Stat.ENERGY_POWER, 50],
     ]),
-    new Item('Chef\'s Apron', Slot.CHEST, SetName.GRB, 100, [
+    new Item(79, 'Chef\'s Apron', Slot.CHEST, SetName.GRB, 100, [
         [Stat.POWER, 20],
         [Stat.TOUGHNESS, 250],
         [Stat.COOKING, 30],
         [Stat.ENERGY_POWER, 50],
     ]),
-    new Item('Regular Pants', Slot.PANTS, SetName.GRB, 100, [
+    new Item(80, 'Regular Pants', Slot.PANTS, SetName.GRB, 100, [
         [Stat.POWER, 20],
         [Stat.TOUGHNESS, 250],
         [Stat.COOKING, 30],
         [Stat.ENERGY_POWER, 65],
     ]),
-    new Item('Non Slip Shoes', Slot.BOOTS, SetName.GRB, 100, [
+    new Item(81, 'Non Slip Shoes', Slot.BOOTS, SetName.GRB, 100, [
         [Stat.POWER, 20],
         [Stat.TOUGHNESS, 250],
         [Stat.COOKING, 30],
         [Stat.ENERGY_POWER, 65],
     ]),
-    new Item('Bloody Cleaver', Slot.WEAPON, SetName.GRB, 100, [
+    new Item(82, 'Bloody Cleaver', Slot.WEAPON, SetName.GRB, 100, [
         [Stat.POWER, 1000],
         [Stat.TOUGHNESS, 80],
         [Stat.COOKING, 120],
         [Stat.ENERGY_POWER, 45],
         [Stat.ENERGY_BARS, 65],
     ]),
-    new Item('Suspicious Sausage Necklace', Slot.ACCESSORY, SetName.GRB, 100, [
+    new Item(83, 'Suspicious Sausage Necklace', Slot.ACCESSORY, SetName.GRB, 100, [
         [Stat.POWER, 250],
         [Stat.TOUGHNESS, 250],
     ]),
-    new Item('Raw Slab of Meat', Slot.ACCESSORY, SetName.GRB, 100, [
+    new Item(84, 'Raw Slab of Meat', Slot.ACCESSORY, SetName.GRB, 100, [
         [Stat.ENERGY_POWER, 70],
         [Stat.ENERGY_CAP, 5],
     ]),
-    new Item('Clockwork Hat', Slot.HEAD, SetName.CLOCK, 100, [
+    new Item(85, 'Clockwork Hat', Slot.HEAD, SetName.CLOCK, 100, [
         [Stat.POWER, 30],
         [Stat.TOUGHNESS, 430],
         [Stat.MAGIC_POWER, 30],
         [Stat.MAGIC_CAP, 2],
     ]),
-    new Item('Clockwork Chest', Slot.CHEST, SetName.CLOCK, 100, [
+    new Item(86, 'Clockwork Chest', Slot.CHEST, SetName.CLOCK, 100, [
         [Stat.POWER, 20],
         [Stat.TOUGHNESS, 445],
         [Stat.MAGIC_POWER, 30],
         [Stat.MAGIC_CAP, 3],
     ]),
-    new Item('Clockwork Pants', Slot.PANTS, SetName.CLOCK, 100, [
+    new Item(87, 'Clockwork Pants', Slot.PANTS, SetName.CLOCK, 100, [
         [Stat.POWER, 20],
         [Stat.TOUGHNESS, 500],
         [Stat.MAGIC_POWER, 30],
         [Stat.MAGIC_CAP, 3],
     ]),
-    new Item('Clockwork Boots', Slot.BOOTS, SetName.CLOCK, 100, [
+    new Item(88, 'Clockwork Boots', Slot.BOOTS, SetName.CLOCK, 100, [
         [Stat.POWER, 20],
         [Stat.TOUGHNESS, 515],
         [Stat.MAGIC_POWER, 30],
         [Stat.MAGIC_CAP, 3],
     ]),
-    new Item('A Comically Oversized Minute-Hand', Slot.WEAPON, SetName.CLOCK, 100, [
+    new Item(89, 'A Comically Oversized Minute-Hand', Slot.WEAPON, SetName.CLOCK, 100, [
         [Stat.POWER, 2500],
         [Stat.TOUGHNESS, 80],
         [Stat.MAGIC_POWER, 50],
         [Stat.MAGIC_BARS, 65],
     ]),
-    new Item('Alarm Clock', Slot.ACCESSORY, SetName.CLOCK, 100, [
+    new Item(90, 'Alarm Clock', Slot.ACCESSORY, SetName.CLOCK, 100, [
         [Stat.POWER, 450],
         [Stat.TOUGHNESS, 450],
     ]),
-    new Item('The Sands of Time', Slot.ACCESSORY, SetName.CLOCK, 100, [
+    new Item(91, 'The Sands of Time', Slot.ACCESSORY, SetName.CLOCK, 100, [
         [Stat.MOVE_COOLDOWN, 10],
     ]),
-    new Item('Ascended Ascended Forest Pendant', Slot.ACCESSORY, SetName.FOREST_PENDANT, 100, [
+    new Item(94, 'Ascended Ascended Forest Pendant', Slot.ACCESSORY, SetName.FOREST_PENDANT, 100, [
         [Stat.POWER, 800],
         [Stat.TOUGHNESS, 800],
         [Stat.DROP_CHANCE, 40],
         [Stat.GOLD_DROP, 400],
         [Stat.MAGIC_POWER, 100],
     ]),
-    new Item('Circle Helmet', Slot.HEAD, SetName.TWO_D, 100, [
+    new Item(95, 'Circle Helmet', Slot.HEAD, SetName.TWO_D, 100, [
         [Stat.POWER, 50],
         [Stat.TOUGHNESS, 600],
         [Stat.ENERGY_POWER, 95],
         [Stat.ENERGY_BARS, 30],
         [Stat.WANDOOS_SPEED, 10],
     ]),
-    new Item('Square Chestpiece', Slot.CHEST, SetName.TWO_D, 100, [
+    new Item(96, 'Square Chestpiece', Slot.CHEST, SetName.TWO_D, 100, [
         [Stat.POWER, 50],
         [Stat.TOUGHNESS, 645],
         [Stat.MAGIC_POWER, 40],
         [Stat.ENERGY_POWER, 50],
         [Stat.ENERGY_BARS, 50],
     ]),
-    new Item('Rectangle Pants', Slot.PANTS, SetName.TWO_D, 100, [
+    new Item(97, 'Rectangle Pants', Slot.PANTS, SetName.TWO_D, 100, [
         [Stat.POWER, 70],
         [Stat.TOUGHNESS, 760],
         [Stat.ENERGY_POWER, 50],
         [Stat.ENERGY_CAP, 7],
     ]),
-    new Item('Polygon Boots', Slot.BOOTS, SetName.TWO_D, 100, [
+    new Item(98, 'Polygon Boots', Slot.BOOTS, SetName.TWO_D, 100, [
         [Stat.POWER, 60],
         [Stat.TOUGHNESS, 700],
         [Stat.ENERGY_POWER, 50],
         [Stat.ENERGY_BARS, 70],
         [Stat.ENERGY_CAP, 5],
     ]),
-    new Item('A Triangle', Slot.WEAPON, SetName.TWO_D, 100, [
+    new Item(99, 'A Triangle', Slot.WEAPON, SetName.TWO_D, 100, [
         [Stat.POWER, 4600],
         [Stat.TOUGHNESS, 300],
         [Stat.ENERGY_POWER, 45],
         [Stat.ENERGY_BARS, 50],
     ]),
-    new Item('THE CUBE', Slot.ACCESSORY, SetName.TWO_D, 100, [
+    new Item(100, 'THE CUBE', Slot.ACCESSORY, SetName.TWO_D, 100, [
         [Stat.POWER, 650],
         [Stat.TOUGHNESS, 650],
     ]),
-    new Item('King Circle\'s Amulet of Helping Random Stuff', Slot.ACCESSORY, SetName.TWO_D, 100, [
+    new Item(101, 'King Circle\'s Amulet of Helping Random Stuff', Slot.ACCESSORY, SetName.TWO_D, 100, [
         [Stat.WANDOOS_SPEED, 30],
         [Stat.AT_SPEED, 40],
     ]),
-    new Item('Spoopy Helmet', Slot.HEAD, SetName.SPOOPY, 100, [
+    new Item(103, 'Spoopy Helmet', Slot.HEAD, SetName.SPOOPY, 100, [
         [Stat.POWER, 50],
         [Stat.TOUGHNESS, 1000],
         [Stat.ENERGY_CAP, 10.3],
         [Stat.MAGIC_CAP, 10.5],
         [Stat.MAGIC_POWER, 75],
     ]),
-    new Item('Ghostly Chest', Slot.CHEST, SetName.SPOOPY, 100, [
+    new Item(104, 'Ghostly Chest', Slot.CHEST, SetName.SPOOPY, 100, [
         [Stat.POWER, 80],
         [Stat.TOUGHNESS, 1035],
         [Stat.ENERGY_CAP, 11],
         [Stat.MAGIC_CAP, 11.5],
         [Stat.MAGIC_POWER, 40],
     ]),
-    new Item('Pants of Horror', Slot.PANTS, SetName.SPOOPY, 100, [
+    new Item(105, 'Pants of Horror', Slot.PANTS, SetName.SPOOPY, 100, [
         [Stat.POWER, 70],
         [Stat.TOUGHNESS, 1060],
         [Stat.ENERGY_CAP, 14],
         [Stat.MAGIC_CAP, 12],
         [Stat.MAGIC_BARS, 40],
     ]),
-    new Item('Spectral Boots', Slot.BOOTS, SetName.SPOOPY, 100, [
+    new Item(106, 'Spectral Boots', Slot.BOOTS, SetName.SPOOPY, 100, [
         [Stat.POWER, 60],
         [Stat.TOUGHNESS, 1090],
         [Stat.ENERGY_POWER, 50],
         [Stat.MAGIC_CAP, 9],
         [Stat.ENERGY_CAP, 5],
     ]),
-    new Item('Spooky Sword', Slot.WEAPON, SetName.SPOOPY, 100, [
+    new Item(107, 'Spooky Sword', Slot.WEAPON, SetName.SPOOPY, 100, [
         [Stat.POWER, 8888],
         [Stat.TOUGHNESS, 300],
         [Stat.ENERGY_POWER, 85],
         [Stat.MAGIC_POWER, 110],
     ]),
-    new Item('Cursed Ring', Slot.ACCESSORY, SetName.SPOOPY, 100, [
+    new Item(108, 'Cursed Ring', Slot.ACCESSORY, SetName.SPOOPY, 100, [
         [Stat.POWER, 1050],
         [Stat.TOUGHNESS, 1050],
     ]),
-    new Item('Amulet of Sunshine, Sparkles, and Gore', Slot.ACCESSORY, SetName.SPOOPY, 100, [
+    new Item(109, 'Amulet of Sunshine, Sparkles, and Gore', Slot.ACCESSORY, SetName.SPOOPY, 100, [
         [Stat.ENERGY_POWER, 100],
         [Stat.MAGIC_POWER, 100],
     ]),
-    new Item('Dragon Wings', Slot.ACCESSORY, SetName.SPOOPY, 100, [
+    new Item(110, 'Dragon Wings', Slot.ACCESSORY, SetName.SPOOPY, 100, [
         [Stat.POWER, 82],
         [Stat.TOUGHNESS, 82],
         [Stat.MAGIC_CAP, 22.82],
         [Stat.MAGIC_POWER, 108.2],
         [Stat.GOLD_DROP, 200],
     ]),
-    new Item('Office Hat', Slot.HEAD, SetName.JAKE, 100, [
+    new Item(111, 'Office Hat', Slot.HEAD, SetName.JAKE, 100, [
         [Stat.POWER, 80],
         [Stat.TOUGHNESS, 1300],
         [Stat.ENERGY_CAP, 15.82],
         [Stat.ENERGY_POWER, 108.2],
     ]),
-    new Item('Office Shirt', Slot.CHEST, SetName.JAKE, 100, [
+    new Item(112, 'Office Shirt', Slot.CHEST, SetName.JAKE, 100, [
         [Stat.POWER, 80],
         [Stat.TOUGHNESS, 1250],
         [Stat.ENERGY_CAP, 30.82],
         [Stat.ENERGY_POWER, 78.2],
     ]),
-    new Item('Office Pants', Slot.PANTS, SetName.JAKE, 100, [
+    new Item(113, 'Office Pants', Slot.PANTS, SetName.JAKE, 100, [
         [Stat.POWER, 80],
         [Stat.TOUGHNESS, 1399],
         [Stat.ENERGY_CAP, 28.82],
         [Stat.ENERGY_POWER, 58.2],
     ]),
-    new Item('Office Shoes', Slot.BOOTS, SetName.JAKE, 100, [
+    new Item(114, 'Office Shoes', Slot.BOOTS, SetName.JAKE, 100, [
         [Stat.POWER, 80],
         [Stat.TOUGHNESS, 1300],
         [Stat.ENERGY_POWER, 168.2],
     ]),
-    new Item('The Pen-Is', Slot.WEAPON, SetName.JAKE, 100, [
+    new Item(115, 'The Pen-Is', Slot.WEAPON, SetName.JAKE, 100, [
         [Stat.POWER, 11500],
         [Stat.MAGIC_CAP, 23.56],
         [Stat.MAGIC_POWER, 88.2],
     ]),
-    new Item('A Regular Tie', Slot.ACCESSORY, SetName.JAKE, 100, [
+    new Item(116, 'A Regular Tie', Slot.ACCESSORY, SetName.JAKE, 100, [
         [Stat.TOUGHNESS, 82],
         [Stat.NGU_SPEED, 60],
         [Stat.MAGIC_POWER, 108.2],
         [Stat.GOLD_DROP, 200],
     ]),
-    new Item('Generic Paperweight', Slot.ACCESSORY, SetName.JAKE, 100, [
+    new Item(117, 'Generic Paperweight', Slot.ACCESSORY, SetName.JAKE, 100, [
         [Stat.POWER, 1450],
         [Stat.TOUGHNESS, 1450],
     ]),
-    new Item('Stapler', Slot.ACCESSORY, SetName.JAKE, 100, [
+    new Item(118, 'Stapler', Slot.ACCESSORY, SetName.JAKE, 100, [
         [Stat.POWER, 500],
         [Stat.ENERGY_CAP, 30],
         [Stat.RESPAWN, 6],
     ]),
-    new Item('My Red Heart <3', Slot.ACCESSORY, SetName.HEART, 100, [
+    new Item(119, 'My Red Heart <3', Slot.ACCESSORY, SetName.HEART, 100, [
         [Stat.POWER, 100],
         [Stat.TOUGHNESS, 100],
         [Stat.EXPERIENCE, 5],
         [Stat.DROP_CHANCE, 30],
     ]),
-    new Item('The Lonely Flubber', Slot.ACCESSORY, SetName.MISC, 100, [
+    new Item(120, 'The Lonely Flubber', Slot.ACCESSORY, SetName.MISC, 100, [
     ]),
-    new Item('The Triple Flubber', Slot.ACCESSORY, SetName.MISC, 100, [
+    new Item(121, 'The Triple Flubber', Slot.ACCESSORY, SetName.MISC, 100, [
         [Stat.RESPAWN, 4],
     ]),
-    new Item('Gaudy Hat', Slot.HEAD, SetName.GAUDY, 100, [
+    new Item(122, 'Gaudy Hat', Slot.HEAD, SetName.GAUDY, 100, [
         [Stat.POWER, 280],
         [Stat.TOUGHNESS, 2400],
         [Stat.ENERGY_BARS, 60],
         [Stat.MAGIC_BARS, 60],
     ]),
-    new Item('Gaudy Shirt', Slot.CHEST, SetName.GAUDY, 100, [
+    new Item(123, 'Gaudy Shirt', Slot.CHEST, SetName.GAUDY, 100, [
         [Stat.POWER, 250],
         [Stat.TOUGHNESS, 2500],
         [Stat.ENERGY_CAP, 38],
         [Stat.ENERGY_POWER, 96],
     ]),
-    new Item('Gaudy Pants', Slot.PANTS, SetName.GAUDY, 100, [
+    new Item(124, 'Gaudy Pants', Slot.PANTS, SetName.GAUDY, 100, [
         [Stat.POWER, 300],
         [Stat.TOUGHNESS, 2600],
         [Stat.ENERGY_CAP, 36],
         [Stat.ENERGY_POWER, 90],
     ]),
-    new Item('Gaudy Boots', Slot.BOOTS, SetName.GAUDY, 100, [
+    new Item(125, 'Gaudy Boots', Slot.BOOTS, SetName.GAUDY, 100, [
         [Stat.POWER, 200],
         [Stat.TOUGHNESS, 2400],
         [Stat.MAGIC_POWER, 120],
     ]),
-    new Item('Paper Fan', Slot.WEAPON, SetName.GAUDY, 100, [
+    new Item(126, 'Paper Fan', Slot.WEAPON, SetName.GAUDY, 100, [
         [Stat.POWER, 20000],
         [Stat.MAGIC_BARS, 100],
         [Stat.MAGIC_POWER, 130],
     ]),
-    new Item('A Beanie', Slot.HEAD, SetName.GAUDY, 100, [
+    new Item(127, 'A Beanie', Slot.HEAD, SetName.GAUDY, 100, [
         [Stat.POWER, 2000],
         [Stat.TOUGHNESS, 3000],
         [Stat.MAGIC_CAP, 53],
         [Stat.MAGIC_POWER, 185],
     ]),
-    new Item('Sir Looty McLootington III, Esquire', Slot.ACCESSORY, SetName.LOOTY, 100, [
+    new Item(128, 'Sir Looty McLootington III, Esquire', Slot.ACCESSORY, SetName.LOOTY, 100, [
         [Stat.POWER, 200],
         [Stat.TOUGHNESS, 200],
         [Stat.DROP_CHANCE, 40],
         [Stat.ENERGY_POWER, 100],
         [Stat.MAGIC_POWER, 100],
     ]),
-    new Item('My Yellow Heart <3', Slot.ACCESSORY, SetName.HEART, 100, [
+    new Item(129, 'My Yellow Heart <3', Slot.ACCESSORY, SetName.HEART, 100, [
         [Stat.POWER, 100],
         [Stat.TOUGHNESS, 100],
         [Stat.AP, 10],
         [Stat.GOLD_DROP, 300],
     ]),
-    new Item('Mega Helmet', Slot.HEAD, SetName.MEGA, 100, [
+    new Item(130, 'Mega Helmet', Slot.HEAD, SetName.MEGA, 100, [
         [Stat.POWER, 300],
         [Stat.TOUGHNESS, 5600],
         [Stat.ENERGY_POWER, 230],
         [Stat.MAGIC_POWER, 230],
     ]),
-    new Item('Mega Chest', Slot.CHEST, SetName.MEGA, 100, [
+    new Item(131, 'Mega Chest', Slot.CHEST, SetName.MEGA, 100, [
         [Stat.POWER, 300],
         [Stat.TOUGHNESS, 5600],
         [Stat.ENERGY_BARS, 170],
         [Stat.MAGIC_BARS, 170],
     ]),
-    new Item('Mega Blue Jeans', Slot.PANTS, SetName.MEGA, 100, [
+    new Item(132, 'Mega Blue Jeans', Slot.PANTS, SetName.MEGA, 100, [
         [Stat.POWER, 300],
         [Stat.TOUGHNESS, 5700],
         [Stat.ENERGY_CAP, 46],
         [Stat.MAGIC_CAP, 46],
     ]),
-    new Item('Mega Boots', Slot.BOOTS, SetName.MEGA, 100, [
+    new Item(133, 'Mega Boots', Slot.BOOTS, SetName.MEGA, 100, [
         [Stat.POWER, 300],
         [Stat.TOUGHNESS, 5500],
         [Stat.MAGIC_POWER, 140],
         [Stat.MAGIC_BARS, 150],
     ]),
-    new Item('Beam Laser Sword', Slot.WEAPON, SetName.MEGA, 100, [
+    new Item(134, 'Beam Laser Sword', Slot.WEAPON, SetName.MEGA, 100, [
         [Stat.POWER, 44000],
         [Stat.ENERGY_POWER, 140],
         [Stat.ENERGY_BARS, 100],
         [Stat.ENERGY_CAP, 20],
     ]),
-    new Item('Ring of Apathy', Slot.ACCESSORY, SetName.MISC, 100, [
+    new Item(135, 'Ring of Apathy', Slot.ACCESSORY, SetName.MISC, 100, [
     ]),
-    new Item('Ring of Greed', Slot.ACCESSORY, SetName.UUG_RINGS, 100, [
+    new Item(136, 'Ring of Greed', Slot.ACCESSORY, SetName.UUG_RINGS, 100, [
         [Stat.GOLD_DROP, 800],
         [Stat.DROP_CHANCE, 60],
         [Stat.RESPAWN, 8],
     ]),
-    new Item('Ring of Might', Slot.ACCESSORY, SetName.UUG_RINGS, 100, [
+    new Item(137, 'Ring of Might', Slot.ACCESSORY, SetName.UUG_RINGS, 100, [
         [Stat.POWER, 6666],
         [Stat.TOUGHNESS, 6666],
         [Stat.MOVE_COOLDOWN, 10],
         [Stat.RESPAWN, 2],
     ]),
-    new Item('Ring of Utility', Slot.ACCESSORY, SetName.UUG_RINGS, 100, [
+    new Item(138, 'Ring of Utility', Slot.ACCESSORY, SetName.UUG_RINGS, 100, [
         [Stat.POWER, 1000],
         [Stat.TOUGHNESS, 1000],
         [Stat.NGU_SPEED, 50],
         [Stat.WANDOOS_SPEED, 50],
         [Stat.AT_SPEED, 50],
     ]),
-    new Item('Ring of Way Too Much Energy', Slot.ACCESSORY, SetName.UUG_RINGS, 100, [
+    new Item(139, 'Ring of Way Too Much Energy', Slot.ACCESSORY, SetName.UUG_RINGS, 100, [
         [Stat.POWER, 1000],
         [Stat.TOUGHNESS, 1000],
         [Stat.ENERGY_POWER, 250],
         [Stat.ENERGY_BARS, 120],
         [Stat.ENERGY_CAP, 40],
     ]),
-    new Item('Ring of Way Too Much Magic', Slot.ACCESSORY, SetName.UUG_RINGS, 100, [
+    new Item(140, 'Ring of Way Too Much Magic', Slot.ACCESSORY, SetName.UUG_RINGS, 100, [
         [Stat.POWER, 1000],
         [Stat.TOUGHNESS, 1000],
         [Stat.MAGIC_POWER, 250],
         [Stat.MAGIC_BARS, 120],
         [Stat.MAGIC_CAP, 40],
     ]),
-    new Item('Ascended Ascended Ascended Pendant', Slot.ACCESSORY, SetName.FOREST_PENDANT, 100, [
+    new Item(142, 'Ascended Ascended Ascended Pendant', Slot.ACCESSORY, SetName.FOREST_PENDANT, 100, [
         [Stat.POWER, 40000],
         [Stat.TOUGHNESS, 40000],
         [Stat.DROP_CHANCE, 100],
         [Stat.GOLD_DROP, 800],
         [Stat.ENERGY_POWER, 270],
     ]),
-    new Item('Groucho Marx Disguise', Slot.HEAD, SetName.BEARDVERSE, 100, [
+    new Item(143, 'Groucho Marx Disguise', Slot.HEAD, SetName.BEARDVERSE, 100, [
         [Stat.POWER, 1100],
         [Stat.TOUGHNESS, 12000],
         [Stat.ENERGY_POWER, 180],
         [Stat.MAGIC_CAP, 48],
         [Stat.MAGIC_BARS, 240],
     ]),
-    new Item('Gossamer Chest', Slot.CHEST, SetName.BEARDVERSE, 100, [
+    new Item(144, 'Gossamer Chest', Slot.CHEST, SetName.BEARDVERSE, 100, [
         [Stat.POWER, 1100],
         [Stat.TOUGHNESS, 12500],
         [Stat.ENERGY_CAP, 62],
         [Stat.MAGIC_CAP, 50],
     ]),
-    new Item('Braided Beard Legs', Slot.PANTS, SetName.BEARDVERSE, 100, [
+    new Item(145, 'Braided Beard Legs', Slot.PANTS, SetName.BEARDVERSE, 100, [
         [Stat.POWER, 1100],
         [Stat.TOUGHNESS, 12500],
         [Stat.MAGIC_POWER, 290],
         [Stat.MAGIC_CAP, 43],
         [Stat.MAGIC_BARS, 230],
     ]),
-    new Item('Fuzzy Orange Cheeto Slippers!', Slot.BOOTS, SetName.BEARDVERSE, 100, [
+    new Item(146, 'Fuzzy Orange Cheeto Slippers!', Slot.BOOTS, SetName.BEARDVERSE, 100, [
         [Stat.POWER, 1200],
         [Stat.TOUGHNESS, 12500],
         [Stat.ENERGY_POWER, 220],
         [Stat.ENERGY_BARS, 330],
         [Stat.ENERGY_CAP, 20],
     ]),
-    new Item('Bearded Axe', Slot.WEAPON, SetName.BEARDVERSE, 100, [
+    new Item(147, 'Bearded Axe', Slot.WEAPON, SetName.BEARDVERSE, 100, [
         [Stat.POWER, 83000],
         [Stat.TOUGHNESS, 6000],
         [Stat.ENERGY_BARS, 220],
         [Stat.MAGIC_BARS, 220],
         [Stat.BEARD_SPEED, 10],
     ]),
-    new Item('An Infinitely Long Strand of Beard Hair', Slot.ACCESSORY, SetName.BEARDVERSE, 100, [
+    new Item(148, 'An Infinitely Long Strand of Beard Hair', Slot.ACCESSORY, SetName.BEARDVERSE, 100, [
         [Stat.POWER, 8000],
         [Stat.TOUGHNESS, 8000],
         [Stat.ENERGY_POWER, 450],
         [Stat.MAGIC_POWER, 350],
         [Stat.BEARD_SPEED, 10],
     ]),
-    new Item('UUG\'s \'Special\' Ring', Slot.ACCESSORY, SetName.UUG_RINGS, 100, [
+    new Item(149, 'UUG\'s \'Special\' Ring', Slot.ACCESSORY, SetName.UUG_RINGS, 100, [
         [Stat.POWER, 12000],
         [Stat.TOUGHNESS, 12000],
         [Stat.NGU_SPEED, 100],
         [Stat.SEED_DROP, 15],
         [Stat.BEARD_SPEED, 10],
     ]),
-    new Item('Wanderer\'s Hat', Slot.HEAD, SetName.WANDERER, 100, [
+    new Item(150, 'Wanderer\'s Hat', Slot.HEAD, SetName.WANDERER, 100, [
         [Stat.POWER, 1000],
         [Stat.TOUGHNESS, 22000],
         [Stat.ENERGY_CAP, 85],
         [Stat.ENERGY_POWER, 750],
         [Stat.MAGIC_POWER, 200],
     ]),
-    new Item('Wanderer\'s Chest', Slot.CHEST, SetName.WANDERER, 100, [
+    new Item(151, 'Wanderer\'s Chest', Slot.CHEST, SetName.WANDERER, 100, [
         [Stat.POWER, 1000],
         [Stat.TOUGHNESS, 23000],
         [Stat.ENERGY_POWER, 800],
         [Stat.ENERGY_BARS, 600],
         [Stat.MAGIC_CAP, 30],
     ]),
-    new Item('Wanderer\'s Pants', Slot.PANTS, SetName.WANDERER, 100, [
+    new Item(152, 'Wanderer\'s Pants', Slot.PANTS, SetName.WANDERER, 100, [
         [Stat.POWER, 1000],
         [Stat.TOUGHNESS, 23000],
         [Stat.ENERGY_BARS, 800],
         [Stat.ENERGY_CAP, 85],
         [Stat.MAGIC_BARS, 200],
     ]),
-    new Item('Wanderer\'s Boots', Slot.BOOTS, SetName.WANDERER, 100, [
+    new Item(153, 'Wanderer\'s Boots', Slot.BOOTS, SetName.WANDERER, 100, [
         [Stat.POWER, 1000],
         [Stat.TOUGHNESS, 24000],
         [Stat.WANDOOS_SPEED, 130],
         [Stat.NGU_SPEED, 60],
     ]),
-    new Item('Wanderer\'s Cane', Slot.WEAPON, SetName.WANDERER, 100, [
+    new Item(154, 'Wanderer\'s Cane', Slot.WEAPON, SetName.WANDERER, 100, [
         [Stat.POWER, 170000],
         [Stat.TOUGHNESS, 12000],
     ]),
-    new Item('taH s\'rerednaW', Slot.HEAD, SetName.WANDERER2, 100, [
+    new Item(155, 'taH s\'rerednaW', Slot.HEAD, SetName.WANDERER2, 100, [
         [Stat.POWER, 1000],
         [Stat.TOUGHNESS, 21000],
         [Stat.MAGIC_CAP, 85],
         [Stat.MAGIC_POWER, 750],
         [Stat.ENERGY_POWER, 200],
     ]),
-    new Item('tsehC s\'rerednaW', Slot.CHEST, SetName.WANDERER2, 100, [
+    new Item(156, 'tsehC s\'rerednaW', Slot.CHEST, SetName.WANDERER2, 100, [
         [Stat.POWER, 1000],
         [Stat.TOUGHNESS, 22000],
         [Stat.MAGIC_POWER, 800],
         [Stat.MAGIC_BARS, 600],
         [Stat.ENERGY_CAP, 30],
     ]),
-    new Item('stnaP s\'rerednaW', Slot.PANTS, SetName.WANDERER2, 100, [
+    new Item(157, 'stnaP s\'rerednaW', Slot.PANTS, SetName.WANDERER2, 100, [
         [Stat.POWER, 1000],
         [Stat.TOUGHNESS, 23000],
         [Stat.MAGIC_BARS, 800],
         [Stat.MAGIC_CAP, 85],
         [Stat.ENERGY_BARS, 200],
     ]),
-    new Item('stooB s\'rerednaW', Slot.BOOTS, SetName.WANDERER2, 100, [
+    new Item(158, 'stooB s\'rerednaW', Slot.BOOTS, SetName.WANDERER2, 100, [
         [Stat.POWER, 1000],
         [Stat.TOUGHNESS, 24000],
         [Stat.SEED_DROP, 30],
         [Stat.BEARD_SPEED, 40],
     ]),
-    new Item('The Candy Cane of Destiny', Slot.WEAPON, SetName.WANDERER, 100, [
+    new Item(159, 'The Candy Cane of Destiny', Slot.WEAPON, SetName.WANDERER, 100, [
         [Stat.POWER, 170000],
         [Stat.TOUGHNESS, 12000],
         [Stat.ENERGY_POWER, 1000],
@@ -628,7 +628,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 100],
         [Stat.MAGIC_CAP, 100],
     ]),
-    new Item('Fanny Pack', Slot.ACCESSORY, SetName.WANDERER, 100, [
+    new Item(160, 'Fanny Pack', Slot.ACCESSORY, SetName.WANDERER, 100, [
         [Stat.POWER, 15000],
         [Stat.TOUGHNESS, 15000],
         [Stat.DROP_CHANCE, 30],
@@ -637,7 +637,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 30],
         [Stat.MAGIC_CAP, 30],
     ]),
-    new Item('Dorky Glasses', Slot.ACCESSORY, SetName.WANDERER2, 100, [
+    new Item(161, 'Dorky Glasses', Slot.ACCESSORY, SetName.WANDERER2, 100, [
         [Stat.POWER, 5000],
         [Stat.TOUGHNESS, 5000],
         [Stat.NGU_SPEED, 150],
@@ -645,42 +645,42 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 500],
         [Stat.MAGIC_BARS, 500],
     ]),
-    new Item('My Brown Heart <3', Slot.ACCESSORY, SetName.HEART, 100, [
+    new Item(162, 'My Brown Heart <3', Slot.ACCESSORY, SetName.HEART, 100, [
         [Stat.POWER, 100],
         [Stat.TOUGHNESS, 100],
         [Stat.SEED_DROP, 35],
         [Stat.ENERGY_POWER, 100],
         [Stat.MAGIC_POWER, 100],
     ]),
-    new Item('Badly Drawn Smiley Face', Slot.HEAD, SetName.BADLY_DRAWN, 100, [
+    new Item(164, 'Badly Drawn Smiley Face', Slot.HEAD, SetName.BADLY_DRAWN, 100, [
         [Stat.TOUGHNESS, 60000],
         [Stat.AT_SPEED, 160],
         [Stat.GOLD_DROP, 1200],
         [Stat.ENERGY_BARS, 450],
         [Stat.MAGIC_BARS, 450],
     ]),
-    new Item('Badly Drawn Chest', Slot.CHEST, SetName.BADLY_DRAWN, 100, [
+    new Item(165, 'Badly Drawn Chest', Slot.CHEST, SetName.BADLY_DRAWN, 100, [
         [Stat.TOUGHNESS, 60000],
         [Stat.MAGIC_CAP, 135],
         [Stat.ENERGY_POWER, 1400],
         [Stat.ENERGY_BARS, 450],
         [Stat.MAGIC_BARS, 450],
     ]),
-    new Item('Badly Drawn Pants', Slot.PANTS, SetName.BADLY_DRAWN, 100, [
+    new Item(166, 'Badly Drawn Pants', Slot.PANTS, SetName.BADLY_DRAWN, 100, [
         [Stat.TOUGHNESS, 60000],
         [Stat.MAGIC_BARS, 1400],
         [Stat.ENERGY_CAP, 130],
         [Stat.ENERGY_POWER, 400],
         [Stat.MAGIC_POWER, 400],
     ]),
-    new Item('Badly Drawn Foot', Slot.BOOTS, SetName.BADLY_DRAWN, 100, [
+    new Item(167, 'Badly Drawn Foot', Slot.BOOTS, SetName.BADLY_DRAWN, 100, [
         [Stat.TOUGHNESS, 60000],
         [Stat.MAGIC_POWER, 1200],
         [Stat.ENERGY_BARS, 1200],
         [Stat.ENERGY_CAP, 40],
         [Stat.MAGIC_CAP, 40],
     ]),
-    new Item('Badly Drawn Gun', Slot.WEAPON, SetName.BADLY_DRAWN, 100, [
+    new Item(168, 'Badly Drawn Gun', Slot.WEAPON, SetName.BADLY_DRAWN, 100, [
         [Stat.POWER, 500000],
         [Stat.TOUGHNESS, 25000],
         [Stat.AUGMENT_SPEED, 120],
@@ -689,7 +689,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 600],
         [Stat.MAGIC_POWER, 600],
     ]),
-    new Item('King Looty', Slot.ACCESSORY, SetName.LOOTY, 100, [
+    new Item(169, 'King Looty', Slot.ACCESSORY, SetName.LOOTY, 100, [
         [Stat.POWER, 100000],
         [Stat.TOUGHNESS, 100000],
         [Stat.DROP_CHANCE, 100],
@@ -698,7 +698,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 40],
         [Stat.MAGIC_CAP, 40],
     ]),
-    new Item('Ascended x4 Pendant', Slot.ACCESSORY, SetName.FOREST_PENDANT, 100, [
+    new Item(170, 'Ascended x4 Pendant', Slot.ACCESSORY, SetName.FOREST_PENDANT, 100, [
         [Stat.POWER, 100000],
         [Stat.TOUGHNESS, 100000],
         [Stat.QUEST_DROP, 5],
@@ -706,21 +706,21 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 120],
         [Stat.MAGIC_CAP, 120],
     ]),
-    new Item('My Green Heart <3', Slot.ACCESSORY, SetName.HEART, 100, [
+    new Item(171, 'My Green Heart <3', Slot.ACCESSORY, SetName.HEART, 100, [
         [Stat.POWER, 100],
         [Stat.TOUGHNESS, 100],
         [Stat.DROP_CHANCE, 50],
         [Stat.RESPAWN, 4],
         [Stat.BEARD_SPEED, 30],
     ]),
-    new Item('Stealthy Hat', Slot.HEAD, SetName.STEALTH, 100, [
+    new Item(173, 'Stealthy Hat', Slot.HEAD, SetName.STEALTH, 100, [
         [Stat.POWER, 5000],
         [Stat.TOUGHNESS, 112000],
         [Stat.ENERGY_POWER, 1200],
         [Stat.ENERGY_CAP, 175],
         [Stat.MAGIC_CAP, 85],
     ]),
-    new Item('Stealthy Chest', Slot.CHEST, SetName.STEALTH, 100, [
+    new Item(174, 'Stealthy Chest', Slot.CHEST, SetName.STEALTH, 100, [
         [Stat.POWER, 5000],
         [Stat.TOUGHNESS, 115000],
         [Stat.ENERGY_BARS, 1900],
@@ -728,21 +728,21 @@ export const ITEMLIST = [
         [Stat.MAGIC_POWER, 900],
         [Stat.MAGIC_BARS, 800],
     ]),
-    new Item('No Pants', Slot.PANTS, SetName.STEALTH, 100, [
+    new Item(175, 'No Pants', Slot.PANTS, SetName.STEALTH, 100, [
         [Stat.POWER, 5000],
         [Stat.TOUGHNESS, 118000],
         [Stat.ENERGY_POWER, 1750],
         [Stat.MAGIC_BARS, 1000],
         [Stat.MAGIC_POWER, 450],
     ]),
-    new Item('High Heeled Boots', Slot.BOOTS, SetName.STEALTH, 100, [
+    new Item(176, 'High Heeled Boots', Slot.BOOTS, SetName.STEALTH, 100, [
         [Stat.POWER, 5000],
         [Stat.TOUGHNESS, 122000],
         [Stat.MAGIC_POWER, 1400],
         [Stat.ENERGY_CAP, 200],
         [Stat.MAGIC_CAP, 60],
     ]),
-    new Item('A Giant Bazooka', Slot.WEAPON, SetName.STEALTH, 100, [
+    new Item(177, 'A Giant Bazooka', Slot.WEAPON, SetName.STEALTH, 100, [
         [Stat.POWER, 1000000],
         [Stat.TOUGHNESS, 60000],
         [Stat.ENERGY_CAP, 120],
@@ -750,7 +750,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 1200],
         [Stat.MAGIC_POWER, 1200],
     ]),
-    new Item('The Stealthiest Armour', Slot.CHEST, SetName.STEALTH, 100, [
+    new Item(178, 'The Stealthiest Armour', Slot.CHEST, SetName.STEALTH, 100, [
         [Stat.POWER, 8000],
         [Stat.TOUGHNESS, 150000],
         [Stat.NGU_SPEED, 200],
@@ -759,7 +759,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 210],
         [Stat.MAGIC_CAP, 210],
     ]),
-    new Item('Slimy Helmet', Slot.HEAD, SetName.SLIMY, 100, [
+    new Item(184, 'Slimy Helmet', Slot.HEAD, SetName.SLIMY, 100, [
         [Stat.POWER, 11000],
         [Stat.TOUGHNESS, 242000],
         [Stat.MAGIC_CAP, 150],
@@ -767,7 +767,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 1400],
         [Stat.MAGIC_POWER, 1400],
     ]),
-    new Item('Slimy Chest', Slot.CHEST, SetName.SLIMY, 100, [
+    new Item(185, 'Slimy Chest', Slot.CHEST, SetName.SLIMY, 100, [
         [Stat.POWER, 11000],
         [Stat.TOUGHNESS, 250000],
         [Stat.MAGIC_POWER, 1400],
@@ -775,7 +775,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 150],
         [Stat.MAGIC_CAP, 150],
     ]),
-    new Item('Slimy Pants', Slot.PANTS, SetName.SLIMY, 100, [
+    new Item(186, 'Slimy Pants', Slot.PANTS, SetName.SLIMY, 100, [
         [Stat.POWER, 10000],
         [Stat.TOUGHNESS, 245000],
         [Stat.ENERGY_POWER, 1800],
@@ -783,7 +783,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 1000],
         [Stat.MAGIC_BARS, 1000],
     ]),
-    new Item('Slimy Boots', Slot.BOOTS, SetName.SLIMY, 100, [
+    new Item(187, 'Slimy Boots', Slot.BOOTS, SetName.SLIMY, 100, [
         [Stat.POWER, 10000],
         [Stat.TOUGHNESS, 240000],
         [Stat.ENERGY_CAP, 140],
@@ -793,40 +793,40 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 1400],
         [Stat.MAGIC_POWER, 1400],
     ]),
-    new Item('The Fists of Flubber', Slot.WEAPON, SetName.SLIMY, 100, [
+    new Item(188, 'The Fists of Flubber', Slot.WEAPON, SetName.SLIMY, 100, [
         [Stat.POWER, 2200000],
         [Stat.TOUGHNESS, 100000],
         [Stat.MAGIC_CAP, 200],
         [Stat.MAGIC_POWER, 2000],
         [Stat.MAGIC_BARS, 1200],
     ]),
-    new Item('A Bald Egg', Slot.ACCESSORY, SetName.SLIMY, 100, [
+    new Item(189, 'A Bald Egg', Slot.ACCESSORY, SetName.SLIMY, 100, [
         [Stat.POWER, 33333],
         [Stat.TOUGHNESS, 33333],
         [Stat.WANDOOS_SPEED, 200],
         [Stat.ENERGY_CAP, 150],
         [Stat.MAGIC_CAP, 150],
     ]),
-    new Item('A Shrunken Voodoo Doll', Slot.ACCESSORY, SetName.SLIMY2, 100, [
+    new Item(190, 'A Shrunken Voodoo Doll', Slot.ACCESSORY, SetName.SLIMY2, 100, [
         [Stat.POWER, 66666],
         [Stat.TOUGHNESS, 66666],
         [Stat.BEARD_SPEED, 200],
         [Stat.NGU_SPEED, 200],
     ]),
-    new Item('A Priceless Van-Gogh Painting', Slot.ACCESSORY, SetName.SLIMY3, 100, [
+    new Item(192, 'A Priceless Van-Gogh Painting', Slot.ACCESSORY, SetName.SLIMY3, 100, [
         [Stat.POWER, 30000],
         [Stat.TOUGHNESS, 30000],
         [Stat.GOLD_DROP, 3000],
         [Stat.ENERGY_CAP, 200],
         [Stat.MAGIC_CAP, 200],
     ]),
-    new Item('A Giant Apple', Slot.ACCESSORY, SetName.SLIMY3, 100, [
+    new Item(193, 'A Giant Apple', Slot.ACCESSORY, SetName.SLIMY3, 100, [
         [Stat.POWER, 50000],
         [Stat.TOUGHNESS, 50000],
         [Stat.SEED_DROP, 50],
         [Stat.YGGDRASIL_YIELD, 10],
     ]),
-    new Item('A Power Pill', Slot.ACCESSORY, SetName.SLIMY4, 100, [
+    new Item(194, 'A Power Pill', Slot.ACCESSORY, SetName.SLIMY4, 100, [
         [Stat.POWER, 250000],
         [Stat.TOUGHNESS, 250000],
         [Stat.ENERGY_POWER, 3000],
@@ -836,26 +836,26 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 300],
         [Stat.MAGIC_CAP, 300],
     ]),
-    new Item('A Small Gerbil', Slot.ACCESSORY, SetName.SLIMY4, 100, [
+    new Item(195, 'A Small Gerbil', Slot.ACCESSORY, SetName.SLIMY4, 100, [
         [Stat.POWER, 100000],
         [Stat.TOUGHNESS, 100000],
         [Stat.MAGIC_CAP, 600],
         [Stat.MAGIC_POWER, 6000],
         [Stat.ENERGY_POWER, 6000],
     ]),
-    new Item('My Blue Heart <3', Slot.ACCESSORY, SetName.HEART, 100, [
+    new Item(196, 'My Blue Heart <3', Slot.ACCESSORY, SetName.HEART, 100, [
         [Stat.POWER, 420],
         [Stat.TOUGHNESS, 420],
         [Stat.GOLD_DROP, 100],
         [Stat.NGU_SPEED, 40],
     ]),
-    new Item('My Purple Heart <3', Slot.ACCESSORY, SetName.HEART, 100, [
+    new Item(212, 'My Purple Heart <3', Slot.ACCESSORY, SetName.HEART, 100, [
         [Stat.POWER, 100],
         [Stat.TOUGHNESS, 1000],
         [Stat.DROP_CHANCE, 40],
         [Stat.BEARD_SPEED, 40],
     ]),
-    new Item('Edgy Helmet', Slot.HEAD, SetName.EDGY, 100, [
+    new Item(213, 'Edgy Helmet', Slot.HEAD, SetName.EDGY, 100, [
         [Stat.POWER, 40000],
         [Stat.TOUGHNESS, 502000],
         [Stat.MAGIC_CAP, 330],
@@ -863,7 +863,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 3600],
         [Stat.MAGIC_POWER, 3600],
     ]),
-    new Item('Edgy Chest', Slot.CHEST, SetName.EDGY, 100, [
+    new Item(214, 'Edgy Chest', Slot.CHEST, SetName.EDGY, 100, [
         [Stat.POWER, 30000],
         [Stat.TOUGHNESS, 540000],
         [Stat.MAGIC_BARS, 3700],
@@ -872,7 +872,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 4100],
         [Stat.MAGIC_POWER, 4100],
     ]),
-    new Item('Edgy Pants', Slot.PANTS, SetName.EDGY, 100, [
+    new Item(215, 'Edgy Pants', Slot.PANTS, SetName.EDGY, 100, [
         [Stat.POWER, 30000],
         [Stat.TOUGHNESS, 555000],
         [Stat.ENERGY_BARS, 3300],
@@ -880,21 +880,21 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 5500],
         [Stat.MAGIC_POWER, 5500],
     ]),
-    new Item('Left Edgy Boot', Slot.BOOTS, SetName.EDGY, 100, [
+    new Item(216, 'Left Edgy Boot', Slot.BOOTS, SetName.EDGY, 100, [
         [Stat.POWER, 20000],
         [Stat.TOUGHNESS, 516000],
         [Stat.ENERGY_CAP, 480],
         [Stat.ENERGY_BARS, 4800],
         [Stat.ENERGY_POWER, 4800],
     ]),
-    new Item('Edgy Jaw Axe', Slot.WEAPON, SetName.EDGY, 100, [
+    new Item(217, 'Edgy Jaw Axe', Slot.WEAPON, SetName.EDGY, 100, [
         [Stat.POWER, 5600000],
         [Stat.TOUGHNESS, 300000],
         [Stat.MAGIC_CAP, 420],
         [Stat.ENERGY_POWER, 4400],
         [Stat.MAGIC_BARS, 1700],
     ]),
-    new Item('A Cheap Plastic Amulet', Slot.ACCESSORY, SetName.EDGY, 100, [
+    new Item(218, 'A Cheap Plastic Amulet', Slot.ACCESSORY, SetName.EDGY, 100, [
         [Stat.POWER, 150000],
         [Stat.TOUGHNESS, 150000],
         [Stat.ENERGY_POWER, 4500],
@@ -904,14 +904,14 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 3200],
         [Stat.MAGIC_BARS, 3200],
     ]),
-    new Item('Right Edgy Boot', Slot.BOOTS, SetName.EDGY, 100, [
+    new Item(219, 'Right Edgy Boot', Slot.BOOTS, SetName.EDGY, 100, [
         [Stat.POWER, 30000],
         [Stat.TOUGHNESS, 516000],
         [Stat.MAGIC_CAP, 480],
         [Stat.MAGIC_BARS, 4800],
         [Stat.MAGIC_POWER, 4800],
     ]),
-    new Item('BOTH Edgy Boots', Slot.BOOTS, SetName.EDGY, 100, [
+    new Item(220, 'BOTH Edgy Boots', Slot.BOOTS, SetName.EDGY, 100, [
         [Stat.POWER, 60000],
         [Stat.TOUGHNESS, 540000],
         [Stat.ENERGY_CAP, 420],
@@ -921,14 +921,14 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 4200],
         [Stat.MAGIC_POWER, 4200],
     ]),
-    new Item('Chocolate Helmet', Slot.HEAD, SetName.CHOCO, 100, [
+    new Item(221, 'Chocolate Helmet', Slot.HEAD, SetName.CHOCO, 100, [
         [Stat.POWER, 30000],
         [Stat.TOUGHNESS, 352000],
         [Stat.ENERGY_POWER, 2600],
         [Stat.MAGIC_CAP, 190],
         [Stat.MAGIC_BARS, 1400],
     ]),
-    new Item('Chocolate Chest', Slot.CHEST, SetName.CHOCO, 100, [
+    new Item(222, 'Chocolate Chest', Slot.CHEST, SetName.CHOCO, 100, [
         [Stat.POWER, 20000],
         [Stat.TOUGHNESS, 370000],
         [Stat.MAGIC_BARS, 2500],
@@ -937,7 +937,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 2900],
         [Stat.MAGIC_POWER, 2900],
     ]),
-    new Item('Chocolate Pants', Slot.PANTS, SetName.CHOCO, 100, [
+    new Item(223, 'Chocolate Pants', Slot.PANTS, SetName.CHOCO, 100, [
         [Stat.POWER, 20000],
         [Stat.TOUGHNESS, 355000],
         [Stat.ENERGY_BARS, 1700],
@@ -945,14 +945,14 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 2800],
         [Stat.MAGIC_POWER, 2800],
     ]),
-    new Item('Chocolate Boots', Slot.BOOTS, SetName.CHOCO, 100, [
+    new Item(224, 'Chocolate Boots', Slot.BOOTS, SetName.CHOCO, 100, [
         [Stat.POWER, 20000],
         [Stat.TOUGHNESS, 366000],
         [Stat.ENERGY_CAP, 340],
         [Stat.ENERGY_BARS, 3400],
         [Stat.ENERGY_POWER, 3400],
     ]),
-    new Item('Chocolate Crowbar', Slot.WEAPON, SetName.CHOCO, 100, [
+    new Item(225, 'Chocolate Crowbar', Slot.WEAPON, SetName.CHOCO, 100, [
         [Stat.POWER, 3800000],
         [Stat.TOUGHNESS, 200000],
         [Stat.MAGIC_CAP, 290],
@@ -960,21 +960,21 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 1800],
         [Stat.MAGIC_BARS, 1800],
     ]),
-    new Item('Energy Bar Bar', Slot.ACCESSORY, SetName.CHOCO, 100, [
+    new Item(226, 'Energy Bar Bar', Slot.ACCESSORY, SetName.CHOCO, 100, [
         [Stat.POWER, 50000],
         [Stat.TOUGHNESS, 50000],
         [Stat.ENERGY_POWER, 3000],
         [Stat.ENERGY_CAP, 250],
         [Stat.ENERGY_BARS, 2200],
     ]),
-    new Item('Magic Bar Bar', Slot.ACCESSORY, SetName.CHOCO, 100, [
+    new Item(227, 'Magic Bar Bar', Slot.ACCESSORY, SetName.CHOCO, 100, [
         [Stat.POWER, 50000],
         [Stat.TOUGHNESS, 50000],
         [Stat.MAGIC_POWER, 3000],
         [Stat.MAGIC_CAP, 250],
         [Stat.MAGIC_BARS, 2200],
     ]),
-    new Item('Ascended x5 Pendant', Slot.ACCESSORY, SetName.FOREST_PENDANT, 100, [
+    new Item(229, 'Ascended x5 Pendant', Slot.ACCESSORY, SetName.FOREST_PENDANT, 100, [
         [Stat.POWER, 400000],
         [Stat.TOUGHNESS, 400000],
         [Stat.NGU_SPEED, 250],
@@ -983,7 +983,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 5000],
         [Stat.MAGIC_POWER, 5000],
     ]),
-    new Item('Emperor Looty', Slot.ACCESSORY, SetName.LOOTY, 100, [
+    new Item(230, 'Emperor Looty', Slot.ACCESSORY, SetName.LOOTY, 100, [
         [Stat.POWER, 300000],
         [Stat.TOUGHNESS, 300000],
         [Stat.DROP_CHANCE, 300],
@@ -992,7 +992,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 150],
         [Stat.MAGIC_CAP, 150],
     ]),
-    new Item('Clown Hat', Slot.HEAD, SetName.PINK, 100, [
+    new Item(231, 'Clown Hat', Slot.HEAD, SetName.PINK, 100, [
         [Stat.POWER, 60000],
         [Stat.TOUGHNESS, 742000],
         [Stat.MAGIC_POWER, 5500],
@@ -1001,7 +1001,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 3500],
         [Stat.MAGIC_BARS, 3500],
     ]),
-    new Item('Fabulous Super Chest', Slot.CHEST, SetName.PINK, 100, [
+    new Item(232, 'Fabulous Super Chest', Slot.CHEST, SetName.PINK, 100, [
         [Stat.POWER, 60000],
         [Stat.TOUGHNESS, 740000],
         [Stat.MAGIC_BARS, 5300],
@@ -1010,7 +1010,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 5400],
         [Stat.MAGIC_POWER, 5400],
     ]),
-    new Item('A Crappy Tutu', Slot.PANTS, SetName.PINK, 100, [
+    new Item(233, 'A Crappy Tutu', Slot.PANTS, SetName.PINK, 100, [
         [Stat.POWER, 50000],
         [Stat.TOUGHNESS, 755000],
         [Stat.ENERGY_BARS, 5000],
@@ -1018,7 +1018,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 600],
         [Stat.MAGIC_CAP, 600],
     ]),
-    new Item('Pretty Pink Slippers', Slot.BOOTS, SetName.PINK, 100, [
+    new Item(234, 'Pretty Pink Slippers', Slot.BOOTS, SetName.PINK, 100, [
         [Stat.POWER, 30000],
         [Stat.TOUGHNESS, 730000],
         [Stat.MAGIC_CAP, 630],
@@ -1026,7 +1026,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 6500],
         [Stat.MAGIC_POWER, 6500],
     ]),
-    new Item('Giant Sticky Foot', Slot.WEAPON, SetName.PINK, 100, [
+    new Item(235, 'Giant Sticky Foot', Slot.WEAPON, SetName.PINK, 100, [
         [Stat.POWER, 7600000],
         [Stat.TOUGHNESS, 440000],
         [Stat.ENERGY_CAP, 570],
@@ -1034,14 +1034,14 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 6000],
         [Stat.MAGIC_POWER, 6000],
     ]),
-    new Item('A Pretty Pink Bow', Slot.ACCESSORY, SetName.PINK, 100, [
+    new Item(236, 'A Pretty Pink Bow', Slot.ACCESSORY, SetName.PINK, 100, [
         [Stat.POWER, 400000],
         [Stat.TOUGHNESS, 400000],
         [Stat.DAYCARE_SPEED, 10],
         [Stat.NGU_SPEED, 170],
         [Stat.QUEST_DROP, 5],
     ]),
-    new Item('A Worn Out Fedora', Slot.HEAD, SetName.NERD, 100, [
+    new Item(237, 'A Worn Out Fedora', Slot.HEAD, SetName.NERD, 100, [
         [Stat.POWER, 80000],
         [Stat.TOUGHNESS, 1100000],
         [Stat.MAGIC_CAP, 900],
@@ -1049,7 +1049,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 5800],
         [Stat.MAGIC_POWER, 5800],
     ]),
-    new Item('Sweat-Stained NGU Shirt', Slot.CHEST, SetName.NERD, 100, [
+    new Item(238, 'Sweat-Stained NGU Shirt', Slot.CHEST, SetName.NERD, 100, [
         [Stat.POWER, 80000],
         [Stat.TOUGHNESS, 1120000],
         [Stat.ENERGY_POWER, 10000],
@@ -1057,7 +1057,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 700],
         [Stat.MAGIC_CAP, 700],
     ]),
-    new Item('Not Sweat-Stained Underpants', Slot.PANTS, SetName.NERD, 100, [
+    new Item(239, 'Not Sweat-Stained Underpants', Slot.PANTS, SetName.NERD, 100, [
         [Stat.POWER, 50000],
         [Stat.TOUGHNESS, 1200000],
         [Stat.MAGIC_BARS, 6200],
@@ -1065,7 +1065,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 6100],
         [Stat.MAGIC_POWER, 6100],
     ]),
-    new Item('Nerdy Shoes', Slot.BOOTS, SetName.NERD, 100, [
+    new Item(240, 'Nerdy Shoes', Slot.BOOTS, SetName.NERD, 100, [
         [Stat.POWER, 80000],
         [Stat.TOUGHNESS, 1200000],
         [Stat.MAGIC_POWER, 8000],
@@ -1074,7 +1074,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 6300],
         [Stat.MAGIC_BARS, 6300],
     ]),
-    new Item('Superior Japanese Katana', Slot.WEAPON, SetName.NERD, 100, [
+    new Item(241, 'Superior Japanese Katana', Slot.WEAPON, SetName.NERD, 100, [
         [Stat.POWER, 11000000],
         [Stat.TOUGHNESS, 600000],
         [Stat.MAGIC_BARS, 6100],
@@ -1083,7 +1083,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 6500],
         [Stat.MAGIC_POWER, 6500],
     ]),
-    new Item('An Ordinary Calculator', Slot.ACCESSORY, SetName.NERD, 100, [
+    new Item(242, 'An Ordinary Calculator', Slot.ACCESSORY, SetName.NERD, 100, [
         [Stat.POWER, 250000],
         [Stat.TOUGHNESS, 250000],
         [Stat.NGU_SPEED, 300],
@@ -1091,7 +1091,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 6000],
         [Stat.MAGIC_BARS, 6000],
     ]),
-    new Item('Anime Figurine', Slot.ACCESSORY, SetName.NERD, 100, [
+    new Item(243, 'Anime Figurine', Slot.ACCESSORY, SetName.NERD, 100, [
         [Stat.POWER, 250000],
         [Stat.TOUGHNESS, 250000],
         [Stat.MAGIC_CAP, 500],
@@ -1099,35 +1099,35 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 8000],
         [Stat.MAGIC_POWER, 8000],
     ]),
-    new Item('The D20', Slot.ACCESSORY, SetName.NERD2, 100, [
+    new Item(244, 'The D20', Slot.ACCESSORY, SetName.NERD2, 100, [
         [Stat.POWER, 250000],
         [Stat.TOUGHNESS, 250000],
         [Stat.ENERGY_POWER, 9000],
         [Stat.ENERGY_CAP, 800],
         [Stat.ENERGY_BARS, 9000],
     ]),
-    new Item('The D8', Slot.ACCESSORY, SetName.NERD2, 100, [
+    new Item(245, 'The D8', Slot.ACCESSORY, SetName.NERD2, 100, [
         [Stat.POWER, 300000],
         [Stat.TOUGHNESS, 250000],
         [Stat.MAGIC_POWER, 9000],
         [Stat.MAGIC_CAP, 800],
         [Stat.MAGIC_BARS, 9000],
     ]),
-    new Item('Anime Bodypillow', Slot.ACCESSORY, SetName.NERD3, 100, [
+    new Item(246, 'Anime Bodypillow', Slot.ACCESSORY, SetName.NERD3, 100, [
         [Stat.POWER, 500000],
         [Stat.TOUGHNESS, 500000],
         [Stat.RES3_POWER, 10],
         [Stat.NGU_SPEED, 150],
         [Stat.RESPAWN, 2],
     ]),
-    new Item('Red Meeple Thingy', Slot.ACCESSORY, SetName.NERD3, 100, [
+    new Item(247, 'Red Meeple Thingy', Slot.ACCESSORY, SetName.NERD3, 100, [
         [Stat.POWER, 500000],
         [Stat.TOUGHNESS, 500000],
         [Stat.MAGIC_POWER, 12000],
         [Stat.RES3_POWER, 10],
         [Stat.AUGMENT_SPEED, 250],
     ]),
-    new Item('A Bag of Trash', Slot.ACCESSORY, SetName.NERD4, 100, [
+    new Item(248, 'A Bag of Trash', Slot.ACCESSORY, SetName.NERD4, 100, [
         [Stat.POWER, 500000],
         [Stat.TOUGHNESS, 500000],
         [Stat.RES3_BARS, 5],
@@ -1135,7 +1135,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 1000],
         [Stat.MAGIC_CAP, 1000],
     ]),
-    new Item('Heart Shaped Panties', Slot.ACCESSORY, SetName.NERD4, 100, [
+    new Item(249, 'Heart Shaped Panties', Slot.ACCESSORY, SetName.NERD4, 100, [
         [Stat.POWER, 666666],
         [Stat.TOUGHNESS, 666666],
         [Stat.RES3_POWER, 6.666666],
@@ -1143,7 +1143,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 666.6666],
         [Stat.MAGIC_CAP, 666.6666],
     ]),
-    new Item('Numerical Head', Slot.HEAD, SetName.META, 100, [
+    new Item(251, 'Numerical Head', Slot.HEAD, SetName.META, 100, [
         [Stat.POWER, 150000],
         [Stat.TOUGHNESS, 2200000],
         [Stat.ENERGY_CAP, 1500],
@@ -1151,7 +1151,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 8300],
         [Stat.MAGIC_POWER, 8300],
     ]),
-    new Item('Numerical Chest', Slot.CHEST, SetName.META, 100, [
+    new Item(252, 'Numerical Chest', Slot.CHEST, SetName.META, 100, [
         [Stat.POWER, 150000],
         [Stat.TOUGHNESS, 2200000],
         [Stat.MAGIC_CAP, 1100],
@@ -1159,7 +1159,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 5000],
         [Stat.MAGIC_BARS, 5000],
     ]),
-    new Item('Numerical Legs', Slot.PANTS, SetName.META, 100, [
+    new Item(253, 'Numerical Legs', Slot.PANTS, SetName.META, 100, [
         [Stat.POWER, 150000],
         [Stat.TOUGHNESS, 2200000],
         [Stat.ENERGY_BARS, 8500],
@@ -1167,7 +1167,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 900],
         [Stat.MAGIC_CAP, 900],
     ]),
-    new Item('Numerical Boots', Slot.BOOTS, SetName.META, 100, [
+    new Item(254, 'Numerical Boots', Slot.BOOTS, SetName.META, 100, [
         [Stat.POWER, 150000],
         [Stat.TOUGHNESS, 2200000],
         [Stat.ENERGY_CAP, 1100],
@@ -1175,14 +1175,14 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 10000],
         [Stat.MAGIC_POWER, 10000],
     ]),
-    new Item('The Number 7', Slot.WEAPON, SetName.META, 100, [
+    new Item(255, 'The Number 7', Slot.WEAPON, SetName.META, 100, [
         [Stat.POWER, 25000000],
         [Stat.TOUGHNESS, 1200000],
         [Stat.MAGIC_POWER, 9000],
         [Stat.MAGIC_CAP, 1000],
         [Stat.RES3_BARS, 10],
     ]),
-    new Item('Infinity Charm', Slot.ACCESSORY, SetName.META, 100, [
+    new Item(256, 'Infinity Charm', Slot.ACCESSORY, SetName.META, 100, [
         [Stat.POWER, 888888],
         [Stat.TOUGHNESS, 888888],
         [Stat.MOVE_COOLDOWN, 5],
@@ -1190,14 +1190,14 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 888.8888],
         [Stat.MAGIC_CAP, 888.8888],
     ]),
-    new Item('69 Charm', Slot.ACCESSORY, SetName.META, 100, [
+    new Item(257, '69 Charm', Slot.ACCESSORY, SetName.META, 100, [
         [Stat.POWER, 696969],
         [Stat.TOUGHNESS, 696969],
         [Stat.QUEST_DROP, 8],
         [Stat.WANDOOS_SPEED, 400],
         [Stat.RES3_CAP, 1],
     ]),
-    new Item('Party Hat', Slot.HEAD, SetName.PARTY, 100, [
+    new Item(258, 'Party Hat', Slot.HEAD, SetName.PARTY, 100, [
         [Stat.POWER, 250000],
         [Stat.TOUGHNESS, 4500000],
         [Stat.MAGIC_CAP, 1500],
@@ -1205,7 +1205,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 8000],
         [Stat.MAGIC_BARS, 8000],
     ]),
-    new Item('Pogmail Chest', Slot.CHEST, SetName.PARTY, 100, [
+    new Item(259, 'Pogmail Chest', Slot.CHEST, SetName.PARTY, 100, [
         [Stat.POWER, 250000],
         [Stat.TOUGHNESS, 4500000],
         [Stat.ENERGY_CAP, 1600],
@@ -1213,7 +1213,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 13000],
         [Stat.MAGIC_POWER, 13000],
     ]),
-    new Item('Tear Away Pants', Slot.PANTS, SetName.PARTY, 100, [
+    new Item(260, 'Tear Away Pants', Slot.PANTS, SetName.PARTY, 100, [
         [Stat.POWER, 250000],
         [Stat.TOUGHNESS, 4500000],
         [Stat.MAGIC_BARS, 12000],
@@ -1221,7 +1221,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 12000],
         [Stat.MAGIC_POWER, 12000],
     ]),
-    new Item('Pizza Boots', Slot.BOOTS, SetName.PARTY, 100, [
+    new Item(261, 'Pizza Boots', Slot.BOOTS, SetName.PARTY, 100, [
         [Stat.POWER, 250000],
         [Stat.TOUGHNESS, 4500000],
         [Stat.ENERGY_BARS, 10000],
@@ -1229,7 +1229,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 1200],
         [Stat.MAGIC_CAP, 1200],
     ]),
-    new Item('The God of Thunder\'s Hammer', Slot.WEAPON, SetName.PARTY, 100, [
+    new Item(262, 'The God of Thunder\'s Hammer', Slot.WEAPON, SetName.PARTY, 100, [
         [Stat.POWER, 50000000],
         [Stat.TOUGHNESS, 2000000],
         [Stat.ENERGY_CAP, 1300],
@@ -1237,7 +1237,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 11000],
         [Stat.MAGIC_POWER, 11000],
     ]),
-    new Item('Plastic Red Cup', Slot.ACCESSORY, SetName.PARTY, 100, [
+    new Item(263, 'Plastic Red Cup', Slot.ACCESSORY, SetName.PARTY, 100, [
         [Stat.POWER, 1500000],
         [Stat.TOUGHNESS, 1000000],
         [Stat.GOLD_DROP, 8000],
@@ -1246,7 +1246,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 12000],
         [Stat.MAGIC_BARS, 12000],
     ]),
-    new Item('Party Whistle', Slot.ACCESSORY, SetName.PARTY, 100, [
+    new Item(264, 'Party Whistle', Slot.ACCESSORY, SetName.PARTY, 100, [
         [Stat.POWER, 2000000],
         [Stat.TOUGHNESS, 2000000],
         [Stat.NGU_SPEED, 200],
@@ -1254,7 +1254,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 10000],
         [Stat.MAGIC_POWER, 10000],
     ]),
-    new Item('Mobster Hat', Slot.HEAD, SetName.MOBSTER, 100, [
+    new Item(265, 'Mobster Hat', Slot.HEAD, SetName.MOBSTER, 100, [
         [Stat.POWER, 400000],
         [Stat.TOUGHNESS, 10000000],
         [Stat.ENERGY_POWER, 17000],
@@ -1262,7 +1262,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 1600],
         [Stat.MAGIC_CAP, 1600],
     ]),
-    new Item('Mobster Vest', Slot.CHEST, SetName.MOBSTER, 100, [
+    new Item(266, 'Mobster Vest', Slot.CHEST, SetName.MOBSTER, 100, [
         [Stat.POWER, 400000],
         [Stat.TOUGHNESS, 10000000],
         [Stat.MAGIC_POWER, 18000],
@@ -1270,7 +1270,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 1600],
         [Stat.MAGIC_CAP, 1600],
     ]),
-    new Item('Mobster Pants', Slot.PANTS, SetName.MOBSTER, 100, [
+    new Item(267, 'Mobster Pants', Slot.PANTS, SetName.MOBSTER, 100, [
         [Stat.POWER, 400000],
         [Stat.TOUGHNESS, 10000000],
         [Stat.ENERGY_CAP, 1400],
@@ -1279,7 +1279,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 13000],
         [Stat.MAGIC_POWER, 13000],
     ]),
-    new Item('Cement Boots', Slot.BOOTS, SetName.MOBSTER, 100, [
+    new Item(268, 'Cement Boots', Slot.BOOTS, SetName.MOBSTER, 100, [
         [Stat.POWER, 400000],
         [Stat.TOUGHNESS, 10000000],
         [Stat.ENERGY_CAP, 1300],
@@ -1287,7 +1287,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 14000],
         [Stat.MAGIC_POWER, 14000],
     ]),
-    new Item('Tommy Gun', Slot.WEAPON, SetName.MOBSTER, 100, [
+    new Item(269, 'Tommy Gun', Slot.WEAPON, SetName.MOBSTER, 100, [
         [Stat.POWER, 100000000],
         [Stat.TOUGHNESS, 4000000],
         [Stat.MAGIC_CAP, 1800],
@@ -1296,7 +1296,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 14000],
         [Stat.MAGIC_BARS, 14000],
     ]),
-    new Item('A Garrote', Slot.ACCESSORY, SetName.MOBSTER, 100, [
+    new Item(270, 'A Garrote', Slot.ACCESSORY, SetName.MOBSTER, 100, [
         [Stat.POWER, 4000000],
         [Stat.TOUGHNESS, 4000000],
         [Stat.DAYCARE_SPEED, 10],
@@ -1304,7 +1304,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 14000],
         [Stat.MAGIC_POWER, 14000],
     ]),
-    new Item('Brass Knuckles', Slot.ACCESSORY, SetName.MOBSTER, 100, [
+    new Item(271, 'Brass Knuckles', Slot.ACCESSORY, SetName.MOBSTER, 100, [
         [Stat.POWER, 3500000],
         [Stat.TOUGHNESS, 3500000],
         [Stat.RES3_POWER, 12],
@@ -1312,7 +1312,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 900],
         [Stat.MAGIC_CAP, 900],
     ]),
-    new Item('Violin Case', Slot.ACCESSORY, SetName.MOBSTER2, 100, [
+    new Item(272, 'Violin Case', Slot.ACCESSORY, SetName.MOBSTER2, 100, [
         [Stat.POWER, 7000000],
         [Stat.TOUGHNESS, 7000000],
         [Stat.RES3_POWER, 13],
@@ -1321,21 +1321,21 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 13000],
         [Stat.MAGIC_BARS, 13000],
     ]),
-    new Item('Molotov Cocktail', Slot.ACCESSORY, SetName.MOBSTER2, 100, [
+    new Item(273, 'Molotov Cocktail', Slot.ACCESSORY, SetName.MOBSTER2, 100, [
         [Stat.POWER, 10000000],
         [Stat.TOUGHNESS, 10000000],
         [Stat.NGU_SPEED, 200],
         [Stat.SEED_DROP, 50],
         [Stat.WANDOOS_SPEED, 800],
     ]),
-    new Item('The Godmother\'s Ring', Slot.ACCESSORY, SetName.MOBSTER3, 100, [
+    new Item(274, 'The Godmother\'s Ring', Slot.ACCESSORY, SetName.MOBSTER3, 100, [
         [Stat.POWER, 15000000],
         [Stat.TOUGHNESS, 15000000],
         [Stat.GOLD_DROP, 30000],
         [Stat.DROP_CHANCE, 700],
         [Stat.RES3_CAP, 5.5],
     ]),
-    new Item('The Godmother\'s Wand', Slot.ACCESSORY, SetName.MOBSTER3, 100, [
+    new Item(275, 'The Godmother\'s Wand', Slot.ACCESSORY, SetName.MOBSTER3, 100, [
         [Stat.POWER, 22000000],
         [Stat.TOUGHNESS, 22000000],
         [Stat.YGGDRASIL_YIELD, 7.5],
@@ -1344,34 +1344,34 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 6000],
         [Stat.MAGIC_CAP, 6000],
     ]),
-    new Item('Left Fairy Wing', Slot.ACCESSORY, SetName.MOBSTER4, 100, [
+    new Item(276, 'Left Fairy Wing', Slot.ACCESSORY, SetName.MOBSTER4, 100, [
         [Stat.POWER, 60000000],
         [Stat.TOUGHNESS, 60000000],
         [Stat.RES3_CAP, 8],
         [Stat.RES3_POWER, 80],
         [Stat.ENERGY_CAP, 8000],
     ]),
-    new Item('Right Fairy Wing', Slot.ACCESSORY, SetName.MOBSTER4, 100, [
+    new Item(277, 'Right Fairy Wing', Slot.ACCESSORY, SetName.MOBSTER4, 100, [
         [Stat.MAGIC_CAP, 9000],
         [Stat.ENERGY_BARS, 90000],
         [Stat.MAGIC_BARS, 90000],
         [Stat.ENERGY_POWER, 90000],
         [Stat.MAGIC_POWER, 90000],
     ]),
-    new Item('My Orange Heart <3', Slot.ACCESSORY, SetName.HEART, 100, [
+    new Item(293, 'My Orange Heart <3', Slot.ACCESSORY, SetName.HEART, 100, [
         [Stat.POWER, 100],
         [Stat.TOUGHNESS, 1000],
         [Stat.QUEST_DROP, 5],
         [Stat.GOLD_DROP, 300],
     ]),
-    new Item('Ascended x6 Pendant', Slot.ACCESSORY, SetName.FOREST_PENDANT, 100, [
+    new Item(295, 'Ascended x6 Pendant', Slot.ACCESSORY, SetName.FOREST_PENDANT, 100, [
         [Stat.POWER, 20000000],
         [Stat.TOUGHNESS, 20000000],
         [Stat.RES3_CAP, 50],
         [Stat.RES3_POWER, 100],
         [Stat.RES3_BARS, 100],
     ]),
-    new Item('GALACTIC HERALD LOOTY', Slot.ACCESSORY, SetName.LOOTY, 100, [
+    new Item(296, 'GALACTIC HERALD LOOTY', Slot.ACCESSORY, SetName.LOOTY, 100, [
         [Stat.POWER, 30000000],
         [Stat.TOUGHNESS, 30000000],
         [Stat.DROP_CHANCE, 600],
@@ -1379,13 +1379,13 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 25000],
         [Stat.MAGIC_POWER, 25000],
     ]),
-    new Item('My Grey Heart <3', Slot.ACCESSORY, SetName.HEART, 100, [
+    new Item(297, 'My Grey Heart <3', Slot.ACCESSORY, SetName.HEART, 100, [
         [Stat.POWER, 1000000],
         [Stat.TOUGHNESS, 1000000],
         [Stat.RES3_CAP, 20],
         [Stat.RES3_BARS, 20],
     ]),
-    new Item('Hamlet', Slot.HEAD, SetName.TYPO, 100, [
+    new Item(301, 'Hamlet', Slot.HEAD, SetName.TYPO, 100, [
         [Stat.POWER, 600000],
         [Stat.TOUGHNESS, 15000000],
         [Stat.RES3_POWER, 28],
@@ -1393,7 +1393,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 31000],
         [Stat.MAGIC_BARS, 31000],
     ]),
-    new Item('Chess Plate', Slot.CHEST, SetName.TYPO, 100, [
+    new Item(302, 'Chess Plate', Slot.CHEST, SetName.TYPO, 100, [
         [Stat.POWER, 600000],
         [Stat.TOUGHNESS, 16000000],
         [Stat.RES3_CAP, 2.7],
@@ -1401,7 +1401,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 29000],
         [Stat.MAGIC_POWER, 29000],
     ]),
-    new Item('Logs', Slot.PANTS, SetName.TYPO, 100, [
+    new Item(303, 'Logs', Slot.PANTS, SetName.TYPO, 100, [
         [Stat.POWER, 600000],
         [Stat.TOUGHNESS, 15500000],
         [Stat.RES3_CAP, 3.2],
@@ -1409,7 +1409,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 3500],
         [Stat.MAGIC_CAP, 3500],
     ]),
-    new Item('Booms', Slot.BOOTS, SetName.TYPO, 100, [
+    new Item(304, 'Booms', Slot.BOOTS, SetName.TYPO, 100, [
         [Stat.POWER, 600000],
         [Stat.TOUGHNESS, 15000000],
         [Stat.RES3_POWER, 30],
@@ -1417,7 +1417,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 35000],
         [Stat.MAGIC_POWER, 35000],
     ]),
-    new Item('Wee pin', Slot.WEAPON, SetName.TYPO, 100, [
+    new Item(305, 'Wee pin', Slot.WEAPON, SetName.TYPO, 100, [
         [Stat.POWER, 160000000],
         [Stat.TOUGHNESS, 6000000],
         [Stat.RES3_CAP, 3.5],
@@ -1426,7 +1426,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 34000],
         [Stat.MAGIC_BARS, 34000],
     ]),
-    new Item('The Ass-cessory', Slot.ACCESSORY, SetName.TYPO, 100, [
+    new Item(306, 'The Ass-cessory', Slot.ACCESSORY, SetName.TYPO, 100, [
         [Stat.POWER, 12000000],
         [Stat.TOUGHNESS, 12000000],
         [Stat.YGGDRASIL_YIELD, 5],
@@ -1435,14 +1435,14 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 33000],
         [Stat.MAGIC_POWER, 33000],
     ]),
-    new Item('Eye of ELXU', Slot.ACCESSORY, SetName.TYPO, 100, [
+    new Item(307, 'Eye of ELXU', Slot.ACCESSORY, SetName.TYPO, 100, [
         [Stat.POWER, 6666666],
         [Stat.TOUGHNESS, 6666666],
         [Stat.RES3_CAP, 3.2],
         [Stat.RES3_POWER, 35],
         [Stat.RES3_BARS, 29],
     ]),
-    new Item('Spinning Tophat', Slot.HEAD, SetName.FAD, 100, [
+    new Item(308, 'Spinning Tophat', Slot.HEAD, SetName.FAD, 100, [
         [Stat.POWER, 900000],
         [Stat.TOUGHNESS, 22000000],
         [Stat.RES3_POWER, 62],
@@ -1450,7 +1450,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 61000],
         [Stat.MAGIC_POWER, 61000],
     ]),
-    new Item('Demonic Flurbie Chestplate', Slot.CHEST, SetName.FAD, 100, [
+    new Item(309, 'Demonic Flurbie Chestplate', Slot.CHEST, SetName.FAD, 100, [
         [Stat.POWER, 900000],
         [Stat.TOUGHNESS, 24000000],
         [Stat.RES3_CAP, 7],
@@ -1459,7 +1459,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 40000],
         [Stat.MAGIC_BARS, 40000],
     ]),
-    new Item('AAA Battery Legs', Slot.PANTS, SetName.FAD, 100, [
+    new Item(310, 'AAA Battery Legs', Slot.PANTS, SetName.FAD, 100, [
         [Stat.POWER, 900000],
         [Stat.TOUGHNESS, 23000000],
         [Stat.RES3_POWER, 62],
@@ -1467,7 +1467,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 57000],
         [Stat.MAGIC_POWER, 57000],
     ]),
-    new Item('Slinky Boots', Slot.BOOTS, SetName.FAD, 100, [
+    new Item(311, 'Slinky Boots', Slot.BOOTS, SetName.FAD, 100, [
         [Stat.POWER, 900000],
         [Stat.TOUGHNESS, 21000000],
         [Stat.RES3_BARS, 62],
@@ -1475,7 +1475,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 50000],
         [Stat.MAGIC_BARS, 50000],
     ]),
-    new Item('THE MALF SLAMMER', Slot.WEAPON, SetName.FAD, 100, [
+    new Item(312, 'THE MALF SLAMMER', Slot.WEAPON, SetName.FAD, 100, [
         [Stat.POWER, 250000000],
         [Stat.TOUGHNESS, 10000000],
         [Stat.RES3_POWER, 64],
@@ -1483,21 +1483,21 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 62000],
         [Stat.MAGIC_POWER, 62000],
     ]),
-    new Item('Rare Foil Pokeyman Card', Slot.ACCESSORY, SetName.FAD, 100, [
+    new Item(313, 'Rare Foil Pokeyman Card', Slot.ACCESSORY, SetName.FAD, 100, [
         [Stat.POWER, 19000000],
         [Stat.TOUGHNESS, 19000000],
         [Stat.DROP_CHANCE, 400],
         [Stat.GOLD_DROP, 50000],
         [Stat.RES3_CAP, 12],
     ]),
-    new Item('A handful of Krazy Bonez', Slot.ACCESSORY, SetName.FAD, 100, [
+    new Item(314, 'A handful of Krazy Bonez', Slot.ACCESSORY, SetName.FAD, 100, [
         [Stat.POWER, 20000000],
         [Stat.TOUGHNESS, 20000000],
         [Stat.QUEST_DROP, 7],
         [Stat.RES3_CAP, 7],
         [Stat.RES3_POWER, 60],
     ]),
-    new Item('Buster Sword Top', Slot.HEAD, SetName.JRPG, 100, [
+    new Item(315, 'Buster Sword Top', Slot.HEAD, SetName.JRPG, 100, [
         [Stat.POWER, 1400000],
         [Stat.TOUGHNESS, 38000000],
         [Stat.RES3_CAP, 8.3],
@@ -1505,14 +1505,14 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 85000],
         [Stat.MAGIC_POWER, 85000],
     ]),
-    new Item('Buster Sword Upper', Slot.CHEST, SetName.JRPG, 100, [
+    new Item(316, 'Buster Sword Upper', Slot.CHEST, SetName.JRPG, 100, [
         [Stat.POWER, 1500000],
         [Stat.TOUGHNESS, 37000000],
         [Stat.RES3_CAP, 9.2],
         [Stat.RES3_POWER, 88],
         [Stat.RES3_BARS, 90],
     ]),
-    new Item('Buster Sword Lower', Slot.PANTS, SetName.JRPG, 100, [
+    new Item(317, 'Buster Sword Lower', Slot.PANTS, SetName.JRPG, 100, [
         [Stat.POWER, 1500000],
         [Stat.TOUGHNESS, 39000000],
         [Stat.RES3_CAP, 8.9],
@@ -1520,7 +1520,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 87000],
         [Stat.MAGIC_BARS, 87000],
     ]),
-    new Item('Buster Sword Bottom', Slot.BOOTS, SetName.JRPG, 100, [
+    new Item(318, 'Buster Sword Bottom', Slot.BOOTS, SetName.JRPG, 100, [
         [Stat.POWER, 1500000],
         [Stat.TOUGHNESS, 38000000],
         [Stat.RES3_POWER, 91],
@@ -1529,7 +1529,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 9400],
         [Stat.MAGIC_CAP, 9400],
     ]),
-    new Item('Gift Shop Buster Sword Replica', Slot.WEAPON, SetName.JRPG, 100, [
+    new Item(319, 'Gift Shop Buster Sword Replica', Slot.WEAPON, SetName.JRPG, 100, [
         [Stat.POWER, 400000000],
         [Stat.TOUGHNESS, 16000000],
         [Stat.RES3_BARS, 91],
@@ -1537,7 +1537,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 87000],
         [Stat.MAGIC_BARS, 87000],
     ]),
-    new Item('A Gigantic Zipper', Slot.ACCESSORY, SetName.JRPG, 100, [
+    new Item(320, 'A Gigantic Zipper', Slot.ACCESSORY, SetName.JRPG, 100, [
         [Stat.POWER, 21000000],
         [Stat.TOUGHNESS, 23000000],
         [Stat.RES3_BARS, 97],
@@ -1545,7 +1545,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 88000],
         [Stat.MAGIC_POWER, 88000],
     ]),
-    new Item('Anime Hero Wig', Slot.ACCESSORY, SetName.JRPG, 100, [
+    new Item(321, 'Anime Hero Wig', Slot.ACCESSORY, SetName.JRPG, 100, [
         [Stat.POWER, 30000000],
         [Stat.TOUGHNESS, 30000000],
         [Stat.RES3_CAP, 8.8],
@@ -1553,14 +1553,14 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 96000],
         [Stat.MAGIC_POWER, 96000],
     ]),
-    new Item('Hat of Greed', Slot.HEAD, SetName.EXILE, 100, [
+    new Item(322, 'Hat of Greed', Slot.HEAD, SetName.EXILE, 100, [
         [Stat.POWER, 2200000],
         [Stat.TOUGHNESS, 57000000],
         [Stat.RES3_CAP, 12],
         [Stat.RES3_POWER, 112],
         [Stat.GOLD_DROP, 100000],
     ]),
-    new Item('Blue Eyes White Chestplate', Slot.CHEST, SetName.EXILE, 100, [
+    new Item(323, 'Blue Eyes White Chestplate', Slot.CHEST, SetName.EXILE, 100, [
         [Stat.POWER, 2300000],
         [Stat.TOUGHNESS, 60000000],
         [Stat.RES3_POWER, 118],
@@ -1569,7 +1569,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 103000],
         [Stat.MAGIC_BARS, 103000],
     ]),
-    new Item('Trap Pants', Slot.PANTS, SetName.EXILE, 100, [
+    new Item(324, 'Trap Pants', Slot.PANTS, SetName.EXILE, 100, [
         [Stat.POWER, 2200000],
         [Stat.TOUGHNESS, 59000000],
         [Stat.RES3_BARS, 110],
@@ -1577,7 +1577,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 120000],
         [Stat.MAGIC_POWER, 120000],
     ]),
-    new Item('All the other Titans\' Missing Shoes', Slot.BOOTS, SetName.EXILE, 100, [
+    new Item(325, 'All the other Titans\' Missing Shoes', Slot.BOOTS, SetName.EXILE, 100, [
         [Stat.POWER, 2200000],
         [Stat.TOUGHNESS, 58000000],
         [Stat.RES3_POWER, 113],
@@ -1586,7 +1586,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 118000],
         [Stat.MAGIC_POWER, 118000],
     ]),
-    new Item('The Disk of Dueling', Slot.WEAPON, SetName.EXILE, 100, [
+    new Item(326, 'The Disk of Dueling', Slot.WEAPON, SetName.EXILE, 100, [
         [Stat.POWER, 620000000],
         [Stat.TOUGHNESS, 25000000],
         [Stat.RES3_POWER, 118],
@@ -1594,14 +1594,14 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 100000],
         [Stat.MAGIC_BARS, 100000],
     ]),
-    new Item('The Joker', Slot.ACCESSORY, SetName.EXILE, 100, [
+    new Item(327, 'The Joker', Slot.ACCESSORY, SetName.EXILE, 100, [
         [Stat.POWER, 66600000],
         [Stat.TOUGHNESS, 66600000],
         [Stat.COOKING, 10000000],
         [Stat.WISH_SPEED, 5],
         [Stat.RES3_CAP, 40],
     ]),
-    new Item('Antlers of the Exile', Slot.ACCESSORY, SetName.EXILE, 100, [
+    new Item(328, 'Antlers of the Exile', Slot.ACCESSORY, SetName.EXILE, 100, [
         [Stat.POWER, 80000000],
         [Stat.RES3_POWER, 120],
         [Stat.ENERGY_POWER, 100000],
@@ -1609,13 +1609,13 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 12000],
         [Stat.MAGIC_CAP, 12000],
     ]),
-    new Item('The Credit Card', Slot.ACCESSORY, SetName.EXILE2, 100, [
+    new Item(329, 'The Credit Card', Slot.ACCESSORY, SetName.EXILE2, 100, [
         [Stat.QUEST_DROP, 5],
         [Stat.GOLD_DROP, 250000],
         [Stat.ENERGY_BARS, 170000],
         [Stat.MAGIC_BARS, 170000],
     ]),
-    new Item('Tentacle of the Exile', Slot.ACCESSORY, SetName.EXILE2, 100, [
+    new Item(330, 'Tentacle of the Exile', Slot.ACCESSORY, SetName.EXILE2, 100, [
         [Stat.POWER, 110000000],
         [Stat.TOUGHNESS, 100000000],
         [Stat.RES3_BARS, 180],
@@ -1623,7 +1623,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 190000],
         [Stat.MAGIC_POWER, 190000],
     ]),
-    new Item('The Skip Card', Slot.ACCESSORY, SetName.EXILE3, 100, [
+    new Item(331, 'The Skip Card', Slot.ACCESSORY, SetName.EXILE3, 100, [
         [Stat.POWER, 120000000],
         [Stat.TOUGHNESS, 120000000],
         [Stat.NGU_SPEED, 250],
@@ -1631,7 +1631,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 280000],
         [Stat.MAGIC_POWER, 280000],
     ]),
-    new Item('Antennae of the Exile', Slot.ACCESSORY, SetName.EXILE3, 100, [
+    new Item(332, 'Antennae of the Exile', Slot.ACCESSORY, SetName.EXILE3, 100, [
         [Stat.POWER, 100000000],
         [Stat.TOUGHNESS, 100000000],
         [Stat.RES3_POWER, 270],
@@ -1639,7 +1639,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 26000],
         [Stat.MAGIC_CAP, 26000],
     ]),
-    new Item('The Black Lotus', Slot.ACCESSORY, SetName.EXILE4, 100, [
+    new Item(333, 'The Black Lotus', Slot.ACCESSORY, SetName.EXILE4, 100, [
         [Stat.POWER, 150000000],
         [Stat.TOUGHNESS, 150000000],
         [Stat.RES3_CAP, 45],
@@ -1647,7 +1647,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 40000],
         [Stat.MAGIC_CAP, 40000],
     ]),
-    new Item('Buster of the Exile', Slot.ACCESSORY, SetName.EXILE4, 100, [
+    new Item(334, 'Buster of the Exile', Slot.ACCESSORY, SetName.EXILE4, 100, [
         [Stat.POWER, 250000000],
         [Stat.TOUGHNESS, 250000000],
         [Stat.RES3_POWER, 400],
@@ -1655,22 +1655,22 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 400000],
         [Stat.MAGIC_POWER, 400000],
     ]),
-    new Item('Seal of the Exile', Slot.WEAPON, SetName.MISC, 100, [
+    new Item(335, 'Seal of the Exile', Slot.WEAPON, SetName.MISC, 100, [
     ]),
-    new Item('Blue Eyes Ultimate Chestplate', Slot.CHEST, SetName.EXILE, 100, [
+    new Item(342, 'Blue Eyes Ultimate Chestplate', Slot.CHEST, SetName.EXILE, 100, [
         [Stat.POWER, 5500000],
         [Stat.TOUGHNESS, 160000000],
         [Stat.RES3_CAP, 120],
         [Stat.WISH_SPEED, 25],
         [Stat.HACK_SPEED, 20],
     ]),
-    new Item('My Pink Heart <3', Slot.ACCESSORY, SetName.HEART, 100, [
+    new Item(344, 'My Pink Heart <3', Slot.ACCESSORY, SetName.HEART, 100, [
         [Stat.POWER, 3000000],
         [Stat.TOUGHNESS, 3000000],
         [Stat.WISH_SPEED, 10],
         [Stat.DAYCARE_SPEED, 10],
     ]),
-    new Item('Cool Shades', Slot.HEAD, SetName.RADLANDS, 100, [
+    new Item(345, 'Cool Shades', Slot.HEAD, SetName.RADLANDS, 100, [
         [Stat.POWER, 3300000],
         [Stat.TOUGHNESS, 87000000],
         [Stat.RES3_CAP, 14.7],
@@ -1679,7 +1679,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 144000],
         [Stat.MAGIC_POWER, 144000],
     ]),
-    new Item('Leather Jacket', Slot.CHEST, SetName.RADLANDS, 100, [
+    new Item(346, 'Leather Jacket', Slot.CHEST, SetName.RADLANDS, 100, [
         [Stat.POWER, 3400000],
         [Stat.TOUGHNESS, 86000000],
         [Stat.RES3_BARS, 147],
@@ -1687,7 +1687,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 14500],
         [Stat.MAGIC_CAP, 14500],
     ]),
-    new Item('Flamin\' Hot Shorts', Slot.PANTS, SetName.RADLANDS, 100, [
+    new Item(347, 'Flamin\' Hot Shorts', Slot.PANTS, SetName.RADLANDS, 100, [
         [Stat.POWER, 3500000],
         [Stat.TOUGHNESS, 86000000],
         [Stat.RES3_CAP, 14.5],
@@ -1696,7 +1696,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 145000],
         [Stat.MAGIC_BARS, 145000],
     ]),
-    new Item('A Skateboard', Slot.BOOTS, SetName.RADLANDS, 100, [
+    new Item(348, 'A Skateboard', Slot.BOOTS, SetName.RADLANDS, 100, [
         [Stat.POWER, 3400000],
         [Stat.TOUGHNESS, 86000000],
         [Stat.RES3_POWER, 144],
@@ -1704,7 +1704,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 15000],
         [Stat.MAGIC_CAP, 15000],
     ]),
-    new Item('Nunchuks', Slot.WEAPON, SetName.RADLANDS, 100, [
+    new Item(349, 'Nunchuks', Slot.WEAPON, SetName.RADLANDS, 100, [
         [Stat.POWER, 880000000],
         [Stat.TOUGHNESS, 35000000],
         [Stat.ENERGY_POWER, 147000],
@@ -1714,7 +1714,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 147000],
         [Stat.MAGIC_BARS, 147000],
     ]),
-    new Item('Not Drugs', Slot.ACCESSORY, SetName.RADLANDS, 100, [
+    new Item(350, 'Not Drugs', Slot.ACCESSORY, SetName.RADLANDS, 100, [
         [Stat.POWER, 90000000],
         [Stat.TOUGHNESS, 90000000],
         [Stat.HACK_SPEED, 14.7],
@@ -1722,7 +1722,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 14600],
         [Stat.MAGIC_CAP, 14600],
     ]),
-    new Item('The Glove of Power', Slot.ACCESSORY, SetName.RADLANDS, 100, [
+    new Item(351, 'The Glove of Power', Slot.ACCESSORY, SetName.RADLANDS, 100, [
         [Stat.POWER, 130000000],
         [Stat.TOUGHNESS, 80000000],
         [Stat.RES3_POWER, 150],
@@ -1730,7 +1730,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 150000],
         [Stat.MAGIC_POWER, 150000],
     ]),
-    new Item('Dunce Cap', Slot.HEAD, SetName.BACKTOSCHOOL, 100, [
+    new Item(352, 'Dunce Cap', Slot.HEAD, SetName.BACKTOSCHOOL, 100, [
         [Stat.POWER, 4600000],
         [Stat.TOUGHNESS, 122000000],
         [Stat.RES3_POWER, 174],
@@ -1739,7 +1739,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 176000],
         [Stat.MAGIC_POWER, 176000],
     ]),
-    new Item('School Jersey', Slot.CHEST, SetName.BACKTOSCHOOL, 100, [
+    new Item(353, 'School Jersey', Slot.CHEST, SetName.BACKTOSCHOOL, 100, [
         [Stat.POWER, 4600000],
         [Stat.TOUGHNESS, 122000000],
         [Stat.RES3_CAP, 17.4],
@@ -1748,7 +1748,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 178000],
         [Stat.MAGIC_BARS, 178000],
     ]),
-    new Item('ULTRAWIDE Pants', Slot.PANTS, SetName.BACKTOSCHOOL, 100, [
+    new Item(354, 'ULTRAWIDE Pants', Slot.PANTS, SetName.BACKTOSCHOOL, 100, [
         [Stat.POWER, 4600000],
         [Stat.TOUGHNESS, 122000000],
         [Stat.RES3_CAP, 17.4],
@@ -1757,7 +1757,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 17600],
         [Stat.MAGIC_CAP, 17600],
     ]),
-    new Item('Shoes With Wheels', Slot.BOOTS, SetName.BACKTOSCHOOL, 100, [
+    new Item(355, 'Shoes With Wheels', Slot.BOOTS, SetName.BACKTOSCHOOL, 100, [
         [Stat.POWER, 4600000],
         [Stat.TOUGHNESS, 122000000],
         [Stat.RES3_BARS, 172],
@@ -1765,7 +1765,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 175000],
         [Stat.MAGIC_POWER, 175000],
     ]),
-    new Item('Floppy Elastic Ruler', Slot.WEAPON, SetName.BACKTOSCHOOL, 100, [
+    new Item(356, 'Floppy Elastic Ruler', Slot.WEAPON, SetName.BACKTOSCHOOL, 100, [
         [Stat.POWER, 1140000000],
         [Stat.TOUGHNESS, 45000000],
         [Stat.RES3_CAP, 17.7],
@@ -1773,7 +1773,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 17300],
         [Stat.MAGIC_CAP, 17300],
     ]),
-    new Item('THE S', Slot.ACCESSORY, SetName.BACKTOSCHOOL, 100, [
+    new Item(357, 'THE S', Slot.ACCESSORY, SetName.BACKTOSCHOOL, 100, [
         [Stat.POWER, 180000000],
         [Stat.TOUGHNESS, 180000000],
         [Stat.RES3_POWER, 180],
@@ -1781,14 +1781,14 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 180000],
         [Stat.MAGIC_POWER, 180000],
     ]),
-    new Item('A Walkman', Slot.ACCESSORY, SetName.BACKTOSCHOOL, 100, [
+    new Item(358, 'A Walkman', Slot.ACCESSORY, SetName.BACKTOSCHOOL, 100, [
         [Stat.POWER, 126000000],
         [Stat.TOUGHNESS, 90000000],
         [Stat.GOLD_DROP, 175000],
         [Stat.HACK_SPEED, 17.5],
         [Stat.WISH_SPEED, 17.5],
     ]),
-    new Item('A 10 Litre Hat', Slot.HEAD, SetName.WESTWORLD, 100, [
+    new Item(359, 'A 10 Litre Hat', Slot.HEAD, SetName.WESTWORLD, 100, [
         [Stat.POWER, 6000000],
         [Stat.TOUGHNESS, 159000000],
         [Stat.RES3_POWER, 209],
@@ -1797,7 +1797,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 213000],
         [Stat.MAGIC_POWER, 213000],
     ]),
-    new Item('Asslest Vest', Slot.CHEST, SetName.WESTWORLD, 100, [
+    new Item(360, 'Asslest Vest', Slot.CHEST, SetName.WESTWORLD, 100, [
         [Stat.POWER, 6000000],
         [Stat.TOUGHNESS, 160000000],
         [Stat.RES3_CAP, 21],
@@ -1805,7 +1805,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 207000],
         [Stat.MAGIC_BARS, 207000],
     ]),
-    new Item('Assful Chaps', Slot.PANTS, SetName.WESTWORLD, 100, [
+    new Item(361, 'Assful Chaps', Slot.PANTS, SetName.WESTWORLD, 100, [
         [Stat.POWER, 6000000],
         [Stat.TOUGHNESS, 158000000],
         [Stat.RES3_POWER, 211],
@@ -1813,7 +1813,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 21200],
         [Stat.MAGIC_CAP, 21200],
     ]),
-    new Item('Extra Spiky Spurs', Slot.BOOTS, SetName.WESTWORLD, 100, [
+    new Item(362, 'Extra Spiky Spurs', Slot.BOOTS, SetName.WESTWORLD, 100, [
         [Stat.POWER, 6000000],
         [Stat.TOUGHNESS, 162000000],
         [Stat.RES3_CAP, 21.2],
@@ -1822,7 +1822,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 210000],
         [Stat.MAGIC_BARS, 210000],
     ]),
-    new Item('The Six Shooter', Slot.WEAPON, SetName.WESTWORLD, 100, [
+    new Item(363, 'The Six Shooter', Slot.WEAPON, SetName.WESTWORLD, 100, [
         [Stat.POWER, 1480000000],
         [Stat.TOUGHNESS, 58000000],
         [Stat.RES3_POWER, 208],
@@ -1830,28 +1830,28 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 21400],
         [Stat.MAGIC_CAP, 21400],
     ]),
-    new Item('A Battle Corgi', Slot.ACCESSORY, SetName.WESTWORLD, 100, [
+    new Item(364, 'A Battle Corgi', Slot.ACCESSORY, SetName.WESTWORLD, 100, [
         [Stat.POWER, 220000000],
         [Stat.TOUGHNESS, 220000000],
         [Stat.WISH_SPEED, 21],
         [Stat.NGU_SPEED, 500],
         [Stat.DROP_CHANCE, 1200],
     ]),
-    new Item('A Pink Bandana', Slot.ACCESSORY, SetName.WESTWORLD, 100, [
+    new Item(365, 'A Pink Bandana', Slot.ACCESSORY, SetName.WESTWORLD, 100, [
         [Stat.POWER, 170000000],
         [Stat.TOUGHNESS, 170000000],
         [Stat.MAGIC_CAP, 36000],
         [Stat.ENERGY_POWER, 360000],
         [Stat.RES3_CAP, 31],
     ]),
-    new Item('A 9mm Beretta', Slot.WEAPON, SetName.WESTWORLD, 100, [
+    new Item(366, 'A 9mm Beretta', Slot.WEAPON, SetName.WESTWORLD, 100, [
         [Stat.POWER, 1400000000],
         [Stat.TOUGHNESS, 70000000],
         [Stat.RES3_CAP, 21],
         [Stat.NGU_SPEED, 700],
         [Stat.AUGMENT_SPEED, 750],
     ]),
-    new Item('Space Helmet', Slot.HEAD, SetName.ITHUNGERS, 100, [
+    new Item(373, 'Space Helmet', Slot.HEAD, SetName.ITHUNGERS, 100, [
         [Stat.POWER, 7800000],
         [Stat.TOUGHNESS, 205000000],
         [Stat.RES3_POWER, 251],
@@ -1859,7 +1859,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 28300],
         [Stat.MAGIC_CAP, 28300],
     ]),
-    new Item('Space Suit Chest', Slot.CHEST, SetName.ITHUNGERS, 100, [
+    new Item(374, 'Space Suit Chest', Slot.CHEST, SetName.ITHUNGERS, 100, [
         [Stat.POWER, 7800000],
         [Stat.TOUGHNESS, 205000000],
         [Stat.RES3_BARS, 271],
@@ -1867,7 +1867,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 250000],
         [Stat.MAGIC_POWER, 250000],
     ]),
-    new Item('Space Suit Legs', Slot.PANTS, SetName.ITHUNGERS, 100, [
+    new Item(375, 'Space Suit Legs', Slot.PANTS, SetName.ITHUNGERS, 100, [
         [Stat.POWER, 7800000],
         [Stat.TOUGHNESS, 205000000],
         [Stat.RES3_POWER, 289],
@@ -1876,7 +1876,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 303000],
         [Stat.MAGIC_BARS, 303000],
     ]),
-    new Item('Space Boots', Slot.BOOTS, SetName.ITHUNGERS, 100, [
+    new Item(376, 'Space Boots', Slot.BOOTS, SetName.ITHUNGERS, 100, [
         [Stat.POWER, 7800000],
         [Stat.TOUGHNESS, 205000000],
         [Stat.RES3_POWER, 254],
@@ -1884,7 +1884,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 30000],
         [Stat.MAGIC_CAP, 30000],
     ]),
-    new Item('Space Gun!', Slot.WEAPON, SetName.ITHUNGERS, 100, [
+    new Item(377, 'Space Gun!', Slot.WEAPON, SetName.ITHUNGERS, 100, [
         [Stat.POWER, 1920000000],
         [Stat.TOUGHNESS, 75000000],
         [Stat.RES3_POWER, 283],
@@ -1892,7 +1892,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 251000],
         [Stat.MAGIC_POWER, 251000],
     ]),
-    new Item('A Manhole', Slot.ACCESSORY, SetName.ITHUNGERS, 100, [
+    new Item(378, 'A Manhole', Slot.ACCESSORY, SetName.ITHUNGERS, 100, [
         [Stat.POWER, 225000000],
         [Stat.TOUGHNESS, 225000000],
         [Stat.HACK_SPEED, 20.2],
@@ -1901,14 +1901,14 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 252000],
         [Stat.MAGIC_BARS, 252000],
     ]),
-    new Item('A Red Shirt', Slot.ACCESSORY, SetName.ITHUNGERS, 100, [
+    new Item(379, 'A Red Shirt', Slot.ACCESSORY, SetName.ITHUNGERS, 100, [
         [Stat.POWER, 300000000],
         [Stat.TOUGHNESS, 1],
         [Stat.WISH_SPEED, 20.3],
         [Stat.RESPAWN, 3],
         [Stat.RES3_CAP, 25.2],
     ]),
-    new Item('\'The Cricket\'', Slot.WEAPON, SetName.ITHUNGERS, 100, [
+    new Item(380, '\'The Cricket\'', Slot.WEAPON, SetName.ITHUNGERS, 100, [
         [Stat.POWER, 2100000000],
         [Stat.TOUGHNESS, 90000000],
         [Stat.RES3_POWER, 253],
@@ -1917,7 +1917,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 249000],
         [Stat.MAGIC_POWER, 249000],
     ]),
-    new Item('Evil Rubber Ducky', Slot.ACCESSORY, SetName.ITHUNGERS2, 100, [
+    new Item(381, 'Evil Rubber Ducky', Slot.ACCESSORY, SetName.ITHUNGERS2, 100, [
         [Stat.POWER, 225000000],
         [Stat.TOUGHNESS, 225000000],
         [Stat.MAGIC_POWER, 301000],
@@ -1926,28 +1926,28 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 304000],
         [Stat.MAGIC_BARS, 304000],
     ]),
-    new Item('A Gas Giant', Slot.ACCESSORY, SetName.ITHUNGERS2, 100, [
+    new Item(382, 'A Gas Giant', Slot.ACCESSORY, SetName.ITHUNGERS2, 100, [
         [Stat.POWER, 290000000],
         [Stat.TOUGHNESS, 290000000],
         [Stat.RES3_POWER, 302],
         [Stat.RES3_CAP, 30.4],
         [Stat.AUGMENT_SPEED, 800],
     ]),
-    new Item('An Inanimate Carbon Rod', Slot.ACCESSORY, SetName.ITHUNGERS3, 100, [
+    new Item(383, 'An Inanimate Carbon Rod', Slot.ACCESSORY, SetName.ITHUNGERS3, 100, [
         [Stat.POWER, 400000000],
         [Stat.TOUGHNESS, 400000000],
         [Stat.HACK_SPEED, 20],
         [Stat.YGGDRASIL_YIELD, 4],
         [Stat.WANDOOS_SPEED, 1300],
     ]),
-    new Item('A Funky Klein Bottle', Slot.ACCESSORY, SetName.ITHUNGERS3, 100, [
+    new Item(384, 'A Funky Klein Bottle', Slot.ACCESSORY, SetName.ITHUNGERS3, 100, [
         [Stat.POWER, 380000000],
         [Stat.TOUGHNESS, 380000000],
         [Stat.RES3_POWER, 365],
         [Stat.ENERGY_POWER, 510000],
         [Stat.MAGIC_POWER, 510000],
     ]),
-    new Item('Giant Alien Bug Nest', Slot.ACCESSORY, SetName.ITHUNGERS4, 100, [
+    new Item(385, 'Giant Alien Bug Nest', Slot.ACCESSORY, SetName.ITHUNGERS4, 100, [
         [Stat.POWER, 456000000],
         [Stat.TOUGHNESS, 456000000],
         [Stat.QUEST_DROP, 8],
@@ -1955,7 +1955,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 437000],
         [Stat.MAGIC_POWER, 437000],
     ]),
-    new Item('The Key', Slot.ACCESSORY, SetName.ITHUNGERS4, 100, [
+    new Item(386, 'The Key', Slot.ACCESSORY, SetName.ITHUNGERS4, 100, [
         [Stat.POWER, 456000000],
         [Stat.TOUGHNESS, 456000000],
         [Stat.AUGMENT_SPEED, 750],
@@ -1963,14 +1963,14 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 437000],
         [Stat.MAGIC_POWER, 437000],
     ]),
-    new Item('Ascended x7 Pendant', Slot.ACCESSORY, SetName.FOREST_PENDANT, 100, [
+    new Item(388, 'Ascended x7 Pendant', Slot.ACCESSORY, SetName.FOREST_PENDANT, 100, [
         [Stat.POWER, 400000000],
         [Stat.TOUGHNESS, 400000000],
         [Stat.RES3_CAP, 40],
         [Stat.RES3_POWER, 400],
         [Stat.WISH_SPEED, 40],
     ]),
-    new Item('SUPREME INTELLIGENCE LOOTY', Slot.ACCESSORY, SetName.LOOTY, 100, [
+    new Item(389, 'SUPREME INTELLIGENCE LOOTY', Slot.ACCESSORY, SetName.LOOTY, 100, [
         [Stat.POWER, 500000000],
         [Stat.TOUGHNESS, 500000000],
         [Stat.GOLD_DROP, 200000],
@@ -1978,14 +1978,14 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 500000],
         [Stat.MAGIC_POWER, 500000],
     ]),
-    new Item('My Rainbow Heart', Slot.ACCESSORY, SetName.HEART, 100, [
+    new Item(390, 'My Rainbow Heart', Slot.ACCESSORY, SetName.HEART, 100, [
         [Stat.POWER, 100],
         [Stat.TOUGHNESS, 100],
         [Stat.COOKING, 69000000],
         [Stat.RES3_BARS, 100],
         [Stat.SEED_DROP, 30],
     ]),
-    new Item('Bread Bowl Helmet', Slot.HEAD, SetName.BREADVERSE, 100, [
+    new Item(392, 'Bread Bowl Helmet', Slot.HEAD, SetName.BREADVERSE, 100, [
         [Stat.POWER, 13000000],
         [Stat.TOUGHNESS, 380000000],
         [Stat.RES3_POWER, 360],
@@ -1993,14 +1993,14 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 40700],
         [Stat.MAGIC_CAP, 40700],
     ]),
-    new Item('Paper Thin Crepe Cape', Slot.CHEST, SetName.BREADVERSE, 100, [
+    new Item(393, 'Paper Thin Crepe Cape', Slot.CHEST, SetName.BREADVERSE, 100, [
         [Stat.POWER, 13000000],
         [Stat.TOUGHNESS, 382000000],
         [Stat.NGU_SPEED, 1100],
         [Stat.RES3_BARS, 389],
         [Stat.RES3_CAP, 36.1],
     ]),
-    new Item('Flour Sack Pants', Slot.PANTS, SetName.BREADVERSE, 100, [
+    new Item(394, 'Flour Sack Pants', Slot.PANTS, SetName.BREADVERSE, 100, [
         [Stat.POWER, 13000000],
         [Stat.TOUGHNESS, 383000000],
         [Stat.RES3_POWER, 419],
@@ -2009,14 +2009,14 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 439000],
         [Stat.MAGIC_BARS, 439000],
     ]),
-    new Item('Gingerbread Boots', Slot.BOOTS, SetName.BREADVERSE, 100, [
+    new Item(395, 'Gingerbread Boots', Slot.BOOTS, SetName.BREADVERSE, 100, [
         [Stat.POWER, 13000000],
         [Stat.TOUGHNESS, 378000000],
         [Stat.RES3_POWER, 369],
         [Stat.WISH_SPEED, 30.2],
         [Stat.RES3_CAP, 37],
     ]),
-    new Item('1 Day-Old Baguette', Slot.WEAPON, SetName.BREADVERSE, 100, [
+    new Item(396, '1 Day-Old Baguette', Slot.WEAPON, SetName.BREADVERSE, 100, [
         [Stat.POWER, 3600000000],
         [Stat.TOUGHNESS, 137000000],
         [Stat.RES3_POWER, 405],
@@ -2024,7 +2024,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 363000],
         [Stat.MAGIC_POWER, 363000],
     ]),
-    new Item('A Cream Pie', Slot.ACCESSORY, SetName.BREADVERSE, 100, [
+    new Item(397, 'A Cream Pie', Slot.ACCESSORY, SetName.BREADVERSE, 100, [
         [Stat.POWER, 410000000],
         [Stat.TOUGHNESS, 410000000],
         [Stat.HACK_SPEED, 30],
@@ -2033,14 +2033,14 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 364000],
         [Stat.MAGIC_BARS, 364000],
     ]),
-    new Item('A Spoonful of Yeast', Slot.ACCESSORY, SetName.BREADVERSE, 100, [
+    new Item(398, 'A Spoonful of Yeast', Slot.ACCESSORY, SetName.BREADVERSE, 100, [
         [Stat.POWER, 380000000],
         [Stat.TOUGHNESS, 380000000],
         [Stat.WISH_SPEED, 30.2],
         [Stat.NGU_SPEED, 1000],
         [Stat.RES3_CAP, 36.3],
     ]),
-    new Item('A Rolling Pin', Slot.WEAPON, SetName.BREADVERSE, 100, [
+    new Item(399, 'A Rolling Pin', Slot.WEAPON, SetName.BREADVERSE, 100, [
         [Stat.POWER, 3820000000],
         [Stat.TOUGHNESS, 90000000],
         [Stat.RES3_POWER, 365],
@@ -2049,21 +2049,21 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 362000],
         [Stat.MAGIC_POWER, 362000],
     ]),
-    new Item('Disco Ball Helmet', Slot.HEAD, SetName.SEVENTIES, 100, [
+    new Item(400, 'Disco Ball Helmet', Slot.HEAD, SetName.SEVENTIES, 100, [
         [Stat.POWER, 17500000],
         [Stat.TOUGHNESS, 513000000],
         [Stat.RES3_POWER, 432],
         [Stat.RES3_CAP, 43.3],
         [Stat.RES3_BARS, 407],
     ]),
-    new Item('Disco Shirt', Slot.CHEST, SetName.SEVENTIES, 100, [
+    new Item(401, 'Disco Shirt', Slot.CHEST, SetName.SEVENTIES, 100, [
         [Stat.POWER, 17600000],
         [Stat.TOUGHNESS, 512000000],
         [Stat.NGU_SPEED, 1320],
         [Stat.RES3_CAP, 46.6],
         [Stat.HACK_SPEED, 35.5],
     ]),
-    new Item('Bell Bottoms', Slot.PANTS, SetName.SEVENTIES, 100, [
+    new Item(402, 'Bell Bottoms', Slot.PANTS, SetName.SEVENTIES, 100, [
         [Stat.POWER, 17600000],
         [Stat.TOUGHNESS, 514000000],
         [Stat.RES3_POWER, 502],
@@ -2071,7 +2071,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 439000],
         [Stat.MAGIC_BARS, 439000],
     ]),
-    new Item('Roller Skates', Slot.BOOTS, SetName.SEVENTIES, 100, [
+    new Item(403, 'Roller Skates', Slot.BOOTS, SetName.SEVENTIES, 100, [
         [Stat.POWER, 17600000],
         [Stat.TOUGHNESS, 516000000],
         [Stat.RES3_POWER, 439],
@@ -2079,7 +2079,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 436000],
         [Stat.MAGIC_POWER, 436000],
     ]),
-    new Item('A Rusty Old Sabre', Slot.WEAPON, SetName.SEVENTIES, 100, [
+    new Item(404, 'A Rusty Old Sabre', Slot.WEAPON, SetName.SEVENTIES, 100, [
         [Stat.POWER, 4860000000],
         [Stat.TOUGHNESS, 137000000],
         [Stat.RES3_POWER, 486],
@@ -2087,7 +2087,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 435000],
         [Stat.MAGIC_POWER, 435000],
     ]),
-    new Item('A Bit of White Powder', Slot.ACCESSORY, SetName.SEVENTIES, 100, [
+    new Item(405, 'A Bit of White Powder', Slot.ACCESSORY, SetName.SEVENTIES, 100, [
         [Stat.POWER, 553000000],
         [Stat.TOUGHNESS, 553000000],
         [Stat.HACK_SPEED, 48],
@@ -2096,7 +2096,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 440000],
         [Stat.MAGIC_BARS, 440000],
     ]),
-    new Item('Some Rolling Paper', Slot.ACCESSORY, SetName.SEVENTIES, 100, [
+    new Item(406, 'Some Rolling Paper', Slot.ACCESSORY, SetName.SEVENTIES, 100, [
         [Stat.POWER, 555000000],
         [Stat.TOUGHNESS, 555000000],
         [Stat.NGU_SPEED, 1200],
@@ -2104,7 +2104,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 424000],
         [Stat.MAGIC_POWER, 424000],
     ]),
-    new Item('A Vinyl Record Shard', Slot.WEAPON, SetName.SEVENTIES, 100, [
+    new Item(407, 'A Vinyl Record Shard', Slot.WEAPON, SetName.SEVENTIES, 100, [
         [Stat.POWER, 5000000000],
         [Stat.TOUGHNESS, 110000000],
         [Stat.RES3_POWER, 433],
@@ -2113,35 +2113,35 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 437000],
         [Stat.MAGIC_POWER, 437000],
     ]),
-    new Item('Neck Bolts', Slot.HEAD, SetName.HALLOWEEN, 100, [
+    new Item(408, 'Neck Bolts', Slot.HEAD, SetName.HALLOWEEN, 100, [
         [Stat.POWER, 25300000],
         [Stat.TOUGHNESS, 743000000],
         [Stat.RES3_POWER, 518],
         [Stat.HACK_SPEED, 47.6],
         [Stat.RES3_BARS, 515],
     ]),
-    new Item('Skeleton Shirt', Slot.CHEST, SetName.HALLOWEEN, 100, [
+    new Item(409, 'Skeleton Shirt', Slot.CHEST, SetName.HALLOWEEN, 100, [
         [Stat.POWER, 25500000],
         [Stat.TOUGHNESS, 740000000],
         [Stat.WISH_SPEED, 51.6],
         [Stat.RES3_CAP, 55.5],
         [Stat.HACK_SPEED, 47.7],
     ]),
-    new Item('A Broomstick', Slot.PANTS, SetName.HALLOWEEN, 100, [
+    new Item(410, 'A Broomstick', Slot.PANTS, SetName.HALLOWEEN, 100, [
         [Stat.POWER, 25500000],
         [Stat.TOUGHNESS, 745000000],
         [Stat.RES3_POWER, 603],
         [Stat.WISH_SPEED, 56.5],
         [Stat.NGU_SPEED, 1250],
     ]),
-    new Item('Fuzzy Boots', Slot.BOOTS, SetName.HALLOWEEN, 100, [
+    new Item(411, 'Fuzzy Boots', Slot.BOOTS, SetName.HALLOWEEN, 100, [
         [Stat.POWER, 25500000],
         [Stat.TOUGHNESS, 744000000],
         [Stat.RES3_POWER, 616],
         [Stat.WANDOOS_SPEED, 3100],
         [Stat.RES3_CAP, 61.3],
     ]),
-    new Item('An Ordinary Apple', Slot.WEAPON, SetName.HALLOWEEN, 100, [
+    new Item(412, 'An Ordinary Apple', Slot.WEAPON, SetName.HALLOWEEN, 100, [
         [Stat.POWER, 7020000000],
         [Stat.TOUGHNESS, 137000000],
         [Stat.RES3_POWER, 573],
@@ -2149,7 +2149,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 521000],
         [Stat.MAGIC_POWER, 521000],
     ]),
-    new Item('A Roll of Toilet Paper', Slot.ACCESSORY, SetName.HALLOWEEN, 100, [
+    new Item(413, 'A Roll of Toilet Paper', Slot.ACCESSORY, SetName.HALLOWEEN, 100, [
         [Stat.POWER, 643000000],
         [Stat.TOUGHNESS, 643000000],
         [Stat.HACK_SPEED, 43],
@@ -2158,7 +2158,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_CAP, 52700],
         [Stat.MAGIC_CAP, 52700],
     ]),
-    new Item('Pandora\'s Box', Slot.ACCESSORY, SetName.HALLOWEEN, 100, [
+    new Item(414, 'Pandora\'s Box', Slot.ACCESSORY, SetName.HALLOWEEN, 100, [
         [Stat.POWER, 651000000],
         [Stat.TOUGHNESS, 651000000],
         [Stat.NGU_SPEED, 1450],
@@ -2166,7 +2166,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 436000],
         [Stat.MAGIC_POWER, 436000],
     ]),
-    new Item('A Giant Scythe', Slot.WEAPON, SetName.HALLOWEEN, 100, [
+    new Item(415, 'A Giant Scythe', Slot.WEAPON, SetName.HALLOWEEN, 100, [
         [Stat.POWER, 7250000000],
         [Stat.TOUGHNESS, 210000000],
         [Stat.RES3_POWER, 520],
@@ -2174,35 +2174,35 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 596000],
         [Stat.MAGIC_POWER, 596000],
     ]),
-    new Item('A Bandana', Slot.HEAD, SetName.ROCKLOBSTER, 100, [
+    new Item(416, 'A Bandana', Slot.HEAD, SetName.ROCKLOBSTER, 100, [
         [Stat.POWER, 36600000],
         [Stat.TOUGHNESS, 1075000000],
         [Stat.RES3_POWER, 623],
         [Stat.HACK_SPEED, 57.4],
         [Stat.RES3_BARS, 613],
     ]),
-    new Item('Broken Drum', Slot.CHEST, SetName.ROCKLOBSTER, 100, [
+    new Item(417, 'Broken Drum', Slot.CHEST, SetName.ROCKLOBSTER, 100, [
         [Stat.POWER, 36600000],
         [Stat.TOUGHNESS, 1075000000],
         [Stat.WISH_SPEED, 61.7],
         [Stat.RES3_CAP, 66.6],
         [Stat.HACK_SPEED, 57.4],
     ]),
-    new Item('Stonehenge Pants', Slot.PANTS, SetName.ROCKLOBSTER, 100, [
+    new Item(418, 'Stonehenge Pants', Slot.PANTS, SetName.ROCKLOBSTER, 100, [
         [Stat.POWER, 36600000],
         [Stat.TOUGHNESS, 1070000000],
         [Stat.RES3_POWER, 723],
         [Stat.WISH_SPEED, 67.8],
         [Stat.NGU_SPEED, 2620],
     ]),
-    new Item('Platform Boots', Slot.BOOTS, SetName.ROCKLOBSTER, 100, [
+    new Item(419, 'Platform Boots', Slot.BOOTS, SetName.ROCKLOBSTER, 100, [
         [Stat.POWER, 36600000],
         [Stat.TOUGHNESS, 1080000000],
         [Stat.RES3_POWER, 739],
         [Stat.HACK_SPEED, 58.4],
         [Stat.RES3_CAP, 73.4],
     ]),
-    new Item('A Rocket', Slot.WEAPON, SetName.ROCKLOBSTER, 100, [
+    new Item(420, 'A Rocket', Slot.WEAPON, SetName.ROCKLOBSTER, 100, [
         [Stat.POWER, 10150000000],
         [Stat.TOUGHNESS, 200000000],
         [Stat.RES3_POWER, 686],
@@ -2210,7 +2210,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 625000],
         [Stat.MAGIC_POWER, 625000],
     ]),
-    new Item('A Pet Rock', Slot.ACCESSORY, SetName.ROCKLOBSTER, 100, [
+    new Item(421, 'A Pet Rock', Slot.ACCESSORY, SetName.ROCKLOBSTER, 100, [
         [Stat.POWER, 931000000],
         [Stat.TOUGHNESS, 931000000],
         [Stat.WANDOOS_SPEED, 4600],
@@ -2219,7 +2219,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 630000],
         [Stat.MAGIC_BARS, 630000],
     ]),
-    new Item('A Rolling Stone', Slot.ACCESSORY, SetName.ROCKLOBSTER, 100, [
+    new Item(422, 'A Rolling Stone', Slot.ACCESSORY, SetName.ROCKLOBSTER, 100, [
         [Stat.POWER, 933000000],
         [Stat.TOUGHNESS, 933000000],
         [Stat.NGU_SPEED, 2850],
@@ -2227,7 +2227,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 523000],
         [Stat.MAGIC_POWER, 523000],
     ]),
-    new Item('Giant Drumsticks', Slot.WEAPON, SetName.ROCKLOBSTER, 100, [
+    new Item(423, 'Giant Drumsticks', Slot.WEAPON, SetName.ROCKLOBSTER, 100, [
         [Stat.POWER, 10510000000],
         [Stat.TOUGHNESS, 300000000],
         [Stat.RES3_POWER, 624],
@@ -2235,7 +2235,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 677000],
         [Stat.MAGIC_POWER, 677000],
     ]),
-    new Item('A Skipping Stone', Slot.ACCESSORY, SetName.ROCKLOBSTER2, 100, [
+    new Item(424, 'A Skipping Stone', Slot.ACCESSORY, SetName.ROCKLOBSTER2, 100, [
         [Stat.POWER, 1582000000],
         [Stat.TOUGHNESS, 1582000000],
         [Stat.HACK_SPEED, 78.8],
@@ -2244,7 +2244,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 711000],
         [Stat.MAGIC_BARS, 711000],
     ]),
-    new Item('A Bed Rock', Slot.ACCESSORY, SetName.ROCKLOBSTER2, 100, [
+    new Item(425, 'A Bed Rock', Slot.ACCESSORY, SetName.ROCKLOBSTER2, 100, [
         [Stat.POWER, 1576000000],
         [Stat.TOUGHNESS, 1576000000],
         [Stat.WISH_SPEED, 99.9],
@@ -2252,7 +2252,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 999000],
         [Stat.MAGIC_POWER, 999000],
     ]),
-    new Item('Rock Candy', Slot.ACCESSORY, SetName.ROCKLOBSTER3, 100, [
+    new Item(426, 'Rock Candy', Slot.ACCESSORY, SetName.ROCKLOBSTER3, 100, [
         [Stat.POWER, 2679000000],
         [Stat.TOUGHNESS, 2679000000],
         [Stat.HACK_SPEED, 100],
@@ -2261,7 +2261,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 1300000],
         [Stat.MAGIC_BARS, 1300000],
     ]),
-    new Item('A Broken Pair Of Scissors', Slot.ACCESSORY, SetName.ROCKLOBSTER3, 100, [
+    new Item(427, 'A Broken Pair Of Scissors', Slot.ACCESSORY, SetName.ROCKLOBSTER3, 100, [
         [Stat.POWER, 2700000000],
         [Stat.TOUGHNESS, 2700000000],
         [Stat.NGU_SPEED, 4000],
@@ -2269,14 +2269,14 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 1320000],
         [Stat.MAGIC_POWER, 1320000],
     ]),
-    new Item('Portable Stairway (To Heaven)', Slot.ACCESSORY, SetName.ROCKLOBSTER4, 100, [
+    new Item(428, 'Portable Stairway (To Heaven)', Slot.ACCESSORY, SetName.ROCKLOBSTER4, 100, [
         [Stat.POWER, 4860000000],
         [Stat.TOUGHNESS, 4860000000],
         [Stat.HACK_SPEED, 160],
         [Stat.WISH_SPEED, 160],
         [Stat.NGU_SPEED, 10000],
     ]),
-    new Item('Amplifier', Slot.ACCESSORY, SetName.ROCKLOBSTER4, 100, [
+    new Item(429, 'Amplifier', Slot.ACCESSORY, SetName.ROCKLOBSTER4, 100, [
         [Stat.POWER, 4840000000],
         [Stat.TOUGHNESS, 4840000000],
         [Stat.YGGDRASIL_YIELD, 10],
@@ -2284,14 +2284,14 @@ export const ITEMLIST = [
         [Stat.ENERGY_POWER, 2000000],
         [Stat.MAGIC_POWER, 2000000],
     ]),
-    new Item('Ascended x8 Pendant', Slot.ACCESSORY, SetName.FOREST_PENDANT, 100, [
+    new Item(430, 'Ascended x8 Pendant', Slot.ACCESSORY, SetName.FOREST_PENDANT, 100, [
         [Stat.POWER, 1500000000],
         [Stat.TOUGHNESS, 1500000000],
         [Stat.RES3_CAP, 100],
         [Stat.HACK_SPEED, 100],
         [Stat.WISH_SPEED, 100],
     ]),
-    new Item('GRAND DEMON LOOTZIFER', Slot.ACCESSORY, SetName.LOOTY, 100, [
+    new Item(431, 'GRAND DEMON LOOTZIFER', Slot.ACCESSORY, SetName.LOOTY, 100, [
         [Stat.POWER, 1000000000],
         [Stat.TOUGHNESS, 1000000000],
         [Stat.GOLD_DROP, 666000],

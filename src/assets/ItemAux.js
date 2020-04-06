@@ -1,5 +1,6 @@
 export class Item {
-        constructor(name, slot, zone, level, props) {
+        constructor(id, name, slot, zone, level, props) {
+                this.id = id;
                 this.name = name;
                 this.slot = slot;
                 this.zone = zone;
