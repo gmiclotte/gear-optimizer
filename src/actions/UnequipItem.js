@@ -1,8 +1,8 @@
 export const UNEQUIP_ITEM = 'Unequip item.';
 
-export const UnequipItem = itemName => ({
+export const UnequipItem = itemId => ({
         type: UNEQUIP_ITEM,
         payload: {
-                name: itemName
+                id: itemId
         }
 });

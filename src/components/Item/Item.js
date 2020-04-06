@@ -32,7 +32,7 @@ export default class Item extends Component {
                         return (<span><img className={classNames} data-tip='Empty slot' src={images.logo} alt='Empty'/>
                         </span>);
                 }
-                let tt = item.name + (
+                let tt = '(' + item.id + ') ' + item.name + (
                         item.empty
                         ? ''
                         : ' lvl ' + item.level) + '<br />';
@@ -50,14 +50,18 @@ export default class Item extends Component {
                         ? ' disable-item'
                         : '';
                 classNames += ' ' + item.slot[0]
-                let imgname = item.name;
-                imgname = imgname.replace(/</g, '');
-                imgname = imgname.replace(/!/g, '');
-                return (<img className={classNames} onClick={() => this.props.handleClickItem(item.name)} onContextMenu={(e) => {
+                let imgname = item.id;
+                if (images[imgname] === undefined) {
+                        imgname = item.name;
+                        imgname = imgname.replace(/</g, '');
+                        imgname = imgname.replace(/!/g, '');
+                }
+                return (<img className={classNames} onClick={() => this.props.handleClickItem(item.id)} onContextMenu={(e) => {
                         if (!item.empty) {
-                                this.props.handleRightClickItem(item.name);
+                                console.log(item)
+                                this.props.handleRightClickItem(item.id);
                         }
                         e.preventDefault();
-                        }} data-tip={tt} src={images[imgname]} alt={item.name} key='item'/>);
+                        }} data-tip={tt} src={images[imgname]} alt={item.id} key='item'/>);
         }
 }

@@ -1,20 +1,20 @@
 export const EQUIP_ITEM = 'Equip item.';
 export const EQUIP_ITEMS = 'Equip items.';
 
-export const EquipItem = itemName => {
+export const EquipItem = itemId => {
         return {
                 type: EQUIP_ITEM,
                 payload: {
-                        name: itemName
+                        id: itemId
                 }
         }
 };
 
-export const EquipItems = itemNames => {
+export const EquipItems = itemIds => {
         return {
                 type: EQUIP_ITEMS,
                 payload: {
-                        names: itemNames
+                        ids: itemIds
                 }
         }
 };

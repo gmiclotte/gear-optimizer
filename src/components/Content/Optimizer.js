@@ -77,7 +77,7 @@ class Optimizer extends Component {
         }
 
         closeEditModal = () => (this.props.handleToggleModal('edit item', {
-                itemName: undefined,
+                itemId: undefined,
                 lockable: false,
                 on: false
         }));
@@ -211,13 +211,13 @@ class Optimizer extends Component {
                                 </div>
                         </div>
                         <div className="content__container">
-                                <EquipTable {...this.props} group={'slot'} type='equip' handleClickItem={this.props.handleUnequipItem} handleRightClickItem={(itemName, lockable) => this.props.handleToggleModal('edit item', {
-                                                itemName: itemName,
+                                <EquipTable {...this.props} group={'slot'} type='equip' handleClickItem={this.props.handleUnequipItem} handleRightClickItem={(itemId, lockable) => this.props.handleToggleModal('edit item', {
+                                                itemId: itemId,
                                                 lockable: lockable,
                                                 on: true
                                         })}/>
-                                <ItemTable {...this.props} maxtitan={maxtitan} group={'zone'} type='items' handleClickItem={this.props.handleEquipItem} handleRightClickItem={(itemName) => this.props.handleToggleModal('edit item', {
-                                                itemName: itemName,
+                                <ItemTable {...this.props} maxtitan={maxtitan} group={'zone'} type='items' handleClickItem={this.props.handleEquipItem} handleRightClickItem={(itemId) => this.props.handleToggleModal('edit item', {
+                                                itemId: itemId,
                                                 lockable: false,
                                                 on: true
                                         })}/>

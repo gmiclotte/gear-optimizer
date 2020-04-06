@@ -148,8 +148,8 @@ export default class EquipTable extends React.Component {
                 let last = new EmptySlot();
                 let typeIdx = 0;
                 for (let idx = 0; idx < sorted.length; idx++) {
-                        const name = sorted[idx];
-                        const item = this.itemdata[name];
+                        const id = sorted[idx];
+                        const item = this.itemdata[id];
                         if (item === undefined) {
                                 // fixes some bugs when loading new gear optimizer version
                                 continue
@@ -167,7 +167,7 @@ export default class EquipTable extends React.Component {
                                         localbuffer = [];
                                 }
                         }
-                        localbuffer.push(<Item item={item} idx={idx - typeIdx} lockable={lockable} locked={this.props.locked} handleClickItem={handleClickItem} handleRightClickItem={(itemName) => this.props.handleRightClickItem(itemName, true)} key={name + idx}/>);
+                        localbuffer.push(<Item item={item} idx={idx - typeIdx} lockable={lockable} locked={this.props.locked} handleClickItem={handleClickItem} handleRightClickItem={(itemId) => this.props.handleRightClickItem(itemId, true)} key={id +'_' + idx}/>);
                         last = item;
                 }
                 buffer.push(<div className='item-section' key={this.class_idx++}>
@@ -176,12 +176,12 @@ export default class EquipTable extends React.Component {
         }
 
         render_conditional(condition, title, buffer) {
-                let sorted = this.props.items.filter((name) => (condition(name) && this.itemdata[name].level !== undefined));
+                let sorted = this.props.items.filter((id) => (condition(id) && this.itemdata[id].level !== undefined));
                 let localbuffer = [];
                 for (let idx = 0; idx < sorted.length; idx++) {
-                        let name = sorted[idx];
-                        const item = this.itemdata[name];
-                        localbuffer.push(<Item item={item} lockable={false} handleClickItem={this.props.handleEquipItem} handleRightClickItem={(itemName) => this.props.handleRightClickItem(itemName, false)} key={name}/>);
+                        let id = sorted[idx];
+                        const item = this.itemdata[id];
+                        localbuffer.push(<Item item={item} lockable={false} handleClickItem={this.props.handleEquipItem} handleRightClickItem={(itemId) => this.props.handleRightClickItem(itemId, false)} key={id}/>);
                 }
                 if (localbuffer.length > 0) {
                         buffer.push(<div className='item-section' key={this.class_idx++}>
@@ -209,8 +209,8 @@ export default class EquipTable extends React.Component {
                                         : <BonusLine itemdata={this.itemdata} equip={equip} savedequip={savedequip} factor={Factors[factor]} factors={this.props.factors} capstats={this.props.capstats} offhand={this.props.offhand * 5} key={factor}/>))
                         }
                 </div>);
-                this.render_conditional(name => this.itemdata[name].level !== 100, 'Not maxed', buffer);
-                this.render_conditional(name => this.itemdata[name].disable, 'Disabled', buffer);
+                this.render_conditional(id => this.itemdata[id].level !== 100, 'Not maxed', buffer);
+                this.render_conditional(id => this.itemdata[id].disable, 'Disabled', buffer);
                 return (<div className='item-table'>
                         {buffer}
                 </div>);

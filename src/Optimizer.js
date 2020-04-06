@@ -1,7 +1,7 @@
 import {
         Slot,
         EmptySlot,
-        EmptySlotName,
+        EmptySlotId,
         Equip,
         Factors
 } from './assets/ItemAux'
@@ -15,8 +15,6 @@ import {
         old2newequip,
         cubeBaseItemData
 } from './util.js'
-
-const EMPTY_ACCESSORY = EmptySlotName(Slot['ACCESSORY'][0]);
 
 export class Optimizer {
         constructor(state) {
@@ -65,7 +63,7 @@ export class Optimizer {
                                         sorted.push(item);
                                         item_idx++;
                                 } else {
-                                        sorted.push(EmptySlotName(slotname));
+                                        sorted.push(EmptySlotId(slotname));
                                 }
                         }
                         result[slot] = sorted;
@@ -77,7 +75,7 @@ export class Optimizer {
                 // create new equip
                 return {
                         ...old2newequip(this.accslots, this.offhand, equip),
-                        other: ['Infinity Cube', 'Base Stats']
+                        other: [1000, 1001]
                 };
         }
 
@@ -85,8 +83,8 @@ export class Optimizer {
                 let base = new Equip();
                 Object.getOwnPropertyNames(Slot).forEach(slot => {
                         for (let i = 0; i < equip[Slot[slot][0]].length; i++) {
-                                const name = equip[Slot[slot][0]][i];
-                                const item = this.itemdata[name];
+                                const id = equip[Slot[slot][0]][i];
+                                const item = this.itemdata[id];
                                 this.add_equip(base, item);
                         }
                 });
@@ -213,7 +211,7 @@ export class Optimizer {
                                         let equip = clone(layouts[j]);
                                         if (item.slot[0] === 'weapon') {
                                                 // check if weapon is already in mainhand slot
-                                                if (equip.items.map(val => val.name).filter(name => name === item.name).length > 0) {
+                                                if (equip.items.map(val => val.id).filter(name => name === item.id).length > 0) {
                                                         continue;
                                                 }
                                         }
@@ -238,20 +236,20 @@ export class Optimizer {
         get_accs(base_layout, accslots) {
                 let accs = this.gear_slot(Slot.ACCESSORY, base_layout);
                 accs = this.pareto(accs, accslots);
-                let everything = accs.concat(base_layout.items).map((x) => (x.name));
+                let everything = accs.concat(base_layout.items).map((x) => (x.id));
                 // sort accessories
                 accs = accs.map((x, idx) => idx).sort((a, b) => {
                         // remove accessory a
-                        everything[a] = EMPTY_ACCESSORY;
+                        everything[a] = EmptySlotId('accessory');
                         const ascore = this.score_equip({accessory: everything});
-                        everything[a] = accs[a].name;
+                        everything[a] = accs[a].id;
                         // remove accessory b
-                        everything[b] = EMPTY_ACCESSORY;
+                        everything[b] = EmptySlotId('accessory');
                         const bscore = this.score_equip({accessory: everything});
-                        everything[b] = accs[b].name;
+                        everything[b] = accs[b].id;
                         // compare scores
                         return ascore - bscore;
-                }).map(x => accs[x].name);
+                }).map(x => accs[x].id);
                 return accs;
         }
 
@@ -308,7 +306,7 @@ export class Optimizer {
                                                 let rawriskscore = -1;
                                                 // detect acc that contributes the least
                                                 for (let kdx = locked_accs; kdx < locked_accs + accslots; kdx++) {
-                                                        const tmpscores = this.replacement_score(candidate, kdx, EMPTY_ACCESSORY);
+                                                        const tmpscores = this.replacement_score(candidate, kdx, EmptySlotId('accessory'));
                                                         const tmpscore = tmpscores[0];
                                                         const rawtmpscore = tmpscores[1];
                                                         if (tmpscore > riskscore || (tmpscore === riskscore && rawtmpscore > rawriskscore)) {
@@ -337,7 +335,7 @@ export class Optimizer {
                                                         winner = undefined;
                                                         filter_accs = [
                                                                 ...filter_accs,
-                                                                EMPTY_ACCESSORY
+                                                                EmptySlotId('accessory')
                                                         ];
                                                         // try every available acc as a replacement for least contributing current acc
                                                         let filter_idx = undefined;
@@ -436,7 +434,7 @@ export class Optimizer {
                                         if (this.itemdata[tmp].empty) {
                                                 continue;
                                         }
-                                        candidate[slotname][idx] = EmptySlotName(slotname);
+                                        candidate[slotname][idx] = EmptySlotId(slotname);
                                         const tmp_score = this.score_equip(candidate);
                                         if (tmp_score === score) {
                                                 console.log('Dropped ' + tmp + ' from optimal loadout.');
@@ -466,7 +464,7 @@ export class Optimizer {
                 if (item.empty) {
                         return equip;
                 }
-                item = equip.items.filter((x) => (x.name === item.name))[0];
+                item = equip.items.filter((x) => (x.id === item.id))[0];
                 if (item === undefined) {
                         return equip;
                 }
@@ -474,19 +472,19 @@ export class Optimizer {
                         const stat = item.statnames[i];
                         equip[stat] -= item[stat];
                 }
-                equip.items = equip.items.filter((x) => (x.name !== item.name));
+                equip.items = equip.items.filter((x) => (x.id !== item.id));
                 equip.counts[item.slot[0]] -= 1;
                 return equip;
         }
 
         gear_slot(type, equip) {
-                const equiped = equip.items.filter((item) => (item.slot[0] === type[0])).map((x) => (x.name));
+                const equiped = equip.items.filter((item) => (item.slot[0] === type[0])).map((x) => (x.id));
                 return this.itemnames.filter((name) => {
                         if (!allowed_zone(this.itemdata, this.limits, name)) {
                                 return false;
                         }
                         return this.itemdata[name].slot[0] === type[0];
-                }).map((name) => (this.itemdata[name])).filter((item) => (!item.disable && !equiped.includes(item.name)));
+                }).map((name) => (this.itemdata[name])).filter((item) => (!item.disable && !equiped.includes(item.id)));
         }
 
         //set <equal> to <false> if equal results result in a dominate call

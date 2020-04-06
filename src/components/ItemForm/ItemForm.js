@@ -3,13 +3,13 @@ import {getSlot, getLock} from '../../util'
 
 class LockButton extends React.Component {
         render() {
-                const name = this.props.editItem[1];
+                const id = this.props.editItem[1];
                 const lockable = this.props.editItem[3];
-                if (!lockable || this.props.itemdata[name].empty) {
+                if (!lockable || this.props.itemdata[id].empty) {
                         return <></>
                 }
-                const slot = getSlot(name, this.props.itemdata);
-                const idx = this.props.equip[slot[0]].indexOf(name);
+                const slot = getSlot(id, this.props.itemdata);
+                const idx = this.props.equip[slot[0]].indexOf(id);
                 const locked = getLock(slot[0], idx, this.props.locked);
                 return <button onClick={() => this.props.handleLockItem(!locked, slot[0], idx)}>{
                                 locked
@@ -57,12 +57,17 @@ export default class ItemForm extends React.Component {
         }
 
         render() {
+                const item = this.props.itemdata[this.props.editItem[1]];
                 let able = 'Disable';
-                if (this.props.itemdata[this.props.editItem[1]] !== undefined && this.props.itemdata[this.props.editItem[1]].disable) {
+                if (item !== undefined && item.disable) {
                         able = 'Enable'
                 }
+                let header = '';
+                if (item !== undefined) {
+                        header = '(' +item.id+ ') ' + item.name;
+                }
                 return (<form onSubmit={this.handleSubmit}>
-                        {this.props.editItem[1]}<br/>
+                        {header}<br/>
                         <label>
                                 {'Level:'}
                                 <input style={{

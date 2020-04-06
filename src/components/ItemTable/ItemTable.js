@@ -74,8 +74,8 @@ export default class ItemTable extends React.Component {
                         const sorted = this.props.items.sort(compare);
                         let last = undefined;
                         for (let idx = 0; idx < sorted.length; idx++) {
-                                const name = sorted[idx];
-                                const item = this.props.itemdata[name];
+                                const id = sorted[idx];
+                                const item = this.props.itemdata[id];
                                 if (item.empty) {
                                         continue;
                                 }
@@ -97,14 +97,14 @@ export default class ItemTable extends React.Component {
                                                         return;
                                                 }
                                                 save[item.slot[0]].forEach(i => {
-                                                        if (i === name) {
+                                                        if (i === id) {
                                                                 className = '';
                                                         }
                                                 });
                                         });
                                 }
-                                if (allowed_zone(this.props.itemdata, limits, name)) {
-                                        this.localbuffer.push(<Item className={className} item={item} handleClickItem={this.props.handleClickItem} handleRightClickItem={this.props.handleRightClickItem} key={name}/>);
+                                if (allowed_zone(this.props.itemdata, limits, id)) {
+                                        this.localbuffer.push(<Item className={className} item={item} handleClickItem={this.props.handleClickItem} handleRightClickItem={this.props.handleRightClickItem} key={id}/>);
                                 }
                                 last = item;
                         }

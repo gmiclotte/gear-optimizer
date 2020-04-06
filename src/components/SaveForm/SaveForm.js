@@ -4,7 +4,7 @@ export default class SaveForm extends React.Component {
         constructor(props) {
                 super(props);
                 this.state = {
-                        value: this.props.wishidx
+                        value: this.props.saveIdx
                 };
                 this.handleChange = this.handleChange.bind(this);
                 this.handleSubmit = this.handleSubmit.bind(this);
@@ -23,6 +23,7 @@ export default class SaveForm extends React.Component {
                 } else {
                         console.log('not implemented SaveForm loc: ', this.props.loc);
                 }
+                console.log(this.props.loc, stats)
                 this.props.handleSettings(this.props.loc[0], stats);
         }
 

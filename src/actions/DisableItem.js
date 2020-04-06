@@ -1,8 +1,8 @@
 export const DISABLE_ITEM = 'Disable item.';
 
-export const DisableItem = itemName => ({
+export const DisableItem = itemId => ({
         type: DISABLE_ITEM,
         payload: {
-                name: itemName
+                id: itemId
         }
 });

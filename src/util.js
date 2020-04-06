@@ -17,7 +17,7 @@ export function old2newequip(accslots, offhand, base_layout) {
         let counts = Object.getOwnPropertyNames(Slot).map((x) => (0));
         for (let idx = 0; idx < base_layout.items.length; idx++) {
                 const item = base_layout.items[idx];
-                equip[item.slot[0]][counts[item.slot[1]]] = item.name;
+                equip[item.slot[0]][counts[item.slot[1]]] = item.id;
                 counts[item.slot[1]]++;
         }
         return equip;
@@ -148,6 +148,10 @@ export function get_raw_vals(data, equip, factors, offhand) {
                 let mainhand = true;
                 for (let jdx in sorted) {
                         const name = sorted[jdx];
+                        if (data[name] === undefined) {
+                                console.log(name, data[name])
+                                continue;
+                        }
                         let val = data[name][stat];
                         if (data[name].slot[0] === 'weapon') {
                                 if (mainhand) {
@@ -252,7 +256,7 @@ export const toTime = (ticks) => {
 export const cubeBaseItemData = (itemdata, cubestats, basestats) => {
         // make cube stats item
         let tier = Number(cubestats.tier);
-        let cube = new Item('Infinity Cube', Slot.OTHER, undefined, 0, [
+        let cube = new Item(1000, 'Infinity Cube', Slot.OTHER, undefined, 0, [
 
                 [
                         Stat.POWER,
@@ -292,7 +296,7 @@ export const cubeBaseItemData = (itemdata, cubestats, basestats) => {
                 ]
         ]);
         // make base stats item
-        let base = new Item('Base Stats', Slot.OTHER, undefined, 0, [
+        let base = new Item(1001, 'Base Stats', Slot.OTHER, undefined, 0, [
                 [
                         Stat.POWER,
                         Number(basestats.power)
@@ -304,9 +308,8 @@ export const cubeBaseItemData = (itemdata, cubestats, basestats) => {
         ]);
         return {
                 ...itemdata,
-                'Infinity Cube': cube,
-                'Base Stats': base
-
+                [cube.id]: cube,
+                [base.id]: base
         };
 }
 

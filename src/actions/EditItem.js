@@ -4,7 +4,7 @@ export const EditItem = val => {
         return {
                 type: EDIT_ITEM,
                 payload: {
-                        val: val.length === 0
+                        val: val===undefined
                                 ? 0
                                 : Number(val)
                 }
