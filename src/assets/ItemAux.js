@@ -63,7 +63,7 @@ export class EmptySlot extends Item {
         if (slot === undefined) {
             super('', 'Empty Slot', slot, SetName.SAFE, 100, []);
         } else {
-                super(EmptySlotId(slot[0]), EmptySlotName(slot[0]), slot, SetName.SAFE, 100, []);
+            super(EmptySlotId(slot[0]), EmptySlotName(slot[0]), slot, SetName.SAFE, 100, []);
         }
         this.empty = true;
     }
@@ -122,7 +122,6 @@ export const ItemNameContainer = (accslots, offhand) => {
         }
         container[slotname] = list;
     }
-    console.log('contianer',container.accessory)
     return container;
 };
 
@@ -1225,7 +1224,7 @@ export const Wishes = [
         'Gold Drop Card III', 7.50E+22, 1
     ],
     [
-        'PP Card III', 1.00E+23, 1
+        'PP Card III', 1.00E+23, 2
     ],
     [
         'A / D Card III', 8.00E+22, 1
@@ -1237,7 +1236,7 @@ export const Wishes = [
         'TM Speed Card III', 1.20E+23, 1
     ],
     [
-        'QP Card III', 1.50E+23, 1
+        'QP Card III', 1.50E+23, 2
     ],
     [
         'Daycare Card III', 1.60E+23, 1
@@ -1343,6 +1342,12 @@ export const Wishes = [
     ],
     [
         'Titan 11 QP', 2.00E+25, 1
+    ],
+    [
+        'Adventure Stats V', 1.00E+24, 20
+    ],
+    [
+        'Stats V', 1.00E+24, 20
     ]
 ];
 

@@ -405,13 +405,34 @@ ZONES = [
     ['Portable Stairway (To Heaven)', 'SetName.ROCKLOBSTER4'],
     ['Amplifier', 'SetName.ROCKLOBSTER4'],
     ['Ascended x8 Pendant', 'SetName.FOREST_PENDANT'],
-    ['GRAND DEMON LOOTZIFER', 'SetName.LOOTY'],
+    ['431', 'SetName.LOOTY'],
+    ['432', 'SetName.FOREST'],
+    ['433', 'SetName.CAVE'],
+    ['434', 'SetName.SKY'],
+    ['435', 'SetName.HSB'],
+    ['436', 'SetName.CLOCK'],
+    ['437', 'SetName.TWO_D'],
+    ['438', 'SetName.SPOOPY'],
+    ['439', 'SetName.GAUDY'],
+    ['440', 'SetName.MEGA'],
+    ['441', 'SetName.BEARDVERSE'],
+    ['442', 'SetName.BADLY_DRAWN'],
+    ['443', 'SetName.STEALTH'],
+    ['444', 'SetName.CHOCO'],
+    ['445', 'SetName.EDGY'],
+    ['446', 'SetName.PINK'],
+    ['447', 'SetName.META'],
+    ['448', 'SetName.PARTY'],
+    ['449', 'SetName.TYPO'],
+    ['450', 'SetName.FAD'],
+    ['451', 'SetName.JRPG'],
+    ['452', 'SetName.RADLANDS'],
 ]
 
 
-def name2zone(val):
+def name2zone(name, id):
     for idx in range(len(ZONES)):
-        if val == ZONES[idx][0]:
+        if name == ZONES[idx][0] or id == ZONES[idx][0]:
             return ZONES[idx][1]
     return 'incorrect zone'
 
@@ -443,7 +464,7 @@ def props2item(props):
     if slot == 'MISC':
         tier = 'MISC'
     else:
-        tier = name2zone(name)
+        tier = name2zone(name, itemID)
     if slot == 'MISC':
         return
     name = name.replace('\'', '\\\'')

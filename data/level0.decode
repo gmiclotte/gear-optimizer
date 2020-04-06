@@ -1,4 +1,4 @@
-2772364
+2774460
 ['I wish that wishes kicked ass', 1.00E+15, 1],
 ['I Wish that wishes weren't so slow :c', 1.00E+15, 10],
 ['I wish MacGuffin drops mattered', 2.00E+15, 5],
@@ -147,11 +147,11 @@
 ['I wish my Hacks Card Tier was higher III', 4.00E+22, 1],
 ['I wish my Augment Card Tier was higher III', 6.00E+22, 1],
 ['I wish my Gold Drop Card Tier was higher III', 7.50E+22, 1],
-['I wish my PP Card Tier was higher III', 1.00E+23, 1],
+['I wish my PP Card Tier was higher III', 1.00E+23, 2],
 ['I wish my A / D Card Tier was higher III', 8.00E+22, 1],
 ['I wish my Magic NGU Card Tier was higher III', 1.30E+23, 1],
 ['I wish my TM Speed Card Tier was higher III', 1.20E+23, 1],
-['I wish my QP Card Tier was higher III', 1.50E+23, 1],
+['I wish my QP Card Tier was higher III', 1.50E+23, 2],
 ['I wish my Daycare Card Tier was higher III', 1.60E+23, 1],
 ['I wish I made Mayo Faster I', 5.00E+20, 10],
 ['I wish Cards Spawned Faster I', 5.00E+20, 10],
@@ -187,6 +187,8 @@
 ['I wish my QP Card Tier was higher IV[', 1.50E+24, 2],
 ['I wish my Daycare Card Tier was higher IV', 1.60E+24, 2],
 ['I wish Titan 11 Dropped QP', 2.00E+25, 1],
+['I wish I was stronger in Adventure mode V', 1.00E+24, 20],
+['I wish I could beat up more bosses VW', 1.00E+24, 20],
 
 ['Attack/Defense Hack', 1.00E+08, 2.5000, 1.0250, 10, 7720],
 ['Adventure Stats Hac', 2.00E+08, 0.1000, 1.0200, 50, 7632],

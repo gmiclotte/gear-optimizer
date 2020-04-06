@@ -169,7 +169,6 @@ function loadState(state) {
                 localStorageState.capstats = state.capstats;
         }
         // translate item names to item ids
-        console.log(localStorageState.items)
         if (localStorageState.version === '1.5.0') {
                 let items = [];
                 let itemdata = {};
@@ -206,7 +205,6 @@ function loadState(state) {
                 localStorageState.lastequip = convert(localStorageState.lastequip)
                 localStorageState.savedequip = localStorageState.savedequip.map(x => convert(x));
         }
-        console.log(localStorageState.items)
         // update item store with changed levels and disabled items
         for (let idx = 0; idx < localStorageState.items.length; idx++) {
                 const name = localStorageState.items[idx];
