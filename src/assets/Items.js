@@ -2346,10 +2346,10 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 100],
     ]),
     new Item(440, 'The F Tank', Slot.ACCESSORY, SetName.MEGA, 100, [
-        [Stat.POWER, 5000],
-        [Stat.TOUGHNESS, 5000],
-        [Stat.ENERGY_POWER, 300],
-        [Stat.ENERGY_BARS, 250],
+        [Stat.POWER, 4000],
+        [Stat.TOUGHNESS, 4000],
+        [Stat.ENERGY_POWER, 160],
+        [Stat.ENERGY_BARS, 100],
         [Stat.ENERGY_CAP, 50],
     ]),
     new Item(441, 'A Beard Comb', Slot.ACCESSORY, SetName.BEARDVERSE, 100, [
