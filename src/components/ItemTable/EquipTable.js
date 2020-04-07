@@ -141,7 +141,7 @@ export default class EquipTable extends React.Component {
                 ReactTooltip.rebuild();
         }
 
-        render_equip(equip, prefix, compare, buffer, handleClickItem, handleCtrlClickItem, lockable) {
+        render_equip(equip, prefix, compare, buffer, handleClickItem, handleCtrlClickItem, handleShiftClickItem, lockable) {
                 this.itemdata = cubeBaseItemData(this.props.itemdata, this.props.cubestats, this.props.basestats);
                 let sorted = Object.getOwnPropertyNames(Slot).sort((a, b) => Slot[a][1] - Slot[b][1]).reduce((res, slot) => res.concat(equip[Slot[slot][0]]), []);
                 let localbuffer = [];
@@ -167,7 +167,7 @@ export default class EquipTable extends React.Component {
                                         localbuffer = [];
                                 }
                         }
-                        localbuffer.push(<Item item={item} idx={idx - typeIdx} lockable={lockable} locked={this.props.locked} handleClickItem={handleClickItem} handleCtrlClickItem={handleCtrlClickItem} handleRightClickItem={(itemId) => this.props.handleRightClickItem(itemId, true)} key={id +'_' + idx}/>);
+                        localbuffer.push(<Item item={item} idx={idx - typeIdx} lockable={lockable} locked={this.props.locked} handleClickItem={handleClickItem} handleCtrlClickItem={handleCtrlClickItem} handleShiftClickItem={handleShiftClickItem} handleRightClickItem={(itemId) => this.props.handleRightClickItem(itemId, true)} key={id +'_' + idx}/>);
                         last = item;
                 }
                 buffer.push(<div className='item-section' key={this.class_idx++}>
@@ -175,14 +175,14 @@ export default class EquipTable extends React.Component {
                 </div>);
         }
 
-        render_conditional(condition, title, buffer, handleCtrlClickItem) {
+        render_conditional(condition, title, buffer, handleCtrlClickItem, handleShiftClickItem) {
                 const short = 'hide' + title.toLowerCase().replace(/\s/g,'');
                 let sorted = this.props.items.filter((id) => (condition(id) && this.itemdata[id].level !== undefined));
                 let localbuffer = [];
                 for (let idx = 0; idx < sorted.length; idx++) {
                         let id = sorted[idx];
                         const item = this.itemdata[id];
-                        localbuffer.push(<Item item={item} lockable={false} handleClickItem={this.props.handleEquipItem} handleCtrlClickItem={handleCtrlClickItem} handleRightClickItem={(itemId) => this.props.handleRightClickItem(itemId, false)} key={id}/>);
+                        localbuffer.push(<Item item={item} lockable={false} handleClickItem={this.props.handleEquipItem} handleCtrlClickItem={handleCtrlClickItem} handleShiftClickItem={handleShiftClickItem} handleRightClickItem={(itemId) => this.props.handleRightClickItem(itemId, false)} key={id}/>);
                 }
                 if (localbuffer.length > 0) {
                         buffer.push(<div className='item-section' key={this.class_idx++}>
@@ -202,20 +202,20 @@ export default class EquipTable extends React.Component {
                 const compare = compare_factory(this.props.group)(this.itemdata);
                 const equip = this.props.equip;
                 const savedequip = this.props.savedequip[this.props.savedidx];
-                this.render_equip(equip, '', compare, buffer, this.props.handleClickItem, this.props.handleCtrlClickItem, true);
+                this.render_equip(equip, '', compare, buffer, this.props.handleClickItem, this.props.handleCtrlClickItem, (itemId) => this.props.handleEditItem(itemId, 100), true);
                 buffer.push(<SaveButtons {...this.props} loadoutURI={equip2url(equip, this.itemdata)} saveURI={equip2url(savedequip, this.itemdata)} key='savebuttons'/>)
                 if (this.props.showsaved) {
                         this.render_equip(savedequip, 'Saved ', compare, buffer, this.props.handleEquipItem, this.props.handleCtrlClickItem, false);
                 }
-                buffer.push(<div className='item-section' key='stats'>{'Gear stats (change w.r.t. save slot)'}<br/><br/> {
+                buffer.push(<div className='item-section' key='stats' onClick={() => this.props.handleSettings('compactbonus', !this.props.compactbonus)}>{'Gear stats (change w.r.t. save slot)'}<br/><br/> {
                                 Object.getOwnPropertyNames(Factors).map((factor) => (
                                         (factor === 'NONE' || factor === 'DELETE' || factor === 'INSERT')
                                         ? <div key={factor}/>
-                                        : <BonusLine itemdata={this.itemdata} equip={equip} savedequip={savedequip} factor={Factors[factor]} factors={this.props.factors} capstats={this.props.capstats} offhand={this.props.offhand * 5} key={factor}/>))
+                                        : <BonusLine itemdata={this.itemdata} equip={equip} savedequip={savedequip} compactbonus={this.props.compactbonus} factor={Factors[factor]} factors={this.props.factors} capstats={this.props.capstats} offhand={this.props.offhand * 5} key={factor}/>))
                         }
                 </div>);
-                this.render_conditional(id => this.itemdata[id].level !== 100, 'Not maxed', buffer, this.props.handleCtrlClickItem);
-                this.render_conditional(id => this.itemdata[id].disable, 'Disabled', buffer, this.props.handleCtrlClickItem);
+                this.render_conditional(id => this.itemdata[id].level !== 100, 'Not maxed', buffer, this.props.handleCtrlClickItem, (itemId) => this.props.handleEditItem(itemId, 100));
+                this.render_conditional(id => this.itemdata[id].disable, 'Disabled', buffer, this.props.handleCtrlClickItem, (itemId) => this.props.handleEditItem(itemId, 100));
                 return (<div className='item-table'>
                         {buffer}
                 </div>);

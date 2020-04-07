@@ -31,7 +31,7 @@ export default class ItemForm extends React.Component {
         }
 
         handleSubmit(event) {
-                this.props.handleEditItem(this.state.value)
+                this.props.handleEditItem(this.props.editItem[1], this.state.value)
                 event.preventDefault();
                 this.props.closeEditModal();
         }

@@ -60,6 +60,8 @@ export default class Item extends Component {
                         onClick={(e) => {
                                 if ((e.ctrlKey || e.altKey) && this.props.handleCtrlClickItem !== undefined) {
                                         this.props.handleCtrlClickItem(item.id);
+                                } else if (e.shiftKey && this.props.handleShiftClickItem !== undefined) {
+                                        this.props.handleShiftClickItem(item.id);
                                 } else {
                                         this.props.handleClickItem(item.id);
                                 }

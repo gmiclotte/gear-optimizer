@@ -1,12 +1,13 @@
 export const EDIT_ITEM = 'Edit item.';
 
-export const EditItem = val => {
+export const EditItem = (itemId, level) => {
         return {
                 type: EDIT_ITEM,
                 payload: {
-                        val: val===undefined
+                        itemId: itemId,
+                        level: level===undefined
                                 ? 0
-                                : Number(val)
+                                : Number(level)
                 }
         }
 };

@@ -669,23 +669,23 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
 
                 case EDIT_ITEM:
                         {
-                                if (isNaN(action.payload.val)) {
+                                if (isNaN(action.payload.level)) {
                                         return state;
                                 }
-                                if (0 > action.payload.val || action.payload.val > 100) {
+                                if (0 > action.payload.level || action.payload.level > 100) {
                                         return state;
                                 }
-                                let item = state.itemdata[state.editItem[1]];
-                                update_level(item, action.payload.val);
+                                let item = {...state.itemdata[action.payload.itemId]};
+                                update_level(item, action.payload.level);
                                 return {
                                         ...state,
                                         editItem: {
                                                 ...state.editItem,
-                                                2: action.payload.val
+                                                2: action.payload.level
                                         },
                                         itemdata: {
                                                 ...state.itemdata,
-                                                [item.name]: item
+                                                [action.payload.itemId]: item
                                         }
                                 }
                         }
