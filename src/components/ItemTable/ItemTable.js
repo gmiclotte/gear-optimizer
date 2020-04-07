@@ -104,7 +104,7 @@ export default class ItemTable extends React.Component {
                                         });
                                 }
                                 if (allowed_zone(this.props.itemdata, limits, id)) {
-                                        this.localbuffer.push(<Item className={className} item={item} handleClickItem={this.props.handleClickItem} handleRightClickItem={this.props.handleRightClickItem} key={id}/>);
+                                        this.localbuffer.push(<Item className={className} item={item} handleClickItem={this.props.handleClickItem} handleCtrlClickItem={this.props.handleCtrlClickItem} handleRightClickItem={this.props.handleRightClickItem} key={id}/>);
                                 }
                                 last = item;
                         }

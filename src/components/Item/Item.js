@@ -56,12 +56,21 @@ export default class Item extends Component {
                         imgname = imgname.replace(/</g, '');
                         imgname = imgname.replace(/!/g, '');
                 }
-                return (<img className={classNames} onClick={() => this.props.handleClickItem(item.id)} onContextMenu={(e) => {
-                        if (!item.empty) {
-                                console.log(item)
-                                this.props.handleRightClickItem(item.id);
-                        }
-                        e.preventDefault();
-                        }} data-tip={tt} src={images[imgname]} alt={item.id} key='item'/>);
+                return (<img className={classNames} 
+                        onClick={(e) => {
+                                if (e.ctrlKey) {
+                                        this.props.handleCtrlClickItem(item.id);
+                                } else {
+                                        this.props.handleClickItem(item.id);
+                                }
+                        }} 
+                        onContextMenu={(e) => {
+                                if (!item.empty) {
+                                        console.log(item)
+                                        this.props.handleRightClickItem(item.id);
+                                }
+                                e.preventDefault();
+                        }} 
+                        data-tip={tt} src={images[imgname]} alt={item.id} key='item'/>);
         }
 }
