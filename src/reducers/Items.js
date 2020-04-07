@@ -17,7 +17,7 @@ import {HACK} from '../actions/Hack';
 import {WISH} from '../actions/Wish';
 import {SETTINGS, TITAN} from '../actions/Settings';
 import {CREMENT} from '../actions/Crement'
-import {DISABLE_ITEM} from '../actions/DisableItem';
+import {DISABLE_ITEM, DISABLE_ZONE} from '../actions/DisableItem';
 import {TOGGLE_MODAL} from '../actions/ToggleModal';
 import {EDIT_ITEM} from '../actions/EditItem';
 import {EDIT_FACTOR} from '../actions/EditFactor';
@@ -603,20 +603,47 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                         }
 
                 case DISABLE_ITEM:
-                        {
-                                const id = action.payload.id;
-                                const item = state.itemdata[id];
-                                return {
-                                        ...state,
-                                        itemdata: {
-                                                ...state.itemdata,
-                                                [id]: {
-                                                        ...item,
-                                                        disable: !item.disable
-                                                }
+                {
+                        const id = action.payload.id;
+                        const item = state.itemdata[id];
+                        return {
+                                ...state,
+                                itemdata: {
+                                        ...state.itemdata,
+                                        [id]: {
+                                                ...item,
+                                                disable: !item.disable
                                         }
-                                };
+                                }
+                        };
+                }
+
+                case DISABLE_ZONE:
+                {
+                        const zoneid = action.payload.id;
+                        let itemdata = {};
+                        Object.getOwnPropertyNames(state.itemdata).forEach(itemid => {
+                                const item = state.itemdata[itemid];
+                                if (item.zone === undefined) {
+                                        return;
+                                }
+                                if (item.zone[1] !== zoneid) {
+                                        itemdata[itemid] = item;
+                                } else {
+                                        itemdata[itemid] = {
+                                                ...item,
+                                                disable: !item.disable,
+                                        }
+                                }
+                        });
+                        return {
+                                ...state,
+                                itemdata: {
+                                        ...state.itemdata,
+                                        ...itemdata,
+                                }
                         }
+                }
 
                 case TOGGLE_MODAL:
                         {

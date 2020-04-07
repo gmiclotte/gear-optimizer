@@ -49,10 +49,18 @@ export default class ItemTable extends React.Component {
                 ReactTooltip.rebuild();
         }
 
+        handleZoneClick(e, zoneId) {
+                if (e.ctrlKey || e.altKey) {
+                        this.props.handleDisableZone(zoneId)
+                } else {
+                        this.props.handleHideZone(zoneId)
+                }
+        }
+
         create_section(buffer, last, class_idx) {
                 if (this.localbuffer.length > 0) {
                         buffer.push(<div className='item-section' key={class_idx++}>
-                                <span onClick={() => this.props.handleHideZone(last.zone[1])}>{last[this.props.group][0]}<br/></span>
+                                <span onClick={(e) => this.handleZoneClick(e, last.zone[1])}>{last[this.props.group][0]}<br/></span>
                                 {
                                         this.props.hidden[last.zone[1]]
                                                 ? undefined

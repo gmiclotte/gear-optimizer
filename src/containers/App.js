@@ -9,7 +9,7 @@ import {HackAsync} from '../actions/Hack'
 import {WishAsync} from '../actions/Wish'
 import {Settings, Go2Titan} from '../actions/Settings'
 import {Crement} from '../actions/Crement'
-import {DisableItem} from '../actions/DisableItem';
+import {DisableItem, DisableZone} from '../actions/DisableItem';
 import {ToggleModal} from '../actions/ToggleModal';
 import {EditItem} from '../actions/EditItem';
 import {EditFactor} from '../actions/EditFactor';
@@ -84,6 +84,7 @@ const mapDispatchToProps = {
         handleEditFactor: EditFactor,
         handleEquipItem: EquipItem,
         handleEquipItems: EquipItems,
+        handleDisableZone: DisableZone,
         handleHideZone: HideZone,
         handleOptimizeGear: OptimizeGearAsync,
         handleOptimizeSaves: OptimizeSavesAsync,
