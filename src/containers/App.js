@@ -64,6 +64,7 @@ const mapStateToProps = state => ({
         hidden: state.optimizer.hidden,
         hidenotmaxed: state.optimizer.hidenotmaxed,
         hidedisabled: state.optimizer.hidedisabled,
+        compactbonus: state.optimizer.compactbonus,
         augstats: state.optimizer.augstats,
         basestats: state.optimizer.basestats,
         capstats: state.optimizer.capstats,

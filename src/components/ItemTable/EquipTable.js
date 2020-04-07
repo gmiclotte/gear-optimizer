@@ -93,10 +93,22 @@ class BonusLine extends React.Component {
         }
 
         render() {
+                let stat = this.props.factor[0];
+                let className;
+                let priority = false;
+                for (let idx = 0; idx < this.props.factors.length; idx++) {
+                        if (stat === Factors[this.props.factors[idx]][0]) {
+                                className = ' priority-stat';
+                                priority = true;
+                                break;
+                        }
+                }
+                if (this.props.compactbonus && !priority) {
+                        return <></>;
+                }
                 let val = score_equip(this.props.itemdata, this.props.equip, this.props.factor, this.props.offhand, this.props.capstats);
                 let old = score_equip(this.props.itemdata, this.props.savedequip, this.props.factor, this.props.offhand, this.props.capstats);
                 let diff_val;
-                let stat = this.props.factor[0];
                 if (stat === 'Power' || stat === 'Toughness' || stat === 'Respawn') {
                         val *= 100;
                         old *= 100;
@@ -112,13 +124,6 @@ class BonusLine extends React.Component {
                 let diff = (<span className={classNameDiff}>
                         {formatted(diff_val, stat, true)}
                 </span>);
-                let className;
-                for (let idx = 0; idx < this.props.factors.length; idx++) {
-                        if (stat === Factors[this.props.factors[idx]][0]) {
-                                className = ' priority-stat';
-                                break;
-                        }
-                }
                 let text = (<span className={className}>
                         {this.props.factor[0] + ': ' + formatted(val, stat, false) + ' '}
                         {diff}</span>);
