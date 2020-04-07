@@ -51,16 +51,21 @@ export default class ItemTable extends React.Component {
 
         handleZoneClick(e, zoneId) {
                 if (e.ctrlKey || e.altKey) {
-                        this.props.handleDisableZone(zoneId)
+                        this.props.handleDisableZone(zoneId);
+                } else if (e.shiftKey) {
+                        this.props.handleSettings('compactitemlist', !this.props.compactitemlist);
                 } else {
-                        this.props.handleHideZone(zoneId)
+                        this.props.handleHideZone(zoneId);
                 }
         }
 
-        create_section(buffer, last, class_idx) {
+        create_section(buffer, last, class_idx, groupName = '') {
+                if (groupName.length === 0) {
+                        groupName = last[this.props.group][0];
+                }
                 if (this.localbuffer.length > 0) {
                         buffer.push(<div className='item-section' key={class_idx++}>
-                                <span onClick={(e) => this.handleZoneClick(e, last.zone[1])}>{last[this.props.group][0]}<br/></span>
+                                <span onClick={(e) => this.handleZoneClick(e, last.zone[1])}>{groupName}<br/></span>
                                 {
                                         this.props.hidden[last.zone[1]]
                                                 ? undefined
@@ -88,7 +93,7 @@ export default class ItemTable extends React.Component {
                                         continue;
                                 }
                                 let next = group(last, item, this.props.group);
-                                if (next) {
+                                if (next && (!this.props.compactitemlist || item.zone[1] < 0)) {
                                         class_idx = this.create_section(buffer, last, class_idx)
                                 }
                                 let className = '';
@@ -116,7 +121,7 @@ export default class ItemTable extends React.Component {
                                 }
                                 last = item;
                         }
-                        class_idx = this.create_section(buffer, last, class_idx);
+                        class_idx = this.create_section(buffer, this.props.compactitemlist ? {zone:Infinity} : last, class_idx, this.props.compactitemlist ? 'Items' : '');
                 }
                 return (<div className='item-table'>
                         {buffer}
