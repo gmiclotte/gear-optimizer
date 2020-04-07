@@ -175,13 +175,13 @@ export default class EquipTable extends React.Component {
                 </div>);
         }
 
-        render_conditional(condition, title, buffer) {
+        render_conditional(condition, title, buffer, handleCtrlClickItem) {
                 let sorted = this.props.items.filter((id) => (condition(id) && this.itemdata[id].level !== undefined));
                 let localbuffer = [];
                 for (let idx = 0; idx < sorted.length; idx++) {
                         let id = sorted[idx];
                         const item = this.itemdata[id];
-                        localbuffer.push(<Item item={item} lockable={false} handleClickItem={this.props.handleEquipItem} handleRightClickItem={(itemId) => this.props.handleRightClickItem(itemId, false)} key={id}/>);
+                        localbuffer.push(<Item item={item} lockable={false} handleClickItem={this.props.handleEquipItem} handleCtrlClickItem={handleCtrlClickItem} handleRightClickItem={(itemId) => this.props.handleRightClickItem(itemId, false)} key={id}/>);
                 }
                 if (localbuffer.length > 0) {
                         buffer.push(<div className='item-section' key={this.class_idx++}>
@@ -209,8 +209,8 @@ export default class EquipTable extends React.Component {
                                         : <BonusLine itemdata={this.itemdata} equip={equip} savedequip={savedequip} factor={Factors[factor]} factors={this.props.factors} capstats={this.props.capstats} offhand={this.props.offhand * 5} key={factor}/>))
                         }
                 </div>);
-                this.render_conditional(id => this.itemdata[id].level !== 100, 'Not maxed', buffer);
-                this.render_conditional(id => this.itemdata[id].disable, 'Disabled', buffer);
+                this.render_conditional(id => this.itemdata[id].level !== 100, 'Not maxed', buffer, this.props.handleCtrlClickItem);
+                this.render_conditional(id => this.itemdata[id].disable, 'Disabled', buffer, this.props.handleCtrlClickItem);
                 return (<div className='item-table'>
                         {buffer}
                 </div>);
