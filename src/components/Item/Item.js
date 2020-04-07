@@ -58,7 +58,7 @@ export default class Item extends Component {
                 }
                 return (<img className={classNames} 
                         onClick={(e) => {
-                                if (e.ctrlKey && this.props.handleCtrlClickItem !== undefined) {
+                                if ((e.ctrlKey || e.altKey) && this.props.handleCtrlClickItem !== undefined) {
                                         this.props.handleCtrlClickItem(item.id);
                                 } else {
                                         this.props.handleClickItem(item.id);
