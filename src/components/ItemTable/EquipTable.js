@@ -176,6 +176,7 @@ export default class EquipTable extends React.Component {
         }
 
         render_conditional(condition, title, buffer, handleCtrlClickItem) {
+                const short = 'hide' + title.toLowerCase().replace(/\s/g,'');
                 let sorted = this.props.items.filter((id) => (condition(id) && this.itemdata[id].level !== undefined));
                 let localbuffer = [];
                 for (let idx = 0; idx < sorted.length; idx++) {
@@ -185,7 +186,11 @@ export default class EquipTable extends React.Component {
                 }
                 if (localbuffer.length > 0) {
                         buffer.push(<div className='item-section' key={this.class_idx++}>
-                                <span>{title}<br/></span>{localbuffer}
+                                <span onClick={() => this.props.handleSettings(short, !this.props[short])}>{title}<br/></span>{
+                                this.props[short]
+                                    ? undefined
+                                    : localbuffer
+                        }
                         </div>);
                 }
         }
