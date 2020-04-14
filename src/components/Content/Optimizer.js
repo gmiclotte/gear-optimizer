@@ -130,8 +130,12 @@ class Optimizer extends Component {
                                   handleClick={this.props.handleCrement} min={-1} max={PENDANTS.length - 1}/></div>
                     <div><Crement header='Accessory slots' value={accslots} name='accslots'
                                   handleClick={this.props.handleCrement} min={0} max={100}/></div>
-                    <div><Crement header='Offhand power' value={this.props.offhand * 5 + '%'} name='offhand'
-                                  handleClick={this.props.handleCrement} min={0} max={20}/></div>
+                    {
+                        this.props.zone > 27
+                            ? <div><Crement header='Offhand power' value={this.props.offhand * 5 + '%'} name='offhand'
+                                            handleClick={this.props.handleCrement} min={0} max={20}/></div>
+                            : ''
+                    }
                 </div>
                 <div className='button-section' key='factorforms'>
                     <OptimizeButton text={'Gear'} running={this.props.running} abort={this.props.handleTerminate}
