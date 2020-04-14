@@ -94,7 +94,7 @@ export default class ItemTable extends React.Component {
                     continue;
                 }
                 let next = group(last, item, this.props.group);
-                if (next && (!this.props.compactitemlist || item.zone[1] < 0)) {
+                if (next && (!this.props.compactitemlist || last.zone[1] < 0)) {
                     class_idx = this.create_section(buffer, last, class_idx)
                 }
                 let className = '';
