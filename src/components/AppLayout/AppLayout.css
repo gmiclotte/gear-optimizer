@@ -1,32 +1,32 @@
 .nav-bar-list {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        width: 100vw;
-        height: 5vh;
-        background-color: #333;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    width: 100vw;
+    height: 5vh;
+    background-color: #333;
 }
 
 .nav-bar-item {
-        display: inline;
-        float: left;
-        border-right: 1px solid #fff;
+    display: inline;
+    float: left;
+    border-right: 1px solid #fff;
 }
 
 .nav-bar-item:last-child {
-        border-right: none;
+    border-right: none;
 }
 
 .nav-link {
-        display: block;
-        color: white;
-        text-align: center;
-        height: 3vh;
-        padding: 1vh 1vw;
-        text-decoration: none;
+    display: block;
+    color: white;
+    text-align: center;
+    height: 3vh;
+    padding: 1vh 1vw;
+    text-decoration: none;
 }
 
 .active {
-        background-color: #33b;
+    background-color: #33b;
 }

@@ -1,41 +1,41 @@
 .item-table {
-        width: 48vw;
-        height: 76vh;
-        margin: auto;
-        overflow-y: auto;
-        overflow-x: hidden;
-        border: 2px solid black;
-        border-radius: 5px;
-        margin: 0vh 1vw;
+    width: 48vw;
+    height: 76vh;
+    margin: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border: 2px solid black;
+    border-radius: 5px;
+    margin: 0vh 1vw;
 }
 
 .stats-section {
-        margin: 5px;
+    margin: 5px;
 }
 
 .item-section {
-        display: inline-block;
-        overflow: hidden;
-        min-width: 50px;
-        max-width: 45vw;
-        display: block;
-        margin: 5px;
-        border: 1px solid black;
-        border-radius: 5px;
+    display: inline-block;
+    overflow: hidden;
+    min-width: 50px;
+    max-width: 45vw;
+    display: block;
+    margin: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
 }
 
 .increase-stat {
-        color: green;
+    color: green;
 }
 
 .same-stat {
-        color: black;
+    color: black;
 }
 
 .decrease-stat {
-        color: red;
+    color: red;
 }
 
 .priority-stat {
-        font-weight: bold;
+    font-weight: bold;
 }

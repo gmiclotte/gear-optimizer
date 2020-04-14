@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {createStore, applyMiddleware, compose} from 'redux';
+import {applyMiddleware, compose, createStore} from 'redux';
 import {Provider} from 'react-redux';
 import createSagaMiddleware from 'redux-saga'
 
@@ -19,7 +19,7 @@ const store = createStore(AppReducer, composeEnhancers(applyMiddleware(sagaMiddl
 sagaMiddleware.run(rootSaga);/* inject our sagas into the middleware */
 
 ReactDOM.render(<Provider store={store}>
-        <App {...store.props}/>
+    <App {...store.props}/>
 </Provider>, document.getElementById('app'),);
 
 // If you want your app to work offline and load faster, you can change

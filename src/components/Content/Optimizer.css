@@ -1,48 +1,48 @@
 .content__container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
 }
 
 .button-section {
-        width: 30vw;
-        height: 20vh;
-        display: block;
-        overflow-y: auto;
-        overflow-x: hidden;
-        margin: 1vh 1vw;
+    width: 30vw;
+    height: 20vh;
+    display: block;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin: 1vh 1vw;
 }
 
 .edit-item-modal {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        right: auto;
-        bottom: auto;
-        border: 1px solid rgb(204, 204, 204);
-        background: rgb(255, 255, 255);
-        overflow: auto;
-        border-radius: 4px;
-        outline: none;
-        padding: 20px;
-        margin-right: -50%;
-        transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    border: 1px solid rgb(204, 204, 204);
+    background: rgb(255, 255, 255);
+    overflow: auto;
+    border-radius: 4px;
+    outline: none;
+    padding: 20px;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
 }
 
 .edit-item-overlay {
-        position: fixed;
-        top: 0px;
-        left: 0px;
-        right: 0px;
-        bottom: 0px;
-        background-color: rgba(0, 0, 0, 0.75);
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    background-color: rgba(0, 0, 0, 0.75);
 }
 
 .cubetable {
-        border-spacing: 0px 0px;
+    border-spacing: 0px 0px;
 }
 
 .cubetable td {
-        padding: 0px;
+    padding: 0px;
 }

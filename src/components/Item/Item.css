@@ -1,15 +1,16 @@
 .disable-item {
-        opacity: .20;
+    opacity: .20;
 }
 
-.item {}
+.item {
+}
 
 .lock-item {
-        outline: 2px solid red;
-        outline-offset: -2px;
+    outline: 2px solid red;
+    outline-offset: -2px;
 }
 
 .unused-item {
-        outline: 2px solid red;
-        outline-offset: -2px;
+    outline: 2px solid red;
+    outline-offset: -2px;
 }
