@@ -20,6 +20,7 @@ export class Optimizer {
         this.offhand = state.offhand * 5;
         this.limits = get_limits(state);
         this.capstats = state.capstats;
+        this.ignoreDisabled = !!state.ignoreDisabled;
     }
 
     construct_base(locked, equip) {
@@ -478,7 +479,7 @@ export class Optimizer {
                 return false;
             }
             return this.itemdata[name].slot[0] === type[0];
-        }).map((name) => (this.itemdata[name])).filter((item) => (!item.disable && !equiped.includes(item.id)));
+        }).map((name) => (this.itemdata[name])).filter((item) => ((this.ignoreDisabled || !item.disable) && !equiped.includes(item.id)));
     }
 
     //set <equal> to <false> if equal results result in a dominate call

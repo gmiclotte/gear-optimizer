@@ -149,7 +149,13 @@ class Optimizer extends Component {
                 <div className='button-section' key='numberforms'>
                     <table className='center cubetable'>
                         <tbody>
-                        <tr>
+                            <tr>
+                                <td>Allow disabled items</td>
+                                <td>
+                                        <input type="checkbox" checked={this.props.ignoreDisabled} onChange={() => this.props.handleSettings('ignoreDisabled', !this.props.ignoreDisabled)}/>
+                                </td>
+                            </tr>
+                            <tr>
                             <td>P/T input</td>
                             <td>
                                 <input type="checkbox" checked={this.props.basestats.modifiers}

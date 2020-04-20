@@ -54,6 +54,7 @@ const mapStateToProps = state => ({
     showsaved: state.optimizer.showsaved,
     showunused: state.optimizer.showunused,
     editItem: state.optimizer.editItem,
+    ignoreDisabled: state.optimizer.ignoreDisabled,
     factors: state.optimizer.factors,
     maxslots: state.optimizer.maxslots,
     running: state.optimizer.running,
