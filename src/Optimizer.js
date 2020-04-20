@@ -287,6 +287,7 @@ export class Optimizer {
             for (let idx in layouts) {
                 // combine every gear with every accessory layout
                 let candidate = layouts[idx];
+                candidate.base_idx = layout;
                 if (accslots > 0) {
                     for (let kdx = 0; kdx < accslots; kdx++) {
                         candidate.accessory[locked_accs + kdx] = acc_candidate[kdx];
@@ -380,7 +381,8 @@ export class Optimizer {
             candidates[idx] = {
                 ...this.old2newequip(this.sort_accs(tmp)),
                 accslots: candidates[idx].accslots,
-                accs: candidates[idx].accs
+                accs: candidates[idx].accs,
+                base_idx: candidates[idx].base_idx,
             };
         }
         // construct alternative candidates
@@ -410,19 +412,16 @@ export class Optimizer {
         // remove gear that doesn't contribute due to hard caps
         alternatives.map(candidate => {
             Object.getOwnPropertyNames(Slot).forEach(slot => {
-                if (slot === 'ACCESSORY' || slot === 'OTHER') {
+                if (slot === 'OTHER') {
                     return;
                 }
                 const slotname = Slot[slot][0];
-                const initial = Math.max(base_layouts.map(layout => {
-                    let count = 0;
-                    layout[slotname].forEach(item => {
-                        count += this.itemdata[item].empty
-                            ? 0
-                            : 1;
-                    });
-                    return count;
-                }));
+                let initial = 0;
+                base_layouts[candidate.base_idx][slotname].forEach(item => {
+                    initial += this.itemdata[item].empty
+                        ? 0
+                        : 1;
+                });
                 const current = candidate[slotname].length;
                 for (let idx = initial; idx < current; idx++) {
                     const tmp = candidate[slotname][idx];
