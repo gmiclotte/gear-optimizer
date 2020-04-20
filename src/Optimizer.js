@@ -415,6 +415,10 @@ export class Optimizer {
                 if (slot === 'OTHER') {
                     return;
                 }
+                if (candidate.base_idx === undefined) {
+                    // this is an unmodified base layout, don't touch it
+                    return;
+                }
                 const slotname = Slot[slot][0];
                 let initial = 0;
                 base_layouts[candidate.base_idx][slotname].forEach(item => {
