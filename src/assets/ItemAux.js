@@ -148,37 +148,45 @@ export const Slot = {
 }
 
 export const Stat = {
-    AT_SPEED: 'Advanced Training Speed',
-    AP: 'AP',
-    AUGMENT_SPEED: 'Augment Speed',
-    BEARD_SPEED: 'Beard Speed',
-    COOKING: 'Cooking',
+    // adventure
+    POWER: 'Power',
+    TOUGHNESS: 'Toughness',
+    MOVE_COOLDOWN: 'Move Cooldown',
+    RESPAWN: 'Respawn',
     DAYCARE_SPEED: 'Daycare Speed',
+    // Drop
+    GOLD_DROP: 'Gold Drops',
     DROP_CHANCE: 'Drop Chance',
+    QUEST_DROP: 'Quest Drops',
+    // Ygg
+    SEED_DROP: 'Seed Gain',
+    YGGDRASIL_YIELD: 'Yggdrasil Yield',
+    // E
     ENERGY_BARS: 'Energy Bars',
     ENERGY_CAP: 'Energy Cap',
     ENERGY_POWER: 'Energy Power',
     ENERGY_SPEED: 'Energy Speed',
-    EXPERIENCE: 'Experience',
-    GOLD_DROP: 'Gold Drops',
-    HACK_SPEED: 'Hack Speed',
+    // M
     MAGIC_BARS: 'Magic Bars',
     MAGIC_CAP: 'Magic Cap',
     MAGIC_POWER: 'Magic Power',
     MAGIC_SPEED: 'Magic Speed',
-    MOVE_COOLDOWN: 'Move Cooldown',
-    NGU_SPEED: 'NGU Speed',
-    POWER: 'Power',
-    QUEST_DROP: 'Quest Drops',
+    // R
     RES3_BARS: 'Resource 3 Bars',
     RES3_CAP: 'Resource 3 Cap',
     RES3_POWER: 'Resource 3 Power',
-    RESPAWN: 'Respawn',
-    SEED_DROP: 'Seed Gain',
-    TOUGHNESS: 'Toughness',
-    WANDOOS_SPEED: 'Wandoos Speed',
-    WISH_SPEED: 'Wish Speed',
-    YGGDRASIL_YIELD: 'Yggdrasil Yield'
+    // raw speed
+    AT_SPEED: 'Raw AT Speed',
+    AUGMENT_SPEED: 'Raw Augment Speed',
+    BEARD_SPEED: 'Raw Beard Speed',
+    HACK_SPEED: 'Raw Hack Speed',
+    NGU_SPEED: 'Raw NGU Speed',
+    WANDOOS_SPEED: 'Raw Wandoos Speed',
+    WISH_SPEED: 'Raw Wish Speed',
+    // junk
+    AP: 'AP',
+    EXPERIENCE: 'Experience',
+    COOKING: 'Cooking',
 }
 
 let single_factors = {
@@ -198,6 +206,10 @@ let single_factors = {
     TOUGHNESS: [
         'Toughness',
         [Stat.TOUGHNESS]
+    ],
+    MOVE_COOLDOWN: [
+        'Move Cooldown',
+        [Stat.MOVE_COOLDOWN]
     ],
     RESPAWN: [
         'Respawn',
@@ -224,11 +236,6 @@ let single_factors = {
 let remaining_factors = {};
 
 Object.keys(Stat).forEach(key => {
-    if (key.includes('SPEED')) {
-        if (!key.includes('ENERGY_') && !key.includes('MAGIC_')) {
-            return;
-        }
-    }
     if (single_factors[key] === undefined) {
         remaining_factors[key] = [
             Stat[key],
@@ -444,6 +451,12 @@ export const multiple_factors = {
         ],
         [
             -1, 1
+        ]
+    ],
+    EMPC:[
+        'EMPC',
+        [
+            Stat.ENERGY_POWER, Stat.ENERGY_CAP, Stat.MAGIC_POWER, Stat.MAGIC_CAP
         ]
     ]
 }
