@@ -84,6 +84,9 @@ class HackComponent extends Component {
             };
         }
         // push new values to state
+        if (hackstats.hacktime > 365 * 1440) {
+            hackstats.hacktime = 365 * 1440
+        }
         this.props.handleSettings('hackstats', hackstats);
 
     }
