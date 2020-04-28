@@ -41,6 +41,9 @@ class NGUComponent extends Component {
                 ...ngustats,
                 [name]: val
             };
+            if (ngustats.ngutime > 365 * 1440) {
+                ngustats.ngutime = 365 * 1440
+            }
             this.props.handleSettings('ngustats', ngustats);
             return;
         }
