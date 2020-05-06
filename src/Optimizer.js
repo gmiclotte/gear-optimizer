@@ -410,7 +410,7 @@ export class Optimizer {
             }
         });
         // remove gear that doesn't contribute due to hard caps
-        alternatives.map(candidate => {
+        alternatives = alternatives.map(candidate => {
             Object.getOwnPropertyNames(Slot).forEach(slot => {
                 if (slot === 'OTHER') {
                     return;
@@ -441,6 +441,7 @@ export class Optimizer {
                     }
                 }
             });
+            return {...candidate, base_idx: undefined} // set base_idx undefined so it isn't used in a future priority
         });
         return alternatives;
     }
