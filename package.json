@@ -4,16 +4,16 @@
   "version": "0.6.12",
   "private": true,
   "dependencies": {
-    "caniuse-lite": "^1.0.30001031",
+    "caniuse-lite": "^1.0.30001058",
     "gh-pages": "^2.2.0",
-    "react": "^16.13.0",
+    "react": "^16.13.1",
     "react-cookie-banner": "^4.1.0",
-    "react-dom": "^16.13.0",
+    "react-dom": "^16.13.1",
     "react-ga": "^2.7.0",
     "react-modal": "^3.11.2",
     "react-redux": "^7.2.0",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "^3.4.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^3.4.1",
     "react-tooltip": "^3.11.6",
     "redux": "^4.0.5",
     "redux-saga": "^1.1.3",
@@ -50,7 +50,7 @@
     }
   },
   "devDependencies": {
-    "react-app-rewired": "^2.1.5",
+    "react-app-rewired": "^2.1.6",
     "release-it": "^12.6.3"
   }
 }
