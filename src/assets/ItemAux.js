@@ -320,6 +320,52 @@ export const multiple_factors = {
                         1 / 3
                 ]
         ],
+        NGUWISH: [
+                'NGUs and Wishes',
+                [
+                        Stat.ENERGY_CAP,
+                        Stat.ENERGY_POWER,
+                        Stat.MAGIC_CAP,
+                        Stat.MAGIC_POWER,
+                        Stat.NGU_SPEED,
+                        Stat.RES3_CAP,
+                        Stat.RES3_POWER,
+                        Stat.WISH_SPEED
+                ],
+                [
+                        1.17 / 3,
+                        1.17 / 3,
+                        1.17 / 3,
+                        1.17 / 3,
+                        2 / 3,
+                        0.17 / 3,
+                        0.17 / 3,
+                        1 / 3
+                ]
+        ],
+        WISHHACK: [
+                'Wishes and Hacks',
+                [
+                        Stat.ENERGY_CAP,
+                        Stat.ENERGY_POWER,
+                        Stat.MAGIC_CAP,
+                        Stat.MAGIC_POWER,
+                        Stat.RES3_CAP,
+                        Stat.RES3_POWER,
+                        Stat.HACK_SPEED,
+                        Stat.WISH_SPEED
+                ],
+                [
+                        0.17 / 2,
+                        0.17 / 2,
+                        0.17 / 2,
+                        0.17 / 2,
+                        1.17 / 2,
+                        1.17 / 2,
+                        1 / 2,
+                        1 / 2
+                ]
+        ],
         ETIMEMACHINE: [
                 'Energy Time Machine',
                 [
