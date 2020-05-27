@@ -1,15 +1,15 @@
 import {LOCALSTORAGE_NAME} from '../constants';
 import {ITEMLIST} from '../assets/Items'
 import {
-        EmptySlot,
-        Factors,
-        Hacks,
-        ItemContainer,
-        ItemNameContainer,
-        NGUs,
-        SetName,
-        Slot,
-        update_level
+    EmptySlot,
+    Factors,
+    Hacks,
+    ItemContainer,
+    ItemNameContainer,
+    NGUs,
+    SetName,
+    Slot,
+    update_level
 } from '../assets/ItemAux'
 
 import {AUGMENT, AUGMENT_SETTINGS} from '../actions/Augment';
