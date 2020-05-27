@@ -859,8 +859,10 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
             while (accslots.length > action.payload.accslots) {
                 accslots = accslots.slice(0, -1);
             }
+            let offhand = action.payload.titan > 8 ? 20 : state.offhand
             return cleanState({
                 ...state,
+                offhand: offhand,
                 zone: zone,
                 looty: action.payload.looty,
                 pendant: action.payload.pendant,
