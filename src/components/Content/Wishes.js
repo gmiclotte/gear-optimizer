@@ -144,7 +144,17 @@ class WishComponent extends Component {
                     }} type="number" step="any" value={this.props.wishstats.wishcap} onFocus={this.handleFocus}
                            onChange={(e) => this.handleChange(e, 'wishcap')}/> {' minutes'}
                 </label>
-                <br/> {<ResourcePriorityForm {...this.props} handleChange={this.handleChange}/>}
+                <br/>
+                <div>{'Equal resources'}
+                    <label>
+                        <input type="checkbox" checked={this.props.wishstats.equalResources}
+                               onChange={(e) => this.props.handleSettings('wishstats', {
+                                   ...this.props.wishstats,
+                                   equalResources: !this.props.wishstats.equalResources
+                               })}/>
+                    </label>
+                </div>
+                {<ResourcePriorityForm {...this.props} handleChange={this.handleChange}/>}
                 <div><Crement header='Wish slots' value={this.props.wishstats.wishes.length} name='wishslots'
                               handleClick={this.props.handleCrement} min={1} max={100}/></div>
                 <br/> {

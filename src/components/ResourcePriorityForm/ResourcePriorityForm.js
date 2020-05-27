@@ -22,6 +22,9 @@ export default class ResourcePriorityForm extends React.Component {
     }
 
     render() {
+        if (this.props.wishstats.equalResources) {
+            return <></>
+        }
         //HACK: this sets the dropdown to the correct value after loading
         if (this.state.rp_idx !== this.props.wishstats.rp_idx) {
             /* eslint-disable-next-line react/no-direct-mutation-state */
