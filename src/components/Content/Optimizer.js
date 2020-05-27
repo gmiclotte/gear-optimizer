@@ -100,6 +100,7 @@ class Optimizer extends Component {
         }
         // render the actual optimizer tab
         const zone = get_zone(this.props.zone);
+        console.log(this.props.zone, zone)
         const maxzone = get_max_zone(this.props.zone);
         const maxtitan = get_max_titan(this.props.zone);
         const accslots = this.props.equip.accessory.length;
@@ -114,6 +115,9 @@ class Optimizer extends Component {
                 <div className='button-section' key='slots'>
                     <button type="button" onClick={() => this.props.handleGo2Titan(8, 3, 5, 12)}>
                         {'Titan 8 Preset'}
+                    </button>
+                    <button type="button" onClick={() => this.props.handleGo2Titan(11, 6, 8, 15)}>
+                        {'Titan 11 Preset'}
                     </button>
                     <div><Crement header='Highest zone' value={zone[0]} name='zone'
                                   handleClick={this.props.handleCrement} min={2} max={maxzone}/></div>

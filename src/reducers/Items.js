@@ -845,7 +845,8 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                 25, //Nerd
                 28, //Godmother
                 32, //Exile
-                36 //It Hungers
+                36, //It Hungers
+                40, //Rock Lobster
             ][action.payload.titan];
             let zoneDict = {};
             Object.getOwnPropertyNames(SetName).forEach(x => {
