@@ -35,8 +35,7 @@ export class Wish {
     }
 
     base(res) {
-        let assignment = res.map(x => Math.max(1e3, Math.floor(x / 1e5)));
-        return assignment;
+        return res.map(x => Math.max(1e3, Math.floor(x / 1e5)));
     }
 
     update_res(r, A) {
@@ -80,10 +79,21 @@ export class Wish {
             result *= res[i] ** x;
         }
         let total = 0;
+        let total_to_level = 0;
+        let level = start
         for (let i = start + 1; i <= goal; i++) {
-            total += this.actualtime(Math.max(wishcap, result / goal * i));
+            let actual = this.actualtime(Math.max(wishcap, result / goal * i));
+            let time = actual[0]
+            let time_to_progress = actual[1]
+            let progress = actual[2]
+            total += time
+            total_to_level += time_to_progress
+            level += progress
+            if (progress < 1) {
+                break
+            }
         }
-        return Math.ceil(total);
+        return [Math.ceil(total), Math.ceil(total_to_level), level];
     }
 
     spread_res(assignments, res, scores, resource_priority, wishcap, exponent, l, totres, coef, start, goal, minimal = 0) {
@@ -268,7 +278,7 @@ export class Wish {
         const start = capreqs.map(c => c[1]);
         const goal = capreqs.map(c => c[2]);
 
-        let assignments = coef.map((_, i) => this.base(res));
+        let assignments = coef.map(_ => this.base(res));
         this.BASE = this.base(res);
         res = this.update_res(totres, assignments);
         const l = coef.length;
@@ -370,8 +380,7 @@ export class Wish {
                     ? coef.map((_, i) => i).sort((a, b) => costs[a] - costs[b])
                     : [];
             idxs.forEach(k => {
-                let tmp = this.topoff(coef[k], assignments[k], res, wishcap, start[k], goal[k], exponent, resource_priority);
-                assignments[k] = tmp;
+                assignments[k] = this.topoff(coef[k], assignments[k], res, wishcap, start[k], goal[k], exponent, resource_priority);
                 res = this.update_res(totres, assignments);
             });
         }
@@ -402,7 +411,7 @@ export class Wish {
 
     actualtime(time) {
         if (time > 10 ** 8) {
-            return Infinity;
+            return [Infinity, 0, 0];
         }
         let progress = Math.fround(0);
         let ticks = 0;
@@ -412,11 +421,11 @@ export class Wish {
             const next = Math.fround(progress + ppt);
             if (next === progress) {
                 console.log('early exit at ', progress * 100, '%');
-                return Infinity;
+                return [Infinity, ticks, progress];
             }
             progress = next;
             ticks += 1;
         }
-        return ticks;
+        return [ticks, ticks, 1];
     }
 }
