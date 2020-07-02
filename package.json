@@ -4,7 +4,7 @@
   "version": "0.6.18",
   "private": true,
   "dependencies": {
-    "caniuse-lite": "^1.0.30001066",
+    "caniuse-lite": "^1.0.30001093",
     "gh-pages": "^2.2.0",
     "react": "^16.13.1",
     "react-cookie-banner": "^4.1.0",
