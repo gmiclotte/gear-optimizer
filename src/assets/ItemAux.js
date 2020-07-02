@@ -144,7 +144,9 @@ export const Slot = {
     ACCESSORY: [
         'accessory', 5
     ],
-    OTHER: ['other', 6]
+    OTHER: [
+        'other', 6
+    ]
 }
 
 export const Stat = {
@@ -706,7 +708,30 @@ export const SetName = {
     ROCKLOBSTER3: [
         'Rock Lobster', 40, 3
     ],
-    ROCKLOBSTER4: ['Rock Lobster', 40, 4]
+    ROCKLOBSTER4: [
+        'Rock Lobster', 40, 4
+    ],
+    CONSTRUCTION: [
+        'Construction Zone', 41
+    ],
+    DUCK: [
+        'DUCK DUCK ZONE', 42
+    ],
+    NETHER: [
+        'The Nether Regions', 43
+    ],
+    AMALGAMATE: [
+        'Amalgamate', 44, 1
+    ],
+    AMALGAMATE2: [
+        'Amalgamate', 44, 2
+    ],
+    AMALGAMATE3: [
+        'Amalgamate', 44, 3
+    ],
+    AMALGAMATE4: [
+        'Amalgamate', 44, 4
+    ]
 }
 
 export const Hacks = [
@@ -1325,10 +1350,10 @@ export const Wishes = [
         'Faster Cards IV', 4.00E+24, 10
     ],
     [
-        'Maximal Card Cost I', 4.00E+24, 1
+        'BEEFY I', 4.00E+24, 1
     ],
     [
-        'Minimal Card Cost I', 4.00E+24, 1
+        'WIMPY I', 4.00E+24, 1
     ],
     [
         'Bigger Deck I', 1.00E+20, 5
@@ -1382,7 +1407,7 @@ export const Wishes = [
         'Gold Drop Card IV', 7.50E+23, 2
     ],
     [
-        'PP Card IV[', 1.00E+24, 2
+        'PP Card IV', 1.00E+24, 2
     ],
     [
         'A / D Card IV', 8.00E+23, 2
@@ -1394,7 +1419,7 @@ export const Wishes = [
         'TM Speed Card IV', 1.20E+24, 2
     ],
     [
-        'QP Card IV[', 1.50E+24, 2
+        'QP Card IV', 1.50E+24, 2
     ],
     [
         'Daycare Card IV', 1.60E+24, 2
@@ -1412,10 +1437,10 @@ export const Wishes = [
         'F**king Done With AT', 1.00E+18, 1
     ],
     [
-        'Stats VI', 2.00E+25, 10
+        'Stats VI', 2.00E+25, 20
     ],
     [
-        'Stats VII', 4.00E+26, 10
+        'Stats VII', 4.00E+26, 20
     ],
     [
         'Energy Power VII', 2.00E+24, 10
@@ -1446,7 +1471,75 @@ export const Wishes = [
     ],
     [
         'Sneak Preview', 1.00E+24, 1
-    ]
+    ],
+    [
+        'SHUT DOWN', 1.00E+27, 1
+    ],
+    [
+        'Titan 12 QP', 1.00E+00, 1
+    ],
+    [
+        'Energy NGU Card V', 4.00E+25, 2
+    ],
+    [
+        'Drop Chance Card V', 5.00E+25, 2
+    ],
+    [
+        'Wandoos Card V', 4.00E+25, 2],
+    [
+        'Adventure Stats Card V', 1.00E+26, 2
+    ],
+    [
+        'Hacks Card V', 8.00E+25, 2
+    ],
+    [
+        'Augment Card V', 1.00E+26, 2
+    ],
+    [
+        'Gold Drop Card V', 1.30E+26, 2
+    ],
+    [
+        'PP Card V', 2.00E+26, 2
+    ],
+    [
+        'A / D Card V', 2.50E+26, 2
+    ],
+    [
+        'Magic NGU Card V', 2.00E+26, 2
+    ],
+    [
+        'TM Speed Card V', 3.00E+26, 2
+    ],
+    [
+        'QP Card V', 5.00E+26, 2
+    ],
+    [
+        'Daycare Card V', 4.00E+26, 2
+    ],
+    [
+        'Adventure Stats VI', 5.00E+25, 20
+    ],
+    [
+        'Stats VIII', 1.80E+26, 20
+    ],
+    [
+        'BEEFY II', 1.00E+26, 1
+    ],
+    [
+        'WIMPY II', 1.00E+26, 1
+    ],
+    [
+        'Faster Mayo V', 8.00E+25, 10
+    ],
+    [
+        'Faster CardsV', 8.00E+25, 10
+    ],
+    [
+        'Faster Mayo VI', 1.00E+27, 10
+    ],
+    [
+        'Faster CardsVI', 1.00E+27, 10
+    ],
 ];
 
 export const resource_priorities = [

@@ -405,35 +405,44 @@ ZONES = [
     ['Portable Stairway (To Heaven)', 'SetName.ROCKLOBSTER4'],
     ['Amplifier', 'SetName.ROCKLOBSTER4'],
     ['Ascended x8 Pendant', 'SetName.FOREST_PENDANT'],
-    ['431', 'SetName.LOOTY'],
-    ['432', 'SetName.FOREST'],
-    ['433', 'SetName.CAVE'],
-    ['434', 'SetName.SKY'],
-    ['435', 'SetName.HSB'],
-    ['436', 'SetName.CLOCK'],
-    ['437', 'SetName.TWO_D'],
-    ['438', 'SetName.SPOOPY'],
-    ['439', 'SetName.GAUDY'],
-    ['440', 'SetName.MEGA'],
-    ['441', 'SetName.BEARDVERSE'],
-    ['442', 'SetName.BADLY_DRAWN'],
-    ['443', 'SetName.STEALTH'],
-    ['444', 'SetName.CHOCO'],
-    ['445', 'SetName.EDGY'],
-    ['446', 'SetName.PINK'],
-    ['447', 'SetName.META'],
-    ['448', 'SetName.PARTY'],
-    ['449', 'SetName.TYPO'],
-    ['450', 'SetName.FAD'],
-    ['451', 'SetName.JRPG'],
-    ['452', 'SetName.RADLANDS'],
+    [431, 'SetName.LOOTY'],
+    [432, 'SetName.FOREST'],
+    [433, 'SetName.CAVE'],
+    [434, 'SetName.SKY'],
+    [435, 'SetName.HSB'],
+    [436, 'SetName.CLOCK'],
+    [437, 'SetName.TWO_D'],
+    [438, 'SetName.SPOOPY'],
+    [439, 'SetName.GAUDY'],
+    [440, 'SetName.MEGA'],
+    [441, 'SetName.BEARDVERSE'],
+    [442, 'SetName.BADLY_DRAWN'],
+    [443, 'SetName.STEALTH'],
+    [444, 'SetName.CHOCO'],
+    [445, 'SetName.EDGY'],
+    [446, 'SetName.PINK'],
+    [447, 'SetName.META'],
+    [448, 'SetName.PARTY'],
+    [449, 'SetName.TYPO'],
+    [450, 'SetName.FAD'],
+    [451, 'SetName.JRPG'],
+    [452, 'SetName.RADLANDS'],
+    [range(453, 460 + 1), 'SetName.CONSTRUCTION'],
+    [range(461, 468 + 1), 'SetName.NETHER'],
+    [range(469, 479 + 1), 'SetName.AMALGAMATE'],
+    [range(496, 503 + 1), 'SetName.DUCK'],
+    [504, 'SetName.FOREST_PENDANT'],
+    [505, 'SetName.LOOTY'],
 ]
 
 
 def name2zone(name, id):
     for idx in range(len(ZONES)):
-        if name == ZONES[idx][0] or id == ZONES[idx][0]:
-            return ZONES[idx][1]
+        try:
+            if name == ZONES[idx][0] or int(id) == ZONES[idx][0] or int(id) in ZONES[idx][0]:
+                return ZONES[idx][1]
+        except TypeError:
+                continue
     return 'incorrect zone'
 
 

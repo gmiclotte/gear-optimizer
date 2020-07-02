@@ -19,7 +19,7 @@ Fast algorithm iteratively replaces the worst candidate accessories with the bes
 
 ## Acknowledgements
 
-Many thanks to TBlazeWarriorT#5348 and Crocketeer#8926 for the helpful discussions on Discord.
+Many thanks to the NGU community on Discord for the helpful discussions.
 
 ## Dev notes
 
