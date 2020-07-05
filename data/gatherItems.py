@@ -429,7 +429,10 @@ ZONES = [
     [452, 'SetName.RADLANDS'],
     [range(453, 460 + 1), 'SetName.CONSTRUCTION'],
     [range(461, 468 + 1), 'SetName.NETHER'],
-    [range(469, 479 + 1), 'SetName.AMALGAMATE'],
+    [range(469, 476 + 1), 'SetName.AMALGAMATE'],
+    [477, 'SetName.AMALGAMATE2'],
+    [478, 'SetName.AMALGAMATE3'],
+    [479, 'SetName.AMALGAMATE4'],
     [range(496, 503 + 1), 'SetName.DUCK'],
     [504, 'SetName.FOREST_PENDANT'],
     [505, 'SetName.LOOTY'],
@@ -477,38 +480,34 @@ def props2item(props):
     if slot == 'MISC':
         return
     name = name.replace('\'', '\\\'')
-    # process alls
-    for idx in range(len(specs)):
-        stat = specs[idx][1]
+    # merge identical specs
+    merged = {}
+    for spec in specs:
+        stat = spec[1]
+        done = False
         for t in ['CAP', 'BARS', 'POWER']:
             if stat == 'ALL_' + t:
-                e = False
-                m = False
-                for jdx in range(len(specs)):
-                    if specs[jdx][1] == 'ENERGY_' + t:
-                        caps[jdx] += caps[idx]
-                        e = True
-                    if specs[jdx][1] == 'MAGIC_' + t:
-                        caps[jdx] += caps[idx]
-                        m = True
-                if not e:
-                    specs += [[None, 'ENERGY_' + t, None]]
-                    caps += [caps[idx]]
-                if not m:
-                    specs += [[None, 'MAGIC_' + t, None]]
-                    caps += [caps[idx]]
-    print(f'    new Item({itemID}, \'{name}\', Slot.{slot}, {tier}, 100, [')
+                merged['ENERGY_' + t] = 0
+                merged['MAGIC_' + t] = 0
+                done = True
+        if done:
+            continue
+        merged[stat] = 0
     for idx in range(len(specs)):
         stat = specs[idx][1]
-        cap = caps[idx]
+        done = False
+        for t in ['CAP', 'BARS', 'POWER']:
+            if stat == 'ALL_' + t:
+                merged['ENERGY_' + t] += caps[idx]
+                merged['MAGIC_' + t] += caps[idx]
+                done = True
+        if done:
+            continue
+        merged[stat] += caps[idx]
+    print(f'    new Item({itemID}, \'{name}\', Slot.{slot}, {tier}, 100, [')
+    for stat in merged:
+        cap = merged[stat]
         if stat == 'specType.None' or stat == 'specType.Cooking' or cap == 0 or stat[:4] == 'ALL_':
-            continue
-        if specs[idx][-1] in [2, 3]:
-            print(f'        [{stat}, {cap}],')
-            continue
-        if specs[idx][:3] == 'ALL':
-            print(f'        [ENERGY{stat[3:]}, {cap}],')
-            print(f'        [MAGIC{stat[3:]}, {cap}],')
             continue
         print(f'        [Stat.{stat}, {cap}],')
     print('    ]),')
