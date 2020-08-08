@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/gear-optimizer/static/css/main.505aaad3.chunk.css",
-    "main.js": "/gear-optimizer/static/js/main.56ad7402.chunk.js",
-    "main.js.map": "/gear-optimizer/static/js/main.56ad7402.chunk.js.map",
+    "main.js": "/gear-optimizer/static/js/main.af83391b.chunk.js",
+    "main.js.map": "/gear-optimizer/static/js/main.af83391b.chunk.js.map",
     "runtime-main.js": "/gear-optimizer/static/js/runtime-main.3b42f847.js",
     "runtime-main.js.map": "/gear-optimizer/static/js/runtime-main.3b42f847.js.map",
     "static/js/2.c97fd558.chunk.js": "/gear-optimizer/static/js/2.c97fd558.chunk.js",
@@ -10,7 +10,7 @@
     "5bf970e6297aa8fad951.worker.js": "/gear-optimizer/5bf970e6297aa8fad951.worker.js",
     "5bf970e6297aa8fad951.worker.js.map": "/gear-optimizer/5bf970e6297aa8fad951.worker.js.map",
     "index.html": "/gear-optimizer/index.html",
-    "precache-manifest.7f0dfb0894558c918901bd62e2c98624.js": "/gear-optimizer/precache-manifest.7f0dfb0894558c918901bd62e2c98624.js",
+    "precache-manifest.b7366b506c5c4b6fd2e9aeddacdda1f9.js": "/gear-optimizer/precache-manifest.b7366b506c5c4b6fd2e9aeddacdda1f9.js",
     "service-worker.js": "/gear-optimizer/service-worker.js",
     "static/css/main.505aaad3.chunk.css.map": "/gear-optimizer/static/css/main.505aaad3.chunk.css.map",
     "static/js/2.c97fd558.chunk.js.LICENSE.txt": "/gear-optimizer/static/js/2.c97fd558.chunk.js.LICENSE.txt"
@@ -19,6 +19,6 @@
     "static/js/runtime-main.3b42f847.js",
     "static/js/2.c97fd558.chunk.js",
     "static/css/main.505aaad3.chunk.css",
-    "static/js/main.56ad7402.chunk.js"
+    "static/js/main.af83391b.chunk.js"
   ]
 }
