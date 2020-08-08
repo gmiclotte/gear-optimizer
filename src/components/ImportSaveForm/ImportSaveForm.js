@@ -90,7 +90,8 @@ const ImportSaveForm = () => {
                 continue;
             }
             for (let j = 0; j < zones[i].length; j++) {
-                if (sB > zones[i][j][0]) {
+                console.log(zones[i][j]);
+                if (bosses[i] > zones[i][j][0]) {
                     return zones[i][j][1];
                 }
             }
