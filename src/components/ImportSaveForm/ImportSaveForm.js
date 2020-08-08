@@ -185,14 +185,7 @@ const ImportSaveForm = () => {
     }
 
     const calculateDiff = (current, newV) => {
-        let diff = Math.abs(current - newV)
-        if (current < newV) {
-            diff = diff
-        } else {
-            diff = diff * -1
-        }
-
-        return diff
+        return newV - current;
     }
 
     const disableUnownedItems = (foundIds, newData) => {
