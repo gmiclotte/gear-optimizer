@@ -221,8 +221,8 @@ const ImportSaveForm = () => {
     return (
         <div className="loadSave">
             <input ref={inputElem} style={{ display: "none" }} type='file' id='savefileloader' accept='.json' onChange={e => handleFilePick(e)} />
-            <button onClick={() => inputElem.current.click()}>Load Ngusav.es JSON File</button>
-            <label>Disable Unowned Items: <input type="checkbox" checked={disableItems} onChange={() => { setDisableItems(!disableItems) }} /></label>
+            <button onClick={() => inputElem.current.click()}>Load NGUSav.es JSON</button>
+            <label>Disable unowned<input type="checkbox" checked={disableItems} onChange={() => { setDisableItems(!disableItems) }} /></label>
         </div>
     )
 }

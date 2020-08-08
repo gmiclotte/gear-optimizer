@@ -16,7 +16,7 @@ const ResetItemsButton = () => {
     }
 
     return (
-        <button onClick={onClick}>Reset All Items to Original State</button>
+        <button onClick={onClick}>Reset Item Data</button>
     )
 }
 

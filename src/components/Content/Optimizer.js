@@ -115,12 +115,15 @@ class Optimizer extends Component {
         return (<div className={this.props.className}>
             <div className="content__container">
                 <div className='button-section' key='slots'>
+                    <ImportSaveForm />
                     <button type="button" onClick={() => this.props.handleGo2Titan(8, 3, 5, 12)}>
                         {'Titan 8 Preset'}
                     </button>
                     <button type="button" onClick={() => this.props.handleGo2Titan(11, 6, 8, 15)}>
                         {'Titan 11 Preset'}
                     </button>
+                    <ResetItemsButton />
+                    <br/>
                     <div><Crement header='Highest zone' value={zone[0]} name='zone'
                                   handleClick={this.props.handleCrement} min={2} max={maxzone}/></div>
                     {
@@ -243,10 +246,6 @@ class Optimizer extends Component {
                         }
                         </tbody>
                     </table>
-                </div>
-                <div className="button-section">
-                    <ImportSaveForm />
-                    <ResetItemsButton />
                 </div>
             </div>
             
