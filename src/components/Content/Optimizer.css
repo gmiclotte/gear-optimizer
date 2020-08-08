@@ -46,3 +46,7 @@
 .cubetable td {
     padding: 0px;
 }
+
+.loadSave label{
+    margin-left: 3px
+}

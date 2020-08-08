@@ -15,6 +15,8 @@ import {default as FactorForm} from '../FactorForm/FactorForm';
 import {default as ItemForm} from '../ItemForm/ItemForm';
 
 import './Optimizer.css';
+import ImportSaveForm from '../ImportSaveForm/ImportSaveForm';
+import ResetItemsButton from '../ResetItemsButton/ResetItemsButton';
 
 const customStyles = {
     content: {
@@ -242,7 +244,12 @@ class Optimizer extends Component {
                         </tbody>
                     </table>
                 </div>
+                <div className="button-section">
+                    <ImportSaveForm />
+                    <ResetItemsButton />
+                </div>
             </div>
+            
             <div className="content__container">
                 <EquipTable {...this.props} group={'slot'} type='equip' handleClickItem={this.props.handleUnequipItem}
                             handleCtrlClickItem={this.props.handleDisableItem}
