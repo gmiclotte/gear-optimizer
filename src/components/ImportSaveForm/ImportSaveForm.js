@@ -9,6 +9,50 @@ import { DisableItem, DisableZone } from '../../actions/DisableItem';
 import { MassUpdate } from '../../actions/MassUpdateItems';
 import { Settings } from '../../actions/Settings';
 
+// minimal boss for each zone, per difficulty
+const sadisticZones = [
+    // TODO: add new zones here
+    [248, 44],
+    [240, 42],
+    [232, 41],
+    [224, 40],
+    [216, 38],
+    [208, 37],
+    [175, 36],
+    [150, 35],
+    [125, 34],
+];
+
+const evilZones = [
+    [200, 33],
+    [190, 32],
+    [182, 30],
+    [174, 29],
+    [166, 28],
+    [158, 26],
+    [125, 25],
+    [100, 24],
+    [58, 23],
+];
+
+const normalZones = [
+    [138, 22],
+    [132, 21],
+    [124, 20],
+    [116, 19],
+    [108, 17],
+    [100, 16],
+    [90, 14],
+    [82, 13],
+    [74, 11],
+    [66, 10],
+    [58, 8],
+    [48, 6],
+    [37, 5],
+    [17, 4],
+    [7, 3],
+];
+
 const ImportSaveForm = () => {
     const dispatch = useDispatch();
     const optimizerState = useSelector(state => state.optimizer);
@@ -43,78 +87,20 @@ const ImportSaveForm = () => {
     }
 
     const getZone = (B, eB, sB) => {
-        let zone;
-        if (sB > 248) {
-            zone = 44
-        } else if (sB > 240) {
-            zone = 42
-        } else if (sB > 232) {
-            zone = 41
-        } else if (sB > 224) {
-            zone = 40
-        } else if (sB > 216) {
-            zone = 38
-        } else if (sB > 208) {
-            zone = 37
-        } else if (sB > 175) {
-            zone = 36
-        } else if (sB > 150) {
-            zone = 35
-        } else if (sB > 125) {
-            zone = 34
-        } else if (eB > 200) {
-            zone = 33
-        } else if (eB > 190) {
-            zone = 32
-        } else if (eB > 182) {
-            zone = 30
-        } else if (eB > 174) {
-            zone = 29
-        } else if (eB > 166) {
-            zone = 28
-        } else if (eB > 158) {
-            zone = 26
-        } else if (eB > 125) {
-            zone = 25
-        } else if (eB > 100) {
-            zone = 24
-        } else if (eB > 58) {
-            zone = 23
-        } else if (B > 137) {
-            zone = 22
-        } else if (B > 132) {
-            zone = 21
-        } else if (B > 124) {
-            zone = 20
-        } else if (B > 116) {
-            zone = 19
-        } else if (B > 108) {
-            zone = 17
-        } else if (B > 100) {
-            zone = 16
-        } else if (B > 90) {
-            zone = 14
-        } else if (B > 82) {
-            zone = 13
-        } else if (B > 74) {
-            zone = 11
-        } else if (B > 66) {
-            zone = 10
-        } else if (B > 58) {
-            zone = 8
-        } else if (B > 48) {
-            zone = 6
-        } else if (B > 37) {
-            zone = 5
-        } else if (B > 17) {
-            zone = 4
-        } else if (B > 7) {
-            zone = 3
-        } else {
-            zone = 2
+        let zones = [sadisticZones, evilZones, normalZones];
+        let bosses = [sB, eB, B];
+        for (let i = 0; i < 3; i++) {
+            if (bosses[i] <= 0) {
+                // not in this difficulty yet
+                continue;
+            }
+            for (let j = 0; j < zones[i].length; j++) {
+                if (sB > zones[i][j][0]) {
+                    return zones[i][j][1];
+                }
+            }
         }
-
-        return zone
+        return 2;
     }
 
     const updateAugmentTab = (data) => {
