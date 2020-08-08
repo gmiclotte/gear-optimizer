@@ -64,10 +64,11 @@ const ImportSaveForm = () => {
 
         let newItemData = { ...optimizerState.itemdata }
 
-        let B = data.stats.highestBoss
-        let eB = data.stats.highestHardBoss
-        let sB = data.stats.highestSadisticBoss
-        let zone = getZone(B, eB, sB);
+        let zone = getZone(
+            data.highestBoss,
+            data.highestHardBoss,
+            data.highestSadisticBoss,
+        );
 
         dispatch(Crement("zone", calculateDiff(optimizerState.zone, zone), 2, 44))
         resetItems(newItemData)
@@ -85,12 +86,11 @@ const ImportSaveForm = () => {
         let zones = [sadisticZones, evilZones, normalZones];
         let bosses = [sB, eB, B];
         for (let i = 0; i < 3; i++) {
-            if (bosses[i] <= 0) {
+            if (bosses[i] <= 1) {
                 // not in this difficulty yet
                 continue;
             }
             for (let j = 0; j < zones[i].length; j++) {
-                console.log(zones[i][j]);
                 if (bosses[i] > zones[i][j][0]) {
                     return zones[i][j][1];
                 }
