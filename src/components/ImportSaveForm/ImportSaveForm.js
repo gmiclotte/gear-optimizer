@@ -1,11 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import { Crement } from '../../actions/Crement';
-import { EditItem } from '../../actions/EditItem';
-import { SetName, Item } from '../../assets/ItemAux';
-import { ITEMLIST } from '../../assets/Items';
-import { DisableItem, DisableZone } from '../../actions/DisableItem';
 import { MassUpdate } from '../../actions/MassUpdateItems';
 import { Settings } from '../../actions/Settings';
 

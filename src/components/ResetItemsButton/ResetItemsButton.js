@@ -1,9 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import { MassUpdate } from '../../actions/MassUpdateItems';
-import { ItemContainer } from '../../assets/ItemAux';
-import { ITEMLIST } from '../../assets/Items';
 
 const ResetItemsButton = () => {
     const dispatch = useDispatch();
