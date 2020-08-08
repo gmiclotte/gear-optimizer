@@ -1,5 +1,5 @@
-import {LOCALSTORAGE_NAME} from '../constants';
-import {ITEMLIST} from '../assets/Items'
+import { LOCALSTORAGE_NAME } from '../constants';
+import { ITEMLIST } from '../assets/Items'
 import {
     EmptySlot,
     Factors,
@@ -12,30 +12,31 @@ import {
     update_level
 } from '../assets/ItemAux'
 
-import {AUGMENT, AUGMENT_SETTINGS} from '../actions/Augment';
-import {HACK} from '../actions/Hack';
-import {WISH} from '../actions/Wish';
-import {SETTINGS, TITAN} from '../actions/Settings';
-import {CREMENT} from '../actions/Crement'
-import {DISABLE_ITEM, DISABLE_ZONE} from '../actions/DisableItem';
-import {TOGGLE_MODAL} from '../actions/ToggleModal';
-import {EDIT_ITEM} from '../actions/EditItem';
-import {EDIT_FACTOR} from '../actions/EditFactor';
-import {EQUIP_ITEM, EQUIP_ITEMS} from '../actions/EquipItem';
-import {HIDE_ZONE} from '../actions/HideZone';
-import {LOCK_ITEM} from '../actions/LockItem'
-import {OPTIMIZE_GEAR} from '../actions/OptimizeGear';
-import {OPTIMIZE_SAVES} from '../actions/OptimizeSaves';
-import {OPTIMIZING_GEAR} from '../actions/OptimizingGear';
-import {TERMINATE} from '../actions/Terminate'
-import {UNDO} from '../actions/Undo'
-import {UNEQUIP_ITEM} from '../actions/UnequipItem';
-import {DELETE_SLOT} from '../actions/DeleteSlot'
-import {LOAD_FACTORS, LOAD_SLOT} from '../actions/LoadSlot'
-import {SAVE_NAME, SAVE_SLOT} from '../actions/SaveSlot'
-import {TOGGLE_SAVED, TOGGLE_UNUSED} from '../actions/ToggleSaved'
-import {LOAD_STATE_LOCALSTORAGE} from '../actions/LoadStateLocalStorage';
-import {SAVE_STATE_LOCALSTORAGE} from '../actions/SaveStateLocalStorage';
+import { AUGMENT, AUGMENT_SETTINGS } from '../actions/Augment';
+import { HACK } from '../actions/Hack';
+import { WISH } from '../actions/Wish';
+import { SETTINGS, TITAN } from '../actions/Settings';
+import { CREMENT } from '../actions/Crement'
+import { DISABLE_ITEM, DISABLE_ZONE } from '../actions/DisableItem';
+import { TOGGLE_MODAL } from '../actions/ToggleModal';
+import { EDIT_ITEM } from '../actions/EditItem';
+import { EDIT_FACTOR } from '../actions/EditFactor';
+import { EQUIP_ITEM, EQUIP_ITEMS } from '../actions/EquipItem';
+import { HIDE_ZONE } from '../actions/HideZone';
+import { LOCK_ITEM } from '../actions/LockItem'
+import { OPTIMIZE_GEAR } from '../actions/OptimizeGear';
+import { OPTIMIZE_SAVES } from '../actions/OptimizeSaves';
+import { OPTIMIZING_GEAR } from '../actions/OptimizingGear';
+import { TERMINATE } from '../actions/Terminate'
+import { UNDO } from '../actions/Undo'
+import { UNEQUIP_ITEM } from '../actions/UnequipItem';
+import { DELETE_SLOT } from '../actions/DeleteSlot'
+import { LOAD_FACTORS, LOAD_SLOT } from '../actions/LoadSlot'
+import { SAVE_NAME, SAVE_SLOT } from '../actions/SaveSlot'
+import { TOGGLE_SAVED, TOGGLE_UNUSED } from '../actions/ToggleSaved'
+import { LOAD_STATE_LOCALSTORAGE } from '../actions/LoadStateLocalStorage';
+import { SAVE_STATE_LOCALSTORAGE } from '../actions/SaveStateLocalStorage';
+import { MASSUPDATE } from '../actions/MassUpdateItems';
 
 let ITEMS = new ItemContainer(ITEMLIST.map((item) => {
     return [item.id, item];
@@ -381,7 +382,7 @@ const INITIAL_STATE = {
         hacktime: 24 * 60,
         hackoption: '0',
         hacks: Hacks.map((hack, hackidx) => {
-            return {level: 0, reducer: 0, goal: 1, hackidx: hackidx};
+            return { level: 0, reducer: 0, goal: 1, hackidx: hackidx };
         }),
         modifiers: false,
         currentLoadout: 0,
@@ -432,14 +433,14 @@ const INITIAL_STATE = {
         nguoption: 0,
         energy: {
             ngus: NGUs.energy.map(x => {
-                return {normal: 0, evil: 0, sadistic: 0};
+                return { normal: 0, evil: 0, sadistic: 0 };
             }),
             cap: 1,
             nguspeed: 1
         },
         magic: {
             ngus: NGUs.magic.map(x => {
-                return {normal: 0, evil: 0, sadistic: 0};
+                return { normal: 0, evil: 0, sadistic: 0 };
             }),
             cap: 1,
             nguspeed: 1
@@ -530,6 +531,13 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
             };
         }
 
+        case MASSUPDATE: {
+            return {
+                ...state,
+                itemdata: action.payload.data
+            }
+        }
+
         case CREMENT: {
             if (action.payload.val < 0 && action.payload.min === state[action.payload.name]) {
                 return state;
@@ -545,7 +553,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                     }
                     wishes.pop();
                 } else if (action.payload.val === 1) {
-                    wishes.push({wishidx: 0, start: 0, goal: 1});
+                    wishes.push({ wishidx: 0, start: 0, goal: 1 });
                 }
                 return {
                     ...state,
@@ -670,7 +678,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
             if (0 > action.payload.level || action.payload.level > 100) {
                 return state;
             }
-            let item = {...state.itemdata[action.payload.itemId]};
+            let item = { ...state.itemdata[action.payload.itemId] };
             update_level(item, action.payload.level);
             return {
                 ...state,
