@@ -128,16 +128,19 @@ const ImportSaveForm = () => {
         let hL = 0;
         let hP = 0;
 
-        const updateItem = (item, i) => {
+        let found = {};
+
+        const updateItem = (item, _) => {
             let id = item.id;
             let level = item.level;
             if (id !== undefined && id in newData && level !== undefined) {
-                if (newData[id] !== undefined) {
+                if (found[id] !== undefined) {
                     // multiple copies !
                     if (level < newData[id].level) {
                         return;
                     }
                 }
+                found[id] = true;
                 newData[id].level = level;
                 foundIds.push(id);
                 if (lootys.includes(id) && id > hL) {
