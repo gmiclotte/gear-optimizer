@@ -120,7 +120,6 @@ const ImportSaveForm = () => {
 
     const updateItemLevels = (data, newData) => {
         let equipped = data.inventory
-        let inventory = data.inventory.inventory
 
         let foundIds = []
         const lootys = [67, 128, 169, 230, 296, 389, 431, 505]
@@ -129,43 +128,42 @@ const ImportSaveForm = () => {
         let hL = 0;
         let hP = 0;
 
+        const updateItem = (item, i) => {
+            let id = item.id;
+            let level = item.level;
+            if (id !== undefined && id in newData && level !== undefined) {
+                if (newData[id] !== undefined) {
+                    // multiple copies !
+                    if (level < newData[id].level) {
+                        return;
+                    }
+                }
+                newData[id].level = level;
+                foundIds.push(id);
+                if (lootys.includes(id) && id > hL) {
+                    // set highest looty
+                    hL = id;
+                }
+                if (pendants.includes(id) && id > hP) {
+                    // set highest pendant
+                    hP = id;
+                }
+            }
+        };
+        // gather equipment, accs, and inventory items
         for (let i of Object.keys(equipped)) {
-            let id = equipped[i].id
-            let level = equipped[i].level
-            if (id !== undefined && id in newData && level !== undefined) {
-                newData[id].level = level
-                foundIds.push(id)
-
-                if (lootys.includes(id) && id > hL) {
-                    hL = id
-                }
-
-                if (pendants.includes(id) && id > hP) {
-                    hP = id
-                }
-            }
+            updateItem(equipped[i], i);
         }
-
-        for (let i of Object.keys(inventory)) {
-            let id = inventory[i].id
-            let level = inventory[i].level
-            if (id !== undefined && id in newData && level !== undefined) {
-                newData[id].level = level
-                foundIds.push(id)
-
-                if (lootys.includes(id) && id > hL) {
-                    hL = id
-                }
-
-                if (pendants.includes(id) && id > hP) {
-                    hP = id
-                }
-            }
+        for (let i = 0; i < equipped.accs.length; i++) {
+            updateItem(equipped.accs[i], i);
+        }
+        for (let i of Object.keys(equipped.inventory)) {
+            updateItem(equipped.inventory[i], i)
         }
 
         let lIndex = lootys.indexOf(hL)
         let pIndex = pendants.indexOf(hP)
-        let accSlots = data.inventory.accs.length
+        let accSlots = equipped.accs.length
 
         let accDiff = calculateDiff(optimizerState.equip.accessory.length, accSlots)
 

@@ -102,7 +102,6 @@ class Optimizer extends Component {
         }
         // render the actual optimizer tab
         const zone = get_zone(this.props.zone);
-        console.log(this.props.zone, zone)
         const maxzone = get_max_zone(this.props.zone);
         const maxtitan = get_max_titan(this.props.zone);
         const accslots = this.props.equip.accessory.length;
