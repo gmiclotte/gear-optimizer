@@ -1476,7 +1476,7 @@ export const Wishes = [
         'SHUT DOWN', 1.00E+27, 1
     ],
     [
-        'Titan 12 QP', 1.00E+00, 1
+        'Titan 12 QP', 3.00E+26, 1
     ],
     [
         'Energy NGU Card V', 4.00E+25, 2
