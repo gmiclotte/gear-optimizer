@@ -219,11 +219,11 @@ const ImportSaveForm = () => {
         newState.blueHeart = data.inventory.itemList.itemMaxxed[195]
         newState.eBetaPot = data.arbitrary.energyPotion2InUse
         newState.eDeltaPot = data.arbitrary.energyPotion1Time.totalseconds > 0
-        newState.energy.cap = data.capEnergy
+        newState.energy.cap = Math.max(data.capEnergy, data.curEnergy)
         newState.energy.ngus = ngus
         newState.mBetaPot = data.arbitrary.magicPotion2InUse
         newState.mDeltaPot = data.arbitrary.magicPotion1Time.totalseconds > 0
-        newState.magic.cap = data.magic.capMagic
+        newState.magic.cap = Math.max(data.magic.capMagic, data.magic.curMagic)
         newState.magic.ngus = mngus
 
         dispatch(Settings("ngustats",
