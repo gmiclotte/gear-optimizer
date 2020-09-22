@@ -79,6 +79,8 @@ const ImportSaveForm = () => {
 
         dispatch(MassUpdate(newItemData))
 
+        updateNgus(data)
+
         updateAugmentTab(data)
     }
 
@@ -183,11 +185,50 @@ const ImportSaveForm = () => {
         dispatch(Crement("looty", calculateDiff(optimizerState.looty, lIndex)))
         dispatch(Crement("pendant", calculateDiff(optimizerState.pendant, pIndex)))
 
+
         return foundIds
     }
 
     const calculateDiff = (current, newV) => {
         return newV - current;
+    }
+
+    const updateNgus = (data) => {
+        let ngus = []
+        for (let i = 0; i < data.NGU.skills.length; i++) {
+            let temp = {}
+            temp.normal = data.NGU.skills[i].level
+            temp.evil = data.NGU.skills[i].evilLevel
+            temp.sadistic = data.NGU.skills[i].sadisticLevel
+            ngus.push(temp)
+        }
+
+        let mngus = []
+        for (let i = 0; i < data.NGU.magicSkills.length; i++) {
+            let temp = {}
+            temp.normal = data.NGU.magicSkills[i].level
+            temp.evil = data.NGU.magicSkills[i].evilLevel
+            temp.sadistic = data.NGU.magicSkills[i].sadisticLevel
+            mngus.push(temp)
+        }
+
+        let newState = { ...optimizerState.ngustats }
+
+        newState.quirk.e2n = data.beastQuest.quirkLevel[14] > 0
+        newState.quirk.s2e = data.beastQuest.quirkLevel[89] > 0
+        newState.blueHeart = data.inventory.itemList.itemMaxxed[195]
+        newState.eBetaPot = data.arbitrary.energyPotion2InUse
+        newState.eDeltaPot = data.arbitrary.energyPotion1Time.totalseconds > 0
+        newState.energy.cap = Math.max(data.capEnergy, data.curEnergy)
+        newState.energy.ngus = ngus
+        newState.mBetaPot = data.arbitrary.magicPotion2InUse
+        newState.mDeltaPot = data.arbitrary.magicPotion1Time.totalseconds > 0
+        newState.magic.cap = Math.max(data.magic.capMagic, data.magic.curMagic)
+        newState.magic.ngus = mngus
+
+        dispatch(Settings("ngustats",
+            newState
+        ))
     }
 
     const disableUnownedItems = (foundIds, newData) => {
