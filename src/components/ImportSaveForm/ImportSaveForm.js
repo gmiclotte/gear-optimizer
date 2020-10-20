@@ -106,19 +106,10 @@ const ImportSaveForm = () => {
         let nac;
         let lsc;
         let augdata = data.challenges
-        if (optimizerState.zone >= 34) {
-            nac = augdata.noAugsChallenge.curSadisticCompletions
-            lsc = augdata.laserSwordChallenge.curSadisticCompletions
-        } else if (optimizerState.zone >= 23) {
-            nac = augdata.noAugsChallenge.curEvilCompletions
-            lsc = augdata.laserSwordChallenge.curEvilCompletions
-        } else {
-            nac = augdata.noAugsChallenge.curCompletions
-            lsc = augdata.laserSwordChallenge.curCompletions
-        }
+        nac = augdata.noAugsChallenge.curCompletions
+        lsc = augdata.laserSwordChallenge.curCompletions
         dispatch(Settings("augstats", { ...optimizerState.augstats, lsc: lsc, nac: nac, ecap: energyCap }))
     }
-
 
     const updateItemLevels = (data, newData) => {
         let equipped = data.inventory
