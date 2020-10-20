@@ -82,6 +82,8 @@ const ImportSaveForm = () => {
         updateNgus(data)
 
         updateAugmentTab(data)
+
+        updateHackTab(data)
     }
 
     const getZone = (B, eB, sB) => {
@@ -110,6 +112,17 @@ const ImportSaveForm = () => {
         lsc = augdata.laserSwordChallenge.curCompletions
         dispatch(Settings("augstats", { ...optimizerState.augstats, lsc: lsc, nac: nac, ecap: energyCap }))
     }
+
+    const updateHackTab = (data) => {
+        let hacks = data.hacks.hacks;
+        
+        let newState = {...optimizerState.hackstats}
+        for (let i = 0; i < newState.hacks.length; i++){
+            newState.hacks[i].level = hacks[i].level
+        }
+        dispatch(Settings("hackstats", newState ));
+    }
+
 
     const updateItemLevels = (data, newData) => {
         let equipped = data.inventory
