@@ -1,10 +1,11 @@
 {
   "homepage": "https://gmiclotte.github.io/gear-optimizer",
   "name": "gear-optimizer",
-  "version": "0.7.8",
+  "version": "0.7.11",
   "private": true,
   "dependencies": {
-    "caniuse-lite": "^1.0.30001112",
+    "caniuse-lite": "^1.0.30001133",
+    "core-js": "^3.6.5",
     "gh-pages": "^2.2.0",
     "react": "^16.13.1",
     "react-cookie-banner": "^4.1.0",
@@ -13,7 +14,7 @@
     "react-modal": "^3.11.2",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^3.4.1",
+    "react-scripts": "^3.4.3",
     "react-tooltip": "^3.11.6",
     "redux": "^4.0.5",
     "redux-saga": "^1.1.3",

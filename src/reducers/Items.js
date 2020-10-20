@@ -111,6 +111,20 @@ export function cleanState(state, skipSaving = false) {
         state[name].currentLoadout = Math.min(state.savedequip.length - 1, state[name].currentLoadout);
         state[name].dedicatedLoadout = Math.min(state.savedequip.length - 1, state[name].dedicatedLoadout);
     }
+    // add empty save slot if required
+    console.log(state.savedequip[state.savedequip.length - 1].name)
+    if (state.savedequip[state.savedequip.length - 1].name !== undefined) {
+        state.savedequip = state.savedequip.concat([
+            {
+                ...ItemNameContainer(state.equip.accessory.length, state.offhand),
+                locked: undefined,
+                factors: undefined,
+                maxslots: undefined,
+                name: undefined
+            }
+        ]);
+        state.maxsavedidx = state.savedequip.length - 1;
+    }
     // save and return cleaned state
     if (!skipSaving && document.cookie.includes('accepts-cookies=true')) {
         window.localStorage.setItem(LOCALSTORAGE_NAME, JSON.stringify({
@@ -986,33 +1000,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
             Object.getOwnPropertyNames(state.locked).forEach(slot => {
                 locked[slot] = state.locked[slot].map(idx => state.equip[slot][idx]);
             });
-            if (state.savedidx === state.maxsavedidx) {
-                return {
-                    ...state,
-                    savedequip: state.savedequip.map((tmp, idx) => {
-                        if (idx === state.savedidx) {
-                            return {
-                                ...state.equip,
-                                locked: locked,
-                                factors: state.factors,
-                                maxslots: state.maxslots,
-                                name: tmp.name
-                            };
-                        }
-                        return tmp;
-                    }).concat([
-                        {
-                            ...ItemNameContainer(state.equip.accessory.length, state.offhand),
-                            locked: undefined,
-                            factors: undefined,
-                            maxslots: undefined,
-                            name: undefined
-                        }
-                    ]),
-                    maxsavedidx: state.maxsavedidx + 1
-                }
-            }
-            return {
+            return cleanState({
                 ...state,
                 savedequip: state.savedequip.map((tmp, idx) => {
                     if (idx === state.savedidx) {
@@ -1026,7 +1014,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                     }
                     return tmp;
                 })
-            }
+            });
         }
 
         case LOAD_SLOT: {
@@ -1082,10 +1070,7 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                     }
                     return equip;
                 }).filter(x => x !== undefined),
-                savedidx: state.savedidx - (
-                    state.savedidx === state.maxsavedidx
-                        ? 1
-                        : 0),
+                savedidx: Math.max(state.savedidx - 1, 0),
                 maxsavedidx: state.maxsavedidx - 1
             })
         }
