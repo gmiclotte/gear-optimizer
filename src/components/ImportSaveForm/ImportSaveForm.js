@@ -82,6 +82,8 @@ const ImportSaveForm = () => {
         updateNgus(data)
 
         updateAugmentTab(data)
+
+        updateHackTab(data)
     }
 
     const getZone = (B, eB, sB) => {
@@ -106,17 +108,19 @@ const ImportSaveForm = () => {
         let nac;
         let lsc;
         let augdata = data.challenges
-        if (optimizerState.zone >= 34) {
-            nac = augdata.noAugsChallenge.curSadisticCompletions
-            lsc = augdata.laserSwordChallenge.curSadisticCompletions
-        } else if (optimizerState.zone >= 23) {
-            nac = augdata.noAugsChallenge.curEvilCompletions
-            lsc = augdata.laserSwordChallenge.curEvilCompletions
-        } else {
-            nac = augdata.noAugsChallenge.curCompletions
-            lsc = augdata.laserSwordChallenge.curCompletions
-        }
+        nac = augdata.noAugsChallenge.curCompletions
+        lsc = augdata.laserSwordChallenge.curCompletions
         dispatch(Settings("augstats", { ...optimizerState.augstats, lsc: lsc, nac: nac, ecap: energyCap }))
+    }
+
+    const updateHackTab = (data) => {
+        let hacks = data.hacks.hacks;
+        
+        let newState = {...optimizerState.hackstats}
+        for (let i = 0; i < newState.hacks.length; i++){
+            newState.hacks[i].level = hacks[i].level
+        }
+        dispatch(Settings("hackstats", newState ));
     }
 
 
