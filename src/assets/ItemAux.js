@@ -731,7 +731,10 @@ export const SetName = {
     ],
     AMALGAMATE4: [
         'Amalgamate', 44, 4
-    ]
+    ],
+    PIRATE: [
+        'The Aethereal Sea Part 1', 45
+    ],
 }
 
 export const Hacks = [

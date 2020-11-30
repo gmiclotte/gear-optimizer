@@ -436,6 +436,7 @@ ZONES = [
     [range(496, 503 + 1), 'SetName.DUCK'],
     [504, 'SetName.FOREST_PENDANT'],
     [505, 'SetName.LOOTY'],
+    [range(506, 514 + 1), 'SetName.PIRATE'],
 ]
 
 
