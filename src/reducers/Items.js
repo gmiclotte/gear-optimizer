@@ -112,7 +112,6 @@ export function cleanState(state, skipSaving = false) {
         state[name].dedicatedLoadout = Math.min(state.savedequip.length - 1, state[name].dedicatedLoadout);
     }
     // add empty save slot if required
-    console.log(state.savedequip[state.savedequip.length - 1].name)
     if (state.savedequip[state.savedequip.length - 1].name !== undefined) {
         state.savedequip = state.savedequip.concat([
             {
