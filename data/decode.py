@@ -238,7 +238,7 @@ h = [byte_data[idx:idx + 1] for idx in range(len(byte_data))]
 # get wishes
 idx = int(sys.argv[2]) - 12
 l = 0
-count = 225 + 1
+count = 230 + 1
 wishes = []
 for _ in range(count):
     printv(f'Wish {_}')

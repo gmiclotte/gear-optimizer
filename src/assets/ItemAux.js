@@ -1541,7 +1541,22 @@ export const Wishes = [
         'Faster Mayo VI', 1.00E+27, 10
     ],
     [
-        'Faster CardsVI', 1.00E+27, 10
+        'Faster Cards VI', 1.00E+27, 10
+    ],
+    [
+        'Adventure Stats VI (part 2)', 3.30E+26, 10
+    ],
+    [
+        'BEEFY III', 3.80E+26, 2
+    ],
+    [
+        'WIMPY III', 3.50E+26, 2
+    ],
+    [
+        'CHONKIER', 3.40E+26, 5
+    ],
+    [
+        'LESS NOT CHONKIER', 3.70E+26, 5
     ],
 ];
 
