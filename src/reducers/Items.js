@@ -545,6 +545,11 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
         }
 
         case MASSUPDATE: {
+            const newItemData = action.payload.data;
+            Object.getOwnPropertyNames(newItemData).forEach((itemid) => {
+                const item = newItemData[itemid];
+                update_level(item, item.level);
+            });
             return {
                 ...state,
                 itemdata: action.payload.data
