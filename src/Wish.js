@@ -258,6 +258,10 @@ export class Wish {
         return [assignments, res, scores];
     }
 
+    capPct(x) {
+        return this.wishstats[`${x}cap`] * this.wishstats[`${x}pct`] / 100;
+    }
+
     optimize() {
         let global_start_time = Date.now();
         const resource_priority = resource_priorities[this.wishstats.rp_idx];
@@ -265,7 +269,7 @@ export class Wish {
         const wishcap = this.wishstats.wishcap/* minutes */ * 60 * 50;
         const mintottime = Math.max(...this.wishstats.wishes.map(wish => wish.goal - wish.start)) * wishcap;
         const powproduct = (this.wishstats.epow * this.wishstats.mpow * this.wishstats.rpow) ** .17;
-        const capproduct = (this.wishstats.ecap * this.wishstats.mcap * this.wishstats.rcap) ** .17;
+        const capproduct = (this.capPct('e') * this.capPct('m') * this.capPct('r')) ** .17;
         const exponent = 0.17;
         const capreqs = costs.map((cost, k) => [
             cost / this.speed(exponent) / powproduct,
@@ -273,9 +277,9 @@ export class Wish {
             this.wishstats.wishes[k].goal
         ]).sort((a, b) => a[0] - b[0]);
         const totres = [
-            Number(this.wishstats.ecap),
-            Number(this.wishstats.mcap),
-            Number(this.wishstats.rcap)
+            Number(this.capPct('e')),
+            Number(this.capPct('m')),
+            Number(this.capPct('r'))
         ];
         let res = [...totres];
         const coef = capreqs.map(c => c[0]);

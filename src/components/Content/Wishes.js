@@ -123,6 +123,14 @@ class WishComponent extends Component {
                                 }} type="number" step="any" value={this.props.wishstats[x[0] + 'cap']}
                                        onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, x[0] + 'cap')}/>
                             </label>
+                            <label>
+                                {' use (%)'}
+                                <input style={{
+                                    width: '11ch',
+                                    margin: '1ch'
+                                }} type="number" step="any" value={this.props.wishstats[x[0] + 'pct']}
+                                       onFocus={this.handleFocus} onChange={(e) => this.handleChange(e, x[0] + 'pct')}/>
+                            </label>
                         </div>)
                     }
                 </div>

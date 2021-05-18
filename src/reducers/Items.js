@@ -349,10 +349,13 @@ const INITIAL_STATE = {
     wishstats: {
         epow: 1,
         ecap: 1,
+        epct: 100,
         mpow: 1,
         mcap: 1,
+        mpct: 100,
         rpow: 1,
         rcap: 1,
+        rpct: 100,
         wishspeed: 1,
         wishcap: 4 * 60,
         wishtime: 4 * 60,
