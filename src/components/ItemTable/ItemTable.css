@@ -28,8 +28,16 @@
     color: green;
 }
 
+.dark-mode .increase-stat {
+    color: #1fb52e;
+}
+
 .same-stat {
     color: black;
+}
+
+.dark-mode .same-stat {
+    color: white;
 }
 
 .decrease-stat {

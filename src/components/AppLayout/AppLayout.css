@@ -3,9 +3,10 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
-    width: 100vw;
+    width: 100%;
     height: 5vh;
     background-color: #333;
+    display: flex;
 }
 
 .nav-bar-item {
@@ -14,8 +15,13 @@
     border-right: 1px solid #fff;
 }
 
+.nav-bar-item-separator {
+    margin-left: auto;
+}
+
 .nav-bar-item:last-child {
     border-right: none;
+    padding-right: 10px;
 }
 
 .nav-link {
@@ -29,4 +35,32 @@
 
 .active {
     background-color: #33b;
+}
+
+/* Dark mode styling */
+
+.app_container.dark-mode {
+    min-height: 100%;
+    background-color: #222;
+    color: white;
+}
+
+div.ReactModal__Content.dark-mode {
+    background-color: #222;
+    color: white;
+}
+
+.dark-mode .howto {
+    padding-bottom: 1px;
+}
+
+.dark-mode input, .dark-mode button, .dark-mode select {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.02);
+    border-color: white;
+}
+
+.dark-mode select option {
+    color: white;
+    background-color: #333;
 }

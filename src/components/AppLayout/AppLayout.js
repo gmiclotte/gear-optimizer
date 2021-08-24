@@ -1,6 +1,6 @@
 import React from 'react';
 import CookieBanner from 'react-cookie-banner';
-import {HashRouter as Router, NavLink, Route, useParams} from 'react-router-dom';
+import { HashRouter as Router, NavLink, Route, useParams } from 'react-router-dom';
 import ReactGA from 'react-ga';
 
 import './AppLayout.css';
@@ -11,6 +11,8 @@ import NGUComponent from '../Content/NGUs';
 import HackComponent from '../Content/Hacks';
 import WishComponent from '../Content/Wishes';
 import AboutComponent from '../About/About';
+
+import DarkModeContext from './DarkModeContext';
 
 function HowTo() {
     ReactGA.pageview('/howto');
@@ -27,7 +29,7 @@ function HowTo() {
                     <li>Select your highest ascended pendant version.</li>
                     <li>Select your number of accessory slots.</li>
                 </ul>
-                <br/>
+                <br />
             </li>
             <li>Perform additional custom item configuration in the item list on the right.
                 <ul>
@@ -37,7 +39,7 @@ function HowTo() {
                     <li>Equip an item from the list by clicking it.</li>
                     <li>Equipped items can be locked by right clicking it in the equipped item list on the left.</li>
                 </ul>
-                <br/>
+                <br />
             </li>
             <li>Handy shortcuts:
                 <ul>
@@ -52,7 +54,7 @@ function HowTo() {
                         and disabled.
                     </li>
                 </ul>
-                <br/>
+                <br />
             </li>
             <li>Configure base Power / Toughness, Infinity Cube, and hard cap information.
                 <ul>
@@ -64,7 +66,7 @@ function HowTo() {
                         appropriate field. To find this value, you can either unequip all your gear or do the math.
                     </li>
                 </ul>
-                <br/>
+                <br />
             </li>
             <li>Select your priorities.
                 <ul>
@@ -79,10 +81,10 @@ function HowTo() {
                         remain for a priority lower down the list.
                     </li>
                 </ul>
-                <br/>
+                <br />
             </li>
             <li>Click the "Optimize Gear" button to compute an optimal loadout based on the configuration.</li>
-            <br/>
+            <br />
             <li>Save and compare loadouts.
                 <ul>
                     <li>The stats list shows the stats of the current loadout and the difference with the currently
@@ -101,7 +103,7 @@ function HowTo() {
                 </ul>
             </li>
         </ol>
-        <br/>
+        <br />
         <ol>
             {'How to use the augments calculator:'}
         </ol>
@@ -113,7 +115,7 @@ function HowTo() {
                 example 3.4:2, then enter 1.7.
             </li>
         </ol>
-        <br/>
+        <br />
         <ol>
             {'How to use the NGUs calculator:'}
         </ol>
@@ -123,7 +125,7 @@ function HowTo() {
             <li>Time is in minutes.</li>
             <li>Keep in mind that the calculator assumes you assign all your E or M to a single NGU.</li>
         </ol>
-        <br/>
+        <br />
         <ol>
             {'How to use the hacks calculator:'}
         </ol>
@@ -138,7 +140,7 @@ function HowTo() {
                 sum of the times in the 'Time' column, which are based on current hack speed.
             </li>
         </ol>
-        <br/>
+        <br />
         <ol>
             {'How to use the wishes calculator:'}
         </ol>
@@ -161,7 +163,7 @@ function HowTo() {
                 (slightly) different values.
             </li>
         </ol>
-        <br/>
+        <br />
         <ol>
             {'How to use the advanced modifiers:'}
         </ol>
@@ -177,13 +179,13 @@ function HowTo() {
             <li>The advanced modifier fields are then used to calculate your ngu/hack/wish/... speed based on the values
                 you entered, and changes in gear and pots between your current run and the run you are planning.
             </li>
-            <br/>
+            <br />
             <li>Current [something]: refers to the [something] you were using while you filled the power/cap/speed/...
                 fields.
             </li>
             <li>Dedicated [something]: refers to the [something] you will be using in your ngu/hack/wish/... run.</li>
         </ol>
-        <br/>
+        <br />
         <ol>
             {'Multiplicative modifiers:'}
         </ol>
@@ -195,78 +197,95 @@ function HowTo() {
     </div>;
 }
 
-const AppLayout = props => (<div className='app_container'>
 
-    <CookieBanner styles={{
-        banner: {
-            height: 'auto'
-        },
-        message: {
-            fontWeight: 400
-        }
-    }}
-                  message='This page wants to use local storage and a cookie to respectively keep track of your configuration and consent. Scroll or click to accept.'/>
-    <Router>
-        <div>
-            <nav>
-                <ul className='nav-bar-list' style={{
-                    width: '100%'
-                }}>
-                    <li className='nav-bar-item'>
-                        <NavLink to='/' exact={true} className='nav-link' activeClassName='active'>Gear</NavLink>
-                    </li>
-                    <li className='nav-bar-item'>
-                        <NavLink to='/augment' exact={true} className='nav-link'
-                                 activeClassName='active'>Augments</NavLink>
-                    </li>
-                    <li className='nav-bar-item'>
-                        <NavLink to='/ngus' exact={true} className='nav-link' activeClassName='active'>NGUs</NavLink>
-                    </li>
-                    <li className='nav-bar-item'>
-                        <NavLink to='/hacks' exact={true} className='nav-link' activeClassName='active'>Hacks</NavLink>
-                    </li>
-                    <li className='nav-bar-item'>
-                        <NavLink to='/wishes' exact={true} className='nav-link'
-                                 activeClassName='active'>Wishes</NavLink>
-                    </li>
-                    <li className='nav-bar-item'>
-                        <NavLink to='/howto' exact={true} className='nav-link' activeClassName='active'>How to</NavLink>
-                    </li>
-                    <li className='nav-bar-item' style={{
-                        float: 'right',
-                        paddingRight: 10
-                    }}>
-                        <NavLink to='/about/' exact={true} className='nav-link' activeClassName='active'>About</NavLink>
-                    </li>
-                </ul>
-            </nav>
+const AppLayout = props => {
+    const [darkMode, setDarkMode] = React.useState(() => localStorage.getItem('dark-mode') === true.toString());
+    const toggleDarkMode = () => {
+        localStorage.setItem('dark-mode', !darkMode)
+        setDarkMode(v => !v);
+    };
+    let className = 'app_container';
+    if (darkMode) {
+        className += ' dark-mode';
+    }
+    return (
+        <div className={className}>
+            <CookieBanner styles={{
+                banner: {
+                    height: 'auto'
+                },
+                message: {
+                    fontWeight: 400
+                }
+            }}
+                message='This page wants to use local storage and a cookie to respectively keep track of your configuration and consent. Scroll or click to accept.'
+            />
+            <DarkModeContext.Provider value={darkMode}>
+                <Router>
+                    <div>
+                        <nav>
+                            <ul className='nav-bar-list'>
+                                <li className='nav-bar-item'>
+                                    <NavLink to='/' exact={true} className='nav-link' activeClassName='active'>Gear</NavLink>
+                                </li>
+                                <li className='nav-bar-item'>
+                                    <NavLink to='/augment' exact={true} className='nav-link'
+                                        activeClassName='active'>Augments</NavLink>
+                                </li>
+                                <li className='nav-bar-item'>
+                                    <NavLink to='/ngus' exact={true} className='nav-link' activeClassName='active'>NGUs</NavLink>
+                                </li>
+                                <li className='nav-bar-item'>
+                                    <NavLink to='/hacks' exact={true} className='nav-link' activeClassName='active'>Hacks</NavLink>
+                                </li>
+                                <li className='nav-bar-item'>
+                                    <NavLink to='/wishes' exact={true} className='nav-link'
+                                        activeClassName='active'>Wishes</NavLink>
+                                </li>
+                                <li className='nav-bar-item'>
+                                    <NavLink to='/howto' exact={true} className='nav-link' activeClassName='active'>How to</NavLink>
+                                </li>
+                                <div className="nav-bar-item-separator"></div>
+                                <li className='nav-bar-item'>
+                                    <div className="nav-link" style={{ cursor: 'pointer', userSelect: 'none' }} onClick={toggleDarkMode}>
+                                        Dark Mode
+                                    </div>
+                                </li>
+                                <li className='nav-bar-item'>
+                                    <NavLink to='/about/' exact={true} className='nav-link' activeClassName='active'>About</NavLink>
+                                </li>
+                            </ul>
+                        </nav>
 
-            <Route exact={true} path='/'
-                   render={(routeProps) => (<Optimizer {...routeProps} {...props} className='app_body'/>)}/>
-            <Route exact={true} path='/loadout/'
-                   render={(routeProps) => (<Optimizer {...routeProps} {...props} className='app_body'/>)}/>
-            <Route exact={true} path='/loadout/:itemlist' children={<Loadout {
-                                                                                 ...props
-                                                                             } />}/>
-            <Route exact={true} path='/howto/' component={HowTo}/>
-            <Route exact={true} path='/augment/'
-                   render={(routeProps) => (<Augment {...routeProps} {...props} className='app_body'/>)}/>
-            <Route exact={true} path='/ngus/'
-                   render={(routeProps) => (<NGUComponent {...routeProps} {...props} className='app_body'/>)}/>
-            <Route exact={true} path='/hacks/'
-                   render={(routeProps) => (<HackComponent {...routeProps} {...props} className='app_body'/>)}/>
-            <Route exact={true} path='/wishes/'
-                   render={(routeProps) => (<WishComponent {...routeProps} {...props} className='app_body'/>)}/>
-            <Route exact={true} path='/about/'
-                   render={(routeProps) => (<AboutComponent {...routeProps} {...props} className='app_body'/>)}/>
+                        <Route exact={true} path='/'
+                            render={(routeProps) => (<Optimizer {...routeProps} {...props} className='app_body' />)} />
+                        <Route exact={true} path='/loadout/'
+                            render={(routeProps) => (<Optimizer {...routeProps} {...props} className='app_body' />)} />
+                        <Route exact={true} path='/loadout/:itemlist' children={<Loadout {
+                            ...props
+                        } />} />
+                        <Route exact={true} path='/howto/' component={HowTo} />
+                        <Route exact={true} path='/augment/'
+                            render={(routeProps) => (<Augment {...routeProps} {...props} className='app_body' />)} />
+                        <Route exact={true} path='/ngus/'
+                            render={(routeProps) => (<NGUComponent {...routeProps} {...props} className='app_body' />)} />
+                        <Route exact={true} path='/hacks/'
+                            render={(routeProps) => (<HackComponent {...routeProps} {...props} className='app_body' />)} />
+                        <Route exact={true} path='/wishes/'
+                            render={(routeProps) => (<WishComponent {...routeProps} {...props} className='app_body' />)} />
+                        <Route exact={true} path='/about/'
+                            render={(routeProps) => (<AboutComponent {...routeProps} {...props} className='app_body' />)} />
+                    </div>
+                </Router>
+            </DarkModeContext.Provider>
         </div>
-    </Router>
-</div>);
+    )
+};
 
 const Loadout = (props) => {
-    let {itemlist} = useParams();
+    let { itemlist } = useParams();
     itemlist = itemlist.split('&');
-    return <Optimizer {...props} loadLoadout={itemlist} className='app_body'/>;
+    return <Optimizer {...props} loadLoadout={itemlist} className='app_body' />;
 }
 
 export default AppLayout;
