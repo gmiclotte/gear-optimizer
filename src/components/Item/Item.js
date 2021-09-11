@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {getLock} from '../../util'
+import { getLock } from '../../util'
+import { useDrag, useDrop } from 'react-dnd';
 
 import './Item.css';
 
@@ -15,7 +16,27 @@ function importAll(r) {
 
 const images = importAll(require.context('../../assets/img/', false, /\.(png|jpe?g|svg)$/));
 
-export default class Item extends Component {
+export const SourceItem = (props) => {
+    const [, drag] = useDrag(() => ({
+        type: 'item',
+        item: props.item,
+        collect: (monitor) => ({
+            isDragging: !!monitor.isDragging()
+        })
+    }));
+    return (<div className="item-container" ref={drag}><Item {...props} /></div>);
+}
+
+export const TargetItem = (props) => {
+    const [, drop] = useDrop(() => ({
+        accept: 'item',
+        drop: (item) => props.handleDropItem(item, props.item),
+        canDrop: (item) => item.slot[0] === props.item.slot[0]
+    }));
+    return (<div className="item-container" ref={drop}><SourceItem {...props} /></div>);
+}
+
+class Item extends Component {
     static propTypes = {
         item: PropTypes.shape({name: PropTypes.string.isRequired, level: PropTypes.number}),
         handleClickItem: PropTypes.func.isRequired,

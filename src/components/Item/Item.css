@@ -2,9 +2,6 @@
     opacity: .20;
 }
 
-.item {
-}
-
 .lock-item {
     outline: 2px solid red;
     outline-offset: -2px;
@@ -13,4 +10,8 @@
 .unused-item {
     outline: 2px solid red;
     outline-offset: -2px;
+}
+
+.item-container {
+    display: inline-block;
 }

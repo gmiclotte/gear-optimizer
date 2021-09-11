@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactTooltip from 'react-tooltip'
 
-import Item from '../Item/Item'
+import {SourceItem} from '../Item/Item'
 import {allowed_zone, get_limits} from '../../util'
 
 import './ItemTable.css';
@@ -118,7 +118,7 @@ export default class ItemTable extends React.Component {
                     });
                 }
                 if (allowed_zone(this.props.itemdata, limits, id) && !(this.props.compactitemlist && item.disable)) {
-                    this.localbuffer.push(<Item className={className} item={item}
+                    this.localbuffer.push(<SourceItem className={className} item={item}
                                                 handleClickItem={this.props.handleClickItem}
                                                 handleCtrlClickItem={this.props.handleCtrlClickItem}
                                                 handleShiftClickItem={(itemId) => this.props.handleEditItem(itemId, -1)}

@@ -37,6 +37,7 @@ import { TOGGLE_SAVED, TOGGLE_UNUSED } from '../actions/ToggleSaved'
 import { LOAD_STATE_LOCALSTORAGE } from '../actions/LoadStateLocalStorage';
 import { SAVE_STATE_LOCALSTORAGE } from '../actions/SaveStateLocalStorage';
 import { MASSUPDATE } from '../actions/MassUpdateItems';
+import { DROP_EQUIP_ITEM } from '../actions/DropEquipItem';
 
 let ITEMS = new ItemContainer(ITEMLIST.map((item) => {
     return [item.id, item];
@@ -812,6 +813,28 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
                     })
                 },
                 lastequip: state.equip
+            };
+        }
+
+        case DROP_EQUIP_ITEM: {
+            const { source, target } = action.payload;
+            if (!source || !target || source.id === target.id || !source.slot || !target.slot || source.slot[0] !== target.slot[0]) {
+                return state;
+            }
+            const updatedSlot = state.equip[target.slot[0]].map(itemId => {
+                if (itemId === target.id) {
+                    return source.id;
+                } else if (itemId === source.id) {
+                    return target.id;
+                }
+                return itemId;
+            });
+            return {
+                ...state,
+                equip: {
+                    ...state.equip,
+                    [target.slot[0]]: updatedSlot
+                }
             };
         }
 

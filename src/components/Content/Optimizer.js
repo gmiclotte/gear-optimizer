@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import ReactTooltip from 'react-tooltip'
 import Modal from 'react-modal';
 import ReactGA from 'react-ga';
-import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import { get_max_titan, get_max_zone, get_zone } from '../../util';
 import { LOOTIES, PENDANTS } from '../../assets/Items';
@@ -112,167 +114,172 @@ class Optimizer extends Component {
         const pendant = this.props.pendant >= 0
             ? PENDANTS[this.props.pendant]
             : 'None';
-        return (<div className={this.props.className}>
-            <div className="content__container">
-                <div className='button-section' key='slots'>
-                    <ImportSaveForm />
-                    <button type="button" onClick={() => this.props.handleGo2Titan(8, 3, 5, 12)}>
-                        {'Titan 8 Preset'}
-                    </button>
-                    <button type="button" onClick={() => this.props.handleGo2Titan(11, 6, 8, 15)}>
-                        {'Titan 11 Preset'}
-                    </button>
-                    <ResetItemsButton />
-                    <br />
-                    <div><Crement header='Highest zone' value={zone[0]} name='zone'
-                        handleClick={this.props.handleCrement} min={2} max={maxzone} /></div>
-                    {
-                        this.props.zone > 20
-                            ? <div><Crement header={maxtitan[0] + ' version'} value={this.props.titanversion}
-                                name='titanversion' handleClick={this.props.handleCrement} min={1} max={4} />
-                            </div>
-                            : ''
-                    }
-                    <div><Crement header='Highest looty' value={looty} name='looty'
-                        handleClick={this.props.handleCrement} min={-1} max={LOOTIES.length - 1} /></div>
-                    <div><Crement header='Highest pendant' value={pendant} name='pendant'
-                        handleClick={this.props.handleCrement} min={-1} max={PENDANTS.length - 1} /></div>
-                    <div><Crement header='Accessory slots' value={accslots} name='accslots'
-                        handleClick={this.props.handleCrement} min={0} max={100} /></div>
-                    {
-                        this.props.zone > 27
-                            ? <div><Crement header='Offhand power' value={this.props.offhand * 5 + '%'} name='offhand'
-                                handleClick={this.props.handleCrement} min={0} max={20} /></div>
-                            : ''
-                    }
-                </div>
-                <div className='button-section' key='factorforms'>
-                    <OptimizeButton text={'Gear'} running={this.props.running} abort={this.props.handleTerminate}
-                        optimize={this.props.handleOptimizeGear} />{' '}
-                    <button onClick={this.props.handleUndo}>
-                        {'Load previous'}
-                    </button>
-                    {[...this.props.factors.keys()].map((idx) => (
-                        <div key={'factorform' + idx}><FactorForm {...this.props} idx={idx} /></div>))}
-                </div>
-                <div className='button-section' key='numberforms'>
-                    <table className='center cubetable'>
-                        <tbody>
-                            <tr>
-                                <td>Allow disabled items</td>
-                                <td>
-                                    <input type="checkbox" checked={this.props.ignoreDisabled}
-                                        onChange={() => this.props.handleSettings('ignoreDisabled', !this.props.ignoreDisabled)} />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>P/T input</td>
-                                <td>
-                                    <input type="checkbox" checked={this.props.basestats.modifiers}
-                                        onChange={(e) => this.props.handleSettings('basestats', {
-                                            ...this.props.basestats,
-                                            modifiers: !this.props.basestats.modifiers
-                                        })} /></td>
-                            </tr>
+        return (
+            <DndProvider backend={HTML5Backend}>
+                <div className={this.props.className}>
+                    <div className="content__container">
+                        <div className='button-section' key='slots'>
+                            <ImportSaveForm />
+                            <button type="button" onClick={() => this.props.handleGo2Titan(8, 3, 5, 12)}>
+                                {'Titan 8 Preset'}
+                            </button>
+                            <button type="button" onClick={() => this.props.handleGo2Titan(11, 6, 8, 15)}>
+                                {'Titan 11 Preset'}
+                            </button>
+                            <ResetItemsButton />
+                            <br />
+                            <div><Crement header='Highest zone' value={zone[0]} name='zone'
+                                handleClick={this.props.handleCrement} min={2} max={maxzone} /></div>
                             {
-                                ['power', 'toughness'].map((statname, idx) => (<tr className={this.props.basestats.modifiers
-                                    ? ''
-                                    : 'hide'} key={statname}>
-                                    <td>{'Base ' + statname.charAt(0).toUpperCase() + statname.slice(1)}
-                                    </td>
-                                    <td>
-                                        <label>
-                                            <input style={{
-                                                width: '9ch',
-                                                margin: '1ch'
-                                            }} type="number" step="any" value={this.props.basestats[statname]}
-                                                onFocus={this.handleFocus}
-                                                onChange={(e) => this.handleChange(e, ['base', statname])} />
-                                        </label>
-                                    </td>
-                                </tr>))
+                                this.props.zone > 20
+                                    ? <div><Crement header={maxtitan[0] + ' version'} value={this.props.titanversion}
+                                        name='titanversion' handleClick={this.props.handleCrement} min={1} max={4} />
+                                    </div>
+                                    : ''
                             }
+                            <div><Crement header='Highest looty' value={looty} name='looty'
+                                handleClick={this.props.handleCrement} min={-1} max={LOOTIES.length - 1} /></div>
+                            <div><Crement header='Highest pendant' value={pendant} name='pendant'
+                                handleClick={this.props.handleCrement} min={-1} max={PENDANTS.length - 1} /></div>
+                            <div><Crement header='Accessory slots' value={accslots} name='accslots'
+                                handleClick={this.props.handleCrement} min={0} max={100} /></div>
                             {
-                                ['power', 'toughness', 'tier'].map((statname, idx) => (
-                                    <tr className={this.props.basestats.modifiers || statname === 'tier'
-                                        ? ''
-                                        : 'hide'} key={statname}>
-                                        <td>{'Cube ' + statname.charAt(0).toUpperCase() + statname.slice(1)}
-                                        </td>
+                                this.props.zone > 27
+                                    ? <div><Crement header='Offhand power' value={this.props.offhand * 5 + '%'} name='offhand'
+                                        handleClick={this.props.handleCrement} min={0} max={20} /></div>
+                                    : ''
+                            }
+                        </div>
+                        <div className='button-section' key='factorforms'>
+                            <OptimizeButton text={'Gear'} running={this.props.running} abort={this.props.handleTerminate}
+                                optimize={this.props.handleOptimizeGear} />{' '}
+                            <button onClick={this.props.handleUndo}>
+                                {'Load previous'}
+                            </button>
+                            {[...this.props.factors.keys()].map((idx) => (
+                                <div key={'factorform' + idx}><FactorForm {...this.props} idx={idx} /></div>))}
+                        </div>
+                        <div className='button-section' key='numberforms'>
+                            <table className='center cubetable'>
+                                <tbody>
+                                    <tr>
+                                        <td>Allow disabled items</td>
                                         <td>
-                                            <label>
-                                                <input style={{
-                                                    width: '9ch',
-                                                    margin: '1ch'
-                                                }} type="number" step="any" value={this.props.cubestats[statname]}
-                                                    onFocus={this.handleFocus}
-                                                    onChange={(e) => this.handleChange(e, ['cube', statname])} />
-                                            </label>
+                                            <input type="checkbox" checked={this.props.ignoreDisabled}
+                                                onChange={() => this.props.handleSettings('ignoreDisabled', !this.props.ignoreDisabled)} />
                                         </td>
-                                    </tr>))
-                            }
-                            <tr>
-                                <td>Hardcap input</td>
-                                <td>
-                                    <input type="checkbox" checked={this.props.capstats.modifiers}
-                                        onChange={(e) => this.props.handleSettings('capstats', {
-                                            ...this.props.capstats,
-                                            modifiers: !this.props.capstats.modifiers
-                                        })} />
-                                </td>
-                            </tr>
-                            {
-                                Object.getOwnPropertyNames(this.props.capstats).map((statname, idx) => {
-                                    if (statname.slice(0, 4) !== 'Nude') {
-                                        return null;
+                                    </tr>
+                                    <tr>
+                                        <td>P/T input</td>
+                                        <td>
+                                            <input type="checkbox" checked={this.props.basestats.modifiers}
+                                                onChange={(e) => this.props.handleSettings('basestats', {
+                                                    ...this.props.basestats,
+                                                    modifiers: !this.props.basestats.modifiers
+                                                })} /></td>
+                                    </tr>
+                                    {
+                                        ['power', 'toughness'].map((statname, idx) => (<tr className={this.props.basestats.modifiers
+                                            ? ''
+                                            : 'hide'} key={statname}>
+                                            <td>{'Base ' + statname.charAt(0).toUpperCase() + statname.slice(1)}
+                                            </td>
+                                            <td>
+                                                <label>
+                                                    <input style={{
+                                                        width: '9ch',
+                                                        margin: '1ch'
+                                                    }} type="number" step="any" value={this.props.basestats[statname]}
+                                                        onFocus={this.handleFocus}
+                                                        onChange={(e) => this.handleChange(e, ['base', statname])} />
+                                                </label>
+                                            </td>
+                                        </tr>))
                                     }
-                                    return (<tr className={this.props.capstats.modifiers
-                                        ? ''
-                                        : 'hide'} key={statname}>
-                                        <td>{statname}
-                                        </td>
+                                    {
+                                        ['power', 'toughness', 'tier'].map((statname, idx) => (
+                                            <tr className={this.props.basestats.modifiers || statname === 'tier'
+                                                ? ''
+                                                : 'hide'} key={statname}>
+                                                <td>{'Cube ' + statname.charAt(0).toUpperCase() + statname.slice(1)}
+                                                </td>
+                                                <td>
+                                                    <label>
+                                                        <input style={{
+                                                            width: '9ch',
+                                                            margin: '1ch'
+                                                        }} type="number" step="any" value={this.props.cubestats[statname]}
+                                                            onFocus={this.handleFocus}
+                                                            onChange={(e) => this.handleChange(e, ['cube', statname])} />
+                                                    </label>
+                                                </td>
+                                            </tr>))
+                                    }
+                                    <tr>
+                                        <td>Hardcap input</td>
                                         <td>
-                                            <label>
-                                                <input style={{
-                                                    width: '9ch',
-                                                    margin: '1ch'
-                                                }} type="number" step="any" value={this.props.capstats[statname]}
-                                                    onFocus={this.handleFocus}
-                                                    onChange={(e) => this.handleChange(e, ['cap', statname])} />
-                                            </label>
+                                            <input type="checkbox" checked={this.props.capstats.modifiers}
+                                                onChange={(e) => this.props.handleSettings('capstats', {
+                                                    ...this.props.capstats,
+                                                    modifiers: !this.props.capstats.modifiers
+                                                })} />
                                         </td>
-                                    </tr>);
-                                })
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                                    </tr>
+                                    {
+                                        Object.getOwnPropertyNames(this.props.capstats).map((statname, idx) => {
+                                            if (statname.slice(0, 4) !== 'Nude') {
+                                                return null;
+                                            }
+                                            return (<tr className={this.props.capstats.modifiers
+                                                ? ''
+                                                : 'hide'} key={statname}>
+                                                <td>{statname}
+                                                </td>
+                                                <td>
+                                                    <label>
+                                                        <input style={{
+                                                            width: '9ch',
+                                                            margin: '1ch'
+                                                        }} type="number" step="any" value={this.props.capstats[statname]}
+                                                            onFocus={this.handleFocus}
+                                                            onChange={(e) => this.handleChange(e, ['cap', statname])} />
+                                                    </label>
+                                                </td>
+                                            </tr>);
+                                        })
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 
-            <div className="content__container">
-                <EquipTable {...this.props} group={'slot'} type='equip' handleClickItem={this.props.handleUnequipItem}
-                    handleCtrlClickItem={this.props.handleDisableItem}
-                    handleRightClickItem={(itemId, lockable) => this.props.handleToggleModal('edit item', {
-                        itemId: itemId,
-                        lockable: lockable,
-                        on: true
-                    })} />
-                <ItemTable {...this.props} maxtitan={maxtitan} group={'zone'} type='items'
-                    handleClickItem={this.props.handleEquipItem}
-                    handleCtrlClickItem={this.props.handleDisableItem}
-                    handleRightClickItem={(itemId) => this.props.handleToggleModal('edit item', {
-                        itemId: itemId,
-                        lockable: false,
-                        on: true
-                    })} />
-            </div>
-            <Modal className={'edit-item-modal' + (this.context ? ' dark-mode' : '')} overlayClassName='edit-item-overlay' isOpen={this.props.editItem[0]}
-                onAfterOpen={undefined} onRequestClose={this.closeEditModal} style={customStyles}
-                contentLabel='Item Edit Modal' autoFocus={false}>
-                <ItemForm {...this.props} closeEditModal={this.closeEditModal} />
-            </Modal>
-            <ReactTooltip multiline={true} />
-        </div>);
+                    <div className="content__container">
+                        <EquipTable {...this.props} group={'slot'} type='equip' handleClickItem={this.props.handleUnequipItem}
+                            handleDropItem={this.props.handleDropEquipItem}
+                            handleCtrlClickItem={this.props.handleDisableItem}
+                            handleRightClickItem={(itemId, lockable) => this.props.handleToggleModal('edit item', {
+                                itemId: itemId,
+                                lockable: lockable,
+                                on: true
+                            })} />
+                        <ItemTable {...this.props} maxtitan={maxtitan} group={'zone'} type='items'
+                            handleClickItem={this.props.handleEquipItem}
+                            handleCtrlClickItem={this.props.handleDisableItem}
+                            handleRightClickItem={(itemId) => this.props.handleToggleModal('edit item', {
+                                itemId: itemId,
+                                lockable: false,
+                                on: true
+                            })} />
+                    </div>
+                    <Modal className={'edit-item-modal' + (this.context ? ' dark-mode' : '')} overlayClassName='edit-item-overlay' isOpen={this.props.editItem[0]}
+                        onAfterOpen={undefined} onRequestClose={this.closeEditModal} style={customStyles}
+                        contentLabel='Item Edit Modal' autoFocus={false}>
+                        <ItemForm {...this.props} closeEditModal={this.closeEditModal} />
+                    </Modal>
+                    <ReactTooltip multiline={true} />
+                </div>
+
+            </DndProvider>);
 
     };
 }

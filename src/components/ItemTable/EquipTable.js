@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactTooltip from 'react-tooltip'
 
-import Item from '../Item/Item'
+import {TargetItem} from '../Item/Item'
 import {EmptySlot, Factors, Slot} from '../../assets/ItemAux'
 import './ItemTable.css';
 import {cubeBaseItemData, score_equip, shorten} from '../../util'
@@ -172,10 +172,11 @@ export default class EquipTable extends React.Component {
                     localbuffer = [];
                 }
             }
-            localbuffer.push(<Item item={item} idx={idx - typeIdx} lockable={lockable} locked={this.props.locked}
+            localbuffer.push(<TargetItem item={item} idx={idx - typeIdx} lockable={lockable} locked={this.props.locked}
                                    handleClickItem={handleClickItem} handleCtrlClickItem={handleCtrlClickItem}
                                    handleShiftClickItem={handleShiftClickItem}
                                    handleRightClickItem={(itemId) => this.props.handleRightClickItem(itemId, true)}
+                                   handleDropItem={this.props.handleDropItem}
                                    key={id + '_' + idx}/>);
             last = item;
         }
@@ -191,9 +192,10 @@ export default class EquipTable extends React.Component {
         for (let idx = 0; idx < sorted.length; idx++) {
             let id = sorted[idx];
             const item = this.itemdata[id];
-            localbuffer.push(<Item item={item} lockable={false} handleClickItem={this.props.handleEquipItem}
+            localbuffer.push(<TargetItem item={item} lockable={false} handleClickItem={this.props.handleEquipItem}
                                    handleCtrlClickItem={handleCtrlClickItem} handleShiftClickItem={handleShiftClickItem}
                                    handleRightClickItem={(itemId) => this.props.handleRightClickItem(itemId, false)}
+                                   handleDropItem={this.props.handleDropItem}
                                    key={id}/>);
         }
         if (localbuffer.length > 0) {

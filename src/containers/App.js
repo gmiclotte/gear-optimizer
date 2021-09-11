@@ -29,6 +29,7 @@ import {LoadStateLocalStorage} from '../actions/LoadStateLocalStorage';
 import {SaveStateLocalStorage} from '../actions/SaveStateLocalStorage';
 
 import '../stylesheets/App.css';
+import { DropEquipItem } from '../actions/DropEquipItem';
 
 ReactGA.initialize('UA-141463995-1');
 
@@ -94,6 +95,7 @@ const mapDispatchToProps = {
     handleTerminate: Terminate,
     handleUndo: Undo,
     handleUnequipItem: UnequipItem,
+    handleDropEquipItem: DropEquipItem,
     handleDeleteSlot: DeleteSlot,
     handleLoadFactors: LoadFactors,
     handleLoadSlot: LoadSlot,
