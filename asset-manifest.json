@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/gear-optimizer/static/css/main.68ee8965.chunk.css",
-    "main.js": "/gear-optimizer/static/js/main.7198713d.chunk.js",
-    "main.js.map": "/gear-optimizer/static/js/main.7198713d.chunk.js.map",
+    "main.css": "/gear-optimizer/static/css/main.d63c0556.chunk.css",
+    "main.js": "/gear-optimizer/static/js/main.2565a0da.chunk.js",
+    "main.js.map": "/gear-optimizer/static/js/main.2565a0da.chunk.js.map",
     "runtime-main.js": "/gear-optimizer/static/js/runtime-main.0d730cbe.js",
     "runtime-main.js.map": "/gear-optimizer/static/js/runtime-main.0d730cbe.js.map",
-    "static/js/2.29527cc0.chunk.js": "/gear-optimizer/static/js/2.29527cc0.chunk.js",
-    "static/js/2.29527cc0.chunk.js.map": "/gear-optimizer/static/js/2.29527cc0.chunk.js.map",
-    "40389e9301111da07331.worker.js": "/gear-optimizer/40389e9301111da07331.worker.js",
-    "40389e9301111da07331.worker.js.map": "/gear-optimizer/40389e9301111da07331.worker.js.map",
+    "static/js/2.d36dfa8f.chunk.js": "/gear-optimizer/static/js/2.d36dfa8f.chunk.js",
+    "static/js/2.d36dfa8f.chunk.js.map": "/gear-optimizer/static/js/2.d36dfa8f.chunk.js.map",
+    "8b25a927fa592f61697d.worker.js": "/gear-optimizer/8b25a927fa592f61697d.worker.js",
+    "8b25a927fa592f61697d.worker.js.map": "/gear-optimizer/8b25a927fa592f61697d.worker.js.map",
     "index.html": "/gear-optimizer/index.html",
-    "precache-manifest.b122041a902b75e041709c860649a93b.js": "/gear-optimizer/precache-manifest.b122041a902b75e041709c860649a93b.js",
+    "precache-manifest.92f06fed26d8e33261e9cf26460527e3.js": "/gear-optimizer/precache-manifest.92f06fed26d8e33261e9cf26460527e3.js",
     "service-worker.js": "/gear-optimizer/service-worker.js",
-    "static/css/main.68ee8965.chunk.css.map": "/gear-optimizer/static/css/main.68ee8965.chunk.css.map",
-    "static/js/2.29527cc0.chunk.js.LICENSE.txt": "/gear-optimizer/static/js/2.29527cc0.chunk.js.LICENSE.txt"
+    "static/css/main.d63c0556.chunk.css.map": "/gear-optimizer/static/css/main.d63c0556.chunk.css.map",
+    "static/js/2.d36dfa8f.chunk.js.LICENSE.txt": "/gear-optimizer/static/js/2.d36dfa8f.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.0d730cbe.js",
-    "static/js/2.29527cc0.chunk.js",
-    "static/css/main.68ee8965.chunk.css",
-    "static/js/main.7198713d.chunk.js"
+    "static/js/2.d36dfa8f.chunk.js",
+    "static/css/main.d63c0556.chunk.css",
+    "static/js/main.2565a0da.chunk.js"
   ]
 }
