@@ -31,7 +31,9 @@
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "release-it": "release-it; echo export default \"{$(grep version -m1 package.json)}\"  > src/_version.js"
+    "release-it": "release-it; npm run version",
+    "version": "echo export default \"{$(grep version -m1 package.json)}\"  > src/_version.js",
+    "init": "npm run git-info; npm run version"
   },
   "eslintConfig": {
     "extends": "react-app"

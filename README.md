@@ -31,6 +31,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 git clone https://github.com/gmiclotte/gear-optimizer.git  
 cd gear-optimizer  
 npm i  
+npm run init  
 npm run start  
 ```
 `npm run start` hosts a local copy, `npm run deploy` builds and deploys to `gh-pages` branch
