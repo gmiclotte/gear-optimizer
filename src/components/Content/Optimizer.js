@@ -119,7 +119,6 @@ class Optimizer extends Component {
                 <div className={this.props.className}>
                     <div className="content__container">
                         <div className='button-section' key='slots'>
-                            <ImportSaveForm />
                             <ImportSaveForm rawSave={true} />
                             <button type="button" onClick={() => this.props.handleGo2Titan(8, 3, 5, 12)}>
                                 {'Titan 8 Preset'}
