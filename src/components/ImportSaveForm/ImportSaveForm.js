@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Crement } from '../../actions/Crement';
 import { MassUpdate } from '../../actions/MassUpdateItems';
 import { Settings } from '../../actions/Settings';
+import { Deserializer } from './deserializeDotNet'
+import PropTypes from 'prop-types'
 
 // minimal boss for each zone, per difficulty
 const sadisticZones = [
@@ -48,7 +50,7 @@ const normalZones = [
     [7, 3],
 ];
 
-const ImportSaveForm = () => {
+const ImportSaveForm = (props) => {
     const dispatch = useDispatch();
     const optimizerState = useSelector(state => state.optimizer);
     const [disableItems, setDisableItems] = useState(false);
@@ -57,8 +59,16 @@ const ImportSaveForm = () => {
     const inputElem = useRef(null);
 
     const handleFileRead = (e) => {
-        const content = fileReader.result
-        let data = JSON.parse(content)
+        let data
+        if (props.rawSave) {
+            const deserializer = Deserializer.fromFile(fileReader.result)
+            deserializer.parse()
+            /** @type Data */
+            data = deserializer.getJson('PlayerData')
+        } else {
+            const content = fileReader.result
+            data = JSON.parse(content)
+        }
 
         console.log(data)
 
@@ -115,7 +125,7 @@ const ImportSaveForm = () => {
 
     const updateHackTab = (data) => {
         let hacks = data.hacks.hacks;
-        
+
         let newState = {...optimizerState.hackstats}
         for (let i = 0; i < newState.hacks.length; i++){
             newState.hacks[i].level = hacks[i].level
@@ -266,14 +276,14 @@ const ImportSaveForm = () => {
 
     return (
         <div className="loadSave">
-            <input ref={inputElem} style={{ display: "none" }} type='file' id='savefileloader' accept='.json' onChange={e => handleFilePick(e)} />
-            <button onClick={() => inputElem.current.click()}>Load NGUSav.es JSON</button>
+            <input ref={inputElem} style={{ display: "none" }} type='file' id='savefileloader' onChange={e => handleFilePick(e)} />
+            <button onClick={() => inputElem.current.click()}>{props.rawSave ? 'Load raw save file' : 'Load NGUSav.es JSON'}</button>
             <label>Disable unowned<input type="checkbox" checked={disableItems} onChange={() => { setDisableItems(!disableItems) }} /></label>
         </div>
     )
 }
 
 ImportSaveForm.propTypes = {
-
+    rawSave: PropTypes.bool
 }
 export default ImportSaveForm;
