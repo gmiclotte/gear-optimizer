@@ -137,6 +137,9 @@ const ImportSaveForm = (props) => {
     const updateItemLevels = (data, newData) => {
         let equipped = data.inventory
 
+        // fix [null, null] entries that make the accs array always have length 20
+        equipped.accs = equipped.accs.filter(x => !isNaN(x.id));
+
         let foundIds = []
         const lootys = [67, 128, 169, 230, 296, 389, 431, 505]
         const pendants = [53, 76, 94, 142, 170, 229, 295, 388, 430, 504]
