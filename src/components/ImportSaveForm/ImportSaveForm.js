@@ -4,7 +4,6 @@ import { Crement } from '../../actions/Crement';
 import { MassUpdate } from '../../actions/MassUpdateItems';
 import { Settings } from '../../actions/Settings';
 import { Deserializer } from './deserializeDotNet'
-import PropTypes from 'prop-types'
 
 // minimal boss for each zone, per difficulty
 const sadisticZones = [
@@ -58,9 +57,9 @@ const ImportSaveForm = (props) => {
 
     const inputElem = useRef(null);
 
-    const handleFileRead = (e) => {
+    const handleFileRead = (rawSave) => (e) => {
         let data
-        if (props.rawSave) {
+        if (rawSave) {
             const deserializer = Deserializer.fromFile(fileReader.result)
             deserializer.parse()
             /** @type Data */
@@ -268,7 +267,7 @@ const ImportSaveForm = (props) => {
         let file = e.target.files[0]
         e.target.value = null
         fileReader = new FileReader()
-        fileReader.onloadend = handleFileRead;
+        fileReader.onloadend = handleFileRead(file.type !== 'application/json');
         try {
             fileReader.readAsText(file)
         } catch{
@@ -280,13 +279,11 @@ const ImportSaveForm = (props) => {
     return (
         <div className="loadSave">
             <input ref={inputElem} style={{ display: "none" }} type='file' id='savefileloader' onChange={e => handleFilePick(e)} />
-            <button onClick={() => inputElem.current.click()}>{props.rawSave ? 'Load raw save file' : 'Load NGUSav.es JSON'}</button>
+            <button onClick={() => inputElem.current.click()}>Load raw save file or NGUSav.es JSON</button>
             <label>Disable unowned<input type="checkbox" checked={disableItems} onChange={() => { setDisableItems(!disableItems) }} /></label>
         </div>
     )
 }
 
-ImportSaveForm.propTypes = {
-    rawSave: PropTypes.bool
-}
+ImportSaveForm.propTypes = {}
 export default ImportSaveForm;
