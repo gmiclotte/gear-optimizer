@@ -279,7 +279,10 @@ const ImportSaveForm = (props) => {
     return (
         <div className="loadSave">
             <input ref={inputElem} style={{ display: "none" }} type='file' id='savefileloader' onChange={e => handleFilePick(e)} />
-            <button onClick={() => inputElem.current.click()}>Load raw save file or NGUSav.es JSON</button>
+            <button onClick={() => inputElem.current.click()}
+                    data-tip={"Supported file types are<br/>(1) raw NGU save files, and<br/>(2) NGUSav.es JSON files."}
+                    data-place="bottom"
+            >Import save from file</button>
             <label>Disable unowned<input type="checkbox" checked={disableItems} onChange={() => { setDisableItems(!disableItems) }} /></label>
         </div>
     )
