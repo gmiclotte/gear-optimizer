@@ -17,11 +17,11 @@
     "react-modal": "^3.12.1",
     "react-redux": "^7.2.2",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^3.4.4",
+    "react-scripts": "^5.0.1",
     "react-tooltip": "^3.11.6",
     "redux": "^4.0.5",
     "redux-saga": "^1.1.3",
-    "worker-loader": "^2.0.0"
+    "worker-loader": "^3.0.8"
   },
   "scripts": {
     "git-info": "echo export default \"{\\\"logMessage\\\": \\\"$(git log -1 --oneline)\\\"}\"  > src/_git_commit.js",
