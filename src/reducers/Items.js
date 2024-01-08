@@ -672,7 +672,6 @@ const ItemsReducer = (state = INITIAL_STATE, action) => {
             const data = action.payload.data;
             console.log(action.payload)
             if (action.payload.name === 'edit item') {
-                console.log('alright')
                 const item = state.itemdata[data.itemId];
                 return {
                     ...state,

@@ -34,7 +34,10 @@ import { DropEquipItem } from '../actions/DropEquipItem';
 ReactGA.initialize('UA-141463995-1');
 
 class App extends Component {
-    componentDidMount = () => this.props.handleLoadStateLocalStorage();
+    componentDidMount = () => {
+        this.props.handleLoadStateLocalStorage();
+        window.appState = this.props;
+    }
     componentDidUpdate = () => this.props.handleSaveStateLocalStorage(this.props);
 
     render() {
