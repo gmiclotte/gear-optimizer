@@ -36,7 +36,7 @@ ReactGA.initialize('UA-141463995-1');
 class App extends Component {
     componentDidMount = () => {
         this.props.handleLoadStateLocalStorage();
-        window.appState = this.props;
+        window.appHandlers = this.props;
     }
     componentDidUpdate = () => this.props.handleSaveStateLocalStorage(this.props);
 
@@ -45,42 +45,45 @@ class App extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    itemdata: state.optimizer.itemdata,
-    items: state.optimizer.items,
-    offhand: state.optimizer.offhand,
-    equip: state.optimizer.equip,
-    locked: state.optimizer.locked,
-    lastequip: state.optimizer.lastequip,
-    savedequip: state.optimizer.savedequip,
-    savedidx: state.optimizer.savedidx,
-    maxsavedidx: state.optimizer.maxsavedidx,
-    showsaved: state.optimizer.showsaved,
-    showunused: state.optimizer.showunused,
-    editItem: state.optimizer.editItem,
-    ignoreDisabled: state.optimizer.ignoreDisabled,
-    factors: state.optimizer.factors,
-    maxslots: state.optimizer.maxslots,
-    running: state.optimizer.running,
-    zone: state.optimizer.zone,
-    titanversion: state.optimizer.titanversion,
-    looty: state.optimizer.looty,
-    pendant: state.optimizer.pendant,
-    hidden: state.optimizer.hidden,
-    hidenotmaxed: state.optimizer.hidenotmaxed,
-    hidedisabled: state.optimizer.hidedisabled,
-    compactbonus: state.optimizer.compactbonus,
-    compactitemlist: state.optimizer.compactitemlist,
-    augstats: state.optimizer.augstats,
-    basestats: state.optimizer.basestats,
-    capstats: state.optimizer.capstats,
-    cubestats: state.optimizer.cubestats,
-    ngustats: state.optimizer.ngustats,
-    hackstats: state.optimizer.hackstats,
-    wishstats: state.optimizer.wishstats,
-    version: state.optimizer.version,
-    loaded: state.optimizer.loaded
-});
+const mapStateToProps = state => {
+    window.appState = state.optimizer;
+    return {
+        itemdata: state.optimizer.itemdata,
+        items: state.optimizer.items,
+        offhand: state.optimizer.offhand,
+        equip: state.optimizer.equip,
+        locked: state.optimizer.locked,
+        lastequip: state.optimizer.lastequip,
+        savedequip: state.optimizer.savedequip,
+        savedidx: state.optimizer.savedidx,
+        maxsavedidx: state.optimizer.maxsavedidx,
+        showsaved: state.optimizer.showsaved,
+        showunused: state.optimizer.showunused,
+        editItem: state.optimizer.editItem,
+        ignoreDisabled: state.optimizer.ignoreDisabled,
+        factors: state.optimizer.factors,
+        maxslots: state.optimizer.maxslots,
+        running: state.optimizer.running,
+        zone: state.optimizer.zone,
+        titanversion: state.optimizer.titanversion,
+        looty: state.optimizer.looty,
+        pendant: state.optimizer.pendant,
+        hidden: state.optimizer.hidden,
+        hidenotmaxed: state.optimizer.hidenotmaxed,
+        hidedisabled: state.optimizer.hidedisabled,
+        compactbonus: state.optimizer.compactbonus,
+        compactitemlist: state.optimizer.compactitemlist,
+        augstats: state.optimizer.augstats,
+        basestats: state.optimizer.basestats,
+        capstats: state.optimizer.capstats,
+        cubestats: state.optimizer.cubestats,
+        ngustats: state.optimizer.ngustats,
+        hackstats: state.optimizer.hackstats,
+        wishstats: state.optimizer.wishstats,
+        version: state.optimizer.version,
+        loaded: state.optimizer.loaded
+    }
+}
 
 const mapDispatchToProps = {
     handleCrement: Crement,
