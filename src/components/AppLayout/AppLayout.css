@@ -64,3 +64,24 @@ div.ReactModal__Content.dark-mode {
     color: white;
     background-color: #333;
 }
+
+.dark-mode div.basic-single * {
+    color: white;
+    background-color: #222;
+}
+
+.dark-mode div.select__input-container {
+    color: white;
+    background: transparent;
+}
+
+.dark-mode div.select__option--is-selected {
+    background-color: #555; /* Your chosen background color for the selected item */
+    color: white; /* Ensures text color is white for readability */
+}
+
+/* Styling for the focused item in the dropdown */
+.dark-mode div.select__option--is-focused {
+    background-color: #333; /* Custom background color for focused item */
+    color: white; /* Ensure text color is white */
+}
