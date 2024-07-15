@@ -36,7 +36,7 @@ export default class FactorForm extends React.Component {
     
         return (
             <div style={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column', marginTop: '5px'}}>
-                <div style={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'row'}}>
+                <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'row'}}>
                     <label style={{ marginRight: '5px', fontSize: '14px' }}>
                         {'Priority '}
                         {Number(this.props.idx) + 1}
@@ -49,6 +49,8 @@ export default class FactorForm extends React.Component {
                         styles={customStyles}
                         className="basic-single"
                         classNamePrefix="select"
+                        menuPortalTarget={document.querySelector('.app_container')} // Use a portal for the dropdown menu
+                        menuPosition="fixed" // Ensure the menu is positioned correctly
                     />
                 </div>
                 <div>
@@ -69,28 +71,28 @@ export default class FactorForm extends React.Component {
 const customStyles = {
     control: (provided) => ({
         ...provided,
-        minHeight: '20px',
-        height: '20px',
-        width: '200px' 
+        width: '200px',
+        transform: 'scale(0.8)',
+        transformOrigin: 'center left',
     }),
     singleValue: (provided) => ({
         ...provided,
-        fontSize: '14px',
-        lineHeight: '14px',
-        paddingBottom: '12px'
     }),
     input: (provided) => ({
         ...provided,
-        fontSize: "14px",
-        lineHeight: "0px",
-        padding: "0px",
     }),
     indicatorsContainer: (provided) => ({
         ...provided,
-        height: '20px'
+        transform: 'scale(0.8)',
+        transformOrigin: 'center left',
     }),
     option: (provided) => ({
         ...provided,
-        fontSize: '12px'
-    })
+        transform: 'scale(0.8)',
+        transformOrigin: 'center left',
+    }),
+    menu: (provided) => ({
+        ...provided,
+        /// zIndex: 9999, // High z-index value to ensure it is on top of other elements
+    }),
 };

@@ -65,7 +65,7 @@ div.ReactModal__Content.dark-mode {
     background-color: #333;
 }
 
-.dark-mode div.basic-single * {
+.dark-mode div.basic-single *, .dark-mode div.select__menu * {
     color: white;
     background-color: #222;
 }
