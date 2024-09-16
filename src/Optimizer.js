@@ -1,4 +1,4 @@
-import { EmptySlot, EmptySlotId, Equip, Factors, Slot } from './assets/ItemAux'
+import {EmptySlot, EmptySlotId, Equip, Factors, Slot} from './assets/ItemAux'
 import {
     allowed_zone,
     clone,
@@ -187,8 +187,8 @@ export class Optimizer {
             return [
                 this.pareto(
                     items, items[0].slot[0] === 'weapon'
-                    ? 2 - base_layout.counts['weapon']
-                    : 1),
+                        ? 2 - base_layout.counts['weapon']
+                        : 1),
                 x[1]
             ];
         });
@@ -236,11 +236,11 @@ export class Optimizer {
         accs = accs.map((x, idx) => idx).sort((a, b) => {
             // remove accessory a
             everything[a] = EmptySlotId('accessory');
-            const ascore = this.score_equip({ accessory: everything });
+            const ascore = this.score_equip({accessory: everything});
             everything[a] = accs[a].id;
             // remove accessory b
             everything[b] = EmptySlotId('accessory');
-            const bscore = this.score_equip({ accessory: everything });
+            const bscore = this.score_equip({accessory: everything});
             everything[b] = accs[b].id;
             // compare scores
             return ascore - bscore;
@@ -441,7 +441,7 @@ export class Optimizer {
                     }
                 }
             });
-            return { ...candidate, base_idx: undefined } // set base_idx undefined so it isn't used in a future priority
+            return {...candidate, base_idx: undefined} // set base_idx undefined so it isn't used in a future priority
         });
         return alternatives;
     }

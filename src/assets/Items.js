@@ -1,4 +1,5 @@
-import {EmptySlot, Item, Stat, Slot, SetName} from './ItemAux'
+import {EmptySlot, Item, SetName, Slot, Stat} from './ItemAux'
+
 export const ITEMLIST = [
     new EmptySlot(Slot.WEAPON),
     new EmptySlot(Slot.HEAD),
@@ -60,8 +61,7 @@ export const ITEMLIST = [
         [Stat.TOUGHNESS, 8],
         [Stat.ENERGY_SPEED, 20],
     ]),
-    new Item(53, 'Forest Pendant', Slot.ACCESSORY, SetName.FOREST_PENDANT, 100, [
-    ]),
+    new Item(53, 'Forest Pendant', Slot.ACCESSORY, SetName.FOREST_PENDANT, 100, []),
     new Item(54, 'Blue Cheese Helmet', Slot.HEAD, SetName.CAVE, 100, [
         [Stat.TOUGHNESS, 50],
         [Stat.MAGIC_POWER, 7],
@@ -389,8 +389,7 @@ export const ITEMLIST = [
         [Stat.EXPERIENCE, 5],
         [Stat.DROP_CHANCE, 30],
     ]),
-    new Item(120, 'The Lonely Flubber', Slot.ACCESSORY, SetName.MISC, 100, [
-    ]),
+    new Item(120, 'The Lonely Flubber', Slot.ACCESSORY, SetName.MISC, 100, []),
     new Item(121, 'The Triple Flubber', Slot.ACCESSORY, SetName.MISC, 100, [
         [Stat.RESPAWN, 4],
     ]),
@@ -471,8 +470,7 @@ export const ITEMLIST = [
         [Stat.ENERGY_BARS, 100],
         [Stat.ENERGY_CAP, 20],
     ]),
-    new Item(135, 'Ring of Apathy', Slot.ACCESSORY, SetName.MISC, 100, [
-    ]),
+    new Item(135, 'Ring of Apathy', Slot.ACCESSORY, SetName.MISC, 100, []),
     new Item(136, 'Ring of Greed', Slot.ACCESSORY, SetName.UUG_RINGS, 100, [
         [Stat.GOLD_DROP, 800],
         [Stat.DROP_CHANCE, 60],
@@ -1655,8 +1653,7 @@ export const ITEMLIST = [
         [Stat.MAGIC_POWER, 400000],
         [Stat.HACK_SPEED, 20],
     ]),
-    new Item(335, 'Seal of the Exile', Slot.WEAPON, SetName.MISC, 100, [
-    ]),
+    new Item(335, 'Seal of the Exile', Slot.WEAPON, SetName.MISC, 100, []),
     new Item(342, 'Blue Eyes Ultimate Chestplate', Slot.CHEST, SetName.EXILE, 100, [
         [Stat.POWER, 5500000],
         [Stat.TOUGHNESS, 160000000],
@@ -2781,5 +2778,5 @@ export const ITEMLIST = [
 ];
 
 
-export const LOOTIES = ITEMLIST.filter(x => x.zone !== undefined && x.zone[0] === SetName.LOOTY[0]).sort((a, b) => a.power - b.power).map(x=>x.name);
-export const PENDANTS = ITEMLIST.filter(x => x.zone !== undefined && x.zone[0] === SetName.FOREST_PENDANT[0]).sort((a, b) => a.power - b.power).map(x=>x.name);
+export const LOOTIES = ITEMLIST.filter(x => x.zone !== undefined && x.zone[0] === SetName.LOOTY[0]).sort((a, b) => a.power - b.power).map(x => x.name);
+export const PENDANTS = ITEMLIST.filter(x => x.zone !== undefined && x.zone[0] === SetName.FOREST_PENDANT[0]).sort((a, b) => a.power - b.power).map(x => x.name);

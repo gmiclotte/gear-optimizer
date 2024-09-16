@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { getLock } from '../../util'
-import { useDrag, useDrop } from 'react-dnd';
+import {getLock} from '../../util'
+import {useDrag, useDrop} from 'react-dnd';
 
 import './Item.css';
 

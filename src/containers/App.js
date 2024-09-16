@@ -29,7 +29,7 @@ import {LoadStateLocalStorage} from '../actions/LoadStateLocalStorage';
 import {SaveStateLocalStorage} from '../actions/SaveStateLocalStorage';
 
 import '../stylesheets/App.css';
-import { DropEquipItem } from '../actions/DropEquipItem';
+import {DropEquipItem} from '../actions/DropEquipItem';
 
 ReactGA.initialize('UA-141463995-1');
 

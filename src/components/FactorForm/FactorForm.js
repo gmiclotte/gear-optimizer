@@ -1,21 +1,24 @@
 import React from 'react';
 import Select from 'react-select';
 
-import { Factors } from '../../assets/ItemAux';
-import { default as Crement } from '../Crement/Crement';
+import {Factors} from '../../assets/ItemAux';
+import {default as Crement} from '../Crement/Crement';
 
 export default class FactorForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedOption: { value: Factors[this.props.factors[this.props.idx]][0], label: Factors[this.props.factors[this.props.idx]][0] }
+            selectedOption: {
+                value: Factors[this.props.factors[this.props.idx]][0],
+                label: Factors[this.props.factors[this.props.idx]][0]
+            }
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(selectedOption) {
-        this.setState({ selectedOption });
+        this.setState({selectedOption});
         this.props.handleEditFactor(this.props.idx, Object.getOwnPropertyNames(Factors).find(factor => Factors[factor][0] === selectedOption.value));
     }
 
@@ -29,15 +32,15 @@ export default class FactorForm extends React.Component {
             value: Factors[factor][0],
             label: Factors[factor][0]
         }));
-        
+
         const selectedValue = options.find(option => option.value === factor[0]);
-    
+
         const accslots = this.props.equip.accessory.length;
-    
+
         return (
-            <div style={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column', marginTop: '5px'}}>
-                <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'row'}}>
-                    <label style={{ marginRight: '5px', fontSize: '14px' }}>
+            <div style={{display: 'flex', alignItems: 'flex-start', flexDirection: 'column', marginTop: '5px'}}>
+                <div style={{display: 'flex', alignItems: 'center', flexDirection: 'row'}}>
+                    <label style={{marginRight: '5px', fontSize: '14px'}}>
                         {'Priority '}
                         {Number(this.props.idx) + 1}
                         {': '}

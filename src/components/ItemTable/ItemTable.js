@@ -119,10 +119,11 @@ export default class ItemTable extends React.Component {
                 }
                 if (allowed_zone(this.props.itemdata, limits, id) && !(this.props.compactitemlist && item.disable)) {
                     this.localbuffer.push(<SourceItem className={className} item={item}
-                                                handleClickItem={this.props.handleClickItem}
-                                                handleCtrlClickItem={this.props.handleCtrlClickItem}
-                                                handleShiftClickItem={(itemId) => this.props.handleEditItem(itemId, -1)}
-                                                handleRightClickItem={this.props.handleRightClickItem} key={id}/>);
+                                                      handleClickItem={this.props.handleClickItem}
+                                                      handleCtrlClickItem={this.props.handleCtrlClickItem}
+                                                      handleShiftClickItem={(itemId) => this.props.handleEditItem(itemId, -1)}
+                                                      handleRightClickItem={this.props.handleRightClickItem}
+                                                      key={id}/>);
                 }
                 last = item;
             }

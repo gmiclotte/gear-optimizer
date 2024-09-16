@@ -1,9 +1,9 @@
-import React, { useState, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Crement } from '../../actions/Crement';
-import { MassUpdate } from '../../actions/MassUpdateItems';
-import { Settings } from '../../actions/Settings';
-import { Deserializer } from './deserializeDotNet'
+import React, {useRef, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {Crement} from '../../actions/Crement';
+import {MassUpdate} from '../../actions/MassUpdateItems';
+import {Settings} from '../../actions/Settings';
+import {Deserializer} from './deserializeDotNet'
 
 // minimal boss for each zone, per difficulty
 const sadisticZones = [
@@ -71,7 +71,7 @@ const ImportSaveForm = (props) => {
 
         console.log(data)
 
-        let newItemData = { ...optimizerState.itemdata }
+        let newItemData = {...optimizerState.itemdata}
 
         let zone = getZone(
             data.highestBoss,
@@ -119,17 +119,17 @@ const ImportSaveForm = (props) => {
         let augdata = data.challenges
         nac = augdata.noAugsChallenge.curCompletions
         lsc = augdata.laserSwordChallenge.curCompletions
-        dispatch(Settings("augstats", { ...optimizerState.augstats, lsc: lsc, nac: nac, ecap: energyCap }))
+        dispatch(Settings("augstats", {...optimizerState.augstats, lsc: lsc, nac: nac, ecap: energyCap}))
     }
 
     const updateHackTab = (data) => {
         let hacks = data.hacks.hacks;
 
         let newState = {...optimizerState.hackstats}
-        for (let i = 0; i < newState.hacks.length; i++){
+        for (let i = 0; i < newState.hacks.length; i++) {
             newState.hacks[i].level = hacks[i].level
         }
-        dispatch(Settings("hackstats", newState ));
+        dispatch(Settings("hackstats", newState));
     }
 
 
@@ -228,7 +228,7 @@ const ImportSaveForm = (props) => {
             mngus.push(temp)
         }
 
-        let newState = { ...optimizerState.ngustats }
+        let newState = {...optimizerState.ngustats}
 
         newState.quirk.e2n = data.beastQuest.quirkLevel[14] > 0
         newState.quirk.s2e = data.beastQuest.quirkLevel[89] > 0
@@ -270,7 +270,7 @@ const ImportSaveForm = (props) => {
         fileReader.onloadend = handleFileRead(file.type !== 'application/json');
         try {
             fileReader.readAsText(file)
-        } catch{
+        } catch {
             inputElem.current.value = null
         }
 
@@ -278,12 +278,16 @@ const ImportSaveForm = (props) => {
 
     return (
         <div className="loadSave">
-            <input ref={inputElem} style={{ display: "none" }} type='file' id='savefileloader' onChange={e => handleFilePick(e)} />
+            <input ref={inputElem} style={{display: "none"}} type='file' id='savefileloader'
+                   onChange={e => handleFilePick(e)}/>
             <button onClick={() => inputElem.current.click()}
                     data-tip={"Supported file types are<br/>(1) raw NGU save files, and<br/>(2) NGUSav.es JSON files."}
                     data-place="bottom"
-            >Import save from file</button>
-            <label>Disable unowned<input type="checkbox" checked={disableItems} onChange={() => { setDisableItems(!disableItems) }} /></label>
+            >Import save from file
+            </button>
+            <label>Disable unowned<input type="checkbox" checked={disableItems} onChange={() => {
+                setDisableItems(!disableItems)
+            }}/></label>
         </div>
     )
 }

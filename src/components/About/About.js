@@ -21,6 +21,7 @@ const customStyles = {
 
 class AboutComponent extends Component {
     static contextType = DarkModeContext;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -97,7 +98,8 @@ class AboutComponent extends Component {
                 <br/>
                 <button onClick={() => this.setState({open: true})}>{'Import/Export local storage'}</button>
             </p>
-            <Modal className={'port-modal' + (this.context ? ' dark-mode' : '')} overlayClassName='port-overlay' isOpen={this.state.open}
+            <Modal className={'port-modal' + (this.context ? ' dark-mode' : '')} overlayClassName='port-overlay'
+                   isOpen={this.state.open}
                    onAfterOpen={undefined} onRequestClose={() => (this.setState({open: false}))} style={customStyles}
                    contentLabel='Import / Export' autoFocus={false}>
                 <PortForm {...this.props} closePortModal={() => (this.setState({open: false}))}/>

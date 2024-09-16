@@ -1,1 +1,1 @@
-export default {"version" : "x.y.z"}
+export default {"version": "x.y.z"}

@@ -326,16 +326,16 @@ class HackComponent extends Component {
                                         target === level
                                             ? ''
                                             : <button type="button" onClick={(e) => this.handleChange(
-                                            {
-                                                target: {
-                                                    value: target > level
-                                                        ? target
-                                                        : level
-                                                }
-                                            }, target > level
-                                                ? 'level'
-                                                : 'goal',
-                                            pos)}>
+                                                {
+                                                    target: {
+                                                        value: target > level
+                                                            ? target
+                                                            : level
+                                                    }
+                                                }, target > level
+                                                    ? 'level'
+                                                    : 'goal',
+                                                pos)}>
                                                 {'Complete'}
                                             </button>
                                     }

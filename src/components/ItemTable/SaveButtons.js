@@ -19,6 +19,7 @@ const customStyles = {
 
 class SaveButtons extends Component {
     static contextType = DarkModeContext;
+
     constructor(props) {
         super(props);
         this.state = {
@@ -66,7 +67,8 @@ class SaveButtons extends Component {
                 {' '}
                 <button key={'export loadout button'}
                         onClick={() => this.setState({open: true})}>{'Export loadout'}</button>
-                <Modal key={'export loadout modal'} className={'port-modal' + (this.context ? ' dark-mode' : '')} overlayClassName='port-overlay'
+                <Modal key={'export loadout modal'} className={'port-modal' + (this.context ? ' dark-mode' : '')}
+                       overlayClassName='port-overlay'
                        isOpen={this.state.open} onAfterOpen={undefined}
                        onRequestClose={() => (this.setState({open: false}))} style={customStyles}
                        contentLabel='Export loadout' autoFocus={false}>
