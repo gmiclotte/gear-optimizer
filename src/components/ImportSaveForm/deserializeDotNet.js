@@ -10,10 +10,14 @@ const getJson = obj => {
     if (typeof obj === 'number') return obj
     if (typeof obj === 'string') return obj
     if (typeof obj === 'object') {
-        if (obj instanceof Long) return obj
-        if (obj instanceof Array) return obj.map(x => getJson(x))
-        if (obj.hasOwnProperty('value')) {
-            if (obj.value.hasOwnProperty('_items') && obj.value._items.hasOwnProperty('value') && obj.value._items.value instanceof Array) {
+        if (obj instanceof Long) {
+            return obj
+        }
+        if (obj instanceof Array) {
+            return obj.map(x => getJson(x))
+        }
+        if (obj.hasOwnProperty('value') && obj.value !== null && obj.value !== undefined) {
+            if (obj.value.hasOwnProperty('_items') && obj.value._items !== undefined && obj.value._items.hasOwnProperty('value') && obj.value._items.value instanceof Array) {
                 return obj.value._items.value.map(x => getJson(x))
             }
             return getJson(obj.value)
@@ -147,7 +151,15 @@ export class Deserializer {
     getSingleValue(type_tag, type_spec, name) {
         if (type_tag === 0) return [null, this.getPrimValue(type_spec)]
         if (type_tag === 1) {
-            if (this.data[this.pos] !== 6) throw new Error(`Could not parse string for ${name}`)
+            if (this.data[this.pos] !== 6) {
+                if (this.data[this.pos] === 9) {
+                    return this.getSingleValue(3, null, name)
+                }
+                if (this.data[this.pos] === 10) {
+                    return this.getSingleValue(3, null, name)
+                }
+                throw new Error(`Could not parse string for ${name}`)
+            }
             this.pos += 1
             const _id = this.readU32()
             return [_id, this.readStr()]
