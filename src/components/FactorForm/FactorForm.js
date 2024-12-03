@@ -1,6 +1,5 @@
 import React from 'react';
 import Select from 'react-select';
-
 import {Factors} from '../../assets/ItemAux';
 import {default as Crement} from '../Crement/Crement';
 
@@ -38,13 +37,8 @@ export default class FactorForm extends React.Component {
         const accslots = this.props.equip.accessory.length;
 
         return (
-            <div style={{display: 'flex', alignItems: 'flex-start', flexDirection: 'column', marginTop: '5px'}}>
-                <div style={{display: 'flex', alignItems: 'center', flexDirection: 'row'}}>
-                    <label style={{marginRight: '5px', fontSize: '14px'}}>
-                        {'Priority '}
-                        {Number(this.props.idx) + 1}
-                        {': '}
-                    </label>
+            <div className="factor-form-row">
+                <div className="factor-form-select">
                     <Select
                         value={selectedValue}
                         onChange={this.handleChange}
@@ -52,11 +46,11 @@ export default class FactorForm extends React.Component {
                         styles={customStyles}
                         className="basic-single"
                         classNamePrefix="select"
-                        menuPortalTarget={document.querySelector('.app_container')} // Use a portal for the dropdown menu
-                        menuPosition="fixed" // Ensure the menu is positioned correctly
+                        menuPortalTarget={document.querySelector('.app_container')}
+                        menuPosition="fixed"
                     />
                 </div>
-                <div>
+                <div className="factor-form-crement">
                     <Crement
                         header='slots'
                         value={this.props.maxslots[this.props.idx]}
@@ -74,28 +68,23 @@ export default class FactorForm extends React.Component {
 const customStyles = {
     control: (provided) => ({
         ...provided,
-        width: '200px',
-        transform: 'scale(0.8)',
-        transformOrigin: 'center left',
+        width: '180px',
     }),
     singleValue: (provided) => ({
         ...provided,
+        fontSize: '0.8em', // Scale the text size
     }),
     input: (provided) => ({
         ...provided,
     }),
     indicatorsContainer: (provided) => ({
         ...provided,
-        transform: 'scale(0.8)',
-        transformOrigin: 'center left',
     }),
     option: (provided) => ({
         ...provided,
-        transform: 'scale(0.8)',
-        transformOrigin: 'center left',
+        fontSize: '0.8em', // Scale the text size
     }),
     menu: (provided) => ({
         ...provided,
-        /// zIndex: 9999, // High z-index value to ensure it is on top of other elements
     }),
 };

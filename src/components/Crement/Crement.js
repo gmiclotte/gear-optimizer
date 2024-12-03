@@ -8,15 +8,22 @@ export default class Crement extends Component {
     };
 
     render() {
-        return (<>
-            <button type="button"
-                    onClick={() => this.props.handleClick(this.props.name, -1, this.props.min, this.props.max)}> -
-            </button>
-            <button type="button"
-                    onClick={() => this.props.handleClick(this.props.name, 1, this.props.min, this.props.max)}> +
-            </button>
-            {' ' + this.props.header + ': ' + this.props.value + ' '}
-        </>);
+        const isInfinity = this.props.value === Infinity;
+        return (
+            <div className="crement-container">
+                <button type="button"
+                        className="crement-button"
+                        onClick={() => this.props.handleClick(this.props.name, -1, this.props.min, this.props.max)}> -
+                </button>
+                <button type="button"
+                        className="crement-button"
+                        onClick={() => this.props.handleClick(this.props.name, 1, this.props.min, this.props.max)}> +
+                </button>
+                {this.props.header + ': '}
+                <span className="crement-value" style={{fontSize: isInfinity ? '2em' : '1em'}}>
+                    {isInfinity ? '∞' : this.props.value}
+                </span>
+            </div>
+        );
     }
 }
-

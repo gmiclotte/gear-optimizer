@@ -162,8 +162,13 @@ class Optimizer extends Component {
                             <button onClick={this.props.handleUndo}>
                                 {'Load previous'}
                             </button>
-                            {[...this.props.factors.keys()].map((idx) => (
-                                <div key={'factorform' + idx}><FactorForm {...this.props} idx={idx}/></div>))}
+                            <div className='factor-forms-container'>
+                                {[...this.props.factors.keys()].map((idx) => (
+                                    <div className='factor-form-row' key={'factorform' + idx}>
+                                        <FactorForm {...this.props} idx={idx}/>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                         <div className='button-section' key='numberforms'>
                             <table className='center cubetable'>
