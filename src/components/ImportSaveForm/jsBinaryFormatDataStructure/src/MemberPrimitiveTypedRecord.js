@@ -1,4 +1,4 @@
-﻿const PrimitiveReader = require('./PrimitiveReader');
+﻿import PrimitiveReader from './PrimitiveReader';
 
 class MemberPrimitiveTypedRecord {
     constructor() {
@@ -12,4 +12,4 @@ class MemberPrimitiveTypedRecord {
     }
 }
 
-module.exports = MemberPrimitiveTypedRecord;
+export default MemberPrimitiveTypedRecord;

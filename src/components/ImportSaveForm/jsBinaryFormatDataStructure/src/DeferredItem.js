@@ -7,4 +7,4 @@ class DeferredItem {
     }
 }
 
-module.exports = DeferredItem;
+export default DeferredItem;

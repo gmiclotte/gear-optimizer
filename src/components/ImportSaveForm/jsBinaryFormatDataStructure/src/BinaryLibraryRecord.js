@@ -10,4 +10,4 @@
     }
 }
 
-module.exports = BinaryLibraryRecord;
+export default BinaryLibraryRecord;
