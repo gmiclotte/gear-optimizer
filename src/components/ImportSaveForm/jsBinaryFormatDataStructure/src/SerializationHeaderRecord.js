@@ -18,4 +18,4 @@
     }
 }
 
-module.exports = SerializationHeaderRecord;
+export default SerializationHeaderRecord;

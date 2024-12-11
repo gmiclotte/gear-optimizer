@@ -7,4 +7,4 @@
     RectangularOffset: 5 // Multi-dimensional Arrays where the lower bound index of at least one of the dimensions is greater than 0.
 };
 
-module.exports = BinaryArrayType;
+export default BinaryArrayType;

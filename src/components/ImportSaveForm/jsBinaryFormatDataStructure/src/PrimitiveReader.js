@@ -1,4 +1,4 @@
-﻿const PrimitiveType = require('./PrimitiveType');
+﻿import PrimitiveType from './PrimitiveType';
 
 class PrimitiveReader {
     static readTimeSpan(reader) {
@@ -50,4 +50,4 @@ class PrimitiveReader {
     }
 }
 
-module.exports = PrimitiveReader;
+export default PrimitiveReader;
