@@ -1,7 +1,7 @@
 {
   "homepage": "https://gmiclotte.github.io/gear-optimizer",
   "name": "gear-optimizer",
-  "version": "0.9.13",
+  "version": "0.9.14",
   "private": true,
   "dependencies": {
     "buffer": "^6.0.3",
