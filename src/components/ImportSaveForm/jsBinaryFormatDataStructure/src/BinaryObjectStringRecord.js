@@ -10,4 +10,4 @@
     }
 }
 
-export default BinaryObjectStringRecord;
+module.exports = BinaryObjectStringRecord;

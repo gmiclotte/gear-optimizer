@@ -12,4 +12,4 @@
     PrimitiveArray: 7 // The Remoting Type is a single-dimensional Array of Primitive Type with a lower bound of 0.
 });
 
-export default BinaryType;
+module.exports = BinaryType;

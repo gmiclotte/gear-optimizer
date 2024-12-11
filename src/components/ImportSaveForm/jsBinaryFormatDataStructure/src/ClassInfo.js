@@ -18,4 +18,4 @@
     }
 }
 
-export default ClassInfo;
+module.exports = ClassInfo;

@@ -10,4 +10,4 @@
     }
 }
 
-export default ClassWithIdRecord;
+module.exports = ClassWithIdRecord;

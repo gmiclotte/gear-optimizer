@@ -4,4 +4,4 @@
     }
 }
 
-export default DeferredReference;
+module.exports = DeferredReference;

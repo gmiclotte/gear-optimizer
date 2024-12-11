@@ -1,5 +1,5 @@
-﻿import ClassSerializationRecord from "./ClassSerializationRecord";
-import ClassInfo from "./ClassInfo";
+﻿const ClassSerializationRecord = require("./ClassSerializationRecord");
+const ClassInfo = require("./ClassInfo");
 
 class SystemClassWithMembersRecord extends ClassSerializationRecord {
     read(reader) {
@@ -20,4 +20,4 @@ class SystemClassWithMembersRecord extends ClassSerializationRecord {
     }
 }
 
-export default SystemClassWithMembersRecord;
+module.exports = SystemClassWithMembersRecord;

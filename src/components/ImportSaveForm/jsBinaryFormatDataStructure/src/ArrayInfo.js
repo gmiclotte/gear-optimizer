@@ -10,4 +10,4 @@
     }
 }
 
-export default ArrayInfo;
+module.exports = ArrayInfo;

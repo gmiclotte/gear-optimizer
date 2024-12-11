@@ -1,5 +1,5 @@
-﻿import MemberTypeInfo from "./MemberTypeInfo";
-import SystemClassWithMembersRecord from "./SystemClassWithMembersRecord";
+﻿const MemberTypeInfo = require("./MemberTypeInfo");
+const SystemClassWithMembersRecord = require("./SystemClassWithMembersRecord");
 
 class SystemClassWithMembersAndTypesRecord extends SystemClassWithMembersRecord {
     read(reader) {
@@ -10,4 +10,4 @@ class SystemClassWithMembersAndTypesRecord extends SystemClassWithMembersRecord 
     }
 }
 
-export default SystemClassWithMembersAndTypesRecord;
+module.exports = SystemClassWithMembersAndTypesRecord;

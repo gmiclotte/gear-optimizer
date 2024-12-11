@@ -1,7 +1,7 @@
-﻿import BinaryArrayType from './BinaryArrayType';
-import BinaryType from './BinaryType';
-import ClassTypeInfo from './ClassTypeInfo';
-import PrimitiveType from "./PrimitiveType";
+﻿const BinaryArrayType = require('./BinaryArrayType');
+const BinaryType = require('./BinaryType');
+const ClassTypeInfo = require('./ClassTypeInfo');
+const PrimitiveType = require("./PrimitiveType");
 
 class BinaryArrayRecord {
     constructor() {
@@ -51,4 +51,4 @@ class BinaryArrayRecord {
     }
 }
 
-export default BinaryArrayRecord;
+module.exports = BinaryArrayRecord;

@@ -1,4 +1,4 @@
-﻿import ClassInfo from "./ClassInfo";
+﻿const ClassInfo = require("./ClassInfo");
 
 class ClassWithMembersRecord {
     constructor() {
@@ -13,4 +13,4 @@ class ClassWithMembersRecord {
     }
 }
 
-export default ClassWithMembersRecord;
+module.exports = ClassWithMembersRecord;

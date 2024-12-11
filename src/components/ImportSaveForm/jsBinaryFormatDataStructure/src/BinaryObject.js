@@ -41,4 +41,4 @@
     }
 }
 
-export default BinaryObject;
+module.exports = BinaryObject;

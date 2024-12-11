@@ -12,4 +12,4 @@
     }
 }
 
-export default ObjectNullMultipleRecord;
+module.exports = ObjectNullMultipleRecord;

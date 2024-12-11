@@ -22,4 +22,4 @@ const RecordType = Object.freeze({
     MethodReturn: 22 // Identifies a BinaryMethodReturn record.
 });
 
-export default RecordType;
+module.exports = RecordType;
