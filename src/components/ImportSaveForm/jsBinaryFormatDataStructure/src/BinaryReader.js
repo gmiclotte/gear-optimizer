@@ -1,8 +1,9 @@
-const PrimitiveType = require("./PrimitiveType");
-const Decimal = require('./Decimal.js');
+import PrimitiveType from "./PrimitiveType";
+import Decimal from './Decimal.js';
+import {Buffer} from 'buffer';
+import BigInt from "core-js/features/bigint";
+
 const LOG_EVERY_READ = false;
-const {Buffer} = require('buffer');
-const BigInt = require("core-js/features/bigint");
 
 class BinaryReader {
     constructor(buffer) {
@@ -268,4 +269,4 @@ class BinaryReader {
     }
 }
 
-module.exports = BinaryReader;
+export default BinaryReader;

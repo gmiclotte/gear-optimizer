@@ -21,4 +21,4 @@ const PrimitiveType = Object.freeze({
     String: 18 // Identifies a LengthPrefixedString (section 2.1.1.6) value.
 });
 
-module.exports = PrimitiveType;
+export default PrimitiveType;

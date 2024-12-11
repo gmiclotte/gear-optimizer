@@ -1,4 +1,4 @@
-﻿const ArrayInfo = require('./ArrayInfo');
+﻿import ArrayInfo from './ArrayInfo';
 
 class ArraySingleStringRecord {
     constructor() {
@@ -11,4 +11,4 @@ class ArraySingleStringRecord {
     }
 }
 
-module.exports = ArraySingleStringRecord;
+export default ArraySingleStringRecord;

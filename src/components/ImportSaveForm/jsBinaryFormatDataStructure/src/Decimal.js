@@ -3,7 +3,7 @@ import BigInt from "core-js/features/bigint";
 // Decimal mimicks a C# decimal structure, which is a 128-bit value.
 // The toNumber method converts the C# decimal to a JavaScript number, this leads to a loss of precision.
 // No other operations have been implemented.
-class Decimal {
+export default class Decimal {
     constructor(buffer) {
         if (buffer.length !== 16) {
             throw new Error("Buffer length must be 16 bytes to represent a C# decimal");

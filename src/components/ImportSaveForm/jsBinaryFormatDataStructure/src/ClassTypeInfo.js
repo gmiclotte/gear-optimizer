@@ -10,4 +10,4 @@
     }
 }
 
-module.exports = ClassTypeInfo;
+export default ClassTypeInfo;

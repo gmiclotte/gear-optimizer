@@ -7,4 +7,4 @@
     }
 }
 
-module.exports = ClassSerializationRecord;
+export default ClassSerializationRecord;

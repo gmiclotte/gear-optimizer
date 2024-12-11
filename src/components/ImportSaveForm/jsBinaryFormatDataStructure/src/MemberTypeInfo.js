@@ -1,5 +1,5 @@
-﻿const BinaryType = require('./BinaryType');
-const ClassTypeInfo = require('./ClassTypeInfo');
+﻿import BinaryType from './BinaryType';
+import ClassTypeInfo from './ClassTypeInfo';
 
 class MemberTypeInfo {
     constructor() {
@@ -30,4 +30,4 @@ class MemberTypeInfo {
     }
 }
 
-module.exports = MemberTypeInfo;
+export default MemberTypeInfo;

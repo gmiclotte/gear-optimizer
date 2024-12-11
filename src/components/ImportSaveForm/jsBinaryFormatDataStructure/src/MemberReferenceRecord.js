@@ -8,4 +8,4 @@
     }
 }
 
-module.exports = MemberReferenceRecord;
+export default MemberReferenceRecord;
