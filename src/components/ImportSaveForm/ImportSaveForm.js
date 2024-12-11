@@ -60,18 +60,16 @@ const ImportSaveForm = (props) => {
     const handleFileRead = (rawSave) => (e) => {
         let data
         if (rawSave) {
-            const deserializer = Deserializer.fromFile(fileReader.result)
-            deserializer.parse()
-            /** @type Data */
-            data = deserializer.getJson('PlayerData')
+            const rawData = Deserializer.fromFile(fileReader.result)[1];
+            data = Deserializer.convertData(undefined, rawData);
         } else {
             const content = fileReader.result
             data = JSON.parse(content)
         }
 
-        console.log(data)
+        console.log("Imported data", data);
 
-        let newItemData = {...optimizerState.itemdata}
+        let newItemData = {...optimizerState.itemdata};
 
         let zone = getZone(
             data.highestBoss,
@@ -212,19 +210,21 @@ const ImportSaveForm = (props) => {
     const updateNgus = (data) => {
         let ngus = []
         for (let i = 0; i < data.NGU.skills.length; i++) {
+            const skill = data.NGU.skills[i];
             let temp = {}
-            temp.normal = data.NGU.skills[i].level
-            temp.evil = data.NGU.skills[i].evilLevel
-            temp.sadistic = data.NGU.skills[i].sadisticLevel
+            temp.normal = skill.level
+            temp.evil = skill.evilLevel
+            temp.sadistic = skill.sadisticLevel
             ngus.push(temp)
         }
 
         let mngus = []
         for (let i = 0; i < data.NGU.magicSkills.length; i++) {
+            const magicSkill = data.NGU.magicSkills[i];
             let temp = {}
-            temp.normal = data.NGU.magicSkills[i].level
-            temp.evil = data.NGU.magicSkills[i].evilLevel
-            temp.sadistic = data.NGU.magicSkills[i].sadisticLevel
+            temp.normal = magicSkill.level
+            temp.evil = magicSkill.evilLevel
+            temp.sadistic = magicSkill.sadisticLevel
             mngus.push(temp)
         }
 
