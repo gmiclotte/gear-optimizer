@@ -28,6 +28,7 @@
     "git-info": "echo export default \"{\\\"logMessage\\\": \\\"$(git log -1 --oneline)\\\"}\"  > src/_git_commit.js",
     "start": "react-app-rewired start",
     "build": "npm run release-it; npm run git-info; react-app-rewired build",
+    "local": "export NODE_OPTIONS=--openssl-legacy-provider; HOST=localhost; rm -fr build/; react-app-rewired build; mv build gear-optimizer; mkdir build; mv gear-optimizer/ build/; cd build; mv gear-optimizer/index.html .; python -m http.server 8000",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
