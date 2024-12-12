@@ -1,6 +1,7 @@
 ﻿import ArrayInfo from './ArrayInfo';
 
 class ArraySingleObjectRecord {
+    static className = "ArraySingleObjectRecord";
     constructor() {
         this.arrayInfo = null;
     }

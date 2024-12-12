@@ -4,6 +4,7 @@ import ClassTypeInfo from './ClassTypeInfo';
 import PrimitiveType from "./PrimitiveType";
 
 class BinaryArrayRecord {
+    static className = "BinaryArrayRecord";
     constructor() {
         this.objectId = 0;
         this.binaryArrayType = null;

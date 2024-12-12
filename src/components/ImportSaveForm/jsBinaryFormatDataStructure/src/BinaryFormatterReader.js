@@ -390,7 +390,7 @@ export class NRBFReader {
     }
 
     readArray(record) {
-        switch (record.constructor.name) {
+        switch (record.constructor.className) {
             case 'ArraySinglePrimitiveRecord':
                 return this.readArraySinglePrimitiveRecord(record);
             case 'ArraySingleStringRecord':
