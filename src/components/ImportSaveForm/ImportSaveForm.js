@@ -135,7 +135,7 @@ const ImportSaveForm = (props) => {
         let equipped = data.inventory
 
         // fix [null, null] entries that make the accs array always have length 20
-        equipped.accs = equipped.accs.filter(x => !isNaN(x.id));
+        equipped.accs = equipped.accs.filter(x => x && !isNaN(x.id));
 
         let foundIds = []
         const lootys = [67, 128, 169, 230, 296, 389, 431, 505]
