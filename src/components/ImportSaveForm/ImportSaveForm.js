@@ -147,6 +147,10 @@ const ImportSaveForm = (props) => {
         let found = {};
 
         const updateItem = (item, _) => {
+            if (!item) {
+                // console.trace("Skipping null item in updateItem");
+                return;
+            }
             let id = item.id;
             let level = item.level;
             if (id !== undefined && id in newData && level !== undefined) {
