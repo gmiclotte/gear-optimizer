@@ -59,6 +59,6 @@
   },
   "devDependencies": {
     "react-app-rewired": "^2.1.6",
-    "release-it": "^12.6.3"
+    "release-it": "^15.6.0"
   }
 }
